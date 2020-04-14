@@ -1,0 +1,110 @@
+*.py[cod]
+
+# C extensions
+*.so
+
+# Packages
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+**/report_folder
+
+# Translations
+*.mo
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+.idea
+
+# Complexity
+output/*.html
+output/*/index.html
+
+# Sphinx
+docs/_build
+
+#MACOS
+.DS_Store
+
+#General
+*.log
+ec2.pem
+emr.pem
+unittests.pem
+customer-portfolios.pem
+
+
+#DKModules Unit Test Artifacts
+logs_and_errors.json
+progress.json
+status.json
+test_results.json
+test-tmp.csv
+*_results.txt
+
+# vagrant
+.vagrant
+
+atlassian-ide-plugin.xml
+
+*toobig*
+utils/converted
+utils/raw
+
+# Temp files
+*/*/*-tmp
+*/*/*/*-tmp
+*/*-tmp
+*/*_tmp
+*/*/*-temp
+*.out
+last_cluster.txt
+tests/DKCustomers
+
+# src dirrectory got github3.py
+src
+
+# Using drive mapping to get the debug helpers into the container, but we don't want this in git.
+.pycharm_helpers/
+
+# Keep simple files used for testing out of the repo
+ignoreme.txt
+deleteme.txt
+
+*-va.json
+*-va.sql
+
+# For when using synced folders in vagratn, .pycharm_helpers might end up in project folder
+.pycharm_helpers/
+
+# General ignore files
+ignoreme.txt
+
+# Used to make unit tests unique
+my_unitest_guid.txt
+coverage-report
+test-results.xml
+.coverage*
+
+# Python virtualenv
+venv
