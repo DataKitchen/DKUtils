@@ -1,10 +1,13 @@
 PATH:=bin/:${PATH}
 .PHONY: \
     help \
+    bump/patch bump/minor bump/major \
+    bash scan_secrets \
     lint flake8 yapf yapf-diff \
     clean test clean_pyc compile \
     clean_unit test_unit \
-    clean_tox tox
+    clean_tox tox tox36 \
+    clean_build build upload
 
 # --- Environment ---
 
@@ -55,13 +58,18 @@ MAKE_EXT = docker build -t $(BUILD_IMAGE) . && \
 # --- Versioning ---
 
 bump/patch bump/minor bump/major:
-	bumpversion --verbose $(@F)
+	bumpversion --no-tag $(@F)
 
 
 # --- Utils ---
 
 bash:
 	bash
+
+scan_secrets:
+	./scan_secrets.py $(PACKAGE_NAME)
+
+# --- Linting ---
 
 lint: flake8 yapf
 
