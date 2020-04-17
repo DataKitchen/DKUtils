@@ -16,8 +16,11 @@ WORKDIR $APP_HOME
 ########################################################################
 # Install pip
 ########################################################################
-RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
-    python get-pip.py
+RUN apt-get update && apt-get install --yes \
+    python-distribute\
+    python3 \
+    python3-dev \
+    python3-pip
 
 ########################################################################
 # Install requirements
@@ -26,7 +29,7 @@ RUN mkdir -p DKUtils
 WORKDIR $APP_HOME/DKUtils
 COPY requirements.txt .
 COPY requirements-dev.txt .
-RUN pip install -r requirements-dev.txt
+RUN pip3 install -r requirements-dev.txt
 RUN rm requirements.txt
 RUN rm requirements-dev.txt
 

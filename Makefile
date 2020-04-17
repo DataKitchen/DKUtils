@@ -4,10 +4,10 @@ PATH:=bin/:${PATH}
     bump/patch bump/minor bump/major \
     bash scan_secrets \
     lint flake8 yapf yapf-diff \
-    clean test clean_pyc compile \
-    clean_unit test_unit \
-    clean_tox tox tox36 \
-    clean_build build upload
+    test test_unit clean_unit tox clean_tox \
+    docs docs/html docs/clean \
+    build upload clean_build \
+    clean clean_pyc
 
 # --- Environment ---
 
@@ -26,21 +26,39 @@ help:
 	@echo
 	@echo "Add '-ext' to any target to run it inside a docker container"
 	@echo
-	@echo "Available commands:"
-	@echo "  bump/major bump/minor bump/patch - bump the version"
-	@echo "  bash         run bash - typically used in conjunction with -ext to enter a docker container"
-	@echo "  lint         run flake8 and yapf"
-	@echo "  flake8       run flake8"
-	@echo "  yapf         run yapf and correct issues in-place"
-	@echo "  yapf-diff    run yapf and display diff between existing code and resolution if in-place is used"
-	@echo "  clean        remove files from last test run (e.g. report_dir, .coverage, etc.) and *.pyc files"
-	@echo "  test         compile and run all unit tests"
-	@echo "  clean_pyc    remove all *.pyc files"
-	@echo "  compile      compile python source files"
-	@echo "  clean_unit   remove files from last test run (e.g. report_dir, .coverage, etc.)"
-	@echo "  test_unit    run all unit tests"
-	@echo "  clean_tox    clean tox files (e.g. .tox)"
-	@echo "  tox          run unit tests in python 2 and 3"
+	@echo "Versioning:"
+	@echo "    bump/major bump/minor bump/patch - bump the version"
+	@echo
+	@echo "Utilities:"
+	@echo "    bash         run bash - typically used in conjunction with -ext to enter a docker container"
+	@echo "    scan_secrets scan source code for sensitive information"
+	@echo
+	@echo "Linting:"
+	@echo "    lint         run flake8 and yapf"
+	@echo "    flake8       run flake8"
+	@echo "    yapf         run yapf and correct issues in-place"
+	@echo "    yapf-diff    run yapf and display diff between existing code and resolution if in-place is used"
+	@echo
+	@echo "Testing:"
+	@echo "    test         run all unit tests"
+	@echo "    test_unit    run all unit tests"
+	@echo "    clean_unit   remove files from last test run (e.g. report_dir, .coverage, etc.)"
+	@echo "    tox          run unit tests in python 2 and 3"
+	@echo "    clean_tox    clean tox files (e.g. .tox)"
+	@echo
+	@echo "Documentation:"
+	@echo "    docs         generate Sphinx documentation"
+	@echo "    docs/html    generate Sphinx documentation"
+	@echo "    docs/clean   remove generated Sphinx documentation"
+	@echo
+	@echo "Build and Upload:"
+	@echo "    build        generate distribution archives (i.e. *.tar.gz and *.whl)"
+	@echo "    upload       upload distribution archives to PyPI"
+	@echo "    clean_build  remove all the build files (i.e. build, dist, *.egg-info)"
+	@echo
+	@echo "Cleanup:"
+	@echo "    clean        run all the clean targets in one go"
+	@echo "    clean_pyc    remove all *.pyc files"
 	@echo
 
 
@@ -69,6 +87,7 @@ bash:
 scan_secrets:
 	./scan_secrets.py $(PACKAGE_NAME)
 
+
 # --- Linting ---
 
 lint: flake8 yapf
@@ -83,18 +102,15 @@ yapf-diff:
 	yapf --diff --recursive $(PACKAGE_NAME) tests
 
 
-# --- Compile and Test ---
+# --- Testing ---
 
-clean: clean_pyc clean_unit clean_tox clean_build
+clean: clean_pyc clean_unit clean_tox clean_build docs/clean
 
-test: compile test_unit
+test: test_unit
 
 clean_pyc:
 	@find $(MAKEFILE_DIR)/$(PACKAGE_NAME) -name '*.pyc' -delete
 	@find $(MAKEFILE_DIR)/$(PACKAGE_NAME) -name '__pycache__' -delete
-
-compile:
-	@python -m compileall -f $(MAKEFILE_DIR)/$(PACKAGE_NAME)
 
 clean_unit:
 	@rm -fr .coverage $(PACKAGE_NAME).egg-info
@@ -107,13 +123,17 @@ test_unit:
 clean_tox:
 	@rm -fr .tox
 
-tox: clean_tox
+tox: clean_unit clean_tox
 tox:
 	tox -v
 
-tox36: clean_tox
-tox36:
-	tox -v -e py36
+
+# --- Docs ---
+
+docs: docs/html
+
+docs/html docs/clean:
+	$(MAKE) -C docs $(@F)
 
 
 # --- Build and Upload ---

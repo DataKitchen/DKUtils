@@ -17,7 +17,6 @@ class TestWaitLoop(TestCase):
         start_time = time.time()
         while wait_loop:
             iterations += 1
-            print(f'iteration: {iterations}')
 
         elapsed_time = time.time() - start_time
         msg = f'Elapsed time ({elapsed_time}) should be > wait loop timeout ({timeout_secs})'
