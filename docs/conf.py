@@ -14,7 +14,6 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
 
-
 # -- Project information -----------------------------------------------------
 
 project = 'DKUtils'
@@ -22,8 +21,7 @@ copyright = '2020, DataKitchen'
 author = 'DataKitchen'
 
 # The full version, including alpha/beta/rc tags
-release = '0.2.0'
-
+release = '0.0.0'
 
 # -- General configuration ---------------------------------------------------
 
@@ -49,7 +47,6 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
-
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
@@ -58,15 +55,15 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 html_theme = 'sphinx_rtd_theme'
 
 html_theme_options = {
-  # RTD Global options
-  'display_version': True,
-  'prev_next_buttons_location': 'both',
+    # RTD Global options
+    'display_version': True,
+    'prev_next_buttons_location': 'both',
 
-  # RTD Toc options
-  'collapse_navigation': False,
-  'sticky_navigation': True,
-  'navigation_depth': 3,
-  'includehidden': False,
+    # RTD Toc options
+    'collapse_navigation': False,
+    'sticky_navigation': True,
+    'navigation_depth': 3,
+    'includehidden': False,
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
@@ -86,52 +83,52 @@ autodoc_docstring_signature = True
 autoclass_content = 'both'
 
 autodoc_default_flags = [
-  'show-inheritance',
-  'undoc-members',
-  'special-members',
-  # 'private-members',
-  # 'inherited-members',
+    'show-inheritance',
+    'undoc-members',
+    'special-members',
+    # 'private-members',
+    # 'inherited-members',
 ]
 
 # Never document these methods/attributes
 autodoc_exclude_always = {
-  '__class__',
-  '__delattr__',
-  '__dict__',
-  '__format__',
-  '__hash__',
-  '__module__',
-  '__new__',
-  '__reduce__',
-  '__reduce_ex__',
-  '__sizeof__',
-  '__slots__',
-  '__subclasshook__',
-  '__weakref__',
+    '__class__',
+    '__delattr__',
+    '__dict__',
+    '__format__',
+    '__hash__',
+    '__module__',
+    '__new__',
+    '__reduce__',
+    '__reduce_ex__',
+    '__sizeof__',
+    '__slots__',
+    '__subclasshook__',
+    '__weakref__',
 }
 
 # Document these only if their docstrings don't match those of their base classes
 autodoc_exclude_if_no_redoc_base_classes = [object, type]
 autodoc_exclude_if_no_redoc = {
-  '__init__',
-  '__getattribute__',
-  '__setattribute__',
-  '__getattr__',
-  '__setattr__',
-  '__getitem__',
-  '__setitem__',
-  '__str__',
-  '__repr__',
-  '__iter__',
-  'next',
-  '__next__',
-  'close',
-  '__del__',
+    '__init__',
+    '__getattribute__',
+    '__setattribute__',
+    '__getattr__',
+    '__setattr__',
+    '__getitem__',
+    '__setitem__',
+    '__str__',
+    '__repr__',
+    '__iter__',
+    'next',
+    '__next__',
+    'close',
+    '__del__',
 }
 
 
 def autodoc_skip_member(app, what, name, obj, skip, options):
-  """
+    """
   Do not generate documentation for functions/methods/classes/objects that
   either:
 
@@ -163,27 +160,27 @@ def autodoc_skip_member(app, what, name, obj, skip, options):
     True if object should be skipped, False otherwise
   """
 
-  if not skip:
-    if name in autodoc_exclude_always:
-      skip = True
-    elif name.startswith('Abstract') or '.Abstract' in name:
-      skip = True
-    elif getattr(obj, '_skipdoc', False):
-      skip = True
-    elif name in autodoc_exclude_if_no_redoc:
-      for cls in autodoc_exclude_if_no_redoc_base_classes:
-        if isinstance(obj, cls):
-          base_doc = getattr(getattr(cls, name, None), '__doc__', '')
-          obj_doc = getattr(obj, '__doc__', '')
-          skip |= (obj_doc == base_doc)
+    if not skip:
+        if name in autodoc_exclude_always:
+            skip = True
+        elif name.startswith('Abstract') or '.Abstract' in name:
+            skip = True
+        elif getattr(obj, '_skipdoc', False):
+            skip = True
+        elif name in autodoc_exclude_if_no_redoc:
+            for cls in autodoc_exclude_if_no_redoc_base_classes:
+                if isinstance(obj, cls):
+                    base_doc = getattr(getattr(cls, name, None), '__doc__', '')
+                    obj_doc = getattr(obj, '__doc__', '')
+                    skip |= (obj_doc == base_doc)
 
-  return skip
+    return skip
 
 
 def setup(app):
-  """Implement custom autodoc skipping and css"""
-  app.connect('autodoc-skip-member', autodoc_skip_member)
-  app.add_css_file('css/custom.css')
+    """Implement custom autodoc skipping and css"""
+    app.connect('autodoc-skip-member', autodoc_skip_member)
+    app.add_css_file('css/custom.css')
 
 
 # -- Options for napoleon extension ------------------------------------------
