@@ -24,4 +24,3 @@ def validate_globals(global_variables):
 
     if undefined_globals:
         raise NameError(f'Undefined global variables: {undefined_globals}')
-

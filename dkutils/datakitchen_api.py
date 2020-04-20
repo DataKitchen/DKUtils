@@ -1,6 +1,5 @@
 import requests
 
-
 DEFAULT_DATAKITCHEN_URL = 'https://cloud.datakitchen.io'
 
 
@@ -38,7 +37,9 @@ def get_headers(username, password, datakitchen_url=DEFAULT_DATAKITCHEN_URL):
     return {'Authorization': f'Bearer {response.text}'}
 
 
-def create_order(headers, kitchen, recipe, variation, parameters={}, datakitchen_url=DEFAULT_DATAKITCHEN_URL):
+def create_order(
+    headers, kitchen, recipe, variation, parameters={}, datakitchen_url=DEFAULT_DATAKITCHEN_URL
+):
     """
 
     Parameters
@@ -67,10 +68,7 @@ def create_order(headers, kitchen, recipe, variation, parameters={}, datakitchen
         :class:`Response <Response>` object
     """
     order_create_url = f'{datakitchen_url}/v2/order/create/{kitchen}/{recipe}/{variation}'
-    payload = {
-        "schedule": "now",
-        "parameters": parameters
-    }
+    payload = {"schedule": "now", "parameters": parameters}
     response = requests.put(order_create_url, headers=headers, json=payload)
     response.raise_for_status()
     return response
