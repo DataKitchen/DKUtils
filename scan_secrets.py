@@ -94,12 +94,7 @@ class Issue:
 
 
 def ignore(tokens, line, path, basepath, linenum, accepted_cases):
-
-    path = path[len(basepath) + 1:]
-    if accepted_cases and \
-        path in accepted_cases and \
-        linenum in accepted_cases[path]:
-
+    if accepted_cases and path in accepted_cases and linenum in accepted_cases[path]:
         expression = accepted_cases[path][linenum]
 
         if expression == '*':

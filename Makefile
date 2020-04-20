@@ -85,7 +85,7 @@ bash:
 	bash
 
 scan_secrets:
-	./scan_secrets.py $(PACKAGE_NAME)
+	@./scan_secrets.py $(PACKAGE_NAME) accepted_cases.txt
 
 
 # --- Linting ---

@@ -1,0 +1,9 @@
+dkutils/datakitchen_api.py,4,.*DEFAULT_DATAKITCHEN_URL = 'https://cloud\.datakitchen\.io'.*
+dkutils/datakitchen_api.py,7,.*def get_headers\(username, password, datakitchen_url=DEFAULT_DATAKITCHEN_URL\):.*
+dkutils/datakitchen_api.py,7,.*def get_headers\(username, password, datakitchen_url=DEFAULT_DATAKITCHEN_URL\):.*
+dkutils/datakitchen_api.py,14,.*username : str.*
+dkutils/datakitchen_api.py,15,.*DataKitchen platform username\..*
+dkutils/datakitchen_api.py,16,.*password : str.*
+dkutils/datakitchen_api.py,17,.*DataKitchen platform password\..*
+dkutils/datakitchen_api.py,32,.*credentials\['username'\] = username.*
+dkutils/datakitchen_api.py,33,.*credentials\['password'\] = password.*
