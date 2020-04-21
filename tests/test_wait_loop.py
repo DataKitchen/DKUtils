@@ -1,6 +1,5 @@
 import time
 
-from datetime import datetime, timedelta
 from unittest import TestCase
 
 from dkutils.wait_loop import WaitLoop
@@ -10,8 +9,8 @@ class TestWaitLoop(TestCase):
 
     def test_wait_loop(self):
         sleep_secs = 1
-        timeout_secs = 5
-        wait_loop = WaitLoop(sleep_secs, datetime.now() + timedelta(seconds=timeout_secs))
+        duration_secs = 5
+        wait_loop = WaitLoop(sleep_secs, duration_secs)
 
         iterations = 0
         start_time = time.time()
@@ -19,5 +18,5 @@ class TestWaitLoop(TestCase):
             iterations += 1
 
         elapsed_time = time.time() - start_time
-        msg = f'Elapsed time ({elapsed_time}) should be > wait loop timeout ({timeout_secs})'
-        self.assertGreaterEqual(elapsed_time, timeout_secs, msg)
+        msg = f'Elapsed time ({elapsed_time}) should be > wait loop timeout ({duration_secs})'
+        self.assertGreaterEqual(elapsed_time, duration_secs, msg)

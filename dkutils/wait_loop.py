@@ -1,11 +1,11 @@
 import time
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class WaitLoop:
 
-    def __init__(self, sleep_secs, timeout_time):
+    def __init__(self, sleep_secs, duration_secs):
         """
         WaitLoop is for use in a while loop. Create an instance of this class and add
         it as the condition/expression to the while loop.
@@ -14,13 +14,13 @@ class WaitLoop:
         ----------
         sleep_secs : int
           Number of seconds to sleep in between loop executions.
-        timeout_time : datetime
-          Time after which the loop will exit execution.
+        duration_secs : int
+          Max duration in seconds after which the loop will exit.
         """
         self.first_pass = True
         self.resume = True
         self._sleep_secs = sleep_secs
-        self._timeout_time = timeout_time
+        self._timeout_time = datetime.now() + timedelta(seconds=duration_secs)
 
     def __bool__(self):
         """
