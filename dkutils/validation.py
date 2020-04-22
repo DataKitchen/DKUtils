@@ -1,25 +1,29 @@
-from . import LOGGER
+import inspect
 
 
-def validate_globals(global_variables):
+def validate_globals(global_var_names):
     """
     Validate that the list of provided global variable names exist in the global namespace
-    and have defined values.
+    of the calling function.
 
     Parameters
     ----------
-    global_variables : array
+    global_var_names : array
       Array of global variable names to test for existence.
 
     Raises
     -------
     NameError
-        If global variable is undefined.
+        If any global variables do not exist in the global namespace of the calling function.
     """
     undefined_globals = []
-    for var in global_variables:
-        if var not in globals() or not globals()[var]:
-            LOGGER.error(f'Undefined global variable: {var}')
+
+    # https://docs.python.org/3/library/inspect.html#inspect.stack
+    cur_globals = inspect.stack()[1][0].f_globals
+
+    for var in global_var_names:
+        if var not in cur_globals:
+            print(f'Undefined global variable: {var}')
             undefined_globals.append(var)
 
     if undefined_globals:
