@@ -118,9 +118,9 @@ def get_order_runs(headers, kitchen, order_id, datakitchen_url=DEFAULT_DATAKITCH
     """
     try:
         order_status_url = f'{datakitchen_url}/v2/order/servings/{kitchen}/{order_id}'
-        payload = {'count': DEFAULT_SERVINGS_COUNT}  # Default is only 10
+        payload = {'count': DEFAULT_SERVINGS_COUNT}
         response = requests.get(order_status_url, headers=headers, json=payload)
         response.raise_for_status()
-        return response['servings']
+        return response.json()['servings']
     except HTTPError:
         print(f'No order runs found for provided order id ({order_id}) in kitchen {kitchen}')

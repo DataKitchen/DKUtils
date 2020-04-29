@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 from requests.exceptions import HTTPError
 
-from dkutils.datakitchen_api import get_headers, create_order
+from dkutils.datakitchen_api import get_headers, create_order, get_order_runs
 
 DUMMY_AUTH_TOKEN = 'DATAKITCHEN_TOKEN'
 DUMMY_HEADERS = {'Authorization': f'Bearer {DUMMY_AUTH_TOKEN}'}
@@ -35,3 +35,32 @@ class TestDatakitchenAPI(TestCase):
     def test_create_order_exception(self):
         with self.assertRaises(HTTPError):
             create_order(DUMMY_HEADERS, 'kitchen', 'recipe', 'variation')
+
+    @patch('dkutils.datakitchen_api.requests.get')
+    def test_get_order_runs(self, mock_get):
+        order_id = '71d8a966-38e0-11ea-8cf9-a6bbea194887'
+        kitchen = 'Foo'
+        response_json = {
+            "servings": [{
+                "order_id": "71d8a966-38e0-11ea-8cf9-a6bbea194887",
+                "status": "COMPLETED_SERVING",
+                "orderrun_status": "OrderRun Completed",
+                "hid": "a8978ddc-83c7-11ea-88ba-9a815c325cee",
+                "variation_name": "dk_agent_checker_run_hourly",
+                "timings": {
+                    "start-time": 1587470413845,
+                    "end-time": 1587470432441,
+                    "duration": 18596
+                }
+            }]
+        }
+        mock_get.return_value.json = lambda: response_json
+        order_runs = get_order_runs(DUMMY_HEADERS, kitchen, order_id)
+        self.assertEqual(order_runs, response_json['servings'])
+
+    @patch('dkutils.datakitchen_api.requests.get')
+    def test_get_order_runs_raise_exception(self, mock_get):
+        order_id = '71d8a966-38e0-11ea-8cf9-a6bbea194887'
+        kitchen = 'Foo'
+        mock_get.return_value.raise_for_status.side_effect = HTTPError('Failed API Call')
+        self.assertIsNone(get_order_runs(DUMMY_HEADERS, kitchen, order_id))
