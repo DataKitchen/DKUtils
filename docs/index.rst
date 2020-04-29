@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-DKUtils documentation!
-===================================
+DKUtils documentation
+=====================
 
 This documentation describes the DKUtils python package. It is
 current as of release |release|.
@@ -15,6 +15,8 @@ current as of release |release|.
    :caption: Contents:
 
    DKUtils <apidoc/modules>
+   guide
+   release_notes
 
 
 
