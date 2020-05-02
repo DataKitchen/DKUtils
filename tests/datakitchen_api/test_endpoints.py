@@ -3,15 +3,15 @@ from unittest.mock import patch
 
 from requests.exceptions import HTTPError
 
-from dkutils.datakitchen_api import get_headers, create_order, get_order_runs
+from dkutils.datakitchen_api.endpoints import get_headers, create_order, get_order_runs
 
 DUMMY_AUTH_TOKEN = 'DATAKITCHEN_TOKEN'
 DUMMY_HEADERS = {'Authorization': f'Bearer {DUMMY_AUTH_TOKEN}'}
 
 
-class TestDatakitchenAPI(TestCase):
+class TestEndpoints(TestCase):
 
-    @patch('dkutils.datakitchen_api.requests.post')
+    @patch('dkutils.datakitchen_api.endpoints.requests.post')
     def test_get_headers(self, mock_post):
         mock_post.return_value.text = DUMMY_AUTH_TOKEN
         headers = get_headers('Foo', 'Bar')
@@ -21,7 +21,7 @@ class TestDatakitchenAPI(TestCase):
         with self.assertRaises(HTTPError):
             get_headers('Foo', 'Bar')
 
-    @patch('dkutils.datakitchen_api.requests.put')
+    @patch('dkutils.datakitchen_api.endpoints.requests.put')
     def test_create_order(self, mock_put):
         response_json = {
             "order_id": "abd8c538-705d-11ea-99d3-2699c9f5d2a0",
@@ -36,7 +36,7 @@ class TestDatakitchenAPI(TestCase):
         with self.assertRaises(HTTPError):
             create_order(DUMMY_HEADERS, 'kitchen', 'recipe', 'variation')
 
-    @patch('dkutils.datakitchen_api.requests.get')
+    @patch('dkutils.datakitchen_api.endpoints.requests.get')
     def test_get_order_runs(self, mock_get):
         order_id = '71d8a966-38e0-11ea-8cf9-a6bbea194887'
         kitchen = 'Foo'
@@ -58,7 +58,7 @@ class TestDatakitchenAPI(TestCase):
         order_runs = get_order_runs(DUMMY_HEADERS, kitchen, order_id)
         self.assertEqual(order_runs, response_json['servings'])
 
-    @patch('dkutils.datakitchen_api.requests.get')
+    @patch('dkutils.datakitchen_api.endpoints.requests.get')
     def test_get_order_runs_raise_exception(self, mock_get):
         order_id = '71d8a966-38e0-11ea-8cf9-a6bbea194887'
         kitchen = 'Foo'

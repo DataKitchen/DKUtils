@@ -2,7 +2,7 @@ import requests
 
 from requests.exceptions import HTTPError
 
-DEFAULT_DATAKITCHEN_URL = 'https://cloud.datakitchen.io'
+from dkutils.constants import DEFAULT_DATAKITCHEN_URL
 
 # The servings API endpoint retrieves only 10 order runs by default. To retrieve them all, assume
 # 100K exceeds the max order runs a given order will ever contain.
