@@ -1,8 +1,9 @@
 from unittest import TestCase
-from unittest.mock import patch
+from unittest.mock import patch, call
 
 from requests.exceptions import HTTPError
 
+from dkutils.constants import COMPLETED_SERVING, PLANNED_SERVING
 from dkutils.datakitchen_api.datakitchen_client import DataKitchenClient
 
 DUMMY_URL = 'https://dummy/url'
@@ -17,6 +18,7 @@ DUMMY_RECIPE = 'dummy_recipe'
 DUMMY_VARIATION = 'dummy_variation'
 DUMMY_PARAMETERS = {}
 DUMMY_ORDER_ID = 'dummy_order_id'
+DUMMY_ORDER_RUN_ID = 'dummy_order_run_id'
 
 
 class TestDataKitchenClient(TestCase):
@@ -104,3 +106,85 @@ class TestDataKitchenClient(TestCase):
         mock_get_order_runs.assert_called_with(
             NONE_TOKEN_HEADERS, DUMMY_KITCHEN, DUMMY_ORDER_ID, datakitchen_url=DUMMY_URL
         )
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
+    @patch('dkutils.datakitchen_api.datakitchen_client.get_order_run_details')
+    def test_get_order_run_status(self, mock_get_order_run_details, mock_post, mock_get):
+        mock_get_order_run_details.return_value = {"status": COMPLETED_SERVING}
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        dk_client.kitchen = DUMMY_KITCHEN
+        order_run_status = dk_client.get_order_run_status(DUMMY_ORDER_RUN_ID)
+        mock_get_order_run_details.assert_called_with(
+            NONE_TOKEN_HEADERS, DUMMY_KITCHEN, DUMMY_ORDER_RUN_ID, datakitchen_url=DUMMY_URL
+        )
+        self.assertEqual(order_run_status, COMPLETED_SERVING)
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
+    @patch('dkutils.datakitchen_api.datakitchen_client.get_order_run_details')
+    def test_get_order_run_status_fail(self, mock_get_order_run_details, mock_post, mock_get):
+        mock_get_order_run_details.side_effect = HTTPError('Failed API call')
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        dk_client.kitchen = DUMMY_KITCHEN
+        order_run_status = dk_client.get_order_run_status(DUMMY_ORDER_RUN_ID)
+        mock_get_order_run_details.assert_called_with(
+            NONE_TOKEN_HEADERS, DUMMY_KITCHEN, DUMMY_ORDER_RUN_ID, datakitchen_url=DUMMY_URL
+        )
+        self.assertIsNone(order_run_status)
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
+    @patch('dkutils.datakitchen_api.datakitchen_client.get_order_run_details')
+    def test_monitor_order_run(self, mock_get_order_run_details, mock_post, mock_get):
+        mock_get_order_run_details.return_value = {"status": COMPLETED_SERVING}
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        dk_client.kitchen = DUMMY_KITCHEN
+        order_run_status = dk_client.monitor_order_run(1, 2, DUMMY_ORDER_RUN_ID)
+        mock_get_order_run_details.assert_called_with(
+            NONE_TOKEN_HEADERS, DUMMY_KITCHEN, DUMMY_ORDER_RUN_ID, datakitchen_url=DUMMY_URL
+        )
+        self.assertEqual(order_run_status, COMPLETED_SERVING)
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
+    @patch('dkutils.datakitchen_api.datakitchen_client.get_order_run_details')
+    def test_monitor_order_run_timeout(self, mock_get_order_run_details, mock_post, mock_get):
+        mock_get_order_run_details.return_value = {"status": PLANNED_SERVING}
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        dk_client.kitchen = DUMMY_KITCHEN
+        order_run_status = dk_client.monitor_order_run(1, 1, DUMMY_ORDER_RUN_ID)
+        mock_get_order_run_details.assert_called_with(
+            NONE_TOKEN_HEADERS, DUMMY_KITCHEN, DUMMY_ORDER_RUN_ID, datakitchen_url=DUMMY_URL
+        )
+        self.assertIsNone(order_run_status)
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
+    @patch('dkutils.datakitchen_api.datakitchen_client.get_order_run_details')
+    def test_monitor_order_runs(self, mock_get_order_run_details, mock_post, mock_get):
+        mock_get_order_run_details.return_value = {"status": COMPLETED_SERVING}
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        order_run_ids = {DUMMY_ORDER_RUN_ID: DUMMY_KITCHEN, 'Foo': 'Bar'}
+        order_run_statuses = dk_client.monitor_order_runs(1, 2, order_run_ids)
+        mock_get_order_run_details.assert_has_calls([
+            call(NONE_TOKEN_HEADERS, DUMMY_KITCHEN, DUMMY_ORDER_RUN_ID, datakitchen_url=DUMMY_URL),
+            call(NONE_TOKEN_HEADERS, 'Bar', 'Foo', datakitchen_url=DUMMY_URL)
+        ])
+        expected_statuses = {DUMMY_ORDER_RUN_ID: COMPLETED_SERVING, 'Foo': COMPLETED_SERVING}
+        self.assertEqual(order_run_statuses, expected_statuses)
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
+    @patch('dkutils.datakitchen_api.datakitchen_client.get_order_run_details')
+    def test_monitor_order_runs_timeout(self, mock_get_order_run_details, mock_post, mock_get):
+        mock_get_order_run_details.return_value = {"status": PLANNED_SERVING}
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        order_run_ids = {DUMMY_ORDER_RUN_ID: DUMMY_KITCHEN, 'Foo': 'Bar'}
+        order_run_statuses = dk_client.monitor_order_runs(1, 2, order_run_ids)
+        mock_get_order_run_details.assert_has_calls([
+            call(NONE_TOKEN_HEADERS, DUMMY_KITCHEN, DUMMY_ORDER_RUN_ID, datakitchen_url=DUMMY_URL),
+            call(NONE_TOKEN_HEADERS, 'Bar', 'Foo', datakitchen_url=DUMMY_URL)
+        ])
+        expected_statuses = {DUMMY_ORDER_RUN_ID: None, 'Foo': None}
+        self.assertEqual(order_run_statuses, expected_statuses)

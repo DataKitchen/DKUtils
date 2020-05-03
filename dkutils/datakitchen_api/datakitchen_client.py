@@ -1,12 +1,14 @@
 import requests
+import traceback
 
 from requests.exceptions import HTTPError
 
-from .endpoints import (
-    create_order,
-    get_order_runs,
+from dkutils.constants import (
+    KITCHEN, RECIPE, VARIATION, DEFAULT_DATAKITCHEN_URL, STOPPED_STATUS_TYPES
 )
-from dkutils.constants import (KITCHEN, RECIPE, VARIATION, DEFAULT_DATAKITCHEN_URL)
+from dkutils.wait_loop import WaitLoop
+
+from .endpoints import (create_order, get_order_runs, get_order_run_details)
 
 
 class DataKitchenClient:
@@ -201,3 +203,92 @@ class DataKitchenClient:
         self._ensure_attributes(KITCHEN)
         self._refresh_token()
         return get_order_runs(self._headers, self.kitchen, order_id, datakitchen_url=self._base_url)
+
+    def get_order_run_status(self, order_run_id):
+        """
+        Retrieve the status of the provided order run. If the order run isn't found, return None.
+
+        Parameters
+        ----------
+        order_run_id : str
+            Order run for which to retrieve status
+
+        Returns
+        -------
+        str or none
+            One of PLANNED_SERVING, ACTIVE_SERVING, COMPLETED_SERVING, STOPPED_SERVING,
+            SERVING_ERROR, SERVING_RERAN, or None if the order run is not found.
+        """
+        self._ensure_attributes(KITCHEN)
+        self._refresh_token()
+        try:
+            order_run_details = get_order_run_details(
+                self._headers, self.kitchen, order_run_id, datakitchen_url=self._base_url
+            )
+            return order_run_details['status']
+        except HTTPError:
+            print(f'Order run retrieval failure:\n{traceback.format_exc()}')
+            return None
+
+    def monitor_order_run(self, sleep_secs, duration_secs, order_run_id):
+        """
+        Wait for the specified order run to complete and return completion status when finished.
+        If the order run takes > duration_secs, return None.
+
+        Parameters
+        ----------
+        sleep_secs : int
+            Number of seconds to sleep in between loop executions.
+        duration_secs : int
+            Max duration in seconds after which the loop will exit.
+        order_run_id : str
+            Order run for which to wait until it's completed
+
+        Returns
+        -------
+        str or none
+            One of PLANNED_SERVING, ACTIVE_SERVING, COMPLETED_SERVING, STOPPED_SERVING,
+            SERVING_ERROR, SERVING_RERAN, or None if the order run is not found.
+        """
+        order_run_ids = {order_run_id: self.kitchen}
+        order_run_statuses = self.monitor_order_runs(sleep_secs, duration_secs, order_run_ids)
+        return order_run_statuses[order_run_id]
+
+    def monitor_order_runs(self, sleep_secs, duration_secs, order_run_ids):
+        """
+        Wait for the specified order runs to complete and return completion status when finished.
+        If the order runs take > duration_secs, return None.
+
+        Parameters
+        ----------
+        sleep_secs : int
+            Number of seconds to sleep in between loop executions.
+        duration_secs : int
+            Max duration in seconds after which the loop will exit.
+        order_run_ids : dict
+            Dictionary keyed by order run id and valued by kitchen for the order runs to wait
+            for completion.
+
+        Returns
+        -------
+        dict or none
+            Dictionary keyed by order run id and valued by one of PLANNED_SERVING, ACTIVE_SERVING,
+            COMPLETED_SERVING, STOPPED_SERVING, SERVING_ERROR, SERVING_RERAN, or None if the order
+            run is not found.
+        """
+        wait_loop = WaitLoop(sleep_secs, duration_secs)
+        completed_order_runs = {}
+        while wait_loop:
+            for order_run_id, kitchen in order_run_ids.items():
+                if order_run_id not in completed_order_runs:
+                    self.kitchen = kitchen
+                    order_run_status = self.get_order_run_status(order_run_id)
+                    if order_run_status in STOPPED_STATUS_TYPES:
+                        completed_order_runs[order_run_id] = order_run_status
+                if len(order_run_ids) == len(completed_order_runs):
+                    return completed_order_runs
+
+        for order_run_id in order_run_ids.keys():
+            if order_run_id not in completed_order_runs:
+                completed_order_runs[order_run_id] = None
+        return completed_order_runs

@@ -124,3 +124,77 @@ def get_order_runs(headers, kitchen, order_id, datakitchen_url=DEFAULT_DATAKITCH
         return response.json()['servings']
     except HTTPError:
         print(f'No order runs found for provided order id ({order_id}) in kitchen {kitchen}')
+
+
+def get_order_run_details(headers, kitchen, order_run_id, datakitchen_url=DEFAULT_DATAKITCHEN_URL):
+    """
+    Retrieve the details of an order run.
+
+    Parameters
+    ----------
+    headers : dict
+        Headers containing authentication token.
+    kitchen :  str
+        Kitchen name
+    order_run_id : str
+        Order run id for which to retrieve details
+    datakitchen_url : str, optional
+        DataKitchen platform URL (default is https://cloud.datakitchen.io)
+
+    Raises
+    ------
+    HTTPError
+        If the request fails.
+
+    Returns
+    ------
+    dict
+        Order run details of the form::
+
+            {
+                "order_id": "ca789c92-8bb6-11ea-883f-46ee3c6afcbf",
+                "hid": "cd463d80-8bb6-11ea-97c5-8a10ccb96113",
+                "recipe_id": "ce7b696e-8bb6-11ea-97c5-8a10ccb96113",
+                "status": "SERVING_ERROR",
+                "variation_name": "sub_workflow",
+                "recipe_name": "Sub_Workflow",
+                "run_time_variables": {
+                    "CAT": "CLS",
+                    "CurrentKitchen": "Add_Real_Data_and_Infrastructure",
+                    "CurrentOrderId": "ca789c92-8bb6-11ea-883f-46ee3c6afcbf",
+                    "CurrentOrderRunId": "cd463d80-8bb6-11ea-97c5-8a10ccb96113",
+                    "CurrentVariation": "sub_workflow",
+                    "DH": "12",
+                    "DT": "20200426",
+                    ...
+                    ...
+                    ...
+                    "tableauConfig": {
+                        "username": "",
+                        "password": "",
+                        "url_login": "",
+                        "url": "",
+                        "selenium_url": "",
+                        "content_url": ""
+                    }
+                },
+                "orderrun_status": "Error in OrderRun",
+                "resumed_by": null,
+                "scheduled_start_time": 1588342778543,
+                "variation": {},
+                "state": "unknown DKNodeStatus"
+            }
+
+    """
+    order_run_details_url = f'{datakitchen_url}/v2/order/details/{kitchen}'
+    payload = {
+        'logs': False,
+        'serving_hid': f'{order_run_id}',
+        'servingjson': False,
+        'summary': False,
+        'testresults': False,
+        'timingresults': False
+    }
+    response = requests.post(order_run_details_url, headers=headers, json=payload)
+    response.raise_for_status()
+    return response.json()['servings'][0]
