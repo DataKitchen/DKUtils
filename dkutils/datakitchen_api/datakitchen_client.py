@@ -22,14 +22,17 @@ class DataKitchenClient:
         variation=None
     ):
         """
-        Client object for invoking DataKitchen API calls.
+        Client object for invoking DataKitchen API calls. If the API call requires a kitchen,
+        recipe, and/or variation, you must set those fields on the client instance prior to
+        invoking those methods (or set them via the constructor when a class instance is
+        created).
 
         Parameters
         ----------
         username : str
-          Number of seconds to sleep in between loop executions.
+          Username to authenticate and obtain a session token via the DataKitchen login API.
         password : str
-          Max duration in seconds after which the loop will exit.
+          Password to authenticate and obtain a session token via the DataKitchen login API.
         base_url: str, optional
             Base DataKitchen Platform URL
         token : str, optional
@@ -136,7 +139,8 @@ class DataKitchenClient:
 
     def create_order(self, parameters={}):
         """
-        Create a new order.
+        Create a new order. Kitchen, recipe and variation attributes must be set prior to invoking
+        this method.
 
         Parameters
         ----------
@@ -166,7 +170,8 @@ class DataKitchenClient:
 
     def get_order_runs(self, order_id):
         """
-        Retrieve all the order runs associated with the provided order.
+        Retrieve all the order runs associated with the provided order. The kitchen attribute
+        must be set prior to invoking this method.
 
         Parameters
         ----------
