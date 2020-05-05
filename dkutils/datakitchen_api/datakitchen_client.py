@@ -14,14 +14,7 @@ from .endpoints import (create_order, get_order_runs, get_order_run_details)
 class DataKitchenClient:
 
     def __init__(
-        self,
-        username,
-        password,
-        base_url=None,
-        token=None,
-        kitchen=None,
-        recipe=None,
-        variation=None
+        self, username, password, base_url=None, kitchen=None, recipe=None, variation=None
     ):
         """
         Client object for invoking DataKitchen API calls. If the API call requires a kitchen,
@@ -37,8 +30,6 @@ class DataKitchenClient:
           Password to authenticate and obtain a session token via the DataKitchen login API.
         base_url: str, optional
             Base DataKitchen Platform URL
-        token : str, optional
-            API token
         kitchen : str, optional
             Kitchen to use in API requests
         recipe : str, optional
@@ -49,8 +40,8 @@ class DataKitchenClient:
         self._username = username
         self._password = password
         self._base_url = base_url if base_url else DEFAULT_DATAKITCHEN_URL
-        self._token = token
-        self._set_headers()
+        self._token = None
+        self._headers = None
         self._refresh_token()
         self.kitchen = kitchen
         self.recipe = recipe
