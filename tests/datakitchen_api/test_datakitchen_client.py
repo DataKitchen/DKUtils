@@ -25,6 +25,32 @@ class TestDataKitchenClient(TestCase):
 
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
+    def test_setters(self, mock_post, mock_get):
+        mock_get.return_value.raise_for_status.side_effect = HTTPError('Failed API Call')
+        mock_post.return_value.text = DUMMY_AUTH_TOKEN
+        dk_client = DataKitchenClient(
+            DUMMY_USERNAME,
+            DUMMY_PASSWORD,
+            base_url=DUMMY_URL,
+            kitchen='kitchen',
+            recipe='recipe',
+            variation='variation'
+        )
+        self.assertEqual(dk_client.kitchen, 'kitchen')
+        self.assertEqual(dk_client.recipe, 'recipe')
+        self.assertEqual(dk_client.variation, 'variation')
+        self.assertEqual(dk_client.set_kitchen(DUMMY_KITCHEN).kitchen, DUMMY_KITCHEN)
+        self.assertEqual(dk_client.set_recipe(DUMMY_RECIPE).recipe, DUMMY_RECIPE)
+        self.assertEqual(dk_client.set_variation(DUMMY_VARIATION).variation, DUMMY_VARIATION)
+        dk_client.kitchen = 'kitchen'
+        dk_client.recipe = 'recipe'
+        dk_client.variation = 'variation'
+        self.assertEqual(dk_client.kitchen, 'kitchen')
+        self.assertEqual(dk_client.recipe, 'recipe')
+        self.assertEqual(dk_client.variation, 'variation')
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
     def test_without_token(self, mock_post, mock_get):
         mock_get.return_value.raise_for_status.side_effect = HTTPError('Failed API Call')
         mock_post.return_value.text = DUMMY_AUTH_TOKEN

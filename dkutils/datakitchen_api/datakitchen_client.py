@@ -55,6 +55,10 @@ class DataKitchenClient:
     def kitchen(self, kitchen):
         self._kitchen = kitchen
 
+    def set_kitchen(self, kitchen):
+        self.kitchen = kitchen
+        return self
+
     @property
     def recipe(self):
         return self._recipe
@@ -63,6 +67,10 @@ class DataKitchenClient:
     def recipe(self, recipe):
         self._recipe = recipe
 
+    def set_recipe(self, recipe):
+        self.recipe = recipe
+        return self
+
     @property
     def variation(self):
         return self._variation
@@ -70,6 +78,10 @@ class DataKitchenClient:
     @variation.setter
     def variation(self, variation):
         self._variation = variation
+
+    def set_variation(self, variation):
+        self.variation = variation
+        return self
 
     def _ensure_attributes(self, *args):
         """
