@@ -8,7 +8,9 @@ from dkutils.constants import (
 )
 from dkutils.wait_loop import WaitLoop
 
-from .endpoints import (create_order, get_order_runs, get_order_run_details)
+# The servings API endpoint retrieves only 10 order runs by default. To retrieve them all, assume
+# 100K exceeds the max order runs a given order will ever contain.
+DEFAULT_SERVINGS_COUNT = 100000
 
 
 class DataKitchenClient:
@@ -164,14 +166,11 @@ class DataKitchenClient:
         """
         self._ensure_attributes(KITCHEN, RECIPE, VARIATION)
         self._refresh_token()
-        return create_order(
-            self._headers,
-            self.kitchen,
-            self.recipe,
-            self.variation,
-            parameters=parameters,
-            datakitchen_url=self._base_url
-        )
+        order_create_url = f'{self._base_url}/v2/order/create/{self.kitchen}/{self.recipe}/{self.variation}'
+        payload = {"schedule": "now", "parameters": parameters}
+        response = requests.put(order_create_url, headers=self._headers, json=payload)
+        response.raise_for_status()
+        return response
 
     def get_order_runs(self, order_id):
         """
@@ -205,7 +204,85 @@ class DataKitchenClient:
         """
         self._ensure_attributes(KITCHEN)
         self._refresh_token()
-        return get_order_runs(self._headers, self.kitchen, order_id, datakitchen_url=self._base_url)
+        try:
+            order_status_url = f'{self._base_url}/v2/order/servings/{self.kitchen}/{order_id}'
+            payload = {'count': DEFAULT_SERVINGS_COUNT}
+            response = requests.get(order_status_url, headers=self._headers, json=payload)
+            response.raise_for_status()
+            return response.json()['servings']
+        except HTTPError:
+            print(
+                f'No order runs found for provided order id ({order_id}) in kitchen {self.kitchen}'
+            )
+
+    def get_order_run_details(self, order_run_id):
+        """
+        Retrieve the details of an order run.
+
+        Parameters
+        ----------
+        order_run_id : str
+            Order run id for which to retrieve details
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+
+        Returns
+        ------
+        dict
+            Order run details of the form::
+
+                {
+                    "order_id": "ca789c92-8bb6-11ea-883f-46ee3c6afcbf",
+                    "hid": "cd463d80-8bb6-11ea-97c5-8a10ccb96113",
+                    "recipe_id": "ce7b696e-8bb6-11ea-97c5-8a10ccb96113",
+                    "status": "SERVING_ERROR",
+                    "variation_name": "sub_workflow",
+                    "recipe_name": "Sub_Workflow",
+                    "run_time_variables": {
+                        "CAT": "CLS",
+                        "CurrentKitchen": "Add_Real_Data_and_Infrastructure",
+                        "CurrentOrderId": "ca789c92-8bb6-11ea-883f-46ee3c6afcbf",
+                        "CurrentOrderRunId": "cd463d80-8bb6-11ea-97c5-8a10ccb96113",
+                        "CurrentVariation": "sub_workflow",
+                        "DH": "12",
+                        "DT": "20200426",
+                        ...
+                        ...
+                        ...
+                        "tableauConfig": {
+                            "username": "",
+                            "password": "",
+                            "url_login": "",
+                            "url": "",
+                            "selenium_url": "",
+                            "content_url": ""
+                        }
+                    },
+                    "orderrun_status": "Error in OrderRun",
+                    "resumed_by": null,
+                    "scheduled_start_time": 1588342778543,
+                    "variation": {},
+                    "state": "unknown DKNodeStatus"
+                }
+
+        """
+        self._ensure_attributes(KITCHEN)
+        self._refresh_token()
+        order_run_details_url = f'{self._base_url}/v2/order/details/{self.kitchen}'
+        payload = {
+            'logs': False,
+            'serving_hid': f'{order_run_id}',
+            'servingjson': False,
+            'summary': False,
+            'testresults': False,
+            'timingresults': False
+        }
+        response = requests.post(order_run_details_url, headers=self._headers, json=payload)
+        response.raise_for_status()
+        return response.json()['servings'][0]
 
     def get_order_run_status(self, order_run_id):
         """
@@ -225,10 +302,7 @@ class DataKitchenClient:
         self._ensure_attributes(KITCHEN)
         self._refresh_token()
         try:
-            order_run_details = get_order_run_details(
-                self._headers, self.kitchen, order_run_id, datakitchen_url=self._base_url
-            )
-            return order_run_details['status']
+            return self.get_order_run_details(order_run_id)['status']
         except HTTPError:
             print(f'Order run retrieval failure:\n{traceback.format_exc()}')
             return None
