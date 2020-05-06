@@ -1,6 +1,14 @@
 DKUtils Release Notes
 =====================
 
+v0.1.0
+------
+* Added DataKitchen API Client.
+* Added get order run status
+* Added monitor order runs
+* Added get order run details function.
+
+
 
 v0.0.4
 ------

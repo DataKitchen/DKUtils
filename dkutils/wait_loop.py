@@ -13,9 +13,9 @@ class WaitLoop:
         Parameters
         ----------
         sleep_secs : int
-          Number of seconds to sleep in between loop executions.
+            Number of seconds to sleep in between loop executions.
         duration_secs : int
-          Max duration in seconds after which the loop will exit.
+            Max duration in seconds after which the loop will exit.
         """
         self.first_pass = True
         self.resume = True
