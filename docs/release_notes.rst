@@ -1,14 +1,16 @@
 DKUtils Release Notes
 =====================
 
+v0.2.0
+------
+* Add resume order run method to DataKitchen API Client.
+
 v0.1.0
 ------
 * Added DataKitchen API Client.
 * Added get order run status
 * Added monitor order runs
 * Added get order run details function.
-
-
 
 v0.0.4
 ------
