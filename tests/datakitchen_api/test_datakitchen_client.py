@@ -157,6 +157,35 @@ class TestDataKitchenClient(TestCase):
         with self.assertRaises(ValueError):
             dk_client.create_order()
 
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.put')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_resume_order_run(self, _, mock_put):
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        dk_client.kitchen = DUMMY_KITCHEN
+        response_json = {
+            "order_id": "abd8c538-705d-11ea-99d3-2699c9f5d2a0",
+            "variable_overrides": {}
+        }
+        mock_put.return_value = MockResponse(json=response_json)
+        response = dk_client.resume_order_run(DUMMY_ORDER_RUN_ID)
+        self.assertEqual(response.json(), response_json)
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.put')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_resume_order_run_raise_error(self, _, mock_put):
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        dk_client.kitchen = DUMMY_KITCHEN
+        mock_put.return_value = MockResponse(raise_error=True)
+        with self.assertRaises(HTTPError):
+            dk_client.resume_order_run(DUMMY_ORDER_RUN_ID)
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.put')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_resume_order_run_no_kitchen(self, _, mock_put):
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        with self.assertRaises(ValueError):
+            dk_client.resume_order_run(DUMMY_ORDER_RUN_ID)
+
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
     def test_get_order_runs(self, _, mock_get):

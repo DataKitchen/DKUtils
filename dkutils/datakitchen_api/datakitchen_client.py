@@ -172,6 +172,33 @@ class DataKitchenClient:
         response.raise_for_status()
         return response
 
+    def resume_order_run(self, order_run_id):
+        """
+        Resume a failed order run. Kitchen attribute must be set prior to invoking this method.
+
+        Parameters
+        ----------
+        order_run_id : str
+            Failed order run id to resume.
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+
+        Returns
+        ------
+        requests.Response
+            :class:`Response <Response>` object
+        """
+        self._ensure_attributes(KITCHEN)
+        self._refresh_token()
+        order_run_resume_url = f'{self._base_url}/v2/order/resume/{order_run_id}'
+        payload = {'kitchen_name': self.kitchen}
+        response = requests.put(order_run_resume_url, headers=self._headers, json=payload)
+        response.raise_for_status()
+        return response
+
     def get_order_runs(self, order_id):
         """
         Retrieve all the order runs associated with the provided order. The kitchen attribute
