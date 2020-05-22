@@ -4,7 +4,7 @@ import traceback
 from requests.exceptions import HTTPError
 
 from dkutils.constants import (
-    KITCHEN, RECIPE, VARIATION, DEFAULT_DATAKITCHEN_URL, STOPPED_STATUS_TYPES
+    KITCHEN, RECIPE, VARIATION, DEFAULT_DATAKITCHEN_URL, DEFAULT_VAULT_URL, STOPPED_STATUS_TYPES
 )
 from dkutils.wait_loop import WaitLoop
 
@@ -396,3 +396,57 @@ class DataKitchenClient:
             if order_run_id not in completed_order_runs:
                 completed_order_runs[order_run_id] = None
         return completed_order_runs
+
+    def update_kitchen_vault(
+        self,
+        prefix,
+        vault_token,
+        vault_url=DEFAULT_VAULT_URL,
+        private=False,
+        inheritable=True,
+    ):
+        """
+        Updates the custom vault configuration for a Kitchen.
+
+        Parameters
+        ----------
+        prefix : str
+            Prefix specifying the vault location (e.g. Implementation/dev).
+        vault_token : str
+            Token for the custom vault.
+        vault_url : str, optional
+            Vault URL (default: https://vault2.datakitchen.io:8200).
+        private : str, optional
+            Set to True if this is a private vault service, otherwise set to False (default: False)
+        inheritable : str, optional
+            Set to True if this vault should be inherited by child kitchens, otherwise set to false
+            (default: True).
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+
+        Returns
+        ------
+        requests.Response
+            :class:`Response <Response>` object
+        """
+        self._ensure_attributes(KITCHEN)
+        self._refresh_token()
+        vault_config_url = f'{self._base_url}/v2/vault/config'
+        payload = {
+            'config': {
+                self.kitchen: {
+                    'inheritable': inheritable,
+                    'prefix': prefix,
+                    'private': private,
+                    'service': 'custom',
+                    'token': vault_token,
+                    'url': vault_url
+                }
+            }
+        }
+        response = requests.post(vault_config_url, headers=self._headers, json=payload)
+        response.raise_for_status()
+        return response
