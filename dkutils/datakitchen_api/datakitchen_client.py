@@ -96,6 +96,17 @@ class DataKitchenClient:
         if invalid_attributes:
             raise ValueError(f'Undefined attributes: ",".join({invalid_attributes})')
 
+    def _api_request(self, http_method, *args, is_json=True, **kwargs):
+        self._refresh_token()
+        api_request = getattr(requests, http_method)
+        api_path = f'{self._base_url}/v2/{"/".join(args)}'
+        if is_json:
+            response = api_request(api_path, headers=self._headers, json=kwargs)
+        else:
+            response = api_request(api_path, headers=self._headers, data=kwargs)
+        response.raise_for_status()
+        return response if is_json else response.text
+
     def _validate_token(self):
         """
         Validate the current token.
@@ -106,9 +117,7 @@ class DataKitchenClient:
             True if the current token is valid, False otherwise
         """
         try:
-            validate_token_url = f'{self._base_url}/v2/validatetoken'
-            response = requests.get(validate_token_url, headers=self._headers)
-            response.raise_for_status()
+            self._api_request('get', 'validatetoken')
             return True
         except HTTPError:
             return False
@@ -128,14 +137,11 @@ class DataKitchenClient:
         if self._validate_token():
             return
 
-        credentials = dict()
-        credentials['username'] = self._username
-        credentials['password'] = self._password
-
-        login_url = f'{self._base_url}/v2/login'
-        response = requests.post(login_url, data=credentials)
-        response.raise_for_status()
-        self._token = response.text
+        self._token = self._api_request(
+            'post', 'login', is_json=False,
+            username=self._username,
+            password=self._password
+        )
         self._set_headers()
 
     def _set_headers(self):
@@ -143,6 +149,9 @@ class DataKitchenClient:
         Set the headers dictionary with the current token.
         """
         self._headers = {'Authorization': f'Bearer {self._token}'}
+
+    def list_kitchens(self):
+        return self._api_request('get', 'kitchen', 'list').json()
 
     def create_order(self, parameters={}):
         """
@@ -165,12 +174,10 @@ class DataKitchenClient:
             :class:`Response <Response>` object
         """
         self._ensure_attributes(KITCHEN, RECIPE, VARIATION)
-        self._refresh_token()
-        order_create_url = f'{self._base_url}/v2/order/create/{self.kitchen}/{self.recipe}/{self.variation}'
-        payload = {"schedule": "now", "parameters": parameters}
-        response = requests.put(order_create_url, headers=self._headers, json=payload)
-        response.raise_for_status()
-        return response
+        return self._api_request(
+            'put', 'order', 'create', self.kitchen, self.recipe, self.variation,
+            schedule='now', parameters=parameters
+        )
 
     def resume_order_run(self, order_run_id):
         """
@@ -192,12 +199,10 @@ class DataKitchenClient:
             :class:`Response <Response>` object
         """
         self._ensure_attributes(KITCHEN)
-        self._refresh_token()
-        order_run_resume_url = f'{self._base_url}/v2/order/resume/{order_run_id}'
-        payload = {'kitchen_name': self.kitchen}
-        response = requests.put(order_run_resume_url, headers=self._headers, json=payload)
-        response.raise_for_status()
-        return response
+        return self._api_request(
+            'put', 'order', 'resume', order_run_id,
+            kitchen_name=self.kitchen
+        )
 
     def get_order_runs(self, order_id):
         """
@@ -230,13 +235,12 @@ class DataKitchenClient:
 
         """
         self._ensure_attributes(KITCHEN)
-        self._refresh_token()
         try:
-            order_status_url = f'{self._base_url}/v2/order/servings/{self.kitchen}/{order_id}'
-            payload = {'count': DEFAULT_SERVINGS_COUNT}
-            response = requests.get(order_status_url, headers=self._headers, json=payload)
-            response.raise_for_status()
-            return response.json()['servings']
+            api_response = self._api_request(
+                'get', 'order', 'servings', self.kitchen, order_id,
+                count=DEFAULT_SERVINGS_COUNT
+            ).json()
+            return api_response['servings']
         except HTTPError:
             print(
                 f'No order runs found for provided order id ({order_id}) in kitchen {self.kitchen}'
@@ -297,19 +301,13 @@ class DataKitchenClient:
 
         """
         self._ensure_attributes(KITCHEN)
-        self._refresh_token()
-        order_run_details_url = f'{self._base_url}/v2/order/details/{self.kitchen}'
-        payload = {
-            'logs': False,
-            'serving_hid': f'{order_run_id}',
-            'servingjson': False,
-            'summary': False,
-            'testresults': False,
-            'timingresults': False
-        }
-        response = requests.post(order_run_details_url, headers=self._headers, json=payload)
-        response.raise_for_status()
-        return response.json()['servings'][0]
+        api_response = self._api_request(
+            'post', 'order', 'details', self.kitchen,
+            logs=False, serving_hid=str(order_run_id),
+            servingjson=False, summary=False,
+            testresults=False, timingresults=False
+        ).json()
+        return api_response['servings'][0]
 
     def get_order_run_status(self, order_run_id):
         """
@@ -327,7 +325,6 @@ class DataKitchenClient:
             SERVING_ERROR, SERVING_RERAN, or None if the order run is not found.
         """
         self._ensure_attributes(KITCHEN)
-        self._refresh_token()
         try:
             return self.get_order_run_details(order_run_id)['status']
         except HTTPError:
