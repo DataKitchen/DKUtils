@@ -169,10 +169,6 @@ class DataKitchenClient:
         """
         self._headers = {'Authorization': f'Bearer {self._token}'}
 
-    def list_kitchens(self):
-        self._refresh_token()
-        return self._api_request(API_GET, 'kitchen', 'list').json()
-
     def create_order(self, parameters={}):
         """
         Create a new order. Kitchen, recipe and variation attributes must be set prior to invoking
