@@ -459,12 +459,17 @@ class DataKitchenClient:
         """
         self._ensure_attributes(KITCHEN)
         self._refresh_token()
-        api_response = self._api_request(
-            API_POST, 'vault', 'config',
-            inheritable=inheritable,
-            private=private,
-            service='custom',
-            token=vault_token,
-            url=vault_url
-        )
-        return api_response
+        payload = {
+            'config': {
+                self.kitchen: {
+                    'inheritable': inheritable,
+                    'prefix': prefix,
+                    'private': private,
+                    'service': 'custom',
+                    'token': vault_token,
+                    'url': vault_url
+                }
+            }
+        }
+        return self._api_request(API_POST, 'vault', 'config', **payload)
+
