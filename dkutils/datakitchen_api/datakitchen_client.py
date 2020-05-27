@@ -4,7 +4,8 @@ import traceback
 from requests.exceptions import HTTPError
 
 from dkutils.constants import (
-    KITCHEN, RECIPE, VARIATION, DEFAULT_DATAKITCHEN_URL, DEFAULT_VAULT_URL, STOPPED_STATUS_TYPES
+    KITCHEN, RECIPE, VARIATION, DEFAULT_DATAKITCHEN_URL, DEFAULT_VAULT_URL, STOPPED_STATUS_TYPES,
+    API_GET, API_POST, API_PUT
 )
 from dkutils.wait_loop import WaitLoop
 
@@ -97,6 +98,25 @@ class DataKitchenClient:
             raise ValueError(f'Undefined attributes: ",".join({invalid_attributes})')
 
     def _api_request(self, http_method, *args, is_json=True, **kwargs):
+        """
+        Make HTTP request to arbitrary API endpoint, with optional parameters as payload.
+
+        Parameters
+        ----------
+        http_method : str
+            HTTP method to use when making API request.
+        *args : list
+            Variable length list of strings to construct endpoint path.
+        is_json : bool
+            Set to False if payload/response is not JSON data.
+        **kwargs : dict
+            Arbitrary keyword arguments to construct request payload.
+
+        Returns
+        -------
+        requests.Response
+            :class:`Response <Response>` object
+        """
         self._refresh_token()
         api_request = getattr(requests, http_method)
         api_path = f'{self._base_url}/v2/{"/".join(args)}'
@@ -105,7 +125,7 @@ class DataKitchenClient:
         else:
             response = api_request(api_path, headers=self._headers, data=kwargs)
         response.raise_for_status()
-        return response if is_json else response.text
+        return response
 
     def _validate_token(self):
         """
@@ -117,7 +137,7 @@ class DataKitchenClient:
             True if the current token is valid, False otherwise
         """
         try:
-            self._api_request('get', 'validatetoken')
+            self._api_request(API_GET, 'validatetoken')
             return True
         except HTTPError:
             return False
@@ -138,7 +158,8 @@ class DataKitchenClient:
             return
 
         self._token = self._api_request(
-            'post', 'login', is_json=False,
+            API_POST, 'login',
+            is_json=False,
             username=self._username,
             password=self._password
         )
@@ -151,7 +172,7 @@ class DataKitchenClient:
         self._headers = {'Authorization': f'Bearer {self._token}'}
 
     def list_kitchens(self):
-        return self._api_request('get', 'kitchen', 'list').json()
+        return self._api_request(API_GET, 'kitchen', 'list').json()
 
     def create_order(self, parameters={}):
         """
@@ -175,7 +196,8 @@ class DataKitchenClient:
         """
         self._ensure_attributes(KITCHEN, RECIPE, VARIATION)
         return self._api_request(
-            'put', 'order', 'create', self.kitchen, self.recipe, self.variation,
+            API_PUT, 'order', 'create',
+            self.kitchen, self.recipe, self.variation,
             schedule='now', parameters=parameters
         )
 
@@ -200,7 +222,8 @@ class DataKitchenClient:
         """
         self._ensure_attributes(KITCHEN)
         return self._api_request(
-            'put', 'order', 'resume', order_run_id,
+            API_PUT, 'order', 'resume',
+            order_run_id,
             kitchen_name=self.kitchen
         )
 
@@ -237,7 +260,8 @@ class DataKitchenClient:
         self._ensure_attributes(KITCHEN)
         try:
             api_response = self._api_request(
-                'get', 'order', 'servings', self.kitchen, order_id,
+                API_GET, 'order', 'servings',
+                self.kitchen, order_id,
                 count=DEFAULT_SERVINGS_COUNT
             ).json()
             return api_response['servings']
@@ -302,7 +326,7 @@ class DataKitchenClient:
         """
         self._ensure_attributes(KITCHEN)
         api_response = self._api_request(
-            'post', 'order', 'details', self.kitchen,
+            API_POST, 'order', 'details', self.kitchen,
             logs=False, serving_hid=str(order_run_id),
             servingjson=False, summary=False,
             testresults=False, timingresults=False
@@ -430,20 +454,12 @@ class DataKitchenClient:
             :class:`Response <Response>` object
         """
         self._ensure_attributes(KITCHEN)
-        self._refresh_token()
-        vault_config_url = f'{self._base_url}/v2/vault/config'
-        payload = {
-            'config': {
-                self.kitchen: {
-                    'inheritable': inheritable,
-                    'prefix': prefix,
-                    'private': private,
-                    'service': 'custom',
-                    'token': vault_token,
-                    'url': vault_url
-                }
-            }
-        }
-        response = requests.post(vault_config_url, headers=self._headers, json=payload)
-        response.raise_for_status()
-        return response
+        api_response = self._api_response(
+            API_POST, 'vault', 'config',
+            inheritable=inheritable,
+            private=private,
+            service='custom',
+            token=vault_token,
+            url=vault_url
+        )
+        return api_response.json()
