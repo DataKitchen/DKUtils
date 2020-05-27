@@ -117,6 +117,8 @@ class DataKitchenClient:
         requests.Response
             :class:`Response <Response>` object
         """
+        if 'login' not in args and 'validatetoken' not in args:
+            self._refresh_token()
         api_request = getattr(requests, http_method)
         api_path = f'{self._base_url}/v2/{"/".join(args)}'
         if is_json:
@@ -190,7 +192,6 @@ class DataKitchenClient:
             :class:`Response <Response>` object
         """
         self._ensure_attributes(KITCHEN, RECIPE, VARIATION)
-        self._refresh_token()
         return self._api_request(
             API_PUT, 'order', 'create',
             self.kitchen, self.recipe, self.variation,
@@ -217,7 +218,6 @@ class DataKitchenClient:
             :class:`Response <Response>` object
         """
         self._ensure_attributes(KITCHEN)
-        self._refresh_token()
         return self._api_request(
             API_PUT, 'order', 'resume',
             order_run_id,
@@ -255,7 +255,6 @@ class DataKitchenClient:
 
         """
         self._ensure_attributes(KITCHEN)
-        self._refresh_token()
         try:
             api_response = self._api_request(
                 API_GET, 'order', 'servings',
@@ -323,7 +322,6 @@ class DataKitchenClient:
 
         """
         self._ensure_attributes(KITCHEN)
-        self._refresh_token()
         api_response = self._api_request(
             API_POST, 'order', 'details', self.kitchen,
             logs=False, serving_hid=str(order_run_id),
@@ -348,7 +346,6 @@ class DataKitchenClient:
             SERVING_ERROR, SERVING_RERAN, or None if the order run is not found.
         """
         self._ensure_attributes(KITCHEN)
-        self._refresh_token()
         try:
             return self.get_order_run_details(order_run_id)['status']
         except HTTPError:
@@ -454,7 +451,6 @@ class DataKitchenClient:
             :class:`Response <Response>` object
         """
         self._ensure_attributes(KITCHEN)
-        self._refresh_token()
         payload = {
             'config': {
                 self.kitchen: {
