@@ -1,6 +1,11 @@
 DKUtils Release Notes
 =====================
 
+v0.4.0
+------
+* Added generalized API request method to DataKitchen API Client
+* Updated existing API methods to use new generalized API Request method
+
 v0.3.0
 ------
 * Added update kitchen vault method to DataKitchen API Client

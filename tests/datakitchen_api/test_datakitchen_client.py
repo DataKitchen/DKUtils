@@ -1,3 +1,5 @@
+import sys
+
 from unittest import TestCase
 from unittest.mock import patch
 
@@ -71,8 +73,9 @@ class TestDataKitchenClient(TestCase):
         mock_get.return_value.raise_for_status.side_effect = HTTPError('Failed API Call')
         mock_post.return_value.text = DUMMY_AUTH_TOKEN
         dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
-        mock_get.assert_called_with(f'{DUMMY_URL}/v2/validatetoken', headers=None)
-        mock_post.assert_called_with(f'{DUMMY_URL}/v2/login', data=DUMMY_CREDENTIALS)
+        mock_get.assert_called_with(f'{DUMMY_URL}/v2/validatetoken', headers=None, json={})
+        sys.stdout.write(mock_get.called_with)
+        mock_post.assert_called_with(f'{DUMMY_URL}/v2/login', data=DUMMY_CREDENTIALS, headers=None)
         self.assertEqual(dk_client._headers, DUMMY_HEADERS)
         self.assertEqual(dk_client._token, DUMMY_AUTH_TOKEN)
 
