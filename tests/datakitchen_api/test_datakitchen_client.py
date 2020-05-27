@@ -395,3 +395,23 @@ class TestDataKitchenClient(TestCase):
         order_run_statuses = dk_client.monitor_order_runs(1, 2, order_run_ids)
         expected_statuses = {DUMMY_ORDER_RUN_ID: None, 'Foo': None}
         self.assertEqual(order_run_statuses, expected_statuses)
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_update_kitchen_vault(self, _, mock_post):
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        dk_client.kitchen = DUMMY_KITCHEN
+        response_json = {'test_update_kitchen_vault': 1}
+        mock_post.return_value = MockResponse(json=response_json)
+        response = dk_client.update_kitchen_vault('Implementation/dev', 'vault_token')
+        self.assertEqual(response.json(), response_json)
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_update_kitchen_vault_raise_error(self, _, mock_post):
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        dk_client.kitchen = DUMMY_KITCHEN
+        response_json = {'test_update_kitchen_vault': 1}
+        mock_post.return_value = MockResponse(raise_error=True, json=response_json)
+        with self.assertRaises(HTTPError):
+            dk_client.update_kitchen_vault('Implementation/dev', 'vault_token')
