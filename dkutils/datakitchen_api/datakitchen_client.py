@@ -159,10 +159,7 @@ class DataKitchenClient:
             return
 
         self._token = self._api_request(
-            API_POST, 'login',
-            is_json=False,
-            username=self._username,
-            password=self._password
+            API_POST, 'login', is_json=False, username=self._username, password=self._password
         ).text
         self._set_headers()
 
@@ -194,9 +191,14 @@ class DataKitchenClient:
         """
         self._ensure_attributes(KITCHEN, RECIPE, VARIATION)
         return self._api_request(
-            API_PUT, 'order', 'create',
-            self.kitchen, self.recipe, self.variation,
-            schedule='now', parameters=parameters
+            API_PUT,
+            'order',
+            'create',
+            self.kitchen,
+            self.recipe,
+            self.variation,
+            schedule='now',
+            parameters=parameters
         )
 
     def resume_order_run(self, order_run_id):
@@ -220,9 +222,7 @@ class DataKitchenClient:
         """
         self._ensure_attributes(KITCHEN)
         return self._api_request(
-            API_PUT, 'order', 'resume',
-            order_run_id,
-            kitchen_name=self.kitchen
+            API_PUT, 'order', 'resume', order_run_id, kitchen_name=self.kitchen
         )
 
     def get_order_runs(self, order_id):
@@ -258,9 +258,7 @@ class DataKitchenClient:
         self._ensure_attributes(KITCHEN)
         try:
             api_response = self._api_request(
-                API_GET, 'order', 'servings',
-                self.kitchen, order_id,
-                count=DEFAULT_SERVINGS_COUNT
+                API_GET, 'order', 'servings', self.kitchen, order_id, count=DEFAULT_SERVINGS_COUNT
             ).json()
             return api_response['servings']
         except HTTPError:
@@ -324,10 +322,16 @@ class DataKitchenClient:
         """
         self._ensure_attributes(KITCHEN)
         api_response = self._api_request(
-            API_POST, 'order', 'details', self.kitchen,
-            logs=False, serving_hid=str(order_run_id),
-            servingjson=False, summary=False,
-            testresults=False, timingresults=False
+            API_POST,
+            'order',
+            'details',
+            self.kitchen,
+            logs=False,
+            serving_hid=str(order_run_id),
+            servingjson=False,
+            summary=False,
+            testresults=False,
+            timingresults=False
         ).json()
         return api_response['servings'][0]
 
@@ -465,4 +469,3 @@ class DataKitchenClient:
             }
         }
         return self._api_request(API_POST, 'vault', 'config', **payload)
-

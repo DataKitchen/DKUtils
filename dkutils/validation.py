@@ -29,6 +29,7 @@ def validate_globals(global_var_names):
     if undefined_globals:
         raise NameError(f'Undefined global variables: {undefined_globals}')
 
+
 def skip_token_validation():
     """
     Determine if the outgoing API request should validate the current auth token and
