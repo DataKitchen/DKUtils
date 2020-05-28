@@ -7,6 +7,7 @@ from dkutils.constants import (
     KITCHEN, RECIPE, VARIATION, DEFAULT_DATAKITCHEN_URL, DEFAULT_VAULT_URL, STOPPED_STATUS_TYPES,
     API_GET, API_POST, API_PUT
 )
+from dkutils.validation import skip_token_validation
 from dkutils.wait_loop import WaitLoop
 
 # The servings API endpoint retrieves only 10 order runs by default. To retrieve them all, assume
@@ -117,7 +118,7 @@ class DataKitchenClient:
         requests.Response
             :class:`Response <Response>` object
         """
-        if 'login' not in args and 'validatetoken' not in args:
+        if not skip_token_validation():
             self._refresh_token()
         api_request = getattr(requests, http_method)
         api_path = f'{self._base_url}/v2/{"/".join(args)}'
