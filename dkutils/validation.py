@@ -37,7 +37,7 @@ def skip_token_validation():
     Returns
     -------
     boolean
-        True if current request requires token validation, False otherwise.
+        True if current request can skip token validation, False otherwise.
     """
     skip_methods = ['_validate_token', '_refresh_token']
     return inspect.stack()[2][3] in skip_methods

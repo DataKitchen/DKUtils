@@ -4,6 +4,7 @@ DKUtils Release Notes
 v0.4.0
 ------
 * Added generalized API request method to DataKitchen API Client
+* Added skip_token_verification function to validations
 * Updated existing API methods to use new generalized API Request method
 
 v0.3.0
