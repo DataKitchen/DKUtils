@@ -3,6 +3,11 @@ KITCHEN = 'kitchen'
 RECIPE = 'recipe'
 VARIATION = 'variation'
 
+# API HTTP Request Methods
+API_GET = 'get'
+API_POST = 'post'
+API_PUT = 'put'
+
 # Order run status options
 PLANNED_SERVING = 'PLANNED_SERVING'
 ACTIVE_SERVING = 'ACTIVE_SERVING'
