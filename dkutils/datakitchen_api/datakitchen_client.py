@@ -1,14 +1,27 @@
+import copy
 import requests
 import traceback
 
 from requests.exceptions import HTTPError
 
 from dkutils.constants import (
-    KITCHEN, RECIPE, VARIATION, DEFAULT_DATAKITCHEN_URL, DEFAULT_VAULT_URL, STOPPED_STATUS_TYPES,
-    API_GET, API_POST, API_PUT
+    API_GET,
+    API_POST,
+    API_PUT,
+    DEFAULT_DATAKITCHEN_URL,
+    DEFAULT_VAULT_URL,
+    KITCHEN,
+    ORDER_ID,
+    ORDER_RUN_ID,
+    ORDER_RUN_STATUS,
+    PARAMETERS,
+    RECIPE,
+    STOPPED_STATUS_TYPES,
+    VARIATION,
 )
 from dkutils.validation import skip_token_validation
 from dkutils.wait_loop import WaitLoop
+from .datetime_utils import get_utc_timestamp
 
 # The servings API endpoint retrieves only 10 order runs by default. To retrieve them all, assume
 # 100K exceeds the max order runs a given order will ever contain.
@@ -419,6 +432,218 @@ class DataKitchenClient:
             if order_run_id not in completed_order_runs:
                 completed_order_runs[order_run_id] = None
         return completed_order_runs
+
+    def create_and_monitor_orders(
+        self, orders_details, sleep_secs, duration_secs, max_concurrent=None
+    ):
+        """
+        Create the specified orders and wait for them to complete (or timeout after the specified
+        duration_secs).
+
+        Parameters
+        ----------
+        orders_details : list
+            List of order_details, each of which contains the kitchen, recipe, and variation of
+            the order to create, as well as an optional dictionary of parameters. An example
+            order_details item is of the form::
+
+                {
+                    "kitchen": "IM_Development",
+                    "recipe": "Demo_Recipe_Replay",
+                    "variation": "Process_Daily_Data",
+                    "parameters": {
+                        "DT": "20200529"
+                    }
+                }
+
+        sleep_secs : int
+            Number of seconds to sleep in between loop executions.
+        duration_secs : int
+            Max duration in seconds after which the loop will exit.
+        max_concurrent : integer or None
+            Max number of orders to kick off concurrently. If None, all orders will be kicked off
+            concurrently.
+
+        Returns
+        -------
+        list
+            List of 3 lists: [completed orders, active orders, queued orders]. If all the
+            orders completed in the provided duration_secs, then active orders and queued orders
+            will be empty lists. The completed orders and active orders lists contain the
+            orders_details entries with order_id, order_run_id, and order_status fields appended to
+            each entry. These additional fields will all be populated in the completed orders list.
+            However, the order_run_id and order_run_status fields may be None if the timeout
+            occurred before the order run id for the created order was obtained. The final queued
+            orders list contains a copy of the order_details entries that never made it out of the
+            queue, with no additional fields added. An example order_details entry for the
+            completed orders and active orders array will be of the form::
+
+                {
+                    "kitchen": "IM_Development",
+                    "recipe": "Demo_Recipe_Replay",
+                    "variation": "Process_Daily_Data",
+                    "parameters": {
+                        "DT": "20200529"
+                    }
+                    "order_id": "dc90de6e-a12b-11ea-8ba5-96323db651da",
+                    "order_run_id": "f9b107a8-a12b-11ea-a95a-72553da658b3",
+                    "order_run_status": "COMPLETED_SERVING",
+                }
+
+        """
+        # Orders will be popped of this queue, so create a copy of orders_details in reverse order
+        queued_orders = [copy.deepcopy(od) for od in orders_details[::-1]]
+
+        # Ensure max concurrent variable is valid
+        num_total_orders = len(queued_orders)
+        if max_concurrent is None or max_concurrent > num_total_orders:
+            max_concurrent = len(queued_orders)
+        elif max_concurrent < 1:
+            max_concurrent = 1
+
+        def create_order(order_details):
+            self.kitchen = order_details[KITCHEN]
+            self.recipe = order_details[RECIPE]
+            self.variation = order_details[VARIATION]
+            parameters = order_details[PARAMETERS] if PARAMETERS in order_details else {}
+            order_details[ORDER_ID] = self.create_order(parameters=parameters).json()[ORDER_ID]
+            order_details[ORDER_RUN_ID] = None
+            order_details[ORDER_RUN_STATUS] = None
+            return order_details
+
+        # Create initial orders
+        active_orders = [create_order(queued_orders.pop()) for _ in range(max_concurrent)]
+        completed_orders = []
+
+        wait_loop = WaitLoop(sleep_secs, duration_secs)
+        while wait_loop:
+            cur_completed_orders = []
+            for active_order in active_orders:
+                self.kitchen = active_order[KITCHEN]
+                if active_order[ORDER_RUN_ID] is not None:
+                    active_order[ORDER_RUN_STATUS] = self.get_order_run_status(
+                        active_order[ORDER_RUN_ID]
+                    )
+                    if active_order[ORDER_RUN_STATUS] in STOPPED_STATUS_TYPES:
+                        completed_orders.append(active_order)
+                        cur_completed_orders.append(active_order)
+                else:
+                    order_runs = self.get_order_runs(active_order[ORDER_ID])
+                    if order_runs:
+                        active_order[ORDER_RUN_ID] = order_runs[0]['hid']
+
+            for completed_order in cur_completed_orders:
+                active_orders.remove(completed_order)
+                if len(queued_orders) > 0:
+                    active_orders.append(create_order(queued_orders.pop()))
+
+            if len(active_orders) == 0:
+                break
+
+        return completed_orders, active_orders, queued_orders
+
+    def resume_and_monitor_orders(
+        self, order_runs_details, sleep_secs, duration_secs, max_concurrent=None
+    ):
+        """
+        Resume the specified order runs and wait for them to complete (or timeout after the
+        specified duration_secs).
+
+        Parameters
+        ----------
+        order_runs_details : list
+            List of order_runs_details, each of which contains the kitchen and order run id. An
+            example order_run_details item is of the form::
+
+                {
+                    "kitchen": "IM_Development",
+                    "order_run_id": "84e77b50-a1f3-11ea-aaaf-521d4744de4c"
+                }
+        sleep_secs : int
+            Number of seconds to sleep in between loop executions.
+        duration_secs : int
+            Max duration in seconds after which the loop will exit.
+        max_concurrent : integer or None
+            Max number of orders to kick off concurrently. If None, all orders will be kicked off
+            concurrently.
+
+        Returns
+        -------
+        list
+            List of 3 lists: [completed orders, active orders, queued orders]. If all the
+            orders completed in the provided duration_secs, then active orders and queued orders
+            will be empty lists. The completed orders and active orders lists contain the
+            orders_details entries with order_id, order_run_id, and order_status fields appended to
+            each entry. These additional fields will all be populated in the completed orders list.
+            However, the order_run_id and order_run_status fields may be None if the timeout
+            occurred before the order run id for the created order was obtained. The final queued
+            orders list contains a copy of the order_details entries that never made it out of the
+            queue, with no additional fields added. An example order_details entry for the
+            completed orders and active orders array will be of the form::
+
+                {
+                    "kitchen": "IM_Development",
+                    "order_id": "dc90de6e-a12b-11ea-8ba5-96323db651da",
+                    "order_run_id": "f9b107a8-a12b-11ea-a95a-72553da658b3",
+                    "order_run_status": "COMPLETED_SERVING",
+                }
+
+        """
+        # Order runs will be popped of this queue, so create a copy of order_runs_details in
+        # reverse order
+        queued_orders = [copy.deepcopy(od) for od in order_runs_details[::-1]]
+
+        # Ensure max concurrent variable is valid
+        num_total_orders = len(queued_orders)
+        if max_concurrent is None or max_concurrent > num_total_orders:
+            max_concurrent = len(queued_orders)
+        elif max_concurrent < 1:
+            max_concurrent = 1
+
+        def resume_order(order_run_details):
+            self.kitchen = order_run_details[KITCHEN]
+            order_run_details[ORDER_ID] = self.resume_order_run(order_run_details[ORDER_RUN_ID]
+                                                                ).json()[ORDER_ID]
+            order_run_details[ORDER_RUN_ID] = None
+            order_run_details[ORDER_RUN_STATUS] = None
+            return order_run_details
+
+        # Used to differentiate the resumed order runs from the order runs they were resumed from
+        resume_start_time = get_utc_timestamp()
+
+        # Create initial orders
+        active_orders = [resume_order(queued_orders.pop()) for _ in range(max_concurrent)]
+        completed_orders = []
+
+        wait_loop = WaitLoop(sleep_secs, duration_secs)
+        while wait_loop:
+            cur_completed_orders = []
+            for active_order in active_orders:
+                self.kitchen = active_order[KITCHEN]
+                if active_order[ORDER_RUN_ID] is not None:
+                    active_order[ORDER_RUN_STATUS] = self.get_order_run_status(
+                        active_order[ORDER_RUN_ID]
+                    )
+                    if active_order[ORDER_RUN_STATUS] in STOPPED_STATUS_TYPES:
+                        completed_orders.append(active_order)
+                        cur_completed_orders.append(active_order)
+                else:
+                    order_runs = self.get_order_runs(active_order[ORDER_ID])
+
+                    # Ensure the latest order run is the resumed one and not the run from which it
+                    # was resumed.
+                    if order_runs[0]['timings']['start-time'] > resume_start_time:
+                        active_order[ORDER_RUN_ID] = order_runs[0]['hid']
+
+            for completed_order in cur_completed_orders:
+                active_orders.remove(completed_order)
+                if len(queued_orders) > 0:
+                    active_orders.append(resume_order(queued_orders.pop()))
+
+            if len(active_orders) == 0:
+                break
+
+        return completed_orders, active_orders, queued_orders
 
     def update_kitchen_vault(
         self,

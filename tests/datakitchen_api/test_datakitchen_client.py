@@ -3,8 +3,19 @@ from unittest.mock import patch
 
 from requests.exceptions import HTTPError
 
-from dkutils.constants import COMPLETED_SERVING, PLANNED_SERVING
+from dkutils.constants import (
+    COMPLETED_SERVING,
+    KITCHEN,
+    ORDER_ID,
+    ORDER_RUN_ID,
+    ORDER_RUN_STATUS,
+    PARAMETERS,
+    PLANNED_SERVING,
+    RECIPE,
+    VARIATION,
+)
 from dkutils.datakitchen_api.datakitchen_client import DataKitchenClient
+from dkutils.datakitchen_api.datetime_utils import get_utc_timestamp
 
 DUMMY_URL = 'https://dummy/url'
 DUMMY_AUTH_TOKEN = 'DATAKITCHEN_TOKEN'
@@ -18,7 +29,9 @@ DUMMY_RECIPE = 'dummy_recipe'
 DUMMY_VARIATION = 'dummy_variation'
 DUMMY_PARAMETERS = {}
 DUMMY_ORDER_ID = 'dummy_order_id'
+DUMMY_ORDER_ID2 = 'dummy_order_id2'
 DUMMY_ORDER_RUN_ID = 'dummy_order_run_id'
+DUMMY_ORDER_RUN_ID2 = 'dummy_order_run_id2'
 
 
 class MockResponse:
@@ -395,6 +408,222 @@ class TestDataKitchenClient(TestCase):
         order_run_statuses = dk_client.monitor_order_runs(1, 2, order_run_ids)
         expected_statuses = {DUMMY_ORDER_RUN_ID: None, 'Foo': None}
         self.assertEqual(order_run_statuses, expected_statuses)
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.put')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_create_and_monitor_order_runs(self, _, mock_put, mock_get, mock_post):
+        orders_details = [
+            {
+                KITCHEN: DUMMY_KITCHEN,
+                RECIPE: DUMMY_RECIPE,
+                VARIATION: DUMMY_VARIATION,
+            },
+        ]
+        mock_put.side_effect = [MockResponse(json={ORDER_ID: DUMMY_ORDER_ID})]
+        mock_get.side_effect = [MockResponse(json={'servings': [{'hid': DUMMY_ORDER_RUN_ID}]})]
+        mock_post.side_effect = [MockResponse(json={'servings': [{'status': COMPLETED_SERVING}]})]
+
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        results = dk_client.create_and_monitor_orders(orders_details, 1, 2)
+
+        orders_details[0][ORDER_ID] = DUMMY_ORDER_ID
+        orders_details[0][ORDER_RUN_ID] = DUMMY_ORDER_RUN_ID
+        orders_details[0][ORDER_RUN_STATUS] = COMPLETED_SERVING
+        self.assertEqual(results[0], orders_details)
+        self.assertFalse(results[1])
+        self.assertFalse(results[2])
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.put')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_create_and_monitor_order_runs_timeout(self, _, mock_put, mock_get, mock_post):
+        orders_details = [
+            {
+                KITCHEN: DUMMY_KITCHEN,
+                RECIPE: DUMMY_RECIPE,
+                VARIATION: DUMMY_VARIATION,
+            },
+        ]
+        mock_put.side_effect = [MockResponse(json={ORDER_ID: DUMMY_ORDER_ID})]
+        mock_get.side_effect = [MockResponse(json={'servings': [{'hid': DUMMY_ORDER_RUN_ID}]})]
+        mock_post.side_effect = [MockResponse(json={'servings': [{'status': PLANNED_SERVING}]})]
+
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        results = dk_client.create_and_monitor_orders(orders_details, 1, 2)
+
+        orders_details[0][ORDER_ID] = DUMMY_ORDER_ID
+        orders_details[0][ORDER_RUN_ID] = DUMMY_ORDER_RUN_ID
+        orders_details[0][ORDER_RUN_STATUS] = PLANNED_SERVING
+        self.assertFalse(results[0])
+        self.assertEqual(results[1], orders_details)
+        self.assertFalse(results[2])
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.put')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_create_and_monitor_order_runs_multiple(self, _, mock_put, mock_get, mock_post):
+        orders_details = [
+            {
+                KITCHEN: DUMMY_KITCHEN,
+                RECIPE: DUMMY_RECIPE,
+                VARIATION: DUMMY_VARIATION,
+                PARAMETERS: {
+                    'DT': '20200501'
+                }
+            },
+            {
+                KITCHEN: DUMMY_KITCHEN,
+                RECIPE: DUMMY_RECIPE,
+                VARIATION: DUMMY_VARIATION,
+                PARAMETERS: {
+                    'DT': '20200502'
+                }
+            },
+        ]
+        mock_put.side_effect = [
+            MockResponse(json={ORDER_ID: DUMMY_ORDER_ID}),
+            MockResponse(json={ORDER_ID: DUMMY_ORDER_ID2}),
+        ]
+        mock_get.side_effect = [MockResponse(json={'servings': [{'hid': DUMMY_ORDER_RUN_ID}]})]
+        mock_post.side_effect = [MockResponse(json={'servings': [{'status': COMPLETED_SERVING}]})]
+
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        results = dk_client.create_and_monitor_orders(orders_details, 1, 2, max_concurrent=1)
+
+        orders_details[0][ORDER_ID] = DUMMY_ORDER_ID
+        orders_details[0][ORDER_RUN_ID] = DUMMY_ORDER_RUN_ID
+        orders_details[0][ORDER_RUN_STATUS] = COMPLETED_SERVING
+        orders_details[1][ORDER_ID] = DUMMY_ORDER_ID2
+        orders_details[1][ORDER_RUN_ID] = None
+        orders_details[1][ORDER_RUN_STATUS] = None
+        self.assertEqual(results[0], [orders_details[0]])
+        self.assertEqual(results[1], [orders_details[1]])
+        self.assertFalse(results[2])
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.put')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_resume_and_monitor_order_runs(self, _, mock_put, mock_get, mock_post):
+        orders_details = [
+            {
+                KITCHEN: DUMMY_KITCHEN,
+                ORDER_RUN_ID: DUMMY_ORDER_RUN_ID,
+            },
+        ]
+        mock_put.side_effect = [
+            MockResponse(json={ORDER_ID: DUMMY_ORDER_ID}),
+            MockResponse(json={ORDER_ID: DUMMY_ORDER_ID}),
+        ]
+        mock_get.side_effect = [
+            MockResponse(
+                json={
+                    'servings': [{
+                        'hid': DUMMY_ORDER_RUN_ID,
+                        'timings': {
+                            'start-time': get_utc_timestamp() + 60 * 1000
+                        }
+                    }]
+                }
+            )
+        ]
+        mock_post.side_effect = [MockResponse(json={'servings': [{'status': COMPLETED_SERVING}]})]
+
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        results = dk_client.resume_and_monitor_orders(orders_details, 1, 2)
+
+        orders_details[0][ORDER_ID] = DUMMY_ORDER_ID
+        orders_details[0][ORDER_RUN_ID] = DUMMY_ORDER_RUN_ID
+        orders_details[0][ORDER_RUN_STATUS] = COMPLETED_SERVING
+        self.assertEqual(results[0], orders_details)
+        self.assertFalse(results[1])
+        self.assertFalse(results[2])
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.put')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_resume_and_monitor_order_runs_timeout(self, _, mock_put, mock_get, mock_post):
+        orders_details = [
+            {
+                KITCHEN: DUMMY_KITCHEN,
+                ORDER_RUN_ID: DUMMY_ORDER_RUN_ID,
+            },
+        ]
+        mock_put.side_effect = [MockResponse(json={ORDER_ID: DUMMY_ORDER_ID})]
+        mock_get.side_effect = [
+            MockResponse(
+                json={
+                    'servings': [{
+                        'hid': DUMMY_ORDER_RUN_ID,
+                        'timings': {
+                            'start-time': get_utc_timestamp() + 60 * 1000
+                        }
+                    }]
+                }
+            )
+        ]
+        mock_post.side_effect = [MockResponse(json={'servings': [{'status': PLANNED_SERVING}]})]
+
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        results = dk_client.resume_and_monitor_orders(orders_details, 1, 2)
+
+        orders_details[0][ORDER_ID] = DUMMY_ORDER_ID
+        orders_details[0][ORDER_RUN_ID] = DUMMY_ORDER_RUN_ID
+        orders_details[0][ORDER_RUN_STATUS] = PLANNED_SERVING
+        self.assertFalse(results[0])
+        self.assertEqual(results[1], orders_details)
+        self.assertFalse(results[2])
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.put')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_resume_and_monitor_order_runs_multiple(self, _, mock_put, mock_get, mock_post):
+        orders_details = [
+            {
+                KITCHEN: DUMMY_KITCHEN,
+                ORDER_RUN_ID: DUMMY_ORDER_RUN_ID,
+            },
+            {
+                KITCHEN: DUMMY_KITCHEN,
+                ORDER_RUN_ID: DUMMY_ORDER_RUN_ID2,
+            },
+        ]
+        mock_put.side_effect = [
+            MockResponse(json={ORDER_ID: DUMMY_ORDER_ID}),
+            MockResponse(json={ORDER_ID: DUMMY_ORDER_ID2})
+        ]
+        mock_get.side_effect = [
+            MockResponse(
+                json={
+                    'servings': [{
+                        'hid': DUMMY_ORDER_RUN_ID,
+                        'timings': {
+                            'start-time': get_utc_timestamp() + 60 * 1000
+                        }
+                    }]
+                }
+            )
+        ]
+        mock_post.side_effect = [MockResponse(json={'servings': [{'status': COMPLETED_SERVING}]})]
+
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        results = dk_client.resume_and_monitor_orders(orders_details, 1, 2, max_concurrent=1)
+
+        orders_details[0][ORDER_ID] = DUMMY_ORDER_ID
+        orders_details[0][ORDER_RUN_ID] = DUMMY_ORDER_RUN_ID
+        orders_details[0][ORDER_RUN_STATUS] = COMPLETED_SERVING
+        orders_details[1][ORDER_ID] = DUMMY_ORDER_ID2
+        orders_details[1][ORDER_RUN_ID] = None
+        orders_details[1][ORDER_RUN_STATUS] = None
+        self.assertEqual(results[0], [orders_details[0]])
+        self.assertEqual(results[1], [orders_details[1]])
+        self.assertFalse(results[2])
 
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
