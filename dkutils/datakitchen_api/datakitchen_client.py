@@ -19,7 +19,7 @@ from dkutils.constants import (
     STOPPED_STATUS_TYPES,
     VARIATION,
 )
-from dkutils.validation import skip_token_validation
+from dkutils.validation import get_max_concurrency, skip_token_validation
 from dkutils.wait_loop import WaitLoop
 from .datetime_utils import get_utc_timestamp
 
@@ -496,10 +496,7 @@ class DataKitchenClient:
 
         # Ensure max concurrent variable is valid
         num_total_orders = len(queued_orders)
-        if max_concurrent is None or max_concurrent > num_total_orders:
-            max_concurrent = len(queued_orders)
-        elif max_concurrent < 1:
-            max_concurrent = 1
+        max_concurrent = get_max_concurrency(num_total_orders, max_concurrent)
 
         def create_order(order_details):
             self.kitchen = order_details[KITCHEN]
@@ -595,10 +592,7 @@ class DataKitchenClient:
 
         # Ensure max concurrent variable is valid
         num_total_orders = len(queued_orders)
-        if max_concurrent is None or max_concurrent > num_total_orders:
-            max_concurrent = len(queued_orders)
-        elif max_concurrent < 1:
-            max_concurrent = 1
+        max_concurrent = get_max_concurrency(num_total_orders, max_concurrent)
 
         def resume_order(order_run_details):
             self.kitchen = order_run_details[KITCHEN]

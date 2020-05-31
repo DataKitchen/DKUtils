@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from dkutils.validation import validate_globals
+from dkutils.validation import get_max_concurrency, validate_globals
 
 
 class TestValidation(TestCase):
@@ -31,3 +31,9 @@ class TestValidation(TestCase):
         global undefined
         with self.assertRaises(NameError):
             validate_globals(['undefined'])
+
+    def test_get_max_concurrency(self):
+        self.assertEquals(10, get_max_concurrency(10, None))
+        self.assertEquals(10, get_max_concurrency(10, 12))
+        self.assertEquals(1, get_max_concurrency(10, -1))
+        self.assertEquals(5, get_max_concurrency(10, 5))

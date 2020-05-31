@@ -42,3 +42,30 @@ def skip_token_validation():
     """
     skip_methods = ['_validate_token', '_refresh_token']
     return inspect.stack()[2][3] in skip_methods
+
+
+def get_max_concurrency(num_orders, max_concurrent):
+    """
+    Given a specified maximum concurrency and the number of orders being created/resumed, return
+    a valid maximum concurrency value (i.e. 1 <= max_concurrent <= num_orders). If max_concurrent
+    is None, return num_orders.
+
+    Parameters
+    ----------
+    num_orders : int
+        Number of orders to be created/resumed.
+    max_concurrent
+        Maximum number of orders to process concurrently
+
+    Returns
+    -------
+    int
+        Valid maximum concurrency (i.e. 1 <= max_concurrent <= num_orders) or num_orders if
+        max_concurrent is None.
+
+    """
+    if max_concurrent is None:
+        return num_orders
+    elif max_concurrent < 1:
+        return 1
+    return min(num_orders, max_concurrent)
