@@ -2,6 +2,10 @@ DEFAULT_DATAKITCHEN_URL = 'https://cloud.datakitchen.io'
 KITCHEN = 'kitchen'
 RECIPE = 'recipe'
 VARIATION = 'variation'
+PARAMETERS = 'parameters'
+ORDER_ID = 'order_id'
+ORDER_RUN_ID = 'order_run_id'
+ORDER_RUN_STATUS = 'order_run_status'
 
 # API HTTP Request Methods
 API_GET = 'get'

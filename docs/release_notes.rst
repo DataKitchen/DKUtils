@@ -1,6 +1,14 @@
 DKUtils Release Notes
 =====================
 
+v0.5.0
+------
+* Added create/resume and monitor orders methods to DataKitchen API Client
+
+  * Waits for the orders to complete or for a specified timeout duration (whichever comes first)
+  * Number of maximum concurrently running orders can be specified
+
+
 v0.4.0
 ------
 * Added generalized API request method to DataKitchen API Client
