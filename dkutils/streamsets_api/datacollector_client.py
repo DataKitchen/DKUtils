@@ -3,7 +3,8 @@ from enum import Enum
 import requests
 
 from dkutils.constants import (
-    API_GET
+    API_GET,
+    API_POST
 )
 
 
@@ -27,30 +28,30 @@ class PipelineStatus(Enum):
     STOPPING_ERROR = 'STOPPING_ERROR'  # The pipeline encounters errors while stopping.
 
 
-class StreamSetsDataCollectorClient:
+class DataCollectorClient:
 
     def __init__(
             self, host, port, username, password
     ):
         """
-                Client object for invoking `StreamSets Data Collector REST API<https://streamsets.com/blog/retrieving-metrics-via-streamsets-data-collector-rest-api/>'
+        Client object for invoking `StreamSets Data Collector REST API<https://streamsets.com/blog/retrieving-metrics-via-streamsets-data-collector-rest-api/>'
 
-                Parameters
-                ----------
-                host: str
-                  The name of the to use in making REST API calls.
-                port: int
-                  The port to use in making REST API calls.
-                username : str
-                  Username to authenticate when making REST API calls.
-                password : str
-                  Password to authenticate when making REST API calls.
+        Parameters
+        ----------
+        host: str
+          The name of the to use in making REST API calls.
+        port: int
+          The port to use in making REST API calls.
+        username : str
+          Username to authenticate when making REST API calls.
+        password : str
+          Password to authenticate when making REST API calls.
 
-                """
+        """
         self._base_url = f'http://{host}:{port}/rest/v1/'
         self._auth = (username, password)
 
-    def _api_request(self, http_method, *args, is_json=True, **kwargs):
+    def _api_request(self, http_method, *args, **kwargs):
         """
         Make HTTP request to arbitrary API endpoint, with optional parameters as payload.
 
@@ -60,10 +61,13 @@ class StreamSetsDataCollectorClient:
             HTTP method to use when making API request.
         *args : list
             Variable length list of strings to construct endpoint path.
-        is_json : bool
-            Set to False if payload/response is not JSON data.
         **kwargs : dict
             Arbitrary keyword arguments to construct request payload.
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
 
         Returns
         -------
@@ -72,10 +76,7 @@ class StreamSetsDataCollectorClient:
         """
         api_request = getattr(requests, http_method)
         api_path = f'{self._base_url}{"/".join(args)}'
-        if is_json:
-            response = api_request(api_path, auth=self._auth, json=kwargs)
-        else:
-            response = api_request(api_path, auth=self._auth, data=kwargs)
+        response = api_request(api_path, auth=self._auth, json=kwargs)
         response.raise_for_status()
         return response
 
@@ -88,6 +89,13 @@ class StreamSetsDataCollectorClient:
         pipeline_id: str
             The pipeline id of the pipeline for which status information is being requested
 
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+        ValueError
+            If the pipeline_id is None
+
         Returns
         -------
         requests.Response.json()
@@ -98,17 +106,51 @@ class StreamSetsDataCollectorClient:
 
     def get_pipeline_status(self, pipeline_id):
         """
-                Get an instacne of Pipeline.Status that represents the status of the pipeline with the given pipeline_id
+        Get an instance of Pipeline.Status that represents the status of the pipeline with the given pipeline_id
 
-                Parameters
-                ----------
-                pipeline_id: str
-                    The pipeline id of the pipeline for which status information is being requested
+        Parameters
+        ----------
+        pipeline_id: str
+            The pipeline id of the pipeline for which status information is being requested
 
-                Returns
-                -------
-                PipelineStatus
-                    :class:`PipelineStatus <PipelineStatus>` object
-                """
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+        ValueError
+            If the pipeline_id is None
+
+        Returns
+        -------
+        PipelineStatus
+            :class:`PipelineStatus <PipelineStatus>` object
+        """
         status = self.get_pipeline_full_status(pipeline_id)['status']
         return PipelineStatus(status)
+
+    def start_pipeline(self, pipeline_id, **kwargs):
+        """
+        Start the pipeline with the given pipeline_id
+
+        Parameters
+        ----------
+        pipeline_id: str
+            The pipeline id of the pipeline for which status information is being requested
+        **kwargs : dict
+            Arbitrary keyword arguments to construct runtime parameters
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+        ValueError
+            If the pipeline_id is None
+
+        Returns
+        -------
+        requests.Response.json()
+        """
+        if not pipeline_id:
+            raise ValueError(f'pipeline_id is required')
+        return self._api_request(API_POST, 'pipeline', pipeline_id, 'start?rev=0', **kwargs).json()
+
