@@ -4,7 +4,6 @@ from unittest.mock import patch
 from dkutils.streamsets_api.datacollector_client import DataCollectorClient, PipelineStatus
 from tests.datakitchen_api.test_datakitchen_client import MockResponse
 
-
 PORT = 80
 HOST = 'localhost'
 USER = 'someone'
@@ -13,23 +12,23 @@ AUTH = (USER, PASSWORD)
 BASE_URL = f'http://{HOST}:{PORT}/rest/v1/'
 PIPELINE_ID = "mcctoscccopy6d3074d9-9d77-4d47-81a8-61b840511a67"
 PIPELINE_STATUS = {
-            "pipelineId": PIPELINE_ID,
-            "rev": "0",
-            "user": "admin",
-            "status": "FINISHED",
-            "message": None,
-            "timeStamp": 1591191043662,
-            "attributes": {
-                "IS_REMOTE_PIPELINE": False,
-                "RUNTIME_PARAMETERS": None,
-                "INTERCEPTOR_CONFIGS": []
-            },
-            "executionMode": "STANDALONE",
-            "metrics": "",
-            "retryAttempt": 0,
-            "nextRetryTimeStamp": 0,
-            "name": PIPELINE_ID
-        }
+    "pipelineId": PIPELINE_ID,
+    "rev": "0",
+    "user": "admin",
+    "status": "FINISHED",
+    "message": None,
+    "timeStamp": 1591191043662,
+    "attributes": {
+        "IS_REMOTE_PIPELINE": False,
+        "RUNTIME_PARAMETERS": None,
+        "INTERCEPTOR_CONFIGS": []
+    },
+    "executionMode": "STANDALONE",
+    "metrics": "",
+    "retryAttempt": 0,
+    "nextRetryTimeStamp": 0,
+    "name": PIPELINE_ID
+}
 
 
 class TestDataCollectorClient(TestCase):
@@ -79,6 +78,6 @@ class TestDataCollectorClient(TestCase):
         client = DataCollectorClient(HOST, PORT, USER, PASSWORD)
         runtime_parameters = {"table_name": "table_one"}
         status = client.start_pipeline(PIPELINE_ID, **runtime_parameters)
-        mock_post.assert_called_once_with(f'{BASE_URL}pipeline/{PIPELINE_ID}/start?rev=0', auth=AUTH, json=runtime_parameters)
+        mock_post.assert_called_once_with(f'{BASE_URL}pipeline/{PIPELINE_ID}/start?rev=0', auth=AUTH,
+                                          json=runtime_parameters)
         self.assertEqual(PIPELINE_STATUS, status)
-

@@ -153,4 +153,3 @@ class DataCollectorClient:
         if not pipeline_id:
             raise ValueError(f'pipeline_id is required')
         return self._api_request(API_POST, 'pipeline', pipeline_id, 'start?rev=0', **kwargs).json()
-
