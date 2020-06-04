@@ -39,7 +39,7 @@ class DataCollectorClient:
         Parameters
         ----------
         host: str
-          The name of the to use in making REST API calls.
+          The name of the host to use in making REST API calls.
         port: int
           The port to use in making REST API calls.
         username : str
