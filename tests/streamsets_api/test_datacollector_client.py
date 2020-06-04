@@ -93,3 +93,11 @@ class TestDataCollectorClient(TestCase):
         client.reset_pipeline(PIPELINE_ID)
         mock_post.assert_called_once_with(f'{BASE_URL}pipeline/{PIPELINE_ID}/resetOffset?rev=0', auth=AUTH,
                                           json={})
+
+    @patch('dkutils.streamsets_api.datacollector_client.requests.post')
+    def test_stop_pipeline(self, mock_post):
+        mock_post.return_value = MockResponse(json=PIPELINE_STATUS)
+        client = DataCollectorClient(HOST, PORT, USER, PASSWORD)
+        status = client.stop_pipeline(PIPELINE_ID)
+        mock_post.assert_called_once_with(f'{BASE_URL}pipeline/{PIPELINE_ID}/stop?rev=0', auth=AUTH, json={})
+        self.assertEqual(PIPELINE_STATUS, status)

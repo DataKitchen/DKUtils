@@ -85,6 +85,35 @@ class DataCollectorClient:
         response.raise_for_status()
         return response
 
+    def _pipeline_operation(self, http_method, pipeline_id, operation, **kwargs):
+        """
+        This is an internal function that is used to invoke a pipeline operation which returns the pipeline status
+
+        Parameters
+        ----------
+        http_method : str
+            HTTP method to use when making API request.
+        pipeline_id: str
+            The pipeline id of the pipeline for which status information is being requested
+        operation: str
+            The pipeline operation to be performed
+        **kwargs : dict
+            Arbitrary keyword arguments to construct runtime parameters
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+        ValueError
+            If the pipeline_id is None
+
+        Returns
+        -------
+        requests.Response.json()
+        """
+        self._validate_pipline_id(pipeline_id)
+        return self._api_request(http_method, 'pipeline', pipeline_id, f'{operation}?rev=0', **kwargs).json()
+
     def get_pipeline_full_status(self, pipeline_id):
         """
         Get the JSON containing the status of the pipeline with the given pipeline_id
@@ -105,8 +134,7 @@ class DataCollectorClient:
         -------
         requests.Response.json()
         """
-        self._validate_pipline_id(pipeline_id)
-        return self._api_request(API_GET, 'pipeline', pipeline_id, 'status?rev=0').json()
+        return self._pipeline_operation(API_GET, pipeline_id, 'status')
 
     def get_pipeline_status(self, pipeline_id):
         """
@@ -139,7 +167,7 @@ class DataCollectorClient:
         Parameters
         ----------
         pipeline_id: str
-            The pipeline id of the pipeline for which status information is being requested
+            The pipeline id of the pipeline to start
         **kwargs : dict
             Arbitrary keyword arguments to construct runtime parameters
 
@@ -154,8 +182,31 @@ class DataCollectorClient:
         -------
         requests.Response.json()
         """
-        self._validate_pipline_id(pipeline_id)
-        return self._api_request(API_POST, 'pipeline', pipeline_id, 'start?rev=0', **kwargs).json()
+        return self._pipeline_operation(API_POST, pipeline_id, 'start', **kwargs)
+
+    def stop_pipeline(self, pipeline_id, **kwargs):
+        """
+        Stop the pipeline with the given pipeline_id
+
+        Parameters
+        ----------
+        pipeline_id: str
+            The pipeline id of the pipeline to stop
+        **kwargs : dict
+            Arbitrary keyword arguments to construct runtime parameters
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+        ValueError
+            If the pipeline_id is None
+
+        Returns
+        -------
+        requests.Response.json()
+        """
+        return self._pipeline_operation(API_POST, pipeline_id, 'stop', **kwargs)
 
     def reset_pipeline(self, pipeline_id):
         """
