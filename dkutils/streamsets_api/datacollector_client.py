@@ -81,7 +81,7 @@ class DataCollectorClient:
         """
         api_request = getattr(requests, http_method)
         api_path = f'{self._base_url}{"/".join(args)}'
-        response = api_request(api_path, auth=self._auth, json=kwargs)
+        response = api_request(api_path, auth=self._auth, headers={'X-Requested-By': 'DataKitchen'}, json=kwargs)
         response.raise_for_status()
         return response
 
