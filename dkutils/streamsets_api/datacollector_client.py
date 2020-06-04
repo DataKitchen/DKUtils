@@ -51,6 +51,11 @@ class DataCollectorClient:
         self._base_url = f'http://{host}:{port}/rest/v1/'
         self._auth = (username, password)
 
+    def _validate_pipline_id(self, pipeline_id):
+        """Ensure that the pipeline_id is given"""
+        if not pipeline_id:
+            raise ValueError(f'pipeline_id is required')
+
     def _api_request(self, http_method, *args, **kwargs):
         """
         Make HTTP request to arbitrary API endpoint, with optional parameters as payload.
@@ -100,8 +105,7 @@ class DataCollectorClient:
         -------
         requests.Response.json()
         """
-        if not pipeline_id:
-            raise ValueError(f'pipeline_id is required')
+        self._validate_pipline_id(pipeline_id)
         return self._api_request(API_GET, 'pipeline', pipeline_id, 'status?rev=0').json()
 
     def get_pipeline_status(self, pipeline_id):
@@ -150,6 +154,24 @@ class DataCollectorClient:
         -------
         requests.Response.json()
         """
-        if not pipeline_id:
-            raise ValueError(f'pipeline_id is required')
+        self._validate_pipline_id(pipeline_id)
         return self._api_request(API_POST, 'pipeline', pipeline_id, 'start?rev=0', **kwargs).json()
+
+    def reset_pipeline(self, pipeline_id):
+        """
+        Resets the origin offset of the pipeline with the given pipeline_id
+
+        Parameters
+        ----------
+        pipeline_id: str
+            The pipeline id of the pipeline for which status information is being requested
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+        ValueError
+            If the pipeline_id is None
+        """
+        self._validate_pipline_id(pipeline_id)
+        self._api_request(API_POST, 'pipeline', pipeline_id, 'resetOffset?rev=0')

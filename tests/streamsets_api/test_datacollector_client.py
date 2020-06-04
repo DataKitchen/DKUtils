@@ -81,3 +81,15 @@ class TestDataCollectorClient(TestCase):
         mock_post.assert_called_once_with(f'{BASE_URL}pipeline/{PIPELINE_ID}/start?rev=0', auth=AUTH,
                                           json=runtime_parameters)
         self.assertEqual(PIPELINE_STATUS, status)
+
+    def test_reset_pipeline_raises_valueerror_when_pipeline_id_is_missing(self):
+        client = DataCollectorClient(HOST, PORT, USER, PASSWORD)
+        with self.assertRaises(ValueError):
+            client.reset_pipeline(None)
+
+    @patch('dkutils.streamsets_api.datacollector_client.requests.post')
+    def test_reset_pipeline(self, mock_post):
+        client = DataCollectorClient(HOST, PORT, USER, PASSWORD)
+        client.reset_pipeline(PIPELINE_ID)
+        mock_post.assert_called_once_with(f'{BASE_URL}pipeline/{PIPELINE_ID}/resetOffset?rev=0', auth=AUTH,
+                                          json={})
