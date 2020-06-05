@@ -3,7 +3,91 @@ DKUtils Guide
 
 This guide provides an overview of the various third-party tools that have been added
 to this repository to aid in the development and maintenance of a clean, well tested, and
-well documented python package.
+well documented python package. In addition, it provides a checklist of items a developer
+should follow when adding content to this package.
+
+Development Process
+---------------------
+Multiple steps must be followed to update this package. First, create a branch with a
+name indicating the change you intend to make. When your changes are ready for review, run
+the 4 main :program:`Makefile` targets locally (i.e. test, lint, scan_secrets, and docs) to ensure they pass.
+Please note, fixing one target may break another, so ensure that all four targets pass after
+making any changes. Next, create a Pull Request (PR) in `GitHub <https://ghe.datakitchen.io/DataKitchen/DKUtils>`_
+and assign it to one or more Implementation engineers. Once the PR is approved, run the
+`branch_ci <https://cloud.datakitchen.io/dk/index.html#/variation/im/IM_Production/CICD_DKUtils/branch_ci?tab=graph>`_
+recipe variation of the ``CICD_DKUtils`` recipe in the ``IM_Production`` kitchen - be sure to override the
+``branch`` variable with the name of your branch. Once this variation is passing and your PR is approved,
+merge your changes to master.
+
+To deploy your new package to PyPI, run the
+`complete_cicd <https://cloud.datakitchen.io/dk/index.html#/variation/im/IM_Production/CICD_DKUtils/complete_cicd?tab=graph>`_
+variation in the same recipe - be sure to specify the appropriate ``semantic_version_increment``.
+Afterward, check `PyPI <https://pypi.org/project/DKUtils/>`_ to ensure your version was uploaded.
+Finally, :command:`pip install` the new package and test to ensure your updates are as expected and verify the latest
+documentation is updated on the `DKUtils Website <http://dkutils.dk.io/>`_.
+
+These details are listed in greater detail in the checklist below. This checklist should be referenced
+any time you intend to update this library.
+
+Deployment Checklist
+^^^^^^^^^^^^^^^^^^^^
+Ensure all of these items are performed and passing prior to running the
+`complete_cicd <https://cloud.datakitchen.io/dk/index.html#/variation/im/IM_Production/CICD_DKUtils/complete_cicd?tab=graph>`_
+to build and deploy a new library version:
+
+* Run :command:`make test`
+
+  * Ensure all tests pass
+  * Ensure code coverage is adequate and not significantly different than before your change and no less than 80%
+
+* Run :command:`make lint`
+
+  * Fix any issues reported by Flake8
+  * Commit any changes made automatically by YAPF
+
+* Run :command:`make scan_secrets`
+
+  * Remove any secrets that have been added
+  * Add output lines that don't contain secrets to the ignored_secrets.txt file and commit
+
+* Run :command:`make docs`
+
+  * Ensure you added an entry to the release notes (:file:`/docs/release_notes.rst`) with the
+    appropriate semantic version increment
+  * Resolve any warnings or errors (i.e. red text in output) except for the following warning
+    which is a known bug in Sphinx: ``WARNING: html_static_path entry '_static' does not exist``
+  * Review your documentation updates (i.e. open :file:`/docs/_build/html/index.html` in your browser)
+
+* Create a PR (Pull Request) of your branch
+
+  * Assign it to one or more Implementation team members
+  * Address any PR feedback - approval is required prior to a merge
+
+*  Run `branch_ci <https://cloud.datakitchen.io/dk/index.html#/variation/im/IM_Production/CICD_DKUtils/branch_ci?tab=graph>`_
+   recipe variation
+
+  * Make sure you override the ``branch`` variable with the name of your current branch
+  * Ensure this recipe passes before merging your PR to master
+
+* Merge your branch into master
+* Run `complete_cicd <https://cloud.datakitchen.io/dk/index.html#/variation/im/IM_Production/CICD_DKUtils/complete_cicd?tab=graph>`_
+  recipe variation
+
+  * Tags current master with the new semantic version (e.g. v0.5.0)
+  * Scans the code for secrets by running :command:`make scan_secrets`
+  * Lints the code by running :command:`make lint`
+  * Runs the tests by running :command:`make test`
+  * Bumps the version by running :command:`make bump/<semantic_version_increment>`
+  * Builds and uploads the distribution archives by running :command:`make build` and :command:`make upload`
+  * Builds and uploads the documentation by running :command:`make docs`
+
+    * Docs and test & coverage results are published to `DKUtils Website <http://dkutils.dk.io/>`_
+    * You must be on the VPN to view the documentation and may need to add ``3.225.225.176  dkutils.dk.io`` to
+      your :file:`/etc/hosts` file
+
+* Ensure a new package version was uploaded to `PyPI <https://pypi.org/project/DKUtils/>`_
+
+  * Pip install your new package and run some smoke tests to ensure your new changes are working as expected
 
 Code formatting and standards
 -----------------------------
