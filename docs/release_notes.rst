@@ -1,6 +1,10 @@
 DKUtils Release Notes
 =====================
 
+v0.6.0
+------
+* Added StreamSets DataCollector client
+
 v0.5.0
 ------
 * Added create/resume and monitor orders methods to DataKitchen API Client
