@@ -1,6 +1,10 @@
 DKUtils Release Notes
 =====================
 
+v0.6.1
+------
+* Documented development process for updating and deploying this DKUtils library
+
 v0.6.0
 ------
 * Added StreamSets DataCollector client
