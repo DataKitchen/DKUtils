@@ -2,10 +2,7 @@ from enum import Enum
 
 import requests
 
-from dkutils.constants import (
-    API_GET,
-    API_POST
-)
+from dkutils.constants import (API_GET, API_POST)
 
 
 class PipelineStatus(Enum):
@@ -16,11 +13,11 @@ class PipelineStatus(Enum):
     STOPPED = 'STOPPED'  # The pipeline was manually stopped.
     START_ERROR = 'START_ERROR'  # The pipeline encountered an error while starting and failed to start.
     STOP_ERROR = 'STOP_ERROR'  # The pipeline encountered an error while stopping.
-    CONNECT_ERROR = 'CONNECT_ERROR'  # When running a cluster-mode pipeline, Data Collector cannot connect to the underlying cluster manager, such as Mesos or YARN.
+    CONNECT_ERROR = 'CONNECT_ERROR'  # noqa: When running a cluster-mode pipeline, Data Collector cannot connect to the underlying cluster manager, such as Mesos or YARN.
     CONNECTING = 'CONNECTING'  # The pipeline is preparing to restart after a Data Collector restart.
-    DISCONNECTED = 'DISCONNECTED'  # The pipeline is disconnected from external systems, typically because Data Collector is restarting or shutting down.
+    DISCONNECTED = 'DISCONNECTED'  # noqa: The pipeline is disconnected from external systems, typically because Data Collector is restarting or shutting down.
     FINISHING = 'FINISHING'  # The pipeline is in the process of finishing all expected processing.
-    RETRY = 'RETRY'  # The pipeline is trying to run after encountering an error while running. This occurs only when the pipeline is configured for a retry upon error.
+    RETRY = 'RETRY'  # noqa: The pipeline is trying to run after encountering an error while running. This occurs only when the pipeline is configured for a retry upon error.
     RUNNING_ERROR = 'RUNNING_ERROR'  # The pipeline encounters errors while running.
     STARTING = 'STARTING'  # The pipeline is initializing, but hasn't started yet.
     STARTING_ERROR = 'STARTING_ERROR'  # The pipeline encounters errors while starting.
@@ -30,11 +27,10 @@ class PipelineStatus(Enum):
 
 class DataCollectorClient:
 
-    def __init__(
-            self, host, port, username, password
-    ):
+    def __init__(self, host, port, username, password):
         """
-        Client object for invoking `StreamSets Data Collector REST API<https://streamsets.com/blog/retrieving-metrics-via-streamsets-data-collector-rest-api/>'
+        Client object for invoking `StreamSets Data Collector
+        REST API<https://streamsets.com/blog/retrieving-metrics-via-streamsets-data-collector-rest-api/>'
 
         Parameters
         ----------
@@ -81,7 +77,9 @@ class DataCollectorClient:
         """
         api_request = getattr(requests, http_method)
         api_path = f'{self._base_url}{"/".join(args)}'
-        response = api_request(api_path, auth=self._auth, headers={'X-Requested-By': 'DataKitchen'}, json=kwargs)
+        response = api_request(
+            api_path, auth=self._auth, headers={'X-Requested-By': 'DataKitchen'}, json=kwargs
+        )
         response.raise_for_status()
         return response
 
@@ -112,7 +110,9 @@ class DataCollectorClient:
         requests.Response.json()
         """
         self._validate_pipline_id(pipeline_id)
-        return self._api_request(http_method, 'pipeline', pipeline_id, f'{operation}?rev=0', **kwargs).json()
+        return self._api_request(
+            http_method, 'pipeline', pipeline_id, f'{operation}?rev=0', **kwargs
+        ).json()
 
     def get_pipeline_full_status(self, pipeline_id):
         """
