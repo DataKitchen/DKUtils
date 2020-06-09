@@ -1,7 +1,7 @@
 class DictionaryComparator:
 
     def __init__(self, left, right):
-        """Utility than can be used to perform a shallow comparison on two dictionaries. """
+        """Utility that can be used to perform a shallow comparison on two dictionaries. """
         self._left = left
         self._right = right
 
