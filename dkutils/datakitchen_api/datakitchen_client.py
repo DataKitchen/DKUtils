@@ -16,12 +16,14 @@ from dkutils.constants import (
     ORDER_RUN_STATUS,
     OVERRIDES,
     PARAMETERS,
+    PARENT_KITCHEN,
     RECIPE,
     STOPPED_STATUS_TYPES,
     VARIATION,
 )
 from dkutils.validation import get_max_concurrency, skip_token_validation
 from dkutils.wait_loop import WaitLoop
+from dkutils.dictionary_comparator import DictionaryComparator
 from .datetime_utils import get_utc_timestamp
 
 # The servings API endpoint retrieves only 10 order runs by default. To retrieve them all, assume
@@ -690,6 +692,30 @@ class DataKitchenClient:
         }
         return self._api_request(API_POST, 'vault', 'config', **payload)
 
+    def _get_kitchens_info(self):
+        """
+        Get information about available kitchens
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+
+        Returns
+        -------
+        dict
+            A dictionary keyed by kitchen name containing information about each kitchen
+        """
+        kitchens = {}
+        for kitchen in self._api_request(API_GET, 'kitchen', 'list').json()['kitchens']:
+            name = kitchen['name']
+            if name in kitchens:
+                raise ValueError(
+                    f'More than 1 kitchen with the name: {name} found in list of kitchens'
+                )
+            kitchens[name] = kitchen
+        return kitchens
+
     def _get_kitchen_info(self):
         """
         Gets information about the current kitchen
@@ -704,12 +730,9 @@ class DataKitchenClient:
 
         """
         self._ensure_attributes(KITCHEN)
-        kitchens = self._api_request(API_GET, 'kitchen', 'list').json()['kitchens']
-        kitchens = [kitchen for kitchen in kitchens if kitchen['name'] == self.kitchen]
-        kitchen_count = len(kitchens)
-        if kitchen_count != 1:
-            raise ValueError(f'{kitchen_count} kitchens were found with the name {self.kitchen}')
-        return kitchens[0]
+        kitchens = self._get_kitchens_info()
+        _check_for_kitchens(self.kitchen, kitchens)
+        return kitchens[self.kitchen]
 
     def _update_kitchen(self, kitchen_info):
         """
@@ -809,3 +832,37 @@ class DataKitchenClient:
         kitchen_info = self._get_kitchen_info()
         kitchen_info[OVERRIDES] = overrides
         self._update_kitchen(kitchen_info)
+
+    def compare_overrides(self, other=None):
+        """
+        Compare the overrides in the current kitchen to those of the specified kitchen. If other is None then
+        the comparison is done against the parent kitchen
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+        ValueError
+            If the kitchen attribute is not set
+            If the name of the specified kitchen doesn't match any available kitchen
+
+        Returns
+        _______
+        DictionaryComparator
+            A DictionaryCompparator which can be used to get the results of the comparison
+        """
+        self._ensure_attributes(KITCHEN)
+        kitchens = self._get_kitchens_info()
+        _check_for_kitchens(self.kitchen, kitchens)
+        my_kitchen_info = kitchens[self.kitchen]
+        if not other:
+            other = my_kitchen_info[PARENT_KITCHEN]
+        _check_for_kitchens(other, kitchens)
+        my_overrides = my_kitchen_info[OVERRIDES]
+        other_overrides = kitchens[other][OVERRIDES]
+        return DictionaryComparator(my_overrides, other_overrides)
+
+
+def _check_for_kitchens(kitchen, kitchens):
+    if kitchen not in kitchens:
+        raise ValueError(f'No kitchen with the name: {kitchen} was found in the available kitchens')

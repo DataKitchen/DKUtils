@@ -22,17 +22,24 @@ class TestDictionaryComparator(TestCase):
 
     def test_left_equals_right_when_keys_are_same_but_some_values_are_different_returns_false(self):
         self.assertFalse(DictionaryComparator(DICT_1, DICT_3).left_equals_right())
+
     def test_get_keys_only_in_left_when_keys_same_returns_empty_set(self):
         self.assertEqual(set(), DictionaryComparator(DICT_1, DICT_1).get_keys_only_in_left())
 
     def test_get_keys_only_in_left_returns_keys_in_left(self):
-        self.assertEqual(KEYS_1 - KEYS_2, DictionaryComparator(DICT_1, DICT_2).get_keys_only_in_left())
+        self.assertEqual(
+            KEYS_1 - KEYS_2,
+            DictionaryComparator(DICT_1, DICT_2).get_keys_only_in_left()
+        )
 
     def test_get_keys_only_in_right_when_keys_same_returns_empty_set(self):
         self.assertEqual(set(), DictionaryComparator(DICT_1, DICT_1).get_keys_only_in_right())
 
     def test_get_keys_only_in_right_returns_keys_in_right(self):
-        self.assertEqual(KEYS_2 - KEYS_1, DictionaryComparator(DICT_1, DICT_2).get_keys_only_in_right())
+        self.assertEqual(
+            KEYS_2 - KEYS_1,
+            DictionaryComparator(DICT_1, DICT_2).get_keys_only_in_right()
+        )
 
     def test_get_keys_in_both_when_keys_same_returns_empty_set(self):
         self.assertEqual(KEYS_1, DictionaryComparator(DICT_1, DICT_1).get_keys_in_both())
@@ -58,3 +65,9 @@ class TestDictionaryComparator(TestCase):
 
     def test_right(self):
         self.assertEqual(DICT_2, DictionaryComparator(DICT_1, DICT_2).right)
+
+    def test__eq__when_same_returns_true(self):
+        self.assertEqual(DictionaryComparator(DICT_1, DICT_2), DictionaryComparator(DICT_1, DICT_2))
+
+    def test__eq__on_non_dictionary_comparator_returns_false(self):
+        self.assertNotEqual(DictionaryComparator(DICT_1, DICT_2), "bob")

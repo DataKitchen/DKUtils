@@ -5,6 +5,11 @@ class DictionaryComparator:
         self._left = left
         self._right = right
 
+    def __eq__(self, other):
+        if isinstance(other, DictionaryComparator):
+            return self._left == other._left and self._right == other._right
+        return NotImplemented
+
     @property
     def left(self):
         return self._left
@@ -67,8 +72,11 @@ class DictionaryComparator:
             A dictionary where the key is the keys that occured in both left and right and the  value is a tuple made
             up of the value from the left and the value from the right
         """
-        return {key: (self._left[key], self._right[key]) for key in self.get_keys_in_both() if
-                self._left[key] != self._right[key]}
+        return {
+            key: (self._left[key], self._right[key])
+            for key in self.get_keys_in_both()
+            if self._left[key] != self._right[key]
+        }
 
     def merge_left(self):
         """
