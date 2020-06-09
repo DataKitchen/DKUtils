@@ -6,8 +6,7 @@ PARAMETERS = 'parameters'
 ORDER_ID = 'order_id'
 ORDER_RUN_ID = 'order_run_id'
 ORDER_RUN_STATUS = 'order_run_status'
-OVERRIDES = 'recipeoverrides'
-PARENT_KITCHEN = 'parent-kitchen'
+RECIPE_OVERRIDES = 'recipeoverrides'
 
 # API HTTP Request Methods
 API_GET = 'get'

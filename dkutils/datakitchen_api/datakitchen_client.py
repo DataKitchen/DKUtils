@@ -14,7 +14,7 @@ from dkutils.constants import (
     ORDER_ID,
     ORDER_RUN_ID,
     ORDER_RUN_STATUS,
-    OVERRIDES,
+    RECIPE_OVERRIDES,
     PARAMETERS,
     PARENT_KITCHEN,
     RECIPE,
@@ -881,7 +881,7 @@ class DataKitchenClient:
             A dictionary containing the overides
 
         """
-        return self._get_kitchen_info()[OVERRIDES]
+        return self._get_kitchen_info()[RECIPE_OVERRIDES]
 
     def update_overrides(self, overrides):
         """
@@ -901,7 +901,7 @@ class DataKitchenClient:
             If the name in the given kitchen_info does not match that of the current kitchen
         """
         kitchen_info = self._get_kitchen_info()
-        kitchen_info[OVERRIDES] = overrides
+        kitchen_info[RECIPE_OVERRIDES] = overrides
         self._update_kitchen(kitchen_info)
 
     def compare_overrides(self, other=None):
@@ -928,6 +928,6 @@ class DataKitchenClient:
         if not other:
             other = my_kitchen_info[PARENT_KITCHEN]
         _ensure_and_get_kitchen(other, kitchens)
-        my_overrides = my_kitchen_info[OVERRIDES]
-        other_overrides = kitchens[other][OVERRIDES]
+        my_overrides = my_kitchen_info[RECIPE_OVERRIDES]
+        other_overrides = kitchens[other][RECIPE_OVERRIDES]
         return DictionaryComparator(my_overrides, other_overrides)
