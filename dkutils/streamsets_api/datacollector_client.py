@@ -30,7 +30,7 @@ class DataCollectorClient:
     def __init__(self, host, port, username, password):
         """
         Client object for invoking `StreamSets Data Collector
-        REST API<https://streamsets.com/blog/retrieving-metrics-via-streamsets-data-collector-rest-api/>'
+        REST API <https://streamsets.com/blog/retrieving-metrics-via-streamsets-data-collector-rest-api/>`_
 
         Parameters
         ----------
