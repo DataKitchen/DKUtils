@@ -14,18 +14,27 @@ from dkutils.constants import (
     ORDER_ID,
     ORDER_RUN_ID,
     ORDER_RUN_STATUS,
+    RECIPE_OVERRIDES,
     PARAMETERS,
+    PARENT_KITCHEN,
     RECIPE,
     STOPPED_STATUS_TYPES,
     VARIATION,
 )
 from dkutils.validation import get_max_concurrency, skip_token_validation
 from dkutils.wait_loop import WaitLoop
+from dkutils.dictionary_comparator import DictionaryComparator
 from .datetime_utils import get_utc_timestamp
 
 # The servings API endpoint retrieves only 10 order runs by default. To retrieve them all, assume
 # 100K exceeds the max order runs a given order will ever contain.
 DEFAULT_SERVINGS_COUNT = 100000
+
+
+def _ensure_and_get_kitchen(kitchen, kitchens):
+    if kitchen not in kitchens:
+        raise ValueError(f'No kitchen with the name: {kitchen} was found in the available kitchens')
+    return kitchens[kitchen]
 
 
 class DataKitchenClient:
@@ -688,3 +697,237 @@ class DataKitchenClient:
             }
         }
         return self._api_request(API_POST, 'vault', 'config', **payload)
+
+    def _get_kitchens_info(self):
+        """
+        Get information about available kitchens
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+
+        Returns
+        -------
+        dict
+            A dictionary keyed by kitchen name containing information about each kitchen.
+            For example:
+                {"test_kitchen": {
+                    '_created': None,
+                    '_finished': False,
+                    'created_time': 1582037782076,
+                    'creator_user': 'ddicara+im@datakitchen.io',
+                    'customer': 'Implementation',
+                    'description': 'Implementation Customer development environment.',
+                    'git_name': 'im',
+                    'git_org': 'DKImplementation',
+                    'kitchen-staff': ['aarthy+im@datakitchen.io'],
+                    'mesos-constraint': True,
+                    'mesos-group': 'implementation_dev',
+                    'name': 'IM_Development',
+                    'parent-kitchen': 'IM_Production',
+                    'recipeoverrides': {'DKUtilsVersion': '0.5.0'},
+                    'recipes': ['Utility_Wizard_Ingredients'],
+                    'restrict-recipes': False,
+                    'settings': {
+                        'agile-tools': None,
+                        'alerts': {
+                            'orderrunError': None, 'orderrunOverDuration': None,
+                            'orderrunStart': None, 'orderrunSuccess': None},
+                        'backup': {
+                            'backup_enabled': False, 'backup_failure_email': None,
+                            'backup_success_email': None, 'export_key_timing': False,
+                            'export_node_timing': False, 'export_test_data': False,
+                            'last_backup': None, 's3_access_key': None, 's3_bucket': None,
+                            's3_secret_key': None, 'target_folder': None}},
+                    'wizard-status': {}
+                }}
+
+        """
+        kitchens = {}
+        for kitchen in self._api_request(API_GET, 'kitchen', 'list').json()['kitchens']:
+            name = kitchen['name']
+            if name in kitchens:
+                raise ValueError(
+                    f'More than 1 kitchen with the name: {name} found in list of kitchens'
+                )
+            kitchens[name] = kitchen
+        return kitchens
+
+    def _get_kitchen_info(self):
+        """
+        Gets information about the current kitchen
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+        ValueError
+            If the kitchen attribute is not set
+            if more than one entry is found with the kitchen name
+
+        Returns
+        -------
+        dict
+            A dictionary containing information specific to the current kitchen in the form:
+                {
+                    '_created': None,
+                    '_finished': False,
+                    'created_time': 1582037782076,
+                    'creator_user': 'ddicara+im@datakitchen.io',
+                    'customer': 'Implementation',
+                    'description': 'Implementation Customer development environment.',
+                    'git_name': 'im',
+                    'git_org': 'DKImplementation',
+                    'kitchen-staff': ['aarthy+im@datakitchen.io'],
+                    'mesos-constraint': True,
+                    'mesos-group': 'implementation_dev',
+                    'name': 'IM_Development',
+                    'parent-kitchen': 'IM_Production',
+                    'recipeoverrides': {'DKUtilsVersion': '0.5.0'},
+                    'recipes': ['Utility_Wizard_Ingredients'],
+                    'restrict-recipes': False,
+                    'settings': {
+                        'agile-tools': None,
+                        'alerts': {
+                            'orderrunError': None, 'orderrunOverDuration': None,
+                            'orderrunStart': None, 'orderrunSuccess': None},
+                        'backup': {
+                            'backup_enabled': False, 'backup_failure_email': None,
+                            'backup_success_email': None, 'export_key_timing': False,
+                            'export_node_timing': False, 'export_test_data': False,
+                            'last_backup': None, 's3_access_key': None, 's3_bucket': None,
+                            's3_secret_key': None, 'target_folder': None}},
+                    'wizard-status': {}
+                }
+
+        """
+        self._ensure_attributes(KITCHEN)
+        kitchens = self._get_kitchens_info()
+        return _ensure_and_get_kitchen(self.kitchen, kitchens)
+
+    def _update_kitchen(self, kitchen_info):
+        """
+                Updates information about the current kitchen
+
+                Parameters
+                ----------
+                kitchen_info : dict
+                    A dictionary containing information about the current kitchen in the form:
+                        {
+                            '_created': None,
+                            '_finished': False,
+                            'created_time': 1582037782076,
+                            'creator_user': 'ddicara+im@datakitchen.io',
+                            'customer': 'Implementation',
+                            'description': 'Implementation Customer development environment.',
+                            'git_name': 'im',
+                            'git_org': 'DKImplementation',
+                            'kitchen-staff': ['aarthy+im@datakitchen.io'],
+                            'mesos-constraint': True,
+                            'mesos-group': 'implementation_dev',
+                            'name': 'IM_Development',
+                            'parent-kitchen': 'IM_Production',
+                            'recipeoverrides': {'DKUtilsVersion': '0.5.0'},
+                            'recipes': ['Utility_Wizard_Ingredients'],
+                            'restrict-recipes': False,
+                            'settings': {
+                                'agile-tools': None,
+                                'alerts': {
+                                    'orderrunError': None, 'orderrunOverDuration': None,
+                                    'orderrunStart': None, 'orderrunSuccess': None},
+                                'backup': {
+                                    'backup_enabled': False, 'backup_failure_email': None,
+                                    'backup_success_email': None, 'export_key_timing': False,
+                                    'export_node_timing': False, 'export_test_data': False,
+                                    'last_backup': None, 's3_access_key': None, 's3_bucket': None,
+                                    's3_secret_key': None, 'target_folder': None}},
+                            'wizard-status': {}
+                        }
+                Raises
+                ------
+                HTTPError
+                    If the request fails.
+                ValueError
+                    If the kitchen attribute is not set
+                    If the name in the given kitchen_info does not match that of the current kitchen
+
+                """
+        self._ensure_attributes(KITCHEN)
+        if kitchen_info['name'] != self.kitchen:
+            raise (
+                ValueError(
+                    f'Name in kitchen_info: {kitchen_info["name"]} does not match current kitchen: {self.kitchen}'
+                )
+            )
+        payload = {"kitchen.json": kitchen_info}
+        self._api_request(API_POST, 'kitchen', 'update', self.kitchen, **payload)
+
+    def get_overrides(self):
+        """
+        Returns a dictionary containing the overrides for the current kitchen
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+        ValueError
+            If the kitchen attribute is not set
+            If the name in the given kitchen_info does not match that of the current kitchen
+
+        Returns
+        -------
+        dict
+            A dictionary containing the overides
+
+        """
+        return self._get_kitchen_info()[RECIPE_OVERRIDES]
+
+    def update_overrides(self, overrides):
+        """
+        Updates the overrides for the current kitchen
+
+        Parameters
+        ----------
+        dict
+            A dictionary containing the overrides
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+        ValueError
+            If the kitchen attribute is not set
+            If the name in the given kitchen_info does not match that of the current kitchen
+        """
+        kitchen_info = self._get_kitchen_info()
+        kitchen_info[RECIPE_OVERRIDES] = overrides
+        self._update_kitchen(kitchen_info)
+
+    def compare_overrides(self, other=None):
+        """
+        Compare the overrides in the current kitchen to those of the specified kitchen. If other is None then
+        the comparison is done against the parent kitchen
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+        ValueError
+            If the kitchen attribute is not set
+            If the name of the specified kitchen doesn't match any available kitchen
+
+        Returns
+        _______
+        DictionaryComparator
+            A DictionaryCompparator which can be used to get the results of the comparison
+        """
+        self._ensure_attributes(KITCHEN)
+        kitchens = self._get_kitchens_info()
+        my_kitchen_info = _ensure_and_get_kitchen(self.kitchen, kitchens)
+        if not other:
+            other = my_kitchen_info[PARENT_KITCHEN]
+        _ensure_and_get_kitchen(other, kitchens)
+        my_overrides = my_kitchen_info[RECIPE_OVERRIDES]
+        other_overrides = kitchens[other][RECIPE_OVERRIDES]
+        return DictionaryComparator(my_overrides, other_overrides)

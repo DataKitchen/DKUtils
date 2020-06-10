@@ -1,6 +1,10 @@
 DKUtils Release Notes
 =====================
 
+v0.7.0
+------
+* Added functions to support retrieving, updating and comparing kitchen overrides
+
 v0.6.1
 ------
 * Documented development process for updating and deploying this DKUtils library
