@@ -14,7 +14,7 @@ current as of release |release|.
    :maxdepth: 2
    :caption: Contents:
 
-   DKUtils <apidoc/modules>
+   Code Documentation <apidoc/modules>
    guide
    release_notes
 

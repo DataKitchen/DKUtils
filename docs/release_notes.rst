@@ -1,5 +1,10 @@
-DKUtils Release Notes
-=====================
+Release Notes
+=============
+
+v0.7.1
+------
+* Made some minor documentation changes
+* Added __str__ method to DictionaryComparator
 
 v0.7.0
 ------
