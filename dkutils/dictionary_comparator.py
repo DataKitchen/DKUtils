@@ -1,7 +1,20 @@
+from pprint import pformat
+from textwrap import indent
+
+
 class DictionaryComparator:
 
     def __init__(self, left, right):
-        """Utility that can be used to perform a shallow comparison on two dictionaries. """
+        """
+        Utility that can be used to perform a shallow comparison on two dictionaries.
+
+        Parameters
+        ----------
+        left : dict
+            Left dictionary.
+        right : dict
+            Right dictionary
+        """
         self._left = left
         self._right = right
 
@@ -9,6 +22,14 @@ class DictionaryComparator:
         if isinstance(other, DictionaryComparator):
             return self._left == other._left and self._right == other._right
         return NotImplemented
+
+    def __str__(self):
+        left_keys_only = f'\tKeys only in left: \n\t\t{self.get_keys_only_in_left()}\n'
+        right_keys_only = f'\tKeys only in right: \n\t\t{self.get_keys_only_in_right()}\n'
+        same_keys_different_values = pformat(self.get_same_keys_different_values())
+        same_keys_different_values = indent(same_keys_different_values, '\t\t')
+        same_keys_different_values = f'\tSame Keys but different values: \n{same_keys_different_values}'
+        return left_keys_only + right_keys_only + same_keys_different_values
 
     @property
     def left(self):
@@ -81,10 +102,13 @@ class DictionaryComparator:
     def merge_left(self):
         """
         Merge the dictionaries with preference being given to dictionary on the right if a key exists on both sides.
-        For example given:
+        For example given::
+
             left = {'one': 1, 'two': 2, 'three': 3 }
             right = {'two': 2, 'three': 'III' }
-        merge_left will result in the following:
+
+        merge_left will result in the following::
+
             {'one': 1, 'two': 2, 'three': 'III', 'four': 4 }
 
         Returns
@@ -98,10 +122,13 @@ class DictionaryComparator:
     def merge_right(self):
         """
         Merge the dictionaries with preference being given to dictionary on the left if a key exists on both sides.
-        For example given:
+        For example given::
+
             left = {'one': 1, 'two': 2, 'three': 3 }
             right = {'two': 2, 'three': 'III' }
-        merge_left will result in the following:
+
+        merge_left will result in the following::
+
             {'one': 1, 'two': 2, 'three': '3', 'four': 4 }
 
         Returns

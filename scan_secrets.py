@@ -249,6 +249,11 @@ def parse_accepted_cases(path):
     results = {}
 
     for line in lines:
+        # Ignore blank and comments
+        line = line.strip()
+        if not line or line.startswith('#'):
+            continue
+
         tokens = line.split(',')
         filepath = tokens[0]
         line = int(tokens[1])

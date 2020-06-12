@@ -1,10 +1,11 @@
-DKUtils Guide
-=============
+Development Guide
+=================
 
-This guide provides an overview of the various third-party tools that have been added
-to this repository to aid in the development and maintenance of a clean, well tested, and
-well documented python package. In addition, it provides a checklist of items a developer
-should follow when adding content to this package.
+This guide explains how to contribute code to the DKUtils library. The development
+process and accompanying checklist detail the steps a developer must follow to deploy
+new code. Additionally, an overview is provided of the third-party tools added to
+aid in the development and maintenance of a clean, well tested, and well documented
+python library.
 
 Development Process
 ---------------------
@@ -54,8 +55,7 @@ to build and deploy a new library version:
 
   * Ensure you added an entry to the release notes (:file:`/docs/release_notes.rst`) with the
     appropriate semantic version increment
-  * Resolve any warnings or errors (i.e. red text in output) except for the following warning
-    which is a known bug in Sphinx: ``WARNING: html_static_path entry '_static' does not exist``
+  * Resolve any warnings or errors (i.e. red text in output)
   * Review your documentation updates (i.e. open :file:`/docs/_build/html/index.html` in your browser)
 
 * Create a PR (Pull Request) of your branch

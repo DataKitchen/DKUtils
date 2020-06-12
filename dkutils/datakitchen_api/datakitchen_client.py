@@ -31,7 +31,28 @@ from .datetime_utils import get_utc_timestamp
 DEFAULT_SERVINGS_COUNT = 100000
 
 
-def _ensure_and_get_kitchen(kitchen, kitchens):
+def ensure_and_get_kitchen(kitchen, kitchens):
+    """
+    Ensure the provided kitchens dictionary contains the provided kitchen and if so, return
+    its kitchen info. Otherwise, raise an exception.
+
+    Parameters
+    ----------
+    kitchen : str
+        Name of the kitchen
+    kitchens : dict
+        Dictionary keyed by kitchen name and valued by a dictionary of kitchen info
+
+    Raises
+    ------
+    ValueError
+        If provided kitchen name doesn't exist in the provided kitchens dictionary
+
+    Returns
+    -------
+    dict
+        Kitchen info
+    """
     if kitchen not in kitchens:
         raise ValueError(f'No kitchen with the name: {kitchen} was found in the available kitchens')
     return kitchens[kitchen]
@@ -711,17 +732,18 @@ class DataKitchenClient:
         -------
         dict
             A dictionary keyed by kitchen name containing information about each kitchen.
-            For example:
+            For example::
+
                 {"test_kitchen": {
                     '_created': None,
                     '_finished': False,
                     'created_time': 1582037782076,
-                    'creator_user': 'ddicara+im@datakitchen.io',
+                    'creator_user': '',
                     'customer': 'Implementation',
                     'description': 'Implementation Customer development environment.',
                     'git_name': 'im',
                     'git_org': 'DKImplementation',
-                    'kitchen-staff': ['aarthy+im@datakitchen.io'],
+                    'kitchen-staff': [],
                     'mesos-constraint': True,
                     'mesos-group': 'implementation_dev',
                     'name': 'IM_Development',
@@ -769,17 +791,18 @@ class DataKitchenClient:
         Returns
         -------
         dict
-            A dictionary containing information specific to the current kitchen in the form:
+            A dictionary containing information specific to the current kitchen in the form::
+
                 {
                     '_created': None,
                     '_finished': False,
                     'created_time': 1582037782076,
-                    'creator_user': 'ddicara+im@datakitchen.io',
+                    'creator_user': '',
                     'customer': 'Implementation',
                     'description': 'Implementation Customer development environment.',
                     'git_name': 'im',
                     'git_org': 'DKImplementation',
-                    'kitchen-staff': ['aarthy+im@datakitchen.io'],
+                    'kitchen-staff': [],
                     'mesos-constraint': True,
                     'mesos-group': 'implementation_dev',
                     'name': 'IM_Development',
@@ -804,7 +827,7 @@ class DataKitchenClient:
         """
         self._ensure_attributes(KITCHEN)
         kitchens = self._get_kitchens_info()
-        return _ensure_and_get_kitchen(self.kitchen, kitchens)
+        return ensure_and_get_kitchen(self.kitchen, kitchens)
 
     def _update_kitchen(self, kitchen_info):
         """
@@ -813,17 +836,18 @@ class DataKitchenClient:
                 Parameters
                 ----------
                 kitchen_info : dict
-                    A dictionary containing information about the current kitchen in the form:
+                    A dictionary containing information about the current kitchen in the form::
+
                         {
                             '_created': None,
                             '_finished': False,
                             'created_time': 1582037782076,
-                            'creator_user': 'ddicara+im@datakitchen.io',
+                            'creator_user': '',
                             'customer': 'Implementation',
                             'description': 'Implementation Customer development environment.',
                             'git_name': 'im',
                             'git_org': 'DKImplementation',
-                            'kitchen-staff': ['aarthy+im@datakitchen.io'],
+                            'kitchen-staff': [],
                             'mesos-constraint': True,
                             'mesos-group': 'implementation_dev',
                             'name': 'IM_Development',
@@ -844,6 +868,7 @@ class DataKitchenClient:
                                     's3_secret_key': None, 'target_folder': None}},
                             'wizard-status': {}
                         }
+
                 Raises
                 ------
                 HTTPError
@@ -924,10 +949,10 @@ class DataKitchenClient:
         """
         self._ensure_attributes(KITCHEN)
         kitchens = self._get_kitchens_info()
-        my_kitchen_info = _ensure_and_get_kitchen(self.kitchen, kitchens)
+        my_kitchen_info = ensure_and_get_kitchen(self.kitchen, kitchens)
         if not other:
             other = my_kitchen_info[PARENT_KITCHEN]
-        _ensure_and_get_kitchen(other, kitchens)
+        ensure_and_get_kitchen(other, kitchens)
         my_overrides = my_kitchen_info[RECIPE_OVERRIDES]
         other_overrides = kitchens[other][RECIPE_OVERRIDES]
         return DictionaryComparator(my_overrides, other_overrides)
