@@ -1,5 +1,6 @@
-from jira import JIRA
 import pandas as pd
+
+from jira import JIRA
 from jira.exceptions import JIRAError
 
 DEFAULT_FIELDS = ['created', 'creator', 'assignee', 'status', 'issuetype', 'priority', 'summary', 'description',
@@ -19,9 +20,9 @@ class JiraClient:
         server: str
             The server address and context path to use. Defaults to http://localhost:2990/jira
         username : str
-          Username to establish a session via HTTP BASIC authentication.
+            Username to establish a session via HTTP BASIC authentication.
         api_key : str
-          API Key to establish a session via HTTP BASIC authentication.
+            API Key to establish a session via HTTP BASIC authentication.
         """
         options = {
             'server': server
@@ -54,10 +55,8 @@ class JiraClient:
             issue = self._client.issue(issue_key)
             transition_id = self._client.find_transitionid_by_name(issue_key, status)
             if transition_id is None:
-                print(f'Error: Transition "{status}" does not exist for Issue {issue_key}.')
-                raise KeyError
+                raise KeyError(f'Error: Transition "{status}" does not exist for Issue {issue_key}.')
             self._client.transition_issue(issue, transition_id)
-            return
         except JIRAError:
             print(f'Error: Issue "{issue_key}" does not exist.')
             raise
@@ -90,7 +89,8 @@ class JiraClient:
 
     def get_issue_field(self, issue, field):
         """
-        Helper function that returns the value of the requested value for an issue. This function is used in the get_issues() funtion to extract the fields of an issue.
+        Helper function that returns the value of the requested value for an issue. This function is used in the
+        get_issues() funtion to extract the fields of an issue.
 
         Parameters
         ----------
@@ -173,7 +173,7 @@ class JiraClient:
             block_num += 1
             issues = self._client.search_issues(f'project={project}', block_num * block_size, block_size)
 
-        # Loop over all JIRA issues and extract base fields defined by BASE_FUNCTIONS and requested fields defined by fields
+        # Loop over all issues and extract project, issue and requested fields defined by the parameter fields
         for issue in all_issues:
             issue_details = [project, issue]
             extract_fields = list(map(lambda n: self.get_issue_field(issue, n), fields))
