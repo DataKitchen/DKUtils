@@ -1,8 +1,6 @@
 from jira import JIRA
 import pandas as pd
-import requests
 from jira.exceptions import JIRAError
-from requests.exceptions import HTTPError
 
 DEFAULT_FIELDS = ['created', 'creator', 'assignee', 'status', 'issuetype', 'priority', 'summary', 'description',
                   'resolution', 'resolutiondate']
@@ -30,7 +28,6 @@ class JiraClient:
         }
         self._client = JIRA(options, basic_auth=(username, api_key))
 
-    # Transition the jira ticket to JIRA_STATUS
     def transition_issue(self, issue_key, status):
         """
         Perform a transition on an issue.
