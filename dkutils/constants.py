@@ -1,5 +1,6 @@
 DEFAULT_DATAKITCHEN_URL = 'https://cloud.datakitchen.io'
 KITCHEN = 'kitchen'
+KITCHEN_STAFF = 'kitchen-staff'
 RECIPE = 'recipe'
 VARIATION = 'variation'
 PARAMETERS = 'parameters'
