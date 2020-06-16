@@ -1,7 +1,8 @@
 import copy
-import requests
+import json
 import traceback
 
+import requests
 from requests.exceptions import HTTPError
 
 from dkutils.constants import (
@@ -22,9 +23,9 @@ from dkutils.constants import (
     STOPPED_STATUS_TYPES,
     VARIATION,
 )
+from dkutils.dictionary_comparator import DictionaryComparator
 from dkutils.validation import get_max_concurrency, skip_token_validation
 from dkutils.wait_loop import WaitLoop
-from dkutils.dictionary_comparator import DictionaryComparator
 from .datetime_utils import get_utc_timestamp
 
 # The servings API endpoint retrieves only 10 order runs by default. To retrieve them all, assume
@@ -1025,3 +1026,36 @@ class DataKitchenClient:
             if staff_member not in kitchen_staff:
                 kitchen_staff.append(staff_member)
         self.update_kitchen_staff(kitchen_staff)
+
+    @staticmethod
+    def create_using_context(context="default", kitchen=None, recipe=None, variation=None):
+        """
+        This is a factory method that can be used to create a client using the context created by
+        DKCloudCommand
+
+        Parameters
+        ----------
+        context: str, optional
+            The name of a context created by DKCloudCommand
+        kitchen : str, optional
+            Kitchen to use in API requests
+        recipe : str, optional
+            Recipe to use in API requests
+        variation : str, optional
+            Variation to use in API requests
+
+        Returns
+        -------
+        DataKitchenClient
+            Client object for invoking DataKitchen API calls
+        """
+        with open(f"~/.dk/{context}/config.json") as json_file:
+            data = json.load(json_file)
+            return DataKitchenClient(
+                username=data['dk-cloud-username'],
+                password=data['dk-cloud-password'],
+                base_url=f"{data['dk-cloud-ip']}:{data['dk-cloud-port']}",
+                kitchen=kitchen,
+                recipe=recipe,
+                variation=variation
+            )

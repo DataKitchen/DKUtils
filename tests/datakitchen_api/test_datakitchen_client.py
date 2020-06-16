@@ -1,5 +1,6 @@
+import json
 from unittest import TestCase
-from unittest.mock import patch, call
+from unittest.mock import patch, call, mock_open
 
 from requests.exceptions import HTTPError
 
@@ -11,6 +12,7 @@ from dkutils.datakitchen_api.datakitchen_client import DataKitchenClient
 from dkutils.datakitchen_api.datetime_utils import get_utc_timestamp
 from dkutils.dictionary_comparator import DictionaryComparator
 
+DUMMY_PORT = "443"
 DUMMY_URL = 'https://dummy/url'
 DUMMY_AUTH_TOKEN = 'DATAKITCHEN_TOKEN'
 DUMMY_HEADERS = {'Authorization': f'Bearer {DUMMY_AUTH_TOKEN}'}
@@ -29,6 +31,12 @@ DUMMY_ORDER_RUN_ID2 = 'dummy_order_run_id2'
 LIST_KITCHEN_URL = f'{DUMMY_URL}/v2/kitchen/list'
 KITCHEN_STAFF = "kitchen-staff"
 RECIPE_OVERRIDES = "recipeoverrides"
+JSON_PROFILE = {
+    "dk-cloud-ip": DUMMY_URL,
+    "dk-cloud-port": DUMMY_PORT,
+    "dk-cloud-username": DUMMY_USERNAME,
+    "dk-cloud-password": DUMMY_PASSWORD
+}
 
 
 class MockResponse:
@@ -912,3 +920,36 @@ class TestDataKitchenClient(TestCase):
         dk_client.add_kitchen_staff(new_staff)
         mock_get_kitchen_info.assert_has_calls([call(), call()])
         mock_update_kitchen_info.assert_called_once_with(kitchen_info_with_new_staff)
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient')
+    def test_create_using_default_context(self, mock_client):
+        with patch('builtins.open', mock_open(read_data=json.dumps(JSON_PROFILE))) as m:
+            client = DataKitchenClient.create_using_context(
+                kitchen=DUMMY_KITCHEN, recipe=DUMMY_RECIPE, variation=DUMMY_VARIATION
+            )
+        m.assert_called_once_with(f'~/.dk/default/config.json')
+        mock_client.assert_called_once_with(
+            base_url=f'{DUMMY_URL}:{DUMMY_PORT}',
+            kitchen=DUMMY_KITCHEN,
+            password=DUMMY_PASSWORD,
+            recipe=DUMMY_RECIPE,
+            username=DUMMY_USERNAME,
+            variation=DUMMY_VARIATION
+        )
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient')
+    def test_create_using_context(self, mock_client):
+        with patch('builtins.open', mock_open(read_data=json.dumps(JSON_PROFILE))) as m:
+            context = 'test'
+            client = DataKitchenClient.create_using_context(
+                context, kitchen=DUMMY_KITCHEN, recipe=DUMMY_RECIPE, variation=DUMMY_VARIATION
+            )
+        m.assert_called_once_with(f'~/.dk/{context}/config.json')
+        mock_client.assert_called_once_with(
+            base_url=f'{DUMMY_URL}:{DUMMY_PORT}',
+            kitchen=DUMMY_KITCHEN,
+            password=DUMMY_PASSWORD,
+            recipe=DUMMY_RECIPE,
+            username=DUMMY_USERNAME,
+            variation=DUMMY_VARIATION
+        )
