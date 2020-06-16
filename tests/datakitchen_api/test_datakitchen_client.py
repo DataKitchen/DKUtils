@@ -1,5 +1,6 @@
+import json
 from unittest import TestCase
-from unittest.mock import patch
+from unittest.mock import patch, call, mock_open
 
 from requests.exceptions import HTTPError
 
@@ -7,12 +8,11 @@ from dkutils.constants import (
     COMPLETED_SERVING, KITCHEN, ORDER_ID, ORDER_RUN_ID, ORDER_RUN_STATUS, PARAMETERS,
     PLANNED_SERVING, RECIPE, VARIATION, PARENT_KITCHEN
 )
-from dkutils.datakitchen_api.datakitchen_client import DataKitchenClient
+from dkutils.datakitchen_api.datakitchen_client import DataKitchenClient, create_using_context
 from dkutils.datakitchen_api.datetime_utils import get_utc_timestamp
 from dkutils.dictionary_comparator import DictionaryComparator
 
-RECIPE_OVERRIDES = "recipeoverrides"
-
+DUMMY_PORT = "443"
 DUMMY_URL = 'https://dummy/url'
 DUMMY_AUTH_TOKEN = 'DATAKITCHEN_TOKEN'
 DUMMY_HEADERS = {'Authorization': f'Bearer {DUMMY_AUTH_TOKEN}'}
@@ -29,6 +29,14 @@ DUMMY_ORDER_ID2 = 'dummy_order_id2'
 DUMMY_ORDER_RUN_ID = 'dummy_order_run_id'
 DUMMY_ORDER_RUN_ID2 = 'dummy_order_run_id2'
 LIST_KITCHEN_URL = f'{DUMMY_URL}/v2/kitchen/list'
+KITCHEN_STAFF = "kitchen-staff"
+RECIPE_OVERRIDES = "recipeoverrides"
+JSON_PROFILE = {
+    "dk-cloud-ip": DUMMY_URL,
+    "dk-cloud-port": DUMMY_PORT,
+    "dk-cloud-username": DUMMY_USERNAME,
+    "dk-cloud-password": DUMMY_PASSWORD
+}
 
 
 class MockResponse:
@@ -850,4 +858,98 @@ class TestDataKitchenClient(TestCase):
         self.assertEqual(
             DictionaryComparator(kitchen_overrides, other_kitchen_overrides),
             dk_client.compare_overrides()
+        )
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._get_kitchen_info')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_get_kitchen_staff(self, _, mock_get_kitchen_info):
+        dk_client = DataKitchenClient(
+            DUMMY_USERNAME, DUMMY_PASSWORD, kitchen=DUMMY_KITCHEN, base_url=DUMMY_URL
+        )
+        kitchen_staff = ["ehill+im@datakitchen.io"]
+        mock_get_kitchen_info.return_value = {KITCHEN_STAFF: kitchen_staff}
+        self.assertEqual(kitchen_staff, dk_client.get_kitchen_staff())
+        mock_get_kitchen_info.assert_called_once_with()
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._update_kitchen')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._get_kitchen_info')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_update_kitchen_staff(self, _, mock_get_kitchen_info, mock_update_kitchen_info):
+        dk_client = DataKitchenClient(
+            DUMMY_USERNAME, DUMMY_PASSWORD, kitchen=DUMMY_KITCHEN, base_url=DUMMY_URL
+        )
+        kitchen_info_with_original_kitchen_staff = {
+            "name": DUMMY_KITCHEN,
+            KITCHEN_STAFF: [DUMMY_USERNAME]
+        }
+        new_staff = [DUMMY_USERNAME, "newguy+im@datakitchen.io"]
+        kitchen_info_with_new_staff = kitchen_info_with_original_kitchen_staff.copy()
+        kitchen_info_with_new_staff[KITCHEN_STAFF] = new_staff
+        mock_get_kitchen_info.return_value = kitchen_info_with_original_kitchen_staff
+        dk_client.update_kitchen_staff(new_staff)
+        mock_get_kitchen_info.assert_called_once_with()
+        mock_update_kitchen_info.assert_called_once_with(kitchen_info_with_new_staff)
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_update_kitchen_staff_when_current_user_is_removed_then_value_error_is_raised(self, _):
+        dk_client = DataKitchenClient(
+            DUMMY_USERNAME, DUMMY_PASSWORD, kitchen=DUMMY_KITCHEN, base_url=DUMMY_URL
+        )
+        with self.assertRaises(ValueError) as cm:
+            dk_client.update_kitchen_staff(["some@email.com"])
+        self.assertEqual(
+            f'Current user: {DUMMY_USERNAME} can not be removed from kitchen staff',
+            cm.exception.args[0]
+        )
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._update_kitchen')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._get_kitchen_info')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_add_kitchen_staff(self, _, mock_get_kitchen_info, mock_update_kitchen_info):
+        dk_client = DataKitchenClient(
+            DUMMY_USERNAME, DUMMY_PASSWORD, kitchen=DUMMY_KITCHEN, base_url=DUMMY_URL
+        )
+        kitchen_info_with_original_kitchen_staff = {
+            "name": DUMMY_KITCHEN,
+            KITCHEN_STAFF: [DUMMY_USERNAME]
+        }
+        new_staff = [DUMMY_USERNAME, "newguy+im@datakitchen.io"]
+        kitchen_info_with_new_staff = kitchen_info_with_original_kitchen_staff.copy()
+        kitchen_info_with_new_staff[KITCHEN_STAFF] = new_staff
+        mock_get_kitchen_info.return_value = kitchen_info_with_original_kitchen_staff
+        dk_client.add_kitchen_staff(new_staff)
+        mock_get_kitchen_info.assert_has_calls([call(), call()])
+        mock_update_kitchen_info.assert_called_once_with(kitchen_info_with_new_staff)
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient')
+    def test_create_using_default_context(self, mock_client):
+        with patch('builtins.open', mock_open(read_data=json.dumps(JSON_PROFILE))) as m:
+            client = create_using_context(
+                kitchen=DUMMY_KITCHEN, recipe=DUMMY_RECIPE, variation=DUMMY_VARIATION
+            )
+        m.assert_called_once_with(f'~/.dk/default/config.json')
+        mock_client.assert_called_once_with(
+            base_url=f'{DUMMY_URL}:{DUMMY_PORT}',
+            kitchen=DUMMY_KITCHEN,
+            password=DUMMY_PASSWORD,
+            recipe=DUMMY_RECIPE,
+            username=DUMMY_USERNAME,
+            variation=DUMMY_VARIATION
+        )
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient')
+    def test_create_using_context(self, mock_client):
+        with patch('builtins.open', mock_open(read_data=json.dumps(JSON_PROFILE))) as m:
+            context = 'test'
+            client = create_using_context(
+                context, kitchen=DUMMY_KITCHEN, recipe=DUMMY_RECIPE, variation=DUMMY_VARIATION
+            )
+        m.assert_called_once_with(f'~/.dk/{context}/config.json')
+        mock_client.assert_called_once_with(
+            base_url=f'{DUMMY_URL}:{DUMMY_PORT}',
+            kitchen=DUMMY_KITCHEN,
+            password=DUMMY_PASSWORD,
+            recipe=DUMMY_RECIPE,
+            username=DUMMY_USERNAME,
+            variation=DUMMY_VARIATION
         )

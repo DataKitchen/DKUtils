@@ -1,7 +1,8 @@
 import copy
-import requests
+import json
 import traceback
 
+import requests
 from requests.exceptions import HTTPError
 
 from dkutils.constants import (
@@ -11,6 +12,7 @@ from dkutils.constants import (
     DEFAULT_DATAKITCHEN_URL,
     DEFAULT_VAULT_URL,
     KITCHEN,
+    KITCHEN_STAFF,
     ORDER_ID,
     ORDER_RUN_ID,
     ORDER_RUN_STATUS,
@@ -21,14 +23,47 @@ from dkutils.constants import (
     STOPPED_STATUS_TYPES,
     VARIATION,
 )
+from dkutils.dictionary_comparator import DictionaryComparator
 from dkutils.validation import get_max_concurrency, skip_token_validation
 from dkutils.wait_loop import WaitLoop
-from dkutils.dictionary_comparator import DictionaryComparator
 from .datetime_utils import get_utc_timestamp
 
 # The servings API endpoint retrieves only 10 order runs by default. To retrieve them all, assume
 # 100K exceeds the max order runs a given order will ever contain.
 DEFAULT_SERVINGS_COUNT = 100000
+
+
+def create_using_context(context="default", kitchen=None, recipe=None, variation=None):
+    """
+    This is a factory method that can be used to create a client using the context created by
+    DKCloudCommand
+
+    Parameters
+    ----------
+    context: str, optional
+        The name of a context created by DKCloudCommand
+    kitchen : str, optional
+        Kitchen to use in API requests
+    recipe : str, optional
+        Recipe to use in API requests
+    variation : str, optional
+        Variation to use in API requests
+
+    Returns
+    -------
+    DataKitchenClient
+        Client object for invoking DataKitchen API calls
+    """
+    with open(f"~/.dk/{context}/config.json") as json_file:
+        data = json.load(json_file)
+        return DataKitchenClient(
+            username=data['dk-cloud-username'],
+            password=data['dk-cloud-password'],
+            base_url=f"{data['dk-cloud-ip']}:{data['dk-cloud-port']}",
+            kitchen=kitchen,
+            recipe=recipe,
+            variation=variation
+        )
 
 
 def ensure_and_get_kitchen(kitchen, kitchens):
@@ -956,3 +991,71 @@ class DataKitchenClient:
         my_overrides = my_kitchen_info[RECIPE_OVERRIDES]
         other_overrides = kitchens[other][RECIPE_OVERRIDES]
         return DictionaryComparator(my_overrides, other_overrides)
+
+    def get_kitchen_staff(self):
+        """
+        Returns a list containing the email addresses of the kitchen staff for the current kitchen
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+        ValueError
+            If the kitchen attribute is not set
+            If the name in the given kitchen_info does not match that of the current kitchen
+
+        Returns
+        -------
+        list
+            A list containing the email address of the kitchen staff
+
+        """
+        return self._get_kitchen_info()[KITCHEN_STAFF]
+
+    def update_kitchen_staff(self, kitchen_staff):
+        """
+        Updates the kitchen staff for the current kitchen
+
+        Parameters
+        ----------
+        list
+            A list containing the email addresses of the kitchen staff
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+        ValueError
+            If the kitchen attribute is not set
+            If the current user is not in the kitchen_staff
+        """
+        if self._username not in kitchen_staff:
+            raise ValueError(
+                f"Current user: {self._username} can not be removed from kitchen staff"
+            )
+        kitchen_info = self._get_kitchen_info()
+        kitchen_info[KITCHEN_STAFF] = kitchen_staff
+        self._update_kitchen(kitchen_info)
+
+    def add_kitchen_staff(self, new_kitchen_staff):
+        """
+        Adds the given email addresses to the kitchen staff for the current kitchen. Email addresses that are already
+        part of the existing kitchen staff will be ignored.
+
+        Parameters
+        ----------
+        new_kitchen_staff:list
+            A list containing the email addresses to be added to the kitchen staff
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+        ValueError
+            If the kitchen attribute is not set
+        """
+        kitchen_staff = self.get_kitchen_staff()
+        for staff_member in new_kitchen_staff:
+            if staff_member not in kitchen_staff:
+                kitchen_staff.append(staff_member)
+        self.update_kitchen_staff(kitchen_staff)

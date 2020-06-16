@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v0.8.0
+* Added function to support updating kitchen staff
+* Added factory method to create DataKitchenClient using context created by DKCloudCommand
+
 v0.7.1
 ------
 * Made some minor documentation changes
