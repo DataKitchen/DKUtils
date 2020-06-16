@@ -8,7 +8,7 @@ from dkutils.constants import (
     COMPLETED_SERVING, KITCHEN, ORDER_ID, ORDER_RUN_ID, ORDER_RUN_STATUS, PARAMETERS,
     PLANNED_SERVING, RECIPE, VARIATION, PARENT_KITCHEN
 )
-from dkutils.datakitchen_api.datakitchen_client import DataKitchenClient
+from dkutils.datakitchen_api.datakitchen_client import DataKitchenClient, create_using_context
 from dkutils.datakitchen_api.datetime_utils import get_utc_timestamp
 from dkutils.dictionary_comparator import DictionaryComparator
 
@@ -924,7 +924,7 @@ class TestDataKitchenClient(TestCase):
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient')
     def test_create_using_default_context(self, mock_client):
         with patch('builtins.open', mock_open(read_data=json.dumps(JSON_PROFILE))) as m:
-            client = DataKitchenClient.create_using_context(
+            client = create_using_context(
                 kitchen=DUMMY_KITCHEN, recipe=DUMMY_RECIPE, variation=DUMMY_VARIATION
             )
         m.assert_called_once_with(f'~/.dk/default/config.json')
@@ -941,7 +941,7 @@ class TestDataKitchenClient(TestCase):
     def test_create_using_context(self, mock_client):
         with patch('builtins.open', mock_open(read_data=json.dumps(JSON_PROFILE))) as m:
             context = 'test'
-            client = DataKitchenClient.create_using_context(
+            client = create_using_context(
                 context, kitchen=DUMMY_KITCHEN, recipe=DUMMY_RECIPE, variation=DUMMY_VARIATION
             )
         m.assert_called_once_with(f'~/.dk/{context}/config.json')

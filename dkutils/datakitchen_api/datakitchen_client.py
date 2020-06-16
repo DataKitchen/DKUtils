@@ -33,6 +33,39 @@ from .datetime_utils import get_utc_timestamp
 DEFAULT_SERVINGS_COUNT = 100000
 
 
+def create_using_context(context="default", kitchen=None, recipe=None, variation=None):
+    """
+    This is a factory method that can be used to create a client using the context created by
+    DKCloudCommand
+
+    Parameters
+    ----------
+    context: str, optional
+        The name of a context created by DKCloudCommand
+    kitchen : str, optional
+        Kitchen to use in API requests
+    recipe : str, optional
+        Recipe to use in API requests
+    variation : str, optional
+        Variation to use in API requests
+
+    Returns
+    -------
+    DataKitchenClient
+        Client object for invoking DataKitchen API calls
+    """
+    with open(f"~/.dk/{context}/config.json") as json_file:
+        data = json.load(json_file)
+        return DataKitchenClient(
+            username=data['dk-cloud-username'],
+            password=data['dk-cloud-password'],
+            base_url=f"{data['dk-cloud-ip']}:{data['dk-cloud-port']}",
+            kitchen=kitchen,
+            recipe=recipe,
+            variation=variation
+        )
+
+
 def ensure_and_get_kitchen(kitchen, kitchens):
     """
     Ensure the provided kitchens dictionary contains the provided kitchen and if so, return
@@ -1026,36 +1059,3 @@ class DataKitchenClient:
             if staff_member not in kitchen_staff:
                 kitchen_staff.append(staff_member)
         self.update_kitchen_staff(kitchen_staff)
-
-    @staticmethod
-    def create_using_context(context="default", kitchen=None, recipe=None, variation=None):
-        """
-        This is a factory method that can be used to create a client using the context created by
-        DKCloudCommand
-
-        Parameters
-        ----------
-        context: str, optional
-            The name of a context created by DKCloudCommand
-        kitchen : str, optional
-            Kitchen to use in API requests
-        recipe : str, optional
-            Recipe to use in API requests
-        variation : str, optional
-            Variation to use in API requests
-
-        Returns
-        -------
-        DataKitchenClient
-            Client object for invoking DataKitchen API calls
-        """
-        with open(f"~/.dk/{context}/config.json") as json_file:
-            data = json.load(json_file)
-            return DataKitchenClient(
-                username=data['dk-cloud-username'],
-                password=data['dk-cloud-password'],
-                base_url=f"{data['dk-cloud-ip']}:{data['dk-cloud-port']}",
-                kitchen=kitchen,
-                recipe=recipe,
-                variation=variation
-            )
