@@ -1,5 +1,6 @@
 import copy
 import json
+import os
 import traceback
 
 import requests
@@ -54,7 +55,8 @@ def create_using_context(context="default", kitchen=None, recipe=None, variation
     DataKitchenClient
         Client object for invoking DataKitchen API calls
     """
-    with open(f"~/.dk/{context}/config.json") as json_file:
+    context_path = os.path.expanduser(f'~/.dk/{context}/config.json')
+    with open(context_path) as json_file:
         data = json.load(json_file)
         return DataKitchenClient(
             username=data['dk-cloud-username'],
