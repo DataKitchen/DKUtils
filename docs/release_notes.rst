@@ -1,7 +1,12 @@
 Release Notes
 =============
 
+v0.8.1
+------
+* Fixed incorrect formatting in release notes below for v0.8.0
+
 v0.8.0
+------
 * Added function to support updating kitchen staff
 * Added factory method to create DataKitchenClient using context created by DKCloudCommand
 
