@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v0.8.2
+------
+* Explicitly invoke tilde expansion when deriving the path to a user's dk context
+
 v0.8.1
 ------
 * Fixed incorrect formatting in release notes below for v0.8.0

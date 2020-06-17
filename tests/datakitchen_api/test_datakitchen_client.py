@@ -1,4 +1,5 @@
 import json
+import os
 from unittest import TestCase
 from unittest.mock import patch, call, mock_open
 
@@ -924,10 +925,12 @@ class TestDataKitchenClient(TestCase):
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient')
     def test_create_using_default_context(self, mock_client):
         with patch('builtins.open', mock_open(read_data=json.dumps(JSON_PROFILE))) as m:
-            client = create_using_context(
+            create_using_context(
                 kitchen=DUMMY_KITCHEN, recipe=DUMMY_RECIPE, variation=DUMMY_VARIATION
             )
-        m.assert_called_once_with(f'~/.dk/default/config.json')
+
+        user_home_path = os.path.expanduser('~')
+        m.assert_called_once_with(os.path.join(user_home_path, '.dk/default/config.json'))
         mock_client.assert_called_once_with(
             base_url=f'{DUMMY_URL}:{DUMMY_PORT}',
             kitchen=DUMMY_KITCHEN,
@@ -941,10 +944,11 @@ class TestDataKitchenClient(TestCase):
     def test_create_using_context(self, mock_client):
         with patch('builtins.open', mock_open(read_data=json.dumps(JSON_PROFILE))) as m:
             context = 'test'
-            client = create_using_context(
+            create_using_context(
                 context, kitchen=DUMMY_KITCHEN, recipe=DUMMY_RECIPE, variation=DUMMY_VARIATION
             )
-        m.assert_called_once_with(f'~/.dk/{context}/config.json')
+        user_home_path = os.path.expanduser('~')
+        m.assert_called_once_with(os.path.join(user_home_path, '.dk', context, 'config.json'))
         mock_client.assert_called_once_with(
             base_url=f'{DUMMY_URL}:{DUMMY_PORT}',
             kitchen=DUMMY_KITCHEN,
