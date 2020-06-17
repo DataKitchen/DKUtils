@@ -3,15 +3,15 @@ import pandas as pd
 from jira import JIRA
 from jira.exceptions import JIRAError
 
-DEFAULT_FIELDS = ['created', 'creator', 'assignee', 'status', 'issuetype', 'priority', 'summary', 'description',
-                  'resolution', 'resolutiondate']
+DEFAULT_FIELDS = [
+    'created', 'creator', 'assignee', 'status', 'issuetype', 'priority', 'summary', 'description',
+    'resolution', 'resolutiondate'
+]
 
 
 class JiraClient:
 
-    def __init__(
-            self, server, username, api_key
-    ):
+    def __init__(self, server, username, api_key):
         """
         Client object for invoking JIRA Python API "https://pypi.org/project/jira/"
 
@@ -24,9 +24,7 @@ class JiraClient:
         api_key : str
             API Key to establish a session via HTTP BASIC authentication.
         """
-        options = {
-            'server': server
-        }
+        options = {'server': server}
         self._client = JIRA(options, basic_auth=(username, api_key))
 
     def transition_issue(self, issue_key, status):
@@ -55,7 +53,9 @@ class JiraClient:
             issue = self._client.issue(issue_key)
             transition_id = self._client.find_transitionid_by_name(issue_key, status)
             if transition_id is None:
-                raise KeyError(f'Error: Transition "{status}" does not exist for Issue {issue_key}.')
+                raise KeyError(
+                    f'Error: Transition "{status}" does not exist for Issue {issue_key}.'
+                )
             self._client.transition_issue(issue, transition_id)
         except JIRAError:
             print(f'Error: Issue "{issue_key}" does not exist.')
@@ -171,7 +171,9 @@ class JiraClient:
         while len(issues) > 0:
             all_issues.extend(issues)
             block_num += 1
-            issues = self._client.search_issues(f'project={project}', block_num * block_size, block_size)
+            issues = self._client.search_issues(
+                f'project={project}', block_num * block_size, block_size
+            )
 
         # Loop over all issues and extract project, issue and requested fields defined by the parameter fields
         for issue in all_issues:
@@ -181,4 +183,3 @@ class JiraClient:
             issues_list.append(issue_details)
         df_issues = pd.DataFrame(issues_list, columns=header_list, index=None)
         return df_issues
-
