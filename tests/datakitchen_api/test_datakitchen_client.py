@@ -728,6 +728,37 @@ class TestDataKitchenClient(TestCase):
         self.assertEqual(overrides, self.dk_client.get_overrides())
         mock_get_kitchen_info.assert_called_once_with()
 
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._get_kitchen_info')
+    def test_get_overrides_when_override_names_contains_unknown_names_then_valueerror_is_raised(
+        self, mock_get_kitchen_info
+    ):
+        overrides = {"something": "blue"}
+        mock_get_kitchen_info.return_value = {RECIPE_OVERRIDES: overrides}
+        overide_names = {'bobby'}
+        with self.assertRaises(ValueError) as cm:
+            self.dk_client.get_overrides(overide_names)
+        self.assertEqual(
+            f'The following overrides are not available in the kitchen: {overide_names}',
+            cm.exception.args[0]
+        )
+        mock_get_kitchen_info.assert_called_once_with()
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._get_kitchen_info')
+    def test_get_overrides_when_override_names_contains_subset_of_names(
+        self, mock_get_kitchen_info
+    ):
+        existing_name = 'something'
+        overrides = {'something': "penguin", "borrowed": "baseball", "blue": "skye"}
+        mock_get_kitchen_info.return_value = {RECIPE_OVERRIDES: overrides}
+        overide_names = {existing_name}
+        expected_overrides = {
+            key: value
+            for (key, value) in overrides.items()
+            if key == existing_name
+        }
+        self.assertEqual(expected_overrides, self.dk_client.get_overrides(overide_names))
+        mock_get_kitchen_info.assert_called_once_with()
+
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._update_kitchen')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._get_kitchen_info')
     def test_update_overrides(self, mock_get_kitchen_info, mock_update_kitchen_info):
@@ -897,3 +928,65 @@ class TestDataKitchenClient(TestCase):
             username=DUMMY_USERNAME,
             variation=DUMMY_VARIATION
         )
+
+    def test_get_override_names_that_do_not_exist_when_none_overrides_given_then_raises_valueerror(
+        self
+    ):
+        with self.assertRaises(ValueError) as cm:
+            self.dk_client.get_override_names_that_do_not_exist(None)
+        self.assertEqual('At least one override must be specified', cm.exception.args[0])
+
+    def test_get_override_names_that_do_not_exist_when_empty_overrides_given_then_raises_valueerror(
+        self
+    ):
+        with self.assertRaises(ValueError) as cm:
+            self.dk_client.get_override_names_that_do_not_exist(set())
+        self.assertEqual('At least one override must be specified', cm.exception.args[0])
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_overrides')
+    def test_get_override_names_that_do_not_exist_when_some_do_not_exist(self, mock_get_overrides):
+        existing_name = 'old_guy'
+        new_name = 'new_guy'
+        mock_get_overrides.return_value = {existing_name: 'bob'}
+        self.assertEqual({new_name},
+                         self.dk_client.get_override_names_that_do_not_exist({
+                             existing_name, new_name
+                         }))
+        mock_get_overrides.assert_called_once()
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_overrides')
+    def test_get_override_names_that_do_not_exist_when_all_exist(self, mock_get_overrides):
+        overrides = {'one': 1, 'two': 2}
+        mock_get_overrides.return_value = overrides
+        self.assertEqual(
+            set(), self.dk_client.get_override_names_that_do_not_exist(overrides.keys())
+        )
+        mock_get_overrides.assert_called_once()
+
+    def test_get_override_names_that_exist_when_none_overrides_given_then_raises_valueerror(self):
+        with self.assertRaises(ValueError) as cm:
+            self.dk_client.get_override_names_that_exist(None)
+        self.assertEqual('At least one override must be specified', cm.exception.args[0])
+
+    def test_get_override_names_that_exist_when_empty_overrides_given_then_raises_valueerror(self):
+        with self.assertRaises(ValueError) as cm:
+            self.dk_client.get_override_names_that_exist(set())
+        self.assertEqual('At least one override must be specified', cm.exception.args[0])
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_overrides')
+    def test_get_override_names_that_exist_when_some_do_not_exist(self, mock_get_overrides):
+        existing_name = 'old_guy'
+        new_name = 'new_guy'
+        mock_get_overrides.return_value = {existing_name: 'bob'}
+        self.assertEqual({existing_name},
+                         self.dk_client.get_override_names_that_exist({existing_name, new_name}))
+        mock_get_overrides.assert_called_once()
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_overrides')
+    def test_get_override_names_that_exist_when_all_exist(self, mock_get_overrides):
+        overrides = {'one': 1, 'two': 2}
+        mock_get_overrides.return_value = overrides
+        self.assertEqual(
+            overrides.keys(), self.dk_client.get_override_names_that_exist(overrides.keys())
+        )
+        mock_get_overrides.assert_called_once()

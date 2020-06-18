@@ -925,9 +925,10 @@ class DataKitchenClient:
         payload = {"kitchen.json": kitchen_info}
         self._api_request(API_POST, 'kitchen', 'update', self.kitchen, **payload)
 
-    def get_overrides(self):
+    def get_overrides(self, override_names=None):
         """
-        Returns a dictionary containing the overrides for the current kitchen
+        Returns a dictionary containing the overrides for the current kitchen or if override_names is specified a
+        subset of overrides
 
         Raises
         ------
@@ -936,14 +937,23 @@ class DataKitchenClient:
         ValueError
             If the kitchen attribute is not set
             If the name in the given kitchen_info does not match that of the current kitchen
+            If any of the names in override_names are not available in the current kitchen
 
         Returns
         -------
         dict
-            A dictionary containing the overides
+            A dictionary containing the overrides
 
         """
-        return self._get_kitchen_info()[RECIPE_OVERRIDES]
+        overrides = self._get_kitchen_info()[RECIPE_OVERRIDES]
+        if override_names:
+            missing = override_names - overrides.keys()
+            if missing:
+                raise ValueError(
+                    f'The following overrides are not available in the kitchen: {missing}'
+                )
+            overrides = {key: overrides[key] for key in override_names}
+        return overrides
 
     def update_overrides(self, overrides):
         """
@@ -994,15 +1004,15 @@ class DataKitchenClient:
         other_overrides = kitchens[other][RECIPE_OVERRIDES]
         return DictionaryComparator(my_overrides, other_overrides)
 
-    def overrides_exist(self, overrides):
+    def get_override_names_that_do_not_exist(self, override_names):
         """
-        Given a set of override names that should exist in the kitchen, return a set of the names of any that do not
+        Given a set of override names that could exist in the kitchen, return a set of the names of any that do not
         exist in the kitchen.
 
         Parameters
         ----------
-            overrides:set
-                A set of override names that should exist in the kitchen
+            override_names:set
+                A set of override names that could exist in the kitchen
 
         Raises
         ------
@@ -1015,10 +1025,40 @@ class DataKitchenClient:
         Returns
         -------
         set
-            The set of any of given override names to do not exist in the kitchen. If all of the ovveride names exist
+            The set of any of given override names to do not exist in the kitchen. If all of the override names exist
             then an empty set will be returned.
         """
-        pass
+        if not override_names:
+            raise ValueError("At least one override must be specified")
+        return override_names - self.get_overrides().keys()
+
+    def get_override_names_that_exist(self, override_names):
+        """
+        Given a set of override names that could exist in the kitchen, return a set of the names of that exist in the
+        kitchen.
+
+        Parameters
+        ----------
+            override_names:set
+                A set of override names that could exist in the kitchen
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+        ValueError
+            If the kitchen attribute is not set
+            If the set of overrides is empty
+
+        Returns
+        -------
+        set
+            The set of any of given override names that exist in the kitchen. If none of the override names exist
+            then an empty set will be returned.
+        """
+        if not override_names:
+            raise ValueError("At least one override must be specified")
+        return override_names & self.get_overrides().keys()
 
     def get_kitchen_staff(self):
         """

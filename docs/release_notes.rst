@@ -1,6 +1,12 @@
 Release Notes
 =============
 
+v0.9.0
+------
+* Add function get_override_names_that_do_not_exist
+* Add function get_override_names_that_exist
+* Added parameter to get_overrides to facilitate the retrieval of a subset of overrides
+
 v0.8.2
 ------
 * Explicitly invoke tilde expansion when deriving the path to a user's dk context
