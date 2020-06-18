@@ -62,6 +62,12 @@ class MockResponse:
 class TestDataKitchenClient(TestCase):
 
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def setUp(self, _):
+        self.dk_client = DataKitchenClient(
+            DUMMY_USERNAME, DUMMY_PASSWORD, kitchen=DUMMY_KITCHEN, base_url=DUMMY_URL
+        )
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
     def test_setters(self, _):
         dk_client = DataKitchenClient(
             DUMMY_USERNAME,
@@ -95,12 +101,8 @@ class TestDataKitchenClient(TestCase):
         self.assertEqual(dk_client._headers, DUMMY_HEADERS)
         self.assertEqual(dk_client._token, DUMMY_AUTH_TOKEN)
 
-    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
-    def test_with_kitchen(self, _):
-        dk_client = DataKitchenClient(
-            DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL, kitchen=DUMMY_KITCHEN
-        )
-        self.assertEqual(dk_client._kitchen, DUMMY_KITCHEN)
+    def test_with_kitchen(self):
+        self.assertEqual(self.dk_client._kitchen, DUMMY_KITCHEN)
 
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
     def test_with_recipe(self, _):
@@ -116,11 +118,9 @@ class TestDataKitchenClient(TestCase):
         )
         self.assertEqual(dk_client._variation, DUMMY_VARIATION)
 
-    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
-    def test_missing_attributes(self, _):
-        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+    def test_missing_attributes(self):
         with self.assertRaises(ValueError):
-            dk_client.create_order()
+            self.dk_client.create_order()
 
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.put')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
@@ -658,24 +658,17 @@ class TestDataKitchenClient(TestCase):
             dk_client._get_kitchen_info()
 
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
-    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
-    def test_get_kitchen_info_when_no_kitchen_found_raises_value_error(self, _, mock_get):
+    def test_get_kitchen_info_when_no_kitchen_found_raises_value_error(self, mock_get):
         mock_get.return_value = MockResponse(json={'kitchens': []})
-        dk_client = DataKitchenClient(
-            DUMMY_USERNAME, DUMMY_PASSWORD, kitchen=DUMMY_KITCHEN, base_url=DUMMY_URL
-        )
         with self.assertRaises(ValueError) as cm:
-            dk_client._get_kitchen_info()
+            self.dk_client._get_kitchen_info()
         self.assertEqual(
             f"No kitchen with the name: {DUMMY_KITCHEN} was found in the available kitchens",
             cm.exception.args[0]
         )
 
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
-    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
-    def test_get_kitchen_info_when_more_than_one_kitchen_found_raises_value_error(
-        self, _, mock_get
-    ):
+    def test_get_kitchen_info_when_more_than_one_kitchen_found_raises_value_error(self, mock_get):
         mock_get.return_value = MockResponse(
             json={'kitchens': [{
                 'name': DUMMY_KITCHEN
@@ -683,11 +676,8 @@ class TestDataKitchenClient(TestCase):
                 'name': DUMMY_KITCHEN
             }]}
         )
-        dk_client = DataKitchenClient(
-            DUMMY_USERNAME, DUMMY_PASSWORD, kitchen=DUMMY_KITCHEN, base_url=DUMMY_URL
-        )
         with self.assertRaises(ValueError) as cm:
-            dk_client._get_kitchen_info()
+            self.dk_client._get_kitchen_info()
         self.assertEqual(
             f"More than 1 kitchen with the name: {DUMMY_KITCHEN} found in list of kitchens",
             cm.exception.args[0]
@@ -702,10 +692,7 @@ class TestDataKitchenClient(TestCase):
                 'name': 'some_kitchen'
             }, kitchen_info]}
         )
-        dk_client = DataKitchenClient(
-            DUMMY_USERNAME, DUMMY_PASSWORD, kitchen=DUMMY_KITCHEN, base_url=DUMMY_URL
-        )
-        self.assertEqual(kitchen_info, dk_client._get_kitchen_info())
+        self.assertEqual(kitchen_info, self.dk_client._get_kitchen_info())
         mock_get.assert_called_once_with(LIST_KITCHEN_URL, headers=None, json={})
 
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
@@ -714,14 +701,10 @@ class TestDataKitchenClient(TestCase):
         with self.assertRaises(ValueError):
             dk_client._update_kitchen({})
 
-    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
-    def test_update_kitchen_when_kitchen_does_not_match_set_raises_value_error(self, _):
-        dk_client = DataKitchenClient(
-            DUMMY_USERNAME, DUMMY_PASSWORD, kitchen=DUMMY_KITCHEN, base_url=DUMMY_URL
-        )
+    def test_update_kitchen_when_kitchen_does_not_match_set_raises_value_error(self):
         with self.assertRaises(ValueError) as cm:
             kitchen_name = 'bob'
-            dk_client._update_kitchen({'name': kitchen_name})
+            self.dk_client._update_kitchen({'name': kitchen_name})
         self.assertEqual(
             f'Name in kitchen_info: {kitchen_name} does not match current kitchen: {DUMMY_KITCHEN}',
             cm.exception.args[0]
@@ -731,10 +714,7 @@ class TestDataKitchenClient(TestCase):
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
     def test_update_kitchen(self, _, mock_post):
         kitchen_info = {"name": DUMMY_KITCHEN}
-        dk_client = DataKitchenClient(
-            DUMMY_USERNAME, DUMMY_PASSWORD, kitchen=DUMMY_KITCHEN, base_url=DUMMY_URL
-        )
-        dk_client._update_kitchen(kitchen_info)
+        self.dk_client._update_kitchen(kitchen_info)
         mock_post.assert_called_once_with(
             f'{DUMMY_URL}/v2/kitchen/update/{DUMMY_KITCHEN}',
             headers=None,
@@ -742,23 +722,15 @@ class TestDataKitchenClient(TestCase):
         )
 
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._get_kitchen_info')
-    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
-    def test_get_overrides(self, _, mock_get_kitchen_info):
-        dk_client = DataKitchenClient(
-            DUMMY_USERNAME, DUMMY_PASSWORD, kitchen=DUMMY_KITCHEN, base_url=DUMMY_URL
-        )
+    def test_get_overrides(self, mock_get_kitchen_info):
         overrides = {"something": "blue"}
         mock_get_kitchen_info.return_value = {RECIPE_OVERRIDES: overrides}
-        self.assertEqual(overrides, dk_client.get_overrides())
+        self.assertEqual(overrides, self.dk_client.get_overrides())
         mock_get_kitchen_info.assert_called_once_with()
 
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._update_kitchen')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._get_kitchen_info')
-    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
-    def test_update_overrides(self, _, mock_get_kitchen_info, mock_update_kitchen_info):
-        dk_client = DataKitchenClient(
-            DUMMY_USERNAME, DUMMY_PASSWORD, kitchen=DUMMY_KITCHEN, base_url=DUMMY_URL
-        )
+    def test_update_overrides(self, mock_get_kitchen_info, mock_update_kitchen_info):
         kitchen_info_with_original_overrides = {
             "name": DUMMY_KITCHEN,
             RECIPE_OVERRIDES: {
@@ -769,22 +741,16 @@ class TestDataKitchenClient(TestCase):
         kitchen_info_with_new_overrides = kitchen_info_with_original_overrides.copy()
         kitchen_info_with_new_overrides[RECIPE_OVERRIDES] = new_overrides
         mock_get_kitchen_info.return_value = kitchen_info_with_original_overrides
-        dk_client.update_overrides(new_overrides)
+        self.dk_client.update_overrides(new_overrides)
         mock_get_kitchen_info.assert_called_once_with()
         mock_update_kitchen_info.assert_called_once_with(kitchen_info_with_new_overrides)
 
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._get_kitchens_info')
-    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
-    def test_compare_overrides_when_non_existent_kitchen_raises_error(
-        self, _, mock_get_kitchens_info
-    ):
+    def test_compare_overrides_when_non_existent_kitchen_raises_error(self, mock_get_kitchens_info):
         mock_get_kitchens_info.return_value = {DUMMY_KITCHEN: {"name": DUMMY_KITCHEN}}
-        dk_client = DataKitchenClient(
-            DUMMY_USERNAME, DUMMY_PASSWORD, kitchen=DUMMY_KITCHEN, base_url=DUMMY_URL
-        )
         with self.assertRaises(ValueError) as cm:
             kitchen_name = 'bob'
-            dk_client.compare_overrides(kitchen_name)
+            self.dk_client.compare_overrides(kitchen_name)
         self.assertEqual(
             f'No kitchen with the name: {kitchen_name} was found in the available kitchens',
             cm.exception.args[0]
@@ -797,22 +763,17 @@ class TestDataKitchenClient(TestCase):
             dk_client.compare_overrides()
 
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._get_kitchens_info')
-    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
-    def test_compare_overrides_when_kitchen_not_found_raises_error(self, _, mock_get_kitchens_info):
+    def test_compare_overrides_when_kitchen_not_found_raises_error(self, mock_get_kitchens_info):
         mock_get_kitchens_info.return_value = {}
-        dk_client = DataKitchenClient(
-            DUMMY_USERNAME, DUMMY_PASSWORD, kitchen=DUMMY_KITCHEN, base_url=DUMMY_URL
-        )
         with self.assertRaises(ValueError) as cm:
-            dk_client.compare_overrides()
+            self.dk_client.compare_overrides()
         self.assertEqual(
             f'No kitchen with the name: {DUMMY_KITCHEN} was found in the available kitchens',
             cm.exception.args[0]
         )
 
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._get_kitchens_info')
-    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
-    def test_compare_overrides(self, _, mock_get_kitchens_info):
+    def test_compare_overrides(self, mock_get_kitchens_info):
         kitchen_overrides = {'one': 1}
         other_kitchen_overrides = {'two': 2}
         other_kitchen_name = 'bob'
@@ -826,18 +787,14 @@ class TestDataKitchenClient(TestCase):
                 RECIPE_OVERRIDES: other_kitchen_overrides
             }
         }
-        dk_client = DataKitchenClient(
-            DUMMY_USERNAME, DUMMY_PASSWORD, kitchen=DUMMY_KITCHEN, base_url=DUMMY_URL
-        )
         self.assertEqual(
             DictionaryComparator(kitchen_overrides, other_kitchen_overrides),
-            dk_client.compare_overrides(other_kitchen_name)
+            self.dk_client.compare_overrides(other_kitchen_name)
         )
 
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._get_kitchens_info')
-    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
     def test_compare_overrides_when_other_is_not_specified_then_compared_to_parent(
-        self, _, mock_get_kitchens_info
+        self, mock_get_kitchens_info
     ):
         kitchen_overrides = {'one': 1}
         other_kitchen_overrides = {'two': 2}
@@ -853,32 +810,21 @@ class TestDataKitchenClient(TestCase):
                 RECIPE_OVERRIDES: other_kitchen_overrides
             }
         }
-        dk_client = DataKitchenClient(
-            DUMMY_USERNAME, DUMMY_PASSWORD, kitchen=DUMMY_KITCHEN, base_url=DUMMY_URL
-        )
         self.assertEqual(
             DictionaryComparator(kitchen_overrides, other_kitchen_overrides),
-            dk_client.compare_overrides()
+            self.dk_client.compare_overrides()
         )
 
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._get_kitchen_info')
-    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
-    def test_get_kitchen_staff(self, _, mock_get_kitchen_info):
-        dk_client = DataKitchenClient(
-            DUMMY_USERNAME, DUMMY_PASSWORD, kitchen=DUMMY_KITCHEN, base_url=DUMMY_URL
-        )
+    def test_get_kitchen_staff(self, mock_get_kitchen_info):
         kitchen_staff = ["ehill+im@datakitchen.io"]
         mock_get_kitchen_info.return_value = {KITCHEN_STAFF: kitchen_staff}
-        self.assertEqual(kitchen_staff, dk_client.get_kitchen_staff())
+        self.assertEqual(kitchen_staff, self.dk_client.get_kitchen_staff())
         mock_get_kitchen_info.assert_called_once_with()
 
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._update_kitchen')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._get_kitchen_info')
-    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
-    def test_update_kitchen_staff(self, _, mock_get_kitchen_info, mock_update_kitchen_info):
-        dk_client = DataKitchenClient(
-            DUMMY_USERNAME, DUMMY_PASSWORD, kitchen=DUMMY_KITCHEN, base_url=DUMMY_URL
-        )
+    def test_update_kitchen_staff(self, mock_get_kitchen_info, mock_update_kitchen_info):
         kitchen_info_with_original_kitchen_staff = {
             "name": DUMMY_KITCHEN,
             KITCHEN_STAFF: [DUMMY_USERNAME]
@@ -887,17 +833,14 @@ class TestDataKitchenClient(TestCase):
         kitchen_info_with_new_staff = kitchen_info_with_original_kitchen_staff.copy()
         kitchen_info_with_new_staff[KITCHEN_STAFF] = new_staff
         mock_get_kitchen_info.return_value = kitchen_info_with_original_kitchen_staff
-        dk_client.update_kitchen_staff(new_staff)
+        self.dk_client.update_kitchen_staff(new_staff)
         mock_get_kitchen_info.assert_called_once_with()
         mock_update_kitchen_info.assert_called_once_with(kitchen_info_with_new_staff)
 
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
     def test_update_kitchen_staff_when_current_user_is_removed_then_value_error_is_raised(self, _):
-        dk_client = DataKitchenClient(
-            DUMMY_USERNAME, DUMMY_PASSWORD, kitchen=DUMMY_KITCHEN, base_url=DUMMY_URL
-        )
         with self.assertRaises(ValueError) as cm:
-            dk_client.update_kitchen_staff(["some@email.com"])
+            self.dk_client.update_kitchen_staff(["some@email.com"])
         self.assertEqual(
             f'Current user: {DUMMY_USERNAME} can not be removed from kitchen staff',
             cm.exception.args[0]
@@ -907,9 +850,6 @@ class TestDataKitchenClient(TestCase):
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._get_kitchen_info')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
     def test_add_kitchen_staff(self, _, mock_get_kitchen_info, mock_update_kitchen_info):
-        dk_client = DataKitchenClient(
-            DUMMY_USERNAME, DUMMY_PASSWORD, kitchen=DUMMY_KITCHEN, base_url=DUMMY_URL
-        )
         kitchen_info_with_original_kitchen_staff = {
             "name": DUMMY_KITCHEN,
             KITCHEN_STAFF: [DUMMY_USERNAME]
@@ -918,7 +858,7 @@ class TestDataKitchenClient(TestCase):
         kitchen_info_with_new_staff = kitchen_info_with_original_kitchen_staff.copy()
         kitchen_info_with_new_staff[KITCHEN_STAFF] = new_staff
         mock_get_kitchen_info.return_value = kitchen_info_with_original_kitchen_staff
-        dk_client.add_kitchen_staff(new_staff)
+        self.dk_client.add_kitchen_staff(new_staff)
         mock_get_kitchen_info.assert_has_calls([call(), call()])
         mock_update_kitchen_info.assert_called_once_with(kitchen_info_with_new_staff)
 

@@ -994,6 +994,32 @@ class DataKitchenClient:
         other_overrides = kitchens[other][RECIPE_OVERRIDES]
         return DictionaryComparator(my_overrides, other_overrides)
 
+    def overrides_exist(self, overrides):
+        """
+        Given a set of override names that should exist in the kitchen, return a set of the names of any that do not
+        exist in the kitchen.
+
+        Parameters
+        ----------
+            overrides:set
+                A set of override names that should exist in the kitchen
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+        ValueError
+            If the kitchen attribute is not set
+            If the set of overrides is empty
+
+        Returns
+        -------
+        set
+            The set of any of given override names to do not exist in the kitchen. If all of the ovveride names exist
+            then an empty set will be returned.
+        """
+        pass
+
     def get_kitchen_staff(self):
         """
         Returns a list containing the email addresses of the kitchen staff for the current kitchen
