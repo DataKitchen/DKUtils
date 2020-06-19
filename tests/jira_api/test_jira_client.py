@@ -6,8 +6,10 @@ from dkutils.jira_api.jira_client import JiraClient
 
 DUMMY_API_KEY = 'dummy_api_key'
 DUMMY_COMMENT = 'dummy_comment'
+DUMMY_FIELDS = ['string_field', 'list_field']
 DUMMY_ISSUE = 'dummy_issue'
 DUMMY_ISSUE_KEY = 'dummy_issue_key'
+DUMMY_PROJECT = 'dummy_project'
 DUMMY_SERVER = 'dummy_server'
 DUMMY_STATUS = 'dummy_status'
 DUMMY_TRANSITION_ID = 'dummy_transition_id'
@@ -30,6 +32,10 @@ class MockIssue:
     @property
     def fields(self):
         return MockFields()
+
+    @property
+    def key(self):
+        return DUMMY_ISSUE_KEY
 
 
 class TestJiraClient(TestCase):
@@ -90,3 +96,26 @@ class TestJiraClient(TestCase):
     def test_get_issue_field_missing(self):
         with self.assertRaises(AttributeError):
             self.client.get_issue_field(MockIssue(), 'foo')
+
+    def test_get_issues_none_returned(self):
+        self.mock_jira_instance.search_issues.side_effect = [[]]
+        df = self.client.get_issues(DUMMY_PROJECT, fields=DUMMY_FIELDS)
+        self.mock_jira_instance.search_issues.assert_called_once_with(
+            f'project={DUMMY_PROJECT}', 0, 1000
+        )
+        self.assertEqual(0, len(df))
+
+        expected_columns = ['project', 'key']
+        expected_columns.extend(DUMMY_FIELDS)
+        self.assertListEqual(expected_columns, list(df.columns))
+
+    def test_get_issues_two_returned(self):
+        self.mock_jira_instance.search_issues.side_effect = [[MockIssue()], [MockIssue()], []]
+        df = self.client.get_issues(DUMMY_PROJECT, fields=DUMMY_FIELDS)
+        self.mock_jira_instance.search_issues.assert_called_with(
+            f'project={DUMMY_PROJECT}', 2000, 1000
+        )
+        self.assertEqual(2, len(df))
+
+        expected_row_vals = ['dummy_project', 'dummy_issue_key', 'string_field', 'list,field']
+        self.assertListEqual(expected_row_vals, df.loc[0, :].values.tolist())

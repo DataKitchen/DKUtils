@@ -124,7 +124,8 @@ class JiraClient:
 
     def get_issues(self, project, fields=DEFAULT_FIELDS):
         """
-        Returns a Pandas DataFrame of all JIRA Issues for the requested project with values for all requested fields.
+        Returns a Pandas DataFrame of all JIRA Issues for the requested project with values for
+        all requested fields.
 
         Parameters
         ----------
@@ -132,8 +133,8 @@ class JiraClient:
             Project name or key to pull issues from.
         fields : list, optional
             A list of fields to be extracted for each issue in the project.
-            (default is ['created', 'creator', 'assignee', 'status', 'issuetype', 'priority', 'summary', 'description',
-            'resolution', 'resolutiondate'])
+            (default is ['created', 'creator', 'assignee', 'status', 'issuetype', 'priority',
+            'summary', 'description', 'resolution', 'resolutiondate'])
 
             Note: for a custom field, use the custom field id. (e.g. customfield_10028)
 
@@ -145,13 +146,15 @@ class JiraClient:
         Returns
         ------
         pandas DataFrame
-            A pandas DataFrame of all issues for the requested project with values for all the requested fields.
+            A pandas DataFrame of all issues for the requested project with values for all the
+            requested fields.
 
             The column header of the resulting DataFrame is of the form:
 
                 If "fields" is defined: ['project', 'key', field1, field2 , field3....]
-                (default) If "fields" is not defined: ['project', 'key' ,'created', 'creator', 'assignee','status',
-                'issuetype', 'priority', 'summary', 'description','resolution', 'resolutiondate']
+                (default) If "fields" is not defined: ['project', 'key' ,'created', 'creator',
+                'assignee','status', 'issuetype', 'priority', 'summary', 'description',
+                'resolution', 'resolutiondate']
 
         """
         block_num = 0
@@ -175,9 +178,10 @@ class JiraClient:
                 f'project={project}', block_num * block_size, block_size
             )
 
-        # Loop over all issues and extract project, issue and requested fields defined by the parameter fields
+        # Loop over all issues and extract project, issue and requested fields defined by the
+        # parameter fields
         for issue in all_issues:
-            issue_details = [project, issue]
+            issue_details = [project, issue.key]
             extract_fields = list(map(lambda n: self.get_issue_field(issue, n), fields))
             issue_details.extend(extract_fields)
             issues_list.append(issue_details)
