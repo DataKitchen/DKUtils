@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v0.10.0
+-------
+* Added JIRA API client
+
 v0.9.0
 ------
 * Add function get_override_names_that_do_not_exist
