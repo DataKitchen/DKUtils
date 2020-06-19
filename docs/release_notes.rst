@@ -1,9 +1,13 @@
 Release Notes
 =============
 
-v0.10.0
+v0.10.1
 -------
 * Added JIRA API client
+
+v0.10.0
+-------
+* PACKAGE REMOVED FROM PYPI - DUPLICATE OF v0.9.0
 
 v0.9.0
 ------
