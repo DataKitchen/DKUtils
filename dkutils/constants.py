@@ -1,3 +1,4 @@
+CHANGE_ME = '[Change_Me]'
 DEFAULT_DATAKITCHEN_URL = 'https://cloud.datakitchen.io'
 KITCHEN = 'kitchen'
 KITCHEN_STAFF = 'kitchen-staff'

@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v0.10.2
+-------
+* Added additional check to validate_globals to check that values that should be changed have been
+
 v0.10.1
 -------
 * Added JIRA API client

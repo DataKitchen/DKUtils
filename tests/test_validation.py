@@ -33,7 +33,17 @@ class TestValidation(TestCase):
             validate_globals(['undefined'])
 
     def test_get_max_concurrency(self):
-        self.assertEquals(10, get_max_concurrency(10, None))
-        self.assertEquals(10, get_max_concurrency(10, 12))
-        self.assertEquals(1, get_max_concurrency(10, -1))
-        self.assertEquals(5, get_max_concurrency(10, 5))
+        self.assertEqual(10, get_max_concurrency(10, None))
+        self.assertEqual(10, get_max_concurrency(10, 12))
+        self.assertEqual(1, get_max_concurrency(10, -1))
+        self.assertEqual(5, get_max_concurrency(10, 5))
+
+    def test_valid_globals_when_value_not_changed(self):
+        global FOO
+        FOO = '[Change_Me]'
+        with self.assertRaises(NameError) as cm:
+            validate_globals(['FOO'])
+        self.assertEqual(
+            f"\n\tGlobal variables with values that need to be changed: ['FOO']",
+            cm.exception.args[0]
+        )
