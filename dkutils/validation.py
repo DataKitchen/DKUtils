@@ -1,5 +1,7 @@
 import inspect
 
+from dkutils.constants import CHANGE_ME
+
 
 def validate_globals(global_var_names):
     """
@@ -8,15 +10,17 @@ def validate_globals(global_var_names):
 
     Parameters
     ----------
-    global_var_names : array
-      Array of global variable names to test for existence.
+    global_var_names : list
+      list of global variable names to test for existence.
 
     Raises
     -------
     NameError
         If any global variables do not exist in the global namespace of the calling function.
+        If any global variables exist in the global namespace of the calling function with the value '[CHANGE_ME]'
     """
     undefined_globals = []
+    need_to_be_changed = []
 
     # https://docs.python.org/3/library/inspect.html#inspect.stack
     cur_globals = inspect.stack()[1][0].f_globals
@@ -25,9 +29,16 @@ def validate_globals(global_var_names):
         if var not in cur_globals:
             print(f'Undefined global variable: {var}')
             undefined_globals.append(var)
+        elif CHANGE_ME == cur_globals[var]:
+            need_to_be_changed.append(var)
 
-    if undefined_globals:
-        raise NameError(f'Undefined global variables: {undefined_globals}')
+    if undefined_globals or need_to_be_changed:
+        msg = ''
+        if undefined_globals:
+            msg += f'\n\tUndefined global variables: {undefined_globals}'
+        if need_to_be_changed:
+            msg += f'\n\tGlobal variables with values that need to be changed: {need_to_be_changed}'
+        raise NameError(msg)
 
 
 def skip_token_validation():
