@@ -40,7 +40,7 @@ class TestValidation(TestCase):
 
     def test_valid_globals_when_value_not_changed(self):
         global FOO
-        FOO = '[Change_Me]'
+        FOO = '[CHANGE_ME]'
         with self.assertRaises(NameError) as cm:
             validate_globals(['FOO'])
         self.assertEqual(

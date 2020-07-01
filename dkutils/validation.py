@@ -17,7 +17,7 @@ def validate_globals(global_var_names):
     -------
     NameError
         If any global variables do not exist in the global namespace of the calling function.
-        If any global variables exist in the global namespace of the calling function with the value '[Change_Me]'
+        If any global variables exist in the global namespace of the calling function with the value '[CHANGE_ME]'
     """
     undefined_globals = []
     need_to_be_changed = []
