@@ -171,12 +171,10 @@ class DataKitchenClient:
         """
         Ensure the properties required for the API request are all defined.
         """
-        invalid_attributes = []
-        for attr_name in args:
-            if getattr(self, attr_name) is None:
-                invalid_attributes.append(attr_name)
+        invalid_attributes = [attr_name for attr_name in args if getattr(self, attr_name) is None]
+
         if invalid_attributes:
-            raise ValueError(f'Undefined attributes: ",".join({invalid_attributes})')
+            raise ValueError(f'Undefined attributes: {",".join(invalid_attributes)}')
 
     def _api_request(self, http_method, *args, is_json=True, **kwargs):
         """
@@ -270,6 +268,7 @@ class DataKitchenClient:
             :class:`Response <Response>` object
         """
         self._ensure_attributes(KITCHEN, RECIPE, VARIATION)
+        self._validate_kitchen_recipe_variation()
         return self._api_request(
             API_PUT,
             'order',
@@ -1127,3 +1126,46 @@ class DataKitchenClient:
             if staff_member not in kitchen_staff:
                 kitchen_staff.append(staff_member)
         self.update_kitchen_staff(kitchen_staff)
+
+    def get_recipes(self):
+        """
+        Returns a dictionary whose keys are the recipe names and values contain a list of the variation names
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+        ValueError
+            If the kitchen attribute is not set
+            If the current user is not in the kitchen_staff
+
+        Returns
+        -------
+        dict
+            A dictionary keyed by recipe name containing a list of variation names.
+            For example::
+
+                { 'Demo_Aws_Hadoop_Cluster': ['run_pyhive_azure'] }
+
+        """
+        self._ensure_attributes(KITCHEN)
+        return self._api_request(API_GET, 'recipe', 'variations', 'listfromorders',
+                                 self.kitchen).json()['recipes']
+
+    def _validate_kitchen_recipe_variation(self):
+        self._ensure_attributes(KITCHEN, RECIPE, VARIATION)
+        kitchens = self._get_kitchens_info()
+        if self.kitchen not in kitchens:
+            raise ValueError(
+                f'{self.kitchen} is not one of the available kitchens: {",".join(kitchens.keys())}'
+            )
+        recipes = self.get_recipes()
+        if self.recipe not in recipes.keys():
+            raise ValueError(
+                f'{self.recipe} is not one of the available recipes: {",".join(recipes.keys())}'
+            )
+        variations = recipes[self.recipe]
+        if self.variation not in variations:
+            raise ValueError(
+                f'{self.variation} is not one of the available variations: {",".join(variations)}'
+            )
