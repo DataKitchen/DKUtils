@@ -1035,9 +1035,23 @@ class TestDataKitchenClient(TestCase):
             dk_client.get_recipes()
         self.assertEqual('Undefined attributes: kitchen', cm.exception.args[0])
 
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._get_kitchens_info')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_get_recipes_when_kitchen_is_not_available_then_value_error_is_raised(
+        self, _, mock_get_kitchens_info
+    ):
+        mock_get_kitchens_info.return_value = {DUMMY_KITCHEN: {'kitchen-staff': []}}
+        with self.assertRaises(ValueError) as cm:
+            self.dk_client.get_recipes()
+        self.assertEqual(
+            f'{DUMMY_KITCHEN} is not available to {DUMMY_USERNAME}', cm.exception.args[0]
+        )
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._get_kitchens_info')
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
-    def test_get_recipes(self, _, mock_get):
+    def test_get_recipes(self, _, mock_get, mock_kitchens_info):
+        mock_kitchens_info.return_value = {DUMMY_KITCHEN: {'kitchen-staff': [DUMMY_USERNAME]}}
         mock_get.return_value = MockResponse(json={'recipes': RECIPES})
         self.assertEqual(RECIPES, self.dk_client.get_recipes())
         mock_get.assert_called_once_with(GET_RECIPES_URL, headers=None, json={})
@@ -1102,36 +1116,26 @@ class TestDataKitchenClient(TestCase):
         )
 
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_recipes')
-    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._get_kitchens_info')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
-    def test_validate_kitchen_recipe_variation_when_recipe_invalid(
-        self, _, mock_get_kitchens_info, mock_recipes
-    ):
+    def test_validate_kitchen_recipe_variation_when_recipe_invalid(self, _, mock_recipes):
         self.dk_client.recipe = "bad_recipe"
         self.dk_client.variation = DUMMY_VARIATION
-        mock_get_kitchens_info.return_value = {DUMMY_KITCHEN: {}}
         mock_recipes.return_value = RECIPES
         with self.assertRaises(ValueError) as cm:
             self.dk_client._validate_kitchen_recipe_variation()
-        mock_get_kitchens_info.assert_called_once()
         mock_recipes.assert_called_once()
         self.assertEqual(
             f'bad_recipe is not one of the available recipes: {DUMMY_RECIPE}', cm.exception.args[0]
         )
 
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_recipes')
-    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._get_kitchens_info')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
-    def test_validate_kitchen_recipe_variation_when_variation_invalid(
-        self, _, mock_get_kitchens_info, mock_recipes
-    ):
+    def test_validate_kitchen_recipe_variation_when_variation_invalid(self, _, mock_recipes):
         self.dk_client.recipe = DUMMY_RECIPE
         self.dk_client.variation = 'bad_variation'
-        mock_get_kitchens_info.return_value = {DUMMY_KITCHEN: {}}
         mock_recipes.return_value = RECIPES
         with self.assertRaises(ValueError) as cm:
             self.dk_client._validate_kitchen_recipe_variation()
-        mock_get_kitchens_info.assert_called_once()
         mock_recipes.assert_called_once()
         self.assertEqual(
             f'bad_variation is not one of the available variations: {DUMMY_VARIATION}',

@@ -1149,16 +1149,18 @@ class DataKitchenClient:
 
         """
         self._ensure_attributes(KITCHEN)
-        return self._api_request(API_GET, 'recipe', 'variations', 'listfromorders',
-                                 self.kitchen).json()['recipes']
-
-    def _validate_kitchen_recipe_variation(self):
-        self._ensure_attributes(KITCHEN, RECIPE, VARIATION)
         kitchens = self._get_kitchens_info()
         if self.kitchen not in kitchens:
             raise ValueError(
                 f'{self.kitchen} is not one of the available kitchens: {",".join(kitchens.keys())}'
             )
+        if self._username not in kitchens[self.kitchen]['kitchen-staff']:
+            raise ValueError(f'{self.kitchen} is not available to {self._username}')
+        return self._api_request(API_GET, 'recipe', 'variations', 'listfromorders',
+                                 self.kitchen).json()['recipes']
+
+    def _validate_kitchen_recipe_variation(self):
+        self._ensure_attributes(KITCHEN, RECIPE, VARIATION)
         recipes = self.get_recipes()
         if self.recipe not in recipes.keys():
             raise ValueError(
