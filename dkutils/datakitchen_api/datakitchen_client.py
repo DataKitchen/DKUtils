@@ -2,6 +2,7 @@ import copy
 import json
 import os
 import traceback
+from functools import cmp_to_key
 
 import requests
 from requests.exceptions import HTTPError
@@ -130,6 +131,7 @@ class DataKitchenClient:
         self.kitchen = kitchen
         self.recipe = recipe
         self.variation = variation
+        self._valid_attributes = False
 
     @property
     def kitchen(self):
@@ -138,6 +140,7 @@ class DataKitchenClient:
     @kitchen.setter
     def kitchen(self, kitchen):
         self._kitchen = kitchen
+        self._valid_attributes = False
 
     def set_kitchen(self, kitchen):
         self.kitchen = kitchen
@@ -150,6 +153,7 @@ class DataKitchenClient:
     @recipe.setter
     def recipe(self, recipe):
         self._recipe = recipe
+        self._valid_attributes = False
 
     def set_recipe(self, recipe):
         self.recipe = recipe
@@ -162,6 +166,7 @@ class DataKitchenClient:
     @variation.setter
     def variation(self, variation):
         self._variation = variation
+        self._valid_attributes = False
 
     def set_variation(self, variation):
         self.variation = variation
@@ -171,10 +176,49 @@ class DataKitchenClient:
         """
         Ensure the properties required for the API request are all defined.
         """
-        invalid_attributes = [attr_name for attr_name in args if getattr(self, attr_name) is None]
+
+        def sort_args(a, b):
+            """
+            Sort so attributes are processed in Kitchen, Recipe, Variation order
+            """
+            if KITCHEN == a:
+                return -1
+            if RECIPE == a and VARIATION == b:
+                return -1
+            if a < b:
+                return -1
+            if a == b:
+                return 0
+            return 1
+
+        if self._valid_attributes:
+            return
+        invalid_attributes = []
+        attributes_to_check = set(args)
+        if VARIATION in attributes_to_check:
+            attributes_to_check.add(RECIPE)
+        if RECIPE in attributes_to_check:
+            attributes_to_check.add(KITCHEN)
+        for attr_name in sorted(attributes_to_check, key=cmp_to_key(sort_args)):
+            if getattr(self, attr_name) is None:
+                invalid_attributes.append(attr_name)
+            elif attr_name == RECIPE and KITCHEN not in invalid_attributes:
+                recipes = self.get_recipes()
+                if self.recipe not in recipes.keys():
+                    raise ValueError(
+                        f'{self.recipe} is not one of the available recipes: {",".join(recipes.keys())}'
+                    )
+            elif attr_name == VARIATION and RECIPE not in invalid_attributes and KITCHEN not in invalid_attributes:
+                variations = recipes[self.recipe]
+                if self.variation not in variations:
+                    raise ValueError(
+                        f'{self.variation} is not one of the available variations: {",".join(variations)}'
+                    )
 
         if invalid_attributes:
             raise ValueError(f'Undefined attributes: {",".join(invalid_attributes)}')
+        else:
+            self._valid_attributes = True
 
     def _api_request(self, http_method, *args, is_json=True, **kwargs):
         """
@@ -268,7 +312,6 @@ class DataKitchenClient:
             :class:`Response <Response>` object
         """
         self._ensure_attributes(KITCHEN, RECIPE, VARIATION)
-        self._validate_kitchen_recipe_variation()
         return self._api_request(
             API_PUT,
             'order',
@@ -1158,16 +1201,3 @@ class DataKitchenClient:
             raise ValueError(f'{self.kitchen} is not available to {self._username}')
         return self._api_request(API_GET, 'recipe', 'variations', 'listfromorders',
                                  self.kitchen).json()['recipes']
-
-    def _validate_kitchen_recipe_variation(self):
-        self._ensure_attributes(KITCHEN, RECIPE, VARIATION)
-        recipes = self.get_recipes()
-        if self.recipe not in recipes.keys():
-            raise ValueError(
-                f'{self.recipe} is not one of the available recipes: {",".join(recipes.keys())}'
-            )
-        variations = recipes[self.recipe]
-        if self.variation not in variations:
-            raise ValueError(
-                f'{self.variation} is not one of the available variations: {",".join(variations)}'
-            )
