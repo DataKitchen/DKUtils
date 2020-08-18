@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="DKUtils",
-    version="0.10.2",
+    version="0.11.0",
     author="DataKitchen",
     author_email="info@datakitchen.io",
     description="DataKitchen Utils Library",
