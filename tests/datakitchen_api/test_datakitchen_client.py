@@ -29,6 +29,7 @@ DUMMY_ORDER_ID = 'dummy_order_id'
 DUMMY_ORDER_ID2 = 'dummy_order_id2'
 DUMMY_ORDER_RUN_ID = 'dummy_order_run_id'
 DUMMY_ORDER_RUN_ID2 = 'dummy_order_run_id2'
+GET_RECIPES_URL = f'{DUMMY_URL}/v2/recipe/variations/listfromorders/{DUMMY_KITCHEN}'
 LIST_KITCHEN_URL = f'{DUMMY_URL}/v2/kitchen/list'
 KITCHEN_STAFF = "kitchen-staff"
 RECIPE_OVERRIDES = "recipeoverrides"
@@ -38,6 +39,7 @@ JSON_PROFILE = {
     "dk-cloud-username": DUMMY_USERNAME,
     "dk-cloud-password": DUMMY_PASSWORD
 }
+RECIPES = {DUMMY_RECIPE: [DUMMY_VARIATION]}
 
 
 class MockResponse:
@@ -89,6 +91,7 @@ class TestDataKitchenClient(TestCase):
         self.assertEqual(dk_client.kitchen, 'kitchen')
         self.assertEqual(dk_client.recipe, 'recipe')
         self.assertEqual(dk_client.variation, 'variation')
+        self.assertFalse(dk_client._valid_attributes)
 
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
@@ -119,12 +122,14 @@ class TestDataKitchenClient(TestCase):
         self.assertEqual(dk_client._variation, DUMMY_VARIATION)
 
     def test_missing_attributes(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ValueError) as cm:
             self.dk_client.create_order()
+        self.assertEqual('Undefined attributes: recipe,variation', cm.exception.args[0])
 
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._ensure_attributes')
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.put')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
-    def test_create_order(self, _, mock_put):
+    def test_create_order(self, _, mock_put, mock_ensure_attributes):
         dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
         dk_client.kitchen = DUMMY_KITCHEN
         dk_client.recipe = DUMMY_RECIPE
@@ -137,10 +142,12 @@ class TestDataKitchenClient(TestCase):
         mock_put.return_value = MockResponse(json=response_json)
         response = dk_client.create_order()
         self.assertEqual(response.json(), response_json)
+        mock_ensure_attributes.assert_called_once_with(KITCHEN, RECIPE, VARIATION)
 
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._ensure_attributes')
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.put')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
-    def test_create_order_raise_error(self, _, mock_put):
+    def test_create_order_raise_error(self, _, mock_put, mock_ensure_attributes):
         dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
         dk_client.kitchen = DUMMY_KITCHEN
         dk_client.recipe = DUMMY_RECIPE
@@ -148,33 +155,21 @@ class TestDataKitchenClient(TestCase):
         mock_put.return_value = MockResponse(raise_error=True)
         with self.assertRaises(HTTPError):
             dk_client.create_order()
+        mock_ensure_attributes.assert_called()
 
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._ensure_attributes')
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.put')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
-    def test_create_order_no_kitchen(self, _, mock_put):
+    def test_create_order_when_attributes_not_valid(self, _, mock_put, mock_ensure_attributes):
+        mock_ensure_attributes.side_effect = ValueError("Bad")
         dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
         dk_client.recipe = DUMMY_RECIPE
         dk_client.variation = DUMMY_VARIATION
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ValueError) as cm:
             dk_client.create_order()
-
-    @patch('dkutils.datakitchen_api.datakitchen_client.requests.put')
-    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
-    def test_create_order_no_recipe(self, _, mock_put):
-        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
-        dk_client.kitchen = DUMMY_KITCHEN
-        dk_client.variation = DUMMY_VARIATION
-        with self.assertRaises(ValueError):
-            dk_client.create_order()
-
-    @patch('dkutils.datakitchen_api.datakitchen_client.requests.put')
-    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
-    def test_create_order_no_variation(self, _, mock_put):
-        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
-        dk_client.kitchen = DUMMY_KITCHEN
-        dk_client.recipe = DUMMY_RECIPE
-        with self.assertRaises(ValueError):
-            dk_client.create_order()
+        self.assertEqual(mock_ensure_attributes.side_effect, cm.exception)
+        mock_ensure_attributes.assert_called_once_with(KITCHEN, RECIPE, VARIATION)
+        mock_put.assert_not_called()
 
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.put')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
@@ -202,8 +197,9 @@ class TestDataKitchenClient(TestCase):
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
     def test_resume_order_run_no_kitchen(self, _, mock_put):
         dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ValueError) as cm:
             dk_client.resume_order_run(DUMMY_ORDER_RUN_ID)
+        self.assertEqual('Undefined attributes: kitchen', cm.exception.args[0])
 
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
@@ -240,8 +236,9 @@ class TestDataKitchenClient(TestCase):
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
     def test_get_order_runs_no_kitchen(self, _, mock_get):
         dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ValueError) as cm:
             dk_client.get_order_runs(DUMMY_ORDER_ID)
+        self.assertEqual('Undefined attributes: kitchen', cm.exception.args[0])
 
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
@@ -287,8 +284,9 @@ class TestDataKitchenClient(TestCase):
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
     def test_get_order_run_details_no_kitchen(self, _, mock_post):
         dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ValueError) as cm:
             dk_client.get_order_run_details(DUMMY_ORDER_RUN_ID)
+        self.assertEqual('Undefined attributes: kitchen', cm.exception.args[0])
 
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
@@ -333,8 +331,9 @@ class TestDataKitchenClient(TestCase):
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
     def test_get_order_run_status_no_kitchen(self, _, mock_post):
         dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ValueError) as cm:
             dk_client.get_order_run_status(DUMMY_ORDER_RUN_ID)
+        self.assertEqual('Undefined attributes: kitchen', cm.exception.args[0])
 
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
@@ -415,11 +414,14 @@ class TestDataKitchenClient(TestCase):
         expected_statuses = {DUMMY_ORDER_RUN_ID: None, 'Foo': None}
         self.assertEqual(order_run_statuses, expected_statuses)
 
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._ensure_attributes')
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.put')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
-    def test_create_and_monitor_order_runs(self, _, mock_put, mock_get, mock_post):
+    def test_create_and_monitor_order_runs(
+        self, _, mock_put, mock_get, mock_post, mock_ensure_attributes
+    ):
         orders_details = [
             {
                 KITCHEN: DUMMY_KITCHEN,
@@ -440,12 +442,16 @@ class TestDataKitchenClient(TestCase):
         self.assertEqual(results[0], orders_details)
         self.assertFalse(results[1])
         self.assertFalse(results[2])
+        mock_ensure_attributes.assert_called()
 
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._ensure_attributes')
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.put')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
-    def test_create_and_monitor_order_runs_timeout(self, _, mock_put, mock_get, mock_post):
+    def test_create_and_monitor_order_runs_timeout(
+        self, _, mock_put, mock_get, mock_post, mock_validate
+    ):
         orders_details = [
             {
                 KITCHEN: DUMMY_KITCHEN,
@@ -466,12 +472,16 @@ class TestDataKitchenClient(TestCase):
         self.assertFalse(results[0])
         self.assertEqual(results[1], orders_details)
         self.assertFalse(results[2])
+        mock_validate.assert_called()
 
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._ensure_attributes')
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.put')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
-    def test_create_and_monitor_order_runs_multiple(self, _, mock_put, mock_get, mock_post):
+    def _ensure_attributestest_create_and_monitor_order_runs_multiple(
+        self, _, mock_put, mock_get, mock_post, mock_ensure_attributes
+    ):
         orders_details = [
             {
                 KITCHEN: DUMMY_KITCHEN,
@@ -509,6 +519,7 @@ class TestDataKitchenClient(TestCase):
         self.assertEqual(results[0], [orders_details[0]])
         self.assertEqual(results[1], [orders_details[1]])
         self.assertFalse(results[2])
+        mock_ensure_attributes.assert_called()
 
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
@@ -654,8 +665,9 @@ class TestDataKitchenClient(TestCase):
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
     def test_get_kitchen_info_when_kitchen_not_set_raises_value_error(self, _):
         dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ValueError) as cm:
             dk_client._get_kitchen_info()
+        self.assertEqual('Undefined attributes: kitchen', cm.exception.args[0])
 
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
     def test_get_kitchen_info_when_no_kitchen_found_raises_value_error(self, mock_get):
@@ -990,3 +1002,80 @@ class TestDataKitchenClient(TestCase):
             overrides.keys(), self.dk_client.get_override_names_that_exist(overrides.keys())
         )
         mock_get_overrides.assert_called_once()
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_get_recipes_when_kitchen_is_not_set_then_value_error_is_raised(self, _):
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        with self.assertRaises(ValueError) as cm:
+            dk_client.get_recipes()
+        self.assertEqual('Undefined attributes: kitchen', cm.exception.args[0])
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._get_kitchens_info')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_get_recipes_when_kitchen_is_not_available_then_value_error_is_raised(
+        self, _, mock_get_kitchens_info
+    ):
+        mock_get_kitchens_info.return_value = {DUMMY_KITCHEN: {'kitchen-staff': []}}
+        with self.assertRaises(ValueError) as cm:
+            self.dk_client.get_recipes()
+        self.assertEqual(
+            f'{DUMMY_KITCHEN} is not available to {DUMMY_USERNAME}', cm.exception.args[0]
+        )
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._get_kitchens_info')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_get_recipes(self, _, mock_get, mock_kitchens_info):
+        mock_kitchens_info.return_value = {DUMMY_KITCHEN: {'kitchen-staff': [DUMMY_USERNAME]}}
+        mock_get.return_value = MockResponse(json={'recipes': RECIPES})
+        self.assertEqual(RECIPES, self.dk_client.get_recipes())
+        mock_get.assert_called_once_with(GET_RECIPES_URL, headers=None, json={})
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_ensure_attributes_when_kitchen_not_set_raises_value_error(self, _):
+        self.dk_client.kitchen = None
+        self.dk_client.recipe = DUMMY_RECIPE
+        self.dk_client.variation = DUMMY_VARIATION
+        with self.assertRaises(ValueError) as cm:
+            self.dk_client._ensure_attributes(KITCHEN)
+        self.assertEqual('Undefined attributes: kitchen', cm.exception.args[0])
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_ensure_attributes_when_recipe_not_set_raises_value_error(self, _):
+        self.dk_client.kitchen = None
+        with self.assertRaises(ValueError) as cm:
+            self.dk_client._ensure_attributes(RECIPE)
+        self.assertEqual('Undefined attributes: kitchen,recipe', cm.exception.args[0])
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_ensure_attributes_when_variation_not_set_raises_value_error(self, _):
+        self.dk_client.kitchen
+        with self.assertRaises(ValueError) as cm:
+            self.dk_client._ensure_attributes(VARIATION)
+        self.assertEqual('Undefined attributes: recipe,variation', cm.exception.args[0])
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_recipes')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_ensure_attributes_when_recipe_invalid(self, _, mock_recipes):
+        self.dk_client.recipe = "bad_recipe"
+        mock_recipes.return_value = RECIPES
+        with self.assertRaises(ValueError) as cm:
+            self.dk_client._ensure_attributes(KITCHEN, RECIPE)
+        mock_recipes.assert_called_once()
+        self.assertEqual(
+            f'bad_recipe is not one of the available recipes: {DUMMY_RECIPE}', cm.exception.args[0]
+        )
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_recipes')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_ensure_attributes_when_variation_invalid(self, _, mock_recipes):
+        self.dk_client.recipe = DUMMY_RECIPE
+        self.dk_client.variation = "bad_variation"
+        mock_recipes.return_value = RECIPES
+        with self.assertRaises(ValueError) as cm:
+            self.dk_client._ensure_attributes(KITCHEN, RECIPE, VARIATION)
+        mock_recipes.assert_called_once()
+        self.assertEqual(
+            f'bad_variation is not one of the available variations: {DUMMY_VARIATION}',
+            cm.exception.args[0]
+        )
