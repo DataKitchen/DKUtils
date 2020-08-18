@@ -1,7 +1,7 @@
 Release Notes
 =============
 
-v0.10.3
+v0.11.0
 -------
 *  Add additional check to validate kitchen, recipe, orders combination
 *  Add function get_recipes
