@@ -1053,7 +1053,7 @@ class DataKitchenClient:
 
         Parameters
         ----------
-            override_names:set
+            override_names : set
                 A set of override names that could exist in the kitchen
 
         Raises
@@ -1081,7 +1081,7 @@ class DataKitchenClient:
 
         Parameters
         ----------
-            override_names:set
+            override_names : set
                 A set of override names that could exist in the kitchen
 
         Raises
@@ -1154,7 +1154,7 @@ class DataKitchenClient:
 
         Parameters
         ----------
-        new_kitchen_staff:list
+        new_kitchen_staff : list
             A list containing the email addresses to be added to the kitchen staff
 
         Raises
@@ -1201,3 +1201,98 @@ class DataKitchenClient:
             raise ValueError(f'{self.kitchen} is not available to {self._username}')
         return self._api_request(API_GET, 'recipe', 'variations', 'listfromorders',
                                  self.kitchen).json()['recipes']
+
+    def get_order_status(
+        self,
+        time_period_hours=None,
+        order_id_regex=None,
+        order_status=None,
+        order_run_status=None,
+        order_run_count=3
+    ):
+        """
+        Retrieve the order (and associated order runs) status details based on the applied
+        filters. To filter based on recipe and variation, ensure these properties are set on this
+        client. Alternatively, set recipe and/or variation to None to remove filtering based on
+        these properties.
+
+        Parameters
+        ----------
+        time_period_hours : int, optional
+            Limit retrieved orders to those that started less than the provided number of hours ago.
+        order_id_regex : string, optional
+            Filter retrieved orders based on this provided order id regular expression
+        order_status : string, optional
+            Filter retrieved orders with this provided order status
+        order_run_status : string, optional
+            Filter retrieved order run with this provided order run status
+        order_run_count : int, optional
+            Limit the number of retrieved order runs (default is 3)
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+        ValueError
+            If the kitchen attribute is not set
+
+        Returns
+        -------
+        order_runs : list
+            A list of order runs sorted from most recent start-time to oldest in the form::
+
+                [
+                    {
+                        'hid': '66152846-e0ee-11ea-8280-12128c919b99',
+                        'order_id': 'a8f9ac78-e0ed-11ea-b3f4-56a20effdf97',
+                        'orderrun_status': 'OrderRun Completed',
+                        'status': 'COMPLETED_SERVING',
+                        'timings': {
+                            'duration': 22261,
+                            'end-time': 1597712533033,
+                            'start-time': 1597712510772
+                        }
+                    },
+                    {
+                        'hid': '3f57a7d0-e0ec-11ea-a65f-5edd64ee22f9',
+                        'order_id': '3942feda-e0ec-11ea-a00e-56a20effdf97',
+                        'orderrun_status': 'OrderRun Completed',
+                        'status': 'COMPLETED_SERVING',
+                        'timings': {
+                            'duration': 22676,
+                            'end-time': 1597711609459,
+                            'start-time': 1597711586783
+                        },
+                        'variation_name': 'variation1'
+                    }
+                ]
+
+        """
+        self._ensure_attributes(KITCHEN)
+        kwargs = {}
+        if self.recipe:
+            kwargs[RECIPE] = self.recipe
+        if self.variation:
+            kwargs[VARIATION] = self.variation
+        if time_period_hours:
+            kwargs['timePeriod'] = time_period_hours
+        if order_id_regex:
+            kwargs['search'] = order_id_regex
+        if order_status:
+            kwargs['orderStatus'] = order_status
+        if order_run_status:
+            kwargs['orderRunStatus'] = order_run_status
+        if order_run_count:
+            kwargs['servingsCount'] = order_run_count
+
+        response_json = self._api_request(API_GET, 'order', 'status', self.kitchen, **kwargs).json()
+
+        order_runs = []
+        if 'servings' in response_json and response_json['servings']:
+            for order in response_json['servings'].values():
+                order_runs.extend(order['servings'])
+
+        def sort_start_time(value):
+            return value['timings']['start-time']
+
+        return sorted(order_runs, key=sort_start_time, reverse=True)
