@@ -1,10 +1,14 @@
 Release Notes
 =============
 
+v0.12.0
+-------
+* Add DataKitchenClient function get_order_status
+
 v0.11.0
 -------
-*  Add additional check to validate kitchen, recipe, orders combination
-*  Add function get_recipes
+* Add additional check to validate kitchen, recipe, orders combination
+* Add function get_recipes
 
 v0.10.2
 -------

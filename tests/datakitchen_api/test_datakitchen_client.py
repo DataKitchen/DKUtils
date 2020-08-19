@@ -1079,3 +1079,96 @@ class TestDataKitchenClient(TestCase):
             f'bad_variation is not one of the available variations: {DUMMY_VARIATION}',
             cm.exception.args[0]
         )
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_get_order_status(self, _, mock_get):
+        response_json = {
+            'customer': 'DummyCustomer',
+            'kitchenname': 'DummyKitchen',
+            'orders': [{
+                'hid': 'a8f9ac78-e0ed-11ea-b3f4-56a20effdf97',
+                'input_settings': {},
+                'order-status': 'COMPLETED_ORDER',
+                'recipe': 'Test_Recipe',
+                'schedule': 'now',
+                'variation': 'variation1'
+            }, {
+                'hid': '3942feda-e0ec-11ea-a00e-56a20effdf97',
+                'input_settings': {},
+                'order-status': 'COMPLETED_ORDER',
+                'recipe': 'Test_Recipe',
+                'schedule': 'now',
+                'variation': 'variation1'
+            }],
+            'repo': 'dc',
+            'servings': {
+                '3942feda-e0ec-11ea-a00e-56a20effdf97': {
+                    'servings': [{
+                        'hid': '3f57a7d0-e0ec-11ea-a65f-5edd64ee22f9',
+                        'order_id': '3942feda-e0ec-11ea-a00e-56a20effdf97',
+                        'orderrun_status': 'OrderRun Completed',
+                        'status': 'COMPLETED_SERVING',
+                        'timings': {
+                            'duration': 22676,
+                            'end-time': 1597711609459,
+                            'start-time': 1597711586783
+                        },
+                        'variation_name': 'variation1'
+                    }],
+                    'total': 1
+                },
+                'a8f9ac78-e0ed-11ea-b3f4-56a20effdf97': {
+                    'servings': [{
+                        'hid': '66152846-e0ee-11ea-8280-12128c919b99',
+                        'order_id': 'a8f9ac78-e0ed-11ea-b3f4-56a20effdf97',
+                        'orderrun_status': 'OrderRun Completed',
+                        'status': 'COMPLETED_SERVING',
+                        'timings': {
+                            'duration': 22261,
+                            'end-time': 1597712533033,
+                            'start-time': 1597712510772
+                        },
+                        'variation_name': 'variation1'
+                    }],
+                    'total': 1
+                }
+            },
+            'total-orders': 2
+        }
+
+        expected_order_runs = []
+        for order in response_json['servings'].values():
+            expected_order_runs.extend(order['servings'])
+
+        def sort_start_time(value):
+            return value['timings']['start-time']
+
+        expected_order_runs = sorted(expected_order_runs, key=sort_start_time, reverse=True)
+
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        dk_client.kitchen = DUMMY_KITCHEN
+        dk_client.recipe = DUMMY_RECIPE
+        dk_client.variation = DUMMY_VARIATION
+        mock_get.return_value = MockResponse(json=response_json)
+        observed_order_runs = dk_client.get_order_status(
+            time_period_hours=24,
+            order_id_regex='*',
+            order_status='COMPLETED_SERVING',
+            order_run_status='OrderRun Completed',
+            order_run_count=2,
+        )
+        self.assertEqual(observed_order_runs, expected_order_runs)
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_get_order_status_empty(self, _, mock_get):
+        response_json = {'servings': {}}
+
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        dk_client.kitchen = DUMMY_KITCHEN
+        dk_client.recipe = DUMMY_RECIPE
+        dk_client.variation = DUMMY_VARIATION
+        mock_get.return_value = MockResponse(json=response_json)
+        observed_order_runs = dk_client.get_order_status()
+        self.assertEqual(observed_order_runs, [])
