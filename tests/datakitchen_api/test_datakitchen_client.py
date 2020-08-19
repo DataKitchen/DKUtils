@@ -1146,29 +1146,47 @@ class TestDataKitchenClient(TestCase):
 
         expected_order_runs = sorted(expected_order_runs, key=sort_start_time, reverse=True)
 
-        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
-        dk_client.kitchen = DUMMY_KITCHEN
-        dk_client.recipe = DUMMY_RECIPE
-        dk_client.variation = DUMMY_VARIATION
         mock_get.return_value = MockResponse(json=response_json)
-        observed_order_runs = dk_client.get_order_status(
-            time_period_hours=24,
-            order_id_regex='*',
-            order_status='COMPLETED_SERVING',
-            order_run_status='OrderRun Completed',
-            order_run_count=2,
+        kwargs = {
+            'time_period_hours': 24,
+            'order_id_regex': '*',
+            'order_status': 'COMPLETED_SERVING',
+            'order_run_status': 'OrderRun Completed',
+            'order_run_count': 2
+        }
+        observed_order_runs = self.dk_client.get_order_status(**kwargs)
+        mock_get.assert_called_with(
+            f'{DUMMY_URL}/v2/order/status/{DUMMY_KITCHEN}',
+            headers=None,
+            json={
+                'timePeriod': kwargs['time_period_hours'],
+                'search': kwargs['order_id_regex'],
+                'orderStatus': kwargs['order_status'],
+                'orderRunStatus': kwargs['order_run_status'],
+                'servingsCount': kwargs['order_run_count']
+            }
         )
         self.assertEqual(observed_order_runs, expected_order_runs)
 
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_get_order_status_with_recipe_and_variation(self, _, mock_get):
+        self.dk_client.recipe = DUMMY_RECIPE
+        self.dk_client.variation = DUMMY_VARIATION
+        self.dk_client.get_order_status(order_run_count=None)
+        mock_get.assert_called_with(
+            f'{DUMMY_URL}/v2/order/status/{DUMMY_KITCHEN}',
+            headers=None,
+            json={
+                'recipe': DUMMY_RECIPE,
+                'variation': DUMMY_VARIATION,
+            }
+        )
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
     def test_get_order_status_empty(self, _, mock_get):
         response_json = {'servings': {}}
-
-        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
-        dk_client.kitchen = DUMMY_KITCHEN
-        dk_client.recipe = DUMMY_RECIPE
-        dk_client.variation = DUMMY_VARIATION
         mock_get.return_value = MockResponse(json=response_json)
-        observed_order_runs = dk_client.get_order_status()
+        observed_order_runs = self.dk_client.get_order_status()
         self.assertEqual(observed_order_runs, [])
