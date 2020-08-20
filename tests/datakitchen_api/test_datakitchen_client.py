@@ -6,7 +6,7 @@ from unittest.mock import patch, call, mock_open
 from requests.exceptions import HTTPError
 
 from dkutils.constants import (
-    COMPLETED_SERVING, KITCHEN, ORDER_ID, ORDER_RUN_ID, ORDER_RUN_STATUS, PARAMETERS,
+    API_GET, COMPLETED_SERVING, KITCHEN, ORDER_ID, ORDER_RUN_ID, ORDER_RUN_STATUS, PARAMETERS,
     PLANNED_SERVING, RECIPE, VARIATION, PARENT_KITCHEN
 )
 from dkutils.datakitchen_api.datakitchen_client import DataKitchenClient, create_using_context
@@ -1066,19 +1066,32 @@ class TestDataKitchenClient(TestCase):
             f'bad_recipe is not one of the available recipes: {DUMMY_RECIPE}', cm.exception.args[0]
         )
 
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_variations')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_recipes')
-    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
-    def test_ensure_attributes_when_variation_invalid(self, _, mock_recipes):
+    def test_ensure_attributes_when_variation_invalid(self, mock_recipes, mock_variations):
         self.dk_client.recipe = DUMMY_RECIPE
         self.dk_client.variation = "bad_variation"
         mock_recipes.return_value = RECIPES
+        mock_variations.return_value = {DUMMY_VARIATION: {}}
         with self.assertRaises(ValueError) as cm:
             self.dk_client._ensure_attributes(KITCHEN, RECIPE, VARIATION)
         mock_recipes.assert_called_once()
+        mock_variations.assert_called_once_with()
         self.assertEqual(
             f'bad_variation is not one of the available variations: {DUMMY_VARIATION}',
             cm.exception.args[0]
         )
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_variations')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_recipes')
+    def test_ensure_attributes_when_variation_valid(self, mock_recipes, mock_variations):
+        self.dk_client.recipe = DUMMY_RECIPE
+        self.dk_client.variation = DUMMY_VARIATION
+        mock_recipes.return_value = RECIPES
+        mock_variations.return_value = {DUMMY_VARIATION: {}}
+        self.dk_client._ensure_attributes(KITCHEN, RECIPE, VARIATION)
+        mock_recipes.assert_called_once()
+        mock_variations.assert_called_once_with()
 
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
@@ -1190,3 +1203,26 @@ class TestDataKitchenClient(TestCase):
         mock_get.return_value = MockResponse(json=response_json)
         observed_order_runs = self.dk_client.get_order_status()
         self.assertEqual(observed_order_runs, [])
+
+    def test_get_variations_when_recipe_is_not_set_then_value_error_is_raised(self):
+        with self.assertRaises(ValueError) as cm:
+            self.dk_client.get_variations()
+        self.assertEqual('Undefined attributes: recipe', cm.exception.args[0])
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._api_request')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._ensure_attributes')
+    def test_get_variations(self, mock_ensure_attributes, mock_api_request):
+        self.dk_client.recipe = DUMMY_RECIPE
+        variations = {
+            DUMMY_VARIATION: {
+                'description': 'some description',
+                'graph_setting': "some_graph"
+            }
+        }
+        variation_list = {"variation-list": variations}
+        response_json = {"contents": json.dumps(variation_list)}
+        mock_api_request.return_value = MockResponse(json=response_json)
+        self.assertEqual(variations, self.dk_client.get_variations())
+        mock_api_request.assert_called_once_with(
+            API_GET, 'recipe', 'file', DUMMY_KITCHEN, DUMMY_RECIPE, "variations.json"
+        )
