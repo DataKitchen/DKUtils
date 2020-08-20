@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v0.13.0
+-------
+* Add DataKitchenClient function get_variations
+
 v0.12.0
 -------
 * Add DataKitchenClient function get_order_status

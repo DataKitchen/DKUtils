@@ -209,7 +209,7 @@ class DataKitchenClient:
                         f'{self.recipe} is not one of the available recipes: {",".join(recipes.keys())}'
                     )
             elif attr_name == VARIATION and RECIPE not in invalid_attributes and KITCHEN not in invalid_attributes:
-                variations = recipes[self.recipe]
+                variations = self.get_variations()
                 if self.variation not in variations:
                     raise ValueError(
                         f'{self.variation} is not one of the available variations: {",".join(variations)}'
@@ -1296,3 +1296,34 @@ class DataKitchenClient:
             return value['timings']['start-time']
 
         return sorted(order_runs, key=sort_start_time, reverse=True)
+
+    def get_variations(self):
+        """
+        Returns a dictionary that contains the variation-list from the variations.json file
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+        ValueError
+            If the recipe attribute is not set
+
+        Returns
+        -------
+        dict
+            A dictionary containing the information from the variations.json file.
+            For example::
+
+                { "some_variation": {
+                    "description": "A descript of the variation",
+                    "graph-setting": "a_graph_setting"
+                    }
+                }
+
+        """
+        self._ensure_attributes(RECIPE)
+        response = self._api_request(
+            API_GET, 'recipe', 'file', self.kitchen, self.recipe, "variations.json"
+        )
+        contents = json.loads(response.json()['contents'])
+        return contents['variation-list']
