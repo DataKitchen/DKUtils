@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v0.14.0
+-------
+* Added RemoteClient module which can be used execute commands and upload files to a server using ssh
+
 v0.13.0
 -------
 * Add DataKitchenClient function get_variations
