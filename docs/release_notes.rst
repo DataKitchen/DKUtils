@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v0.15.0
+-------
+* Change URL used by get_recipes function
+
 v0.14.0
 -------
 * Added RemoteClient module which can be used execute commands and upload files to a server using ssh

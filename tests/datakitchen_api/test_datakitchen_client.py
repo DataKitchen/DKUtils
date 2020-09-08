@@ -29,7 +29,7 @@ DUMMY_ORDER_ID = 'dummy_order_id'
 DUMMY_ORDER_ID2 = 'dummy_order_id2'
 DUMMY_ORDER_RUN_ID = 'dummy_order_run_id'
 DUMMY_ORDER_RUN_ID2 = 'dummy_order_run_id2'
-GET_RECIPES_URL = f'{DUMMY_URL}/v2/recipe/variations/listfromorders/{DUMMY_KITCHEN}'
+GET_RECIPES_URL = f'{DUMMY_URL}/v2/kitchen/recipenames/{DUMMY_KITCHEN}'
 LIST_KITCHEN_URL = f'{DUMMY_URL}/v2/kitchen/list'
 KITCHEN_STAFF = "kitchen-staff"
 RECIPE_OVERRIDES = "recipeoverrides"
@@ -39,7 +39,7 @@ JSON_PROFILE = {
     "dk-cloud-username": DUMMY_USERNAME,
     "dk-cloud-password": DUMMY_PASSWORD
 }
-RECIPES = {DUMMY_RECIPE: [DUMMY_VARIATION]}
+RECIPES = [DUMMY_RECIPE]
 
 
 class MockResponse:
