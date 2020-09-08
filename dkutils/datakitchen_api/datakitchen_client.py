@@ -204,9 +204,9 @@ class DataKitchenClient:
                 invalid_attributes.append(attr_name)
             elif attr_name == RECIPE and KITCHEN not in invalid_attributes:
                 recipes = self.get_recipes()
-                if self.recipe not in recipes.keys():
+                if self.recipe not in recipes:
                     raise ValueError(
-                        f'{self.recipe} is not one of the available recipes: {",".join(recipes.keys())}'
+                        f'{self.recipe} is not one of the available recipes: {",".join(recipes)}'
                     )
             elif attr_name == VARIATION and RECIPE not in invalid_attributes and KITCHEN not in invalid_attributes:
                 variations = self.get_variations()
@@ -1184,11 +1184,11 @@ class DataKitchenClient:
 
         Returns
         -------
-        dict
-            A dictionary keyed by recipe name containing a list of variation names.
+        list
+            A list containing the recipe names.
             For example::
 
-                { 'Demo_Aws_Hadoop_Cluster': ['run_pyhive_azure'] }
+                [ 'Demo_Azure', 'Demo_NiFi' ]
 
         """
         self._ensure_attributes(KITCHEN)
@@ -1199,8 +1199,7 @@ class DataKitchenClient:
             )
         if self._username not in kitchens[self.kitchen]['kitchen-staff']:
             raise ValueError(f'{self.kitchen} is not available to {self._username}')
-        return self._api_request(API_GET, 'recipe', 'variations', 'listfromorders',
-                                 self.kitchen).json()['recipes']
+        return self._api_request(API_GET, 'kitchen', 'recipenames', self.kitchen).json()['recipes']
 
     def get_order_status(
         self,
