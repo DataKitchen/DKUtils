@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v0.16.0
+-------
+* Add option to stream logs to RemoteClient commands execution
+
 v0.15.0
 -------
 * Change URL used by get_recipes function
