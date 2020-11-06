@@ -1,3 +1,5 @@
+import os
+
 from unittest import TestCase
 from unittest.mock import patch, call, MagicMock
 
@@ -15,14 +17,13 @@ REMOTE_PATH = "/home/base"
 class TestRemoteClient(TestCase):
 
     def setUp(self):
-        self.client = RemoteClient(HOST, USER, PASSWORD, REMOTE_PATH)
+        self.client = RemoteClient(HOST, USER, PASSWORD)
 
     def test_constructor(self):
-        client = RemoteClient(HOST, USER, PASSWORD, REMOTE_PATH)
+        client = RemoteClient(HOST, USER, PASSWORD)
         self.assertEqual(HOST, client._host)
         self.assertEqual(USER, client._user)
         self.assertEqual(PASSWORD, client._password)
-        self.assertEqual(REMOTE_PATH, client._remote_path)
 
     @patch('dkutils.ssh.remote_client.SCPClient')
     @patch('dkutils.ssh.remote_client.AutoAddPolicy')
@@ -75,7 +76,7 @@ class TestRemoteClient(TestCase):
     def test_bulk_upload(self, mock_ssh_client, mock_scp_client):
         files = ['file1', 'file2']
         mock_scp_client.return_value = mock_scp_client
-        self.client.bulk_upload(files)
+        self.client.bulk_upload(REMOTE_PATH, files)
         calls = [call(file, recursive=True, remote_path=REMOTE_PATH) for file in files]
         mock_scp_client.put.assert_has_calls(calls)
 
@@ -87,7 +88,7 @@ class TestRemoteClient(TestCase):
         mock_scp_client.put.side_effect = expected_exception
         with self.assertRaises(SCPException) as cm:
             file = 'file'
-            self.client.bulk_upload([file])
+            self.client.bulk_upload(REMOTE_PATH, [file])
         self.assertEqual(expected_exception, cm.exception)
         mock_scp_client.put.assert_called_with(file, recursive=True, remote_path=REMOTE_PATH)
 
@@ -100,3 +101,35 @@ class TestRemoteClient(TestCase):
         self.client.disconnect()
         mock_ssh_client.close.assert_called_once()
         mock_scp_client.close.assert_called_once()
+
+    @patch('dkutils.ssh.remote_client.SCPClient')
+    @patch('dkutils.ssh.remote_client.SSHClient')
+    def test_bulk_download(self, _, mock_scp_client):
+        files = ['file1', 'file2']
+        mock_scp_client.return_value = mock_scp_client
+        self.client.bulk_download(REMOTE_PATH, files)
+        calls = [
+            call(os.path.join(REMOTE_PATH, file), local_path='.', recursive=True) for file in files
+        ]
+        mock_scp_client.get.assert_has_calls(calls)
+
+    @patch('dkutils.ssh.remote_client.SCPClient')
+    @patch('dkutils.ssh.remote_client.SSHClient')
+    def test_bulk_download_when_scpexception_raised(self, _, mock_scp_client):
+        expected_exception = SCPException("bad news")
+        mock_scp_client.return_value = mock_scp_client
+        mock_scp_client.get.side_effect = expected_exception
+        with self.assertRaises(SCPException) as cm:
+            file = 'file'
+            self.client.bulk_download(REMOTE_PATH, [file])
+        self.assertEqual(expected_exception, cm.exception)
+        mock_scp_client.get.assert_called_with(
+            os.path.join(REMOTE_PATH, file), local_path='.', recursive=True
+        )
+
+    @patch('dkutils.ssh.remote_client.SCPClient')
+    @patch('dkutils.ssh.remote_client.SSHClient')
+    def test_bulk_download_invalid_local_path(self, _, mock_scp_client):
+        mock_scp_client.return_value = mock_scp_client
+        with self.assertRaises(NotADirectoryError):
+            self.client.bulk_download(REMOTE_PATH, ['file'], local_path='foo')
