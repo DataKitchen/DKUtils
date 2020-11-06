@@ -1,4 +1,5 @@
 import inspect
+import pathlib
 
 from dkutils.constants import CHANGE_ME
 
@@ -80,3 +81,29 @@ def get_max_concurrency(num_orders, max_concurrent):
     elif max_concurrent < 1:
         return 1
     return min(num_orders, max_concurrent)
+
+
+def ensure_pathlib(path):
+    """
+    If provided path is a pathlib.PurePath instance, return it. If it's a string, convert it to a
+    pathlib.PurePath instance and return it. Otherwise, raise a TypeError.
+
+    Parameters
+    ----------
+    path : str or pathlib.PurePath
+        Path to be returned as a pathlib.PurePath instance.
+
+    Raises
+    ------
+    TypeError
+        If provided path is neither a string nor a pathlib.PurePath instance.
+
+    Returns
+    -------
+    pathlib.PurePath
+    """
+    if isinstance(path, str):
+        return pathlib.Path(path)
+    elif not isinstance(path, pathlib.PurePath):
+        raise TypeError(f'Expected str or pathlib.PurePath type, but found {type(path)}')
+    return path

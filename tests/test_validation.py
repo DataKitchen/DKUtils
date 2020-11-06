@@ -1,6 +1,8 @@
+import pathlib
+
 from unittest import TestCase
 
-from dkutils.validation import get_max_concurrency, validate_globals
+from dkutils.validation import get_max_concurrency, validate_globals, ensure_pathlib
 
 
 class TestValidation(TestCase):
@@ -44,6 +46,30 @@ class TestValidation(TestCase):
         with self.assertRaises(NameError) as cm:
             validate_globals(['FOO'])
         self.assertEqual(
-            f"\n\tGlobal variables with values that need to be changed: ['FOO']",
+            "\n\tGlobal variables with values that need to be changed: ['FOO']",
             cm.exception.args[0]
+        )
+
+    def test_ensure_pathlib_str(self):
+        p = ensure_pathlib('this/that.txt')
+        self.assertTrue(isinstance(p, pathlib.PurePath))
+
+    def test_ensure_pathlib_pathlib(self):
+        orig_path = pathlib.Path('this/that.txt')
+        new_path = ensure_pathlib(orig_path)
+        self.assertEqual(orig_path, new_path)
+
+    def test_ensure_pathlib_None(self):
+        with self.assertRaises(TypeError) as cm:
+            ensure_pathlib(None)
+        self.assertEqual(
+            "Expected str or pathlib.PurePath type, but found <class 'NoneType'>",
+            cm.exception.args[0]
+        )
+
+    def test_ensure_pathlib_int(self):
+        with self.assertRaises(TypeError) as cm:
+            ensure_pathlib(1)
+        self.assertEqual(
+            "Expected str or pathlib.PurePath type, but found <class 'int'>", cm.exception.args[0]
         )

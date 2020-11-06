@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+v1.0.0
+------
+* Add bulk download method to RemoteClient
+* Move remote path from RemoteClient constructor to bulk upload & download methods
+
 v0.16.0
 -------
 * Add option to stream logs to RemoteClient commands execution
