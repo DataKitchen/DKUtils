@@ -108,7 +108,9 @@ class TestRemoteClient(TestCase):
         files = ['file1', 'file2']
         mock_scp_client.return_value = mock_scp_client
         self.client.bulk_download(REMOTE_PATH, files)
-        calls = [call(os.path.join(REMOTE_PATH, file), recursive=True) for file in files]
+        calls = [
+            call(os.path.join(REMOTE_PATH, file), local_path='.', recursive=True) for file in files
+        ]
         mock_scp_client.get.assert_has_calls(calls)
 
     @patch('dkutils.ssh.remote_client.SCPClient')
@@ -121,4 +123,13 @@ class TestRemoteClient(TestCase):
             file = 'file'
             self.client.bulk_download(REMOTE_PATH, [file])
         self.assertEqual(expected_exception, cm.exception)
-        mock_scp_client.get.assert_called_with(os.path.join(REMOTE_PATH, file), recursive=True)
+        mock_scp_client.get.assert_called_with(
+            os.path.join(REMOTE_PATH, file), local_path='.', recursive=True
+        )
+
+    @patch('dkutils.ssh.remote_client.SCPClient')
+    @patch('dkutils.ssh.remote_client.SSHClient')
+    def test_bulk_download_invalid_local_path(self, _, mock_scp_client):
+        mock_scp_client.return_value = mock_scp_client
+        with self.assertRaises(NotADirectoryError):
+            self.client.bulk_download(REMOTE_PATH, ['file'], local_path='foo')

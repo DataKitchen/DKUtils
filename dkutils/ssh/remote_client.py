@@ -165,7 +165,7 @@ class RemoteClient:
             raise error
         self._logger.debug(f'Uploaded {remote_path.name} to {remote_path.parent}')
 
-    def bulk_download(self, remote_path, files):
+    def bulk_download(self, remote_path, files, local_path=''):
         """
         Download multiple files from remote directory.
 
@@ -175,16 +175,21 @@ class RemoteClient:
             Target directory on the server from which to download files
         files : List(str)
             List of remote filenames to be downloaded
+        local_path : str or pathlib.PurePath, optional
+            Local destination directory of downloaded files
         """
         remote_path = ensure_pathlib(remote_path)
+        local_path = ensure_pathlib(local_path)
+        if not local_path.is_dir():
+            raise NotADirectoryError(f'Local path is not a directory: {local_path}')
         self._connect()
         for file in files:
-            self.__download_single_file(remote_path / file)
+            self.__download_single_file(remote_path / file, local_path)
         self._logger.debug(
             f'Finished downloading {len(files)} files from {remote_path} on {self._host}'
         )
 
-    def __download_single_file(self, remote_path):
+    def __download_single_file(self, remote_path, local_path):
         """
         Download a single file from a remote directory.
 
@@ -192,6 +197,8 @@ class RemoteClient:
         ----------
         remote_path: pathlib.PurePath
             Path of the remote file or directory to be downloaded
+        local_path: pathlib.PurePath
+            Local destination directory of downloaded file
 
         Raises
         ------
@@ -199,11 +206,13 @@ class RemoteClient:
             If an exception occurs downloading the file/directory
         """
         try:
-            self._scp.get(str(remote_path), recursive=True)
+            self._scp.get(str(remote_path), local_path=str(local_path), recursive=True)
         except SCPException as error:
             self._logger.error(error)
             raise error
-        self._logger.debug(f'Downloaded {remote_path.name} from {remote_path.parent}')
+        self._logger.debug(
+            f'Downloaded {remote_path.name} from {remote_path.parent} to {local_path}'
+        )
 
     def disconnect(self):
         """
