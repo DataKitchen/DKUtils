@@ -74,7 +74,7 @@ class TestRemoteClient(TestCase):
     @patch('dkutils.ssh.remote_client.SCPClient')
     @patch('dkutils.ssh.remote_client.SSHClient')
     def test_bulk_upload(self, mock_ssh_client, mock_scp_client):
-        files = ['file1', 'file2']
+        files = ['/foo/file1', '/bar/file2']
         mock_scp_client.return_value = mock_scp_client
         self.client.bulk_upload(REMOTE_PATH, files)
         calls = [call(file, recursive=True, remote_path=REMOTE_PATH) for file in files]
