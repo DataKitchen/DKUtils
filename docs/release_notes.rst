@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v1.0.1
+------
+* Bugfix RemoteClient bulk upload to resolve remote path issue
+
 v1.0.0
 ------
 * Add bulk download method to RemoteClient
