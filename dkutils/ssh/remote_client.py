@@ -134,24 +134,26 @@ class RemoteClient:
         remote_path: str or pathlib.PurePath
             The directory to upload files to on the server
         files : List(str)
-            List of local files to be uploaded
+            List of local file paths to be uploaded
         """
         remote_path = ensure_pathlib(remote_path)
         self._connect()
         for file in files:
-            self.__upload_single_file(remote_path / file)
+            self.__upload_single_file(remote_path, file)
         self._logger.debug(
             f'Finished uploading {len(files)} files to {remote_path} on {self._host}'
         )
 
-    def __upload_single_file(self, remote_path):
+    def __upload_single_file(self, remote_path, file):
         """
         Upload a single file to a remote directory.
 
         Parameters
         ----------
         remote_path: pathlib.PurePath
-            Path to the local file to be uploaded
+            Remote path where file is uploaded
+        file: str
+            Local path to file being uploaded
 
         Raises
         ------
@@ -159,11 +161,11 @@ class RemoteClient:
             If an exception occurs uploading the file
         """
         try:
-            self._scp.put(remote_path.name, recursive=True, remote_path=str(remote_path.parent))
+            self._scp.put(file, recursive=True, remote_path=str(remote_path))
         except SCPException as error:
             self._logger.error(error)
             raise error
-        self._logger.debug(f'Uploaded {remote_path.name} to {remote_path.parent}')
+        self._logger.debug(f'Uploaded {file} to {remote_path}')
 
     def bulk_download(self, remote_path, files, local_path=''):
         """
