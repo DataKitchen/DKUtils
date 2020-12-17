@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v0.16.0
+-------
+* Added Alteryx Gallery API client
+
 v0.15.0
 -------
 * Change URL used by get_recipes function
