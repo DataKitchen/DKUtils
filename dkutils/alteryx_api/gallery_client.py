@@ -20,13 +20,30 @@ class GalleryException(Exception):
     pass
 
 
-def nested_deco(*args, **kwargs):
+def nested_dataclass_decorator(*args, **kwargs):
     """
     Returns
     -------
-    A decorator that can be used on dataclasses that contain nested dataclasses. This will allow a nested dictionary
-    to passed in the parameter for the field in the constructor and it will be converted to an instance of the nested
-    dataclass.
+    A decorator that can be used on dataclasses that contain nested dataclasses. Use of this decorator on a dataclass
+    which contains a field that is also a dataclass will allow the class to be instantiated via a dictionary which
+    also contains a nested dictionary for the the field that is a dataclass. For example if you had the following
+    declaration:
+    @dataclass
+    class A:
+	    a: int
+	    b: str
+
+    @dataclass
+    class B:
+	    c: str
+	    d: A
+
+    You would normally need to construct an instance of Class B as follows:
+    a = A({"a": 1, "b": "one"})
+    b = B({"c": "see", "d": a})
+    You need to construct an instance of A before creating B. Using this decorator on B will instead let you do the
+    following:
+    b = B({"c": "see", "d": {"a": 1, "b": "one"}}
     """
 
     def wrapper(check_class):
@@ -124,7 +141,7 @@ class JobInfoMessage:
     toolId: int
 
 
-@nested_deco
+@nested_dataclass_decorator
 class JobInfo:
     id: str
     appId: str
@@ -157,7 +174,7 @@ class MetaInfo:
     noOutputFilesMessage: str
 
 
-@nested_deco
+@nested_dataclass_decorator
 class Workflow:
     id: str
     subscriptionId: str
