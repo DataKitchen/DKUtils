@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v1.1.0
+-------
+* Added Alteryx Gallery API client
+
 v1.0.1
 ------
 * Bugfix RemoteClient bulk upload to resolve remote path issue
