@@ -30,13 +30,13 @@ def nested_dataclass_decorator(*args, **kwargs):
     declaration:
     @dataclass
     class A:
-	    a: int
-	    b: str
+        a: int
+        b: str
 
     @dataclass
     class B:
-	    c: str
-	    d: A
+        c: str
+        d: A
 
     You would normally need to construct an instance of Class B as follows:
     a = A({"a": 1, "b": "one"})
