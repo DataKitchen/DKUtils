@@ -10,7 +10,7 @@ GLOBALS_CONFIG_PATH: pathlib.Path = pathlib.Path(os.getcwd()) / 'globals_config.
 ConfigDict = Dict[str, Union[str, int]]
 
 
-def get_local_config(global_var_names, cur_globals):
+def get_globals_config(global_var_names, cur_globals):
     """
     Load the specified glabal variables from a file named globals_config.json if it exists. This is to facillitate
     a way of initializing the globals variables when running the code outside of DataKitchen. These global variables
@@ -51,7 +51,7 @@ def validate_globals(global_var_names):
 
     # https://docs.python.org/3/library/inspect.html#inspect.stack
     cur_globals = inspect.stack()[1][0].f_globals
-    get_local_config(global_var_names, cur_globals)
+    get_globals_config(global_var_names, cur_globals)
     for var in global_var_names:
         if var not in cur_globals:
             print(f'Undefined global variable: {var}')
