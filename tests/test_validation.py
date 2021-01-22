@@ -1,17 +1,11 @@
-import json
 import pathlib
+
 from unittest import TestCase
 
 from dkutils.validation import get_max_concurrency, validate_globals, ensure_pathlib
 
-GLOBALS_CONFIG_FILE = pathlib.Path(__file__).parent / "globals_config.json"
-
 
 class TestValidation(TestCase):
-
-    def tearDown(self):
-        if GLOBALS_CONFIG_FILE.exists():
-            GLOBALS_CONFIG_FILE.unlink()
 
     def test_valid_globals(self):
         validate_globals(['__name__', '__file__'])
@@ -55,14 +49,6 @@ class TestValidation(TestCase):
             "\n\tGlobal variables with values that need to be changed: ['FOO']",
             cm.exception.args[0]
         )
-
-    def test_valid_globals_when_globals_config_file_exists(self):
-        global_var_name = 'BAZ'
-        info = {global_var_name: "somevalue"}
-        with GLOBALS_CONFIG_FILE.open('w') as output:
-            json.dump(info, output)
-        validate_globals([global_var_name])
-        self.assertEqual(info[global_var_name], globals().get(global_var_name))
 
     def test_ensure_pathlib_str(self):
         p = ensure_pathlib('this/that.txt')
