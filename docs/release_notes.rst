@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v1.2.0
+-------
+* Added get_globals_config function
+
 v1.1.0
 -------
 * Added Alteryx Gallery API client
