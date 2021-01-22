@@ -1,7 +1,33 @@
 import inspect
+import json
+import os
 import pathlib
+from typing import Dict, Union
 
 from dkutils.constants import CHANGE_ME
+
+GLOBALS_CONFIG_PATH: pathlib.Path = pathlib.Path(os.getcwd()) / 'globals_config.json'
+ConfigDict = Dict[str, Union[str, int]]
+
+
+def get_local_config(global_var_names, cur_globals):
+    """
+    Load the specified glabal variables from a file named globals_config.json if it exists. This is to facillitate
+    a way of initializing the globals variables when running the code outside of DataKitchen. These global variables
+    would normally be passed from DataKitchen.
+    Parameters
+    ----------
+    global_var_names :
+        list of global variable names to initialize
+    cur_globals
+        list of currently defined global variables
+    """
+    if GLOBALS_CONFIG_PATH.is_file():
+        with GLOBALS_CONFIG_PATH.open() as cfg:
+            config: ConfigDict = json.load(cfg)
+        for var in global_var_names:
+            if var in config:
+                cur_globals[var] = config.get(var)
 
 
 def validate_globals(global_var_names):
@@ -25,7 +51,7 @@ def validate_globals(global_var_names):
 
     # https://docs.python.org/3/library/inspect.html#inspect.stack
     cur_globals = inspect.stack()[1][0].f_globals
-
+    get_local_config(global_var_names, cur_globals)
     for var in global_var_names:
         if var not in cur_globals:
             print(f'Undefined global variable: {var}')
