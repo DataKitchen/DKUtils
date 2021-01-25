@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v1.3.1
+-------
+* Properly add dependencies to setup.py so they are installed when this package is pip installed
+
 v1.3.0
 -------
 * Added set_logging_level function

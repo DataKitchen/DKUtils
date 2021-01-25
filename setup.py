@@ -17,7 +17,15 @@ setuptools.setup(
         "Programming Language :: Python :: 3",
     ],
     python_requires='>=3.6',
-    install_requires=["setuptools>=46.1.3", "twine>=3.1.1", "wheel>=0.34.2"],
+    install_requires=[
+        "dataclasses>=0.6",
+        "jira>=2.0.0",
+        "pandas>=1.0.4",
+        "paramiko>=2.7.2",
+        "scp>=0.13.2",
+        "Sphinx>=3.0.1",
+        "sphinx-rtd-theme>=0.4.3",
+    ],
     tests_require=[
         'bumpversion>=0.5.3',
         'coverage>=5.1',
