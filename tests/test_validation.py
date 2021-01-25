@@ -1,8 +1,9 @@
 import json
+import logging
 import pathlib
 from unittest import TestCase
 
-from dkutils.validation import get_max_concurrency, validate_globals, ensure_pathlib
+from dkutils.validation import get_max_concurrency, validate_globals, ensure_pathlib, set_logging_level
 
 GLOBALS_CONFIG_FILE = pathlib.Path(__file__).parent / "globals_config.json"
 
@@ -87,3 +88,18 @@ class TestValidation(TestCase):
         self.assertEqual(
             "Expected str or pathlib.PurePath type, but found <class 'int'>", cm.exception.args[0]
         )
+
+    def test_set_logging_level_when_no_logger(self):
+        global LOGGER
+        if "LOGGER" in globals():
+            del LOGGER
+        set_logging_level()
+        self.assertEqual(LOGGER.getEffectiveLevel(), logging.INFO)
+        del LOGGER
+
+    def test_set_logging_level_when_logger_exists(self):
+        global LOGGER
+        LOGGER = logging.getLogger()
+        set_logging_level(logging.DEBUG)
+        self.assertEqual(LOGGER.getEffectiveLevel(), logging.DEBUG)
+        del LOGGER
