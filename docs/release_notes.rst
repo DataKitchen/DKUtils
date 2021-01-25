@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v1.3.0
+-------
+* Added set_logging_level function
+
 v1.2.0
 -------
 * Added get_globals_config function

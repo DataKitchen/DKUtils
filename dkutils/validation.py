@@ -1,5 +1,6 @@
 import inspect
 import json
+import logging
 import os
 import pathlib
 from typing import Dict, Union
@@ -133,3 +134,27 @@ def ensure_pathlib(path):
     elif not isinstance(path, pathlib.PurePath):
         raise TypeError(f'Expected str or pathlib.PurePath type, but found {type(path)}')
     return path
+
+
+def set_logging_level(logging_level=logging.INFO):
+    """
+    Set the logging level for the logger in the global variable LOGGER. If the global variable LOOGER does
+    not exist it will be set to a logger obtained from the logging library. This is to allow code to be run
+    outside of DataKitchen without the need to add code to initialize the global variable LOGGER has is done
+    by DataKitchen.make
+    Parameters
+    ----------
+    logging_level: str, optional
+
+    Returns
+    -------
+
+    """
+    logger_name = "LOGGER"
+    cur_globals = inspect.stack()[1][0].f_globals
+    logger = cur_globals.get(logger_name)
+    if not logger:
+        logger = logging.getLogger()
+        logger.addHandler(logging.StreamHandler())
+        cur_globals[logger_name] = logger
+    logger.setLevel(logging_level)
