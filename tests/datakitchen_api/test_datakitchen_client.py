@@ -905,6 +905,18 @@ class TestDataKitchenClient(TestCase):
         mock_get_kitchen_info.assert_has_calls([call(), call()])
         mock_update_kitchen_info.assert_called_once_with(kitchen_info_with_new_staff)
 
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._update_kitchen')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._get_kitchen_info')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_add_kitchen_staff_when_kitchen_staff_is_empty(
+        self, _, mock_get_kitchen_info, mock_update_kitchen_info
+    ):
+        kitchen_info_with_empty_kitchen_staff = {"name": DUMMY_KITCHEN, KITCHEN_STAFF: []}
+        new_staff = [DUMMY_USERNAME, "newguy+im@datakitchen.io"]
+        mock_get_kitchen_info.return_value = kitchen_info_with_empty_kitchen_staff
+        self.dk_client.add_kitchen_staff(new_staff)
+        mock_update_kitchen_info.assert_not_called()
+
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient')
     def test_create_using_default_context(self, mock_client):
         with patch('builtins.open', mock_open(read_data=json.dumps(JSON_PROFILE))) as m:
@@ -1015,7 +1027,11 @@ class TestDataKitchenClient(TestCase):
     def test_get_recipes_when_kitchen_is_not_available_then_value_error_is_raised(
         self, _, mock_get_kitchens_info
     ):
-        mock_get_kitchens_info.return_value = {DUMMY_KITCHEN: {'kitchen-staff': []}}
+        mock_get_kitchens_info.return_value = {
+            DUMMY_KITCHEN: {
+                'kitchen-staff': ["bob@datakitchen.io"]
+            }
+        }
         with self.assertRaises(ValueError) as cm:
             self.dk_client.get_recipes()
         self.assertEqual(
@@ -1027,6 +1043,15 @@ class TestDataKitchenClient(TestCase):
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
     def test_get_recipes(self, _, mock_get, mock_kitchens_info):
         mock_kitchens_info.return_value = {DUMMY_KITCHEN: {'kitchen-staff': [DUMMY_USERNAME]}}
+        mock_get.return_value = MockResponse(json={'recipes': RECIPES})
+        self.assertEqual(RECIPES, self.dk_client.get_recipes())
+        mock_get.assert_called_once_with(GET_RECIPES_URL, headers=None, json={})
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._get_kitchens_info')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_get_recipes_when_staff_is_empty(self, _, mock_get, mock_kitchens_info):
+        mock_kitchens_info.return_value = {DUMMY_KITCHEN: {'kitchen-staff': []}}
         mock_get.return_value = MockResponse(json={'recipes': RECIPES})
         self.assertEqual(RECIPES, self.dk_client.get_recipes())
         mock_get.assert_called_once_with(GET_RECIPES_URL, headers=None, json={})
