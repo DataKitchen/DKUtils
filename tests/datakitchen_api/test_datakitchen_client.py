@@ -905,6 +905,19 @@ class TestDataKitchenClient(TestCase):
         mock_get_kitchen_info.assert_has_calls([call(), call()])
         mock_update_kitchen_info.assert_called_once_with(kitchen_info_with_new_staff)
 
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._update_kitchen')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._get_kitchen_info')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_add_kitchen_staff_when_kitchen_staff_is_empty(self, _, mock_get_kitchen_info, mock_update_kitchen_info):
+        kitchen_info_with_empty_kitchen_staff = {
+            "name": DUMMY_KITCHEN,
+            KITCHEN_STAFF: []
+        }
+        new_staff = [DUMMY_USERNAME, "newguy+im@datakitchen.io"]
+        mock_get_kitchen_info.return_value = kitchen_info_with_empty_kitchen_staff
+        self.dk_client.add_kitchen_staff(new_staff)
+        mock_update_kitchen_info.assert_not_called()
+
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient')
     def test_create_using_default_context(self, mock_client):
         with patch('builtins.open', mock_open(read_data=json.dumps(JSON_PROFILE))) as m:
