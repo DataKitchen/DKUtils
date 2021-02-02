@@ -1165,6 +1165,8 @@ class DataKitchenClient:
             If the kitchen attribute is not set
         """
         kitchen_staff = self.get_kitchen_staff()
+        if not kitchen_staff:
+            return
         for staff_member in new_kitchen_staff:
             if staff_member not in kitchen_staff:
                 kitchen_staff.append(staff_member)
@@ -1197,7 +1199,8 @@ class DataKitchenClient:
             raise ValueError(
                 f'{self.kitchen} is not one of the available kitchens: {",".join(kitchens.keys())}'
             )
-        if self._username not in kitchens[self.kitchen]['kitchen-staff']:
+        if kitchens[self.kitchen]['kitchen-staff'] and self._username not in kitchens[
+                self.kitchen]['kitchen-staff']:
             raise ValueError(f'{self.kitchen} is not available to {self._username}')
         return self._api_request(API_GET, 'kitchen', 'recipenames', self.kitchen).json()['recipes']
 

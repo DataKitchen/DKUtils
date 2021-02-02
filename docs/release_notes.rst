@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v1.3.2
+-------
+* Fix bug in add_kitchen_staff
+
 v1.3.1
 -------
 * Properly add dependencies to setup.py so they are installed when this package is pip installed
