@@ -1165,6 +1165,8 @@ class DataKitchenClient:
             If the kitchen attribute is not set
         """
         kitchen_staff = self.get_kitchen_staff()
+        if not kitchen_staff:
+            return
         for staff_member in new_kitchen_staff:
             if staff_member not in kitchen_staff:
                 kitchen_staff.append(staff_member)
