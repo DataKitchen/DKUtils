@@ -1,6 +1,7 @@
 from unittest import TestCase
 from unittest.mock import patch, call, mock_open, Mock
-from dkutils.gmail_api.gmail_client import  create_base64_encoded_token, GmailClientException, get_object_from_environment
+from dkutils.gmail_api.gmail_client import  create_base64_encoded_token, GmailClientException, \
+    get_object_from_environment, GMailClient
 from pathlib import Path
 import base64
 import tempfile
@@ -52,6 +53,15 @@ class TestGmailClient(TestCase):
         self.assertEqual(thing, get_object_from_environment(variable_name))
 
         mock_getenv.assert_called_once_with(variable_name)
+
+    @patch('dkutils.gmail_api.gmail_client.build')
+    def test_constructor(self, mock_build):
+        creds = {}
+
+        GMailClient(creds)
+
+        mock_build.assert_called_with('gmail', 'v1', credentials=creds)
+
 
 
 

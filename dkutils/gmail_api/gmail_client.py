@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import List
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.oauth2.credentials import Credentials
+from googleapiclient.discovery import build
 import pickle
 import base64
 import os
@@ -108,3 +109,4 @@ class GMailClient:
         credentials: Credentials
             the credentials needed to access the API
         """
+        self.service = build('gmail', 'v1', credentials=credentials)
