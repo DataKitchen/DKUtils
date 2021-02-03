@@ -1,5 +1,5 @@
 from unittest import TestCase
-from unittest.mock import patch
+from unittest.mock import patch, call
 
 from requests.exceptions import HTTPError
 
@@ -13,6 +13,8 @@ SUBSCRIPTION_TYPE = 'source'
 SUBSCRIPTION_NAME = 'name'
 DEFAULT_VERSION = 'v16.0'
 VERSION = 'v17.0'
+BASE_URL = f'https://{DNS}/api/{DEFAULT_VERSION}/'
+JOB_RESPONSE_ID = "123"
 
 
 class MockResponse:
@@ -89,12 +91,105 @@ class TestVeevaClient(TestCase):
         self.assertEqual('Failed API Call', cm.exception.args[0])
 
     @patch('dkutils.veeva_api.veeva_client.requests')
-    def test_run_subscription_process_when_post_fails(self, mock_requests):
+    def test_run_subscription_process_when_post_succeeds(self, mock_requests):
         job_id = "456"
         mock_requests.post.return_value = MockResponse(json={"job_id": job_id})
 
         self.assertEqual(job_id, self.client.run_subscription_process())
 
-        base_url = f'https://{DNS}/api/{DEFAULT_VERSION}/'
         mock_requests.post.assert_called_with(
-            f'{base_url}systems/{SYSTEM_NAME}/{SUBSCRIPTION_TYPE}_subscriptions/{SUBSCRIPTION_NAME}/job')
+            f'{BASE_URL}systems/{SYSTEM_NAME}/{SUBSCRIPTION_TYPE}_subscriptions/{SUBSCRIPTION_NAME}/job')
+
+    @patch('dkutils.veeva_api.veeva_client.requests')
+    def test_retrieve_network_process_job_when_get_fails_raises_httperror(self, mock_requests):
+        mock_requests.get.return_value = MockResponse(raise_error=True)
+
+        with self.assertRaises(HTTPError) as cm:
+            self.client.retrieve_network_process_job(job_resp_id=JOB_RESPONSE_ID)
+
+        self.assertEqual('Failed API Call', cm.exception.args[0])
+        mock_requests.get.assert_has_calls([self.get_status_call()])
+
+    @patch('dkutils.veeva_api.veeva_client.time')
+    @patch('dkutils.veeva_api.veeva_client.requests')
+    def test_retrieve_network_process_job_when_second_get_fails_raises_httperror(self, mock_requests, mock_time):
+        mock_requests.get.side_effect = [MockResponse(json={"job_status": "RUNNING"}), MockResponse(raise_error=True)]
+
+        with self.assertRaises(HTTPError) as cm:
+            self.client.retrieve_network_process_job(job_resp_id="123")
+
+        self.assertEqual('Failed API Call', cm.exception.args[0])
+        mock_time.sleep.assert_called_with(5)
+
+        mock_requests.get.assert_has_calls([self.get_status_call(), self.get_status_call()])
+
+    @patch('dkutils.veeva_api.veeva_client.requests')
+    def test_retrieve_network_process_job_when_job_ends_in_unexpected_status(self, mock_requests):
+        mock_requests.get.return_value = MockResponse(json={"job_status": "FAILED"})
+
+        with self.assertRaises(ValueError) as cm:
+            self.client.retrieve_network_process_job(job_resp_id="123")
+
+        self.assertEqual('The job has terminated with an unexpected status: FAILED', cm.exception.args[0])
+
+        mock_requests.get.assert_has_calls([self.get_status_call()])
+
+    @patch('dkutils.veeva_api.veeva_client.requests')
+    def test_retrieve_network_process_job_when_subscription_type_is_unknown_then_returns_none(self, mock_requests):
+        mock_requests.get.return_value = MockResponse(json={"job_status": "COMPLETE"})
+        self.client.subscription_type = ""
+
+        self.assertEqual(None, self.client.retrieve_network_process_job(job_resp_id="123"))
+
+        mock_requests.get.assert_has_calls([self.get_status_call()])
+
+    @patch('dkutils.veeva_api.veeva_client.requests')
+    def test_retrieve_network_process_job_when_subscription_type_is_source_then_returns_source_info(self,
+                                                                                                    mock_requests):
+        errorCount = 0
+        recordCount = 1
+        badRecordCount = 2
+        mock_requests.get.return_value = MockResponse(
+            json={"job_status": "COMPLETE", "errorCount": errorCount, "recordCount": recordCount,
+                  "badRecordCount": badRecordCount})
+        expected = {'source_subscription_errorcount': str(errorCount),
+                    'source_subscription_recordcount': str(recordCount),
+                    'source_subscription_badrecordcount': str(badRecordCount)
+                    }
+        self.assertEqual(expected, self.client.retrieve_network_process_job(job_resp_id="123"))
+
+        mock_requests.get.assert_has_calls([self.get_status_call()])
+
+    @patch('dkutils.veeva_api.veeva_client.requests')
+    def test_retrieve_network_process_job_when_subscription_type_is_target_then_returns_targe_info(self, mock_requests):
+        self.client.subscription_type = "target"
+        address = "123"
+        customkey = "something big"
+        hco = "hco thing"
+        hcp = "hcp thing"
+        license = "ok"
+        parenthco = "dad"
+        badRecordCount = 2
+        json = {"job_status": "COMPLETE",
+                "jobExportCount":
+                    {"ADDRESS": address, "CUSTOMKEY": customkey, "HCO": hco, "HCP": hcp, "LICENSE": license,
+                     "PARENTHCO": parenthco},
+                "badRecordCount": badRecordCount}
+        mock_requests.get.return_value = MockResponse(json=json)
+        expected = {
+            'target_subscription_ADDRESS_count': address,
+            'target_subscription_CUSTOMKEY_count': customkey,
+            'target_subscription_HCO_count': str(hco),
+            'target_subscription_HCP_count': str(hcp),
+            'target_subscription_LICENSE_count': str(license),
+            'target_subscription_PARENTHCO_count': parenthco,
+            'target_subscription_badrecordcount': str(badRecordCount)
+        }
+
+        self.assertEqual(expected, self.client.retrieve_network_process_job(job_resp_id="123"))
+
+        mock_requests.get.assert_has_calls([self.get_status_call()])
+
+    def get_status_call(self):
+        return call(f'{BASE_URL}systems/{SYSTEM_NAME}/{self.client.subscription_type}_subscriptions/'
+                    f'{SUBSCRIPTION_NAME}/job/{JOB_RESPONSE_ID}', headers=self.client.admin_header)
