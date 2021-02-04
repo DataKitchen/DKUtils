@@ -1,15 +1,16 @@
-from unittest import TestCase
-from unittest.mock import patch, call, mock_open, Mock
-from dkutils.gmail_api.gmail_client import  create_base64_encoded_token, GmailClientException, \
-    get_object_from_environment, GMailClient
-from pathlib import Path
 import base64
-import tempfile
 import pickle
+import tempfile
+from pathlib import Path
+from unittest import TestCase
+from unittest.mock import patch
 
+from dkutils.gmail_api.gmail_client import create_base64_encoded_token, GmailClientException, \
+    get_object_from_environment, GMailClient
 
 PARENT = Path(__file__).parent
 RESOURCES = PARENT / "resources"
+
 
 class TestGmailClient(TestCase):
 
@@ -34,14 +35,15 @@ class TestGmailClient(TestCase):
 
         create_base64_encoded_token(credentials_file, base64_token_file)
 
-        mock_installed_app_flow.from_client_secrets_file.assert_called_once_with(credentials_file, ['https://www.googleapis.com/auth/gmail.readonly'])
+        mock_installed_app_flow.from_client_secrets_file.assert_called_once_with(credentials_file, [
+            'https://www.googleapis.com/auth/gmail.readonly'])
         mock_installed_app_flow.from_client_secrets_file.return_value.run_local_server.assert_called_once_with(port=0)
-        mock_pickle.dumps.assert_called_once_with(mock_installed_app_flow.from_client_secrets_file.return_value.run_local_server.return_value)
+        mock_pickle.dumps.assert_called_once_with(
+            mock_installed_app_flow.from_client_secrets_file.return_value.run_local_server.return_value)
         self.assertTrue(base64_token_file.exists(), f'{base64_token_file.name} should have been created')
         with base64_token_file.open("rb") as input:
             data = input.read()
         self.assertEqual(pickled_bytes, base64.b64decode(data))
-
 
     @patch('os.getenv')
     def test_get_token_from_environment(self, mock_getenv):
@@ -61,8 +63,3 @@ class TestGmailClient(TestCase):
         GMailClient(creds)
 
         mock_build.assert_called_with('gmail', 'v1', credentials=creds)
-
-
-
-
-

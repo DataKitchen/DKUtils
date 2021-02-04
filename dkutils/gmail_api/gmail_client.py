@@ -1,15 +1,18 @@
+import base64
+import os
+import pickle
 from enum import Enum
 from pathlib import Path
 from typing import List
-from google_auth_oauthlib.flow import InstalledAppFlow
+
 from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-import pickle
-import base64
-import os
+
 
 class GmailClientException(Exception):
     pass
+
 
 class Scope(Enum):
 
@@ -21,30 +24,30 @@ class Scope(Enum):
 
     LABELS = ('https://www.googleapis.com/auth/gmail.labels', 'Create, read, update, and delete labels only.')
     SEND = ('https://www.googleapis.com/auth/gmail.send', 'Send messages only. No read or modify privileges on '
-                                                             'mailbox.')
+                                                          'mailbox.')
     READ_ONLY = ('https://www.googleapis.com/auth/gmail.readonly', 'Read all resources and their metadata—no write '
-                                                                      'operations.')
+                                                                   'operations.')
     COMPOSE = ('https://www.googleapis.com/auth/gmail.compose', 'Create, read, update, and delete drafts. Send '
-                                                                   'messages and drafts.')
+                                                                'messages and drafts.')
     INSERT = ('https://www.googleapis.com/auth/gmail.insert', 'Insert and import messages only.')
     MODIFY = ('https://www.googleapis.com/auth/gmail.modify', 'All read/write operations except immediate, permanent'
-                                                                 ' deletion of threads and messages, bypassing Trash.')
+                                                              ' deletion of threads and messages, bypassing Trash.')
     METADATA = ('https://www.googleapis.com/auth/gmail.metadata', 'Read resources metadata including labels, history'
-                                                                     ' records, and email message headers, but not '
-                                                                     'the message body or attachments.')
+                                                                  ' records, and email message headers, but not '
+                                                                  'the message body or attachments.')
     BASIC = ('https://www.googleapis.com/auth/gmail.settings.basic', 'Manage basic mail settings.')
     SHARING = ('https://www.googleapis.com/auth/gmail.settings.sharing', 'Manage sensitive mail settings, including '
-                                                                            'forwarding rules and aliases.'
-                                                                            'Note:Operations guarded by this scope '
-                                                                            'are restricted to administrative use '
-                                                                            'only. They are only available to Google '
-                                                                            'Workspace customers using a service '
-                                                                            'account with domain-wide delegation.')
+                                                                         'forwarding rules and aliases.'
+                                                                         'Note:Operations guarded by this scope '
+                                                                         'are restricted to administrative use '
+                                                                         'only. They are only available to Google '
+                                                                         'Workspace customers using a service '
+                                                                         'account with domain-wide delegation.')
     FULL = ('https://mail.google.com/', 'Full access to the account’s mailboxes, including permanent deletion of '
-                                            'threads and messages This scope should only be requested if your '
-                                            'application needs to immediately and permanently delete threads and '
-                                            'messages, bypassing Trash; all other actions can be performed with less '
-                                            'permissive scopes.')
+                                        'threads and messages This scope should only be requested if your '
+                                        'application needs to immediately and permanently delete threads and '
+                                        'messages, bypassing Trash; all other actions can be performed with less '
+                                        'permissive scopes.')
 
 
 SCOPES = [Scope.READ_ONLY]
@@ -70,11 +73,12 @@ def create_base64_encoded_token(credentials_path: Path, token_path: Path, scopes
     """
     if not credentials_path.exists():
         raise GmailClientException("Credentials file must exist")
-    flow = InstalledAppFlow.from_client_secrets_file(credentials_path, [ scope.value for scope in scopes])
+    flow = InstalledAppFlow.from_client_secrets_file(credentials_path, [scope.value for scope in scopes])
     credentials = flow.run_local_server(port=0)
     pickled_credentials = pickle.dumps(credentials)
     with token_path.open("wb") as output:
         output.write(base64.b64encode(pickled_credentials))
+
 
 def get_object_from_environment(environment_variable_name):
     """
@@ -95,6 +99,7 @@ def get_object_from_environment(environment_variable_name):
     encoded = os.getenv(environment_variable_name)
     decoded = base64.b64decode(encoded)
     return pickle.loads(decoded)
+
 
 class GMailClient:
     def __init__(self, credentials: Credentials):
