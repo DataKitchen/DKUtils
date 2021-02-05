@@ -12,9 +12,13 @@ TERMINAL_STATES = {
 DEFAULT_VERSION = "v16.0"
 
 
+class VeevaNetworkException(Exception):
+    pass
+
+
 def _raise_exception(msg):
     LOGGER.error(msg)
-    raise ValueError(msg)
+    raise VeevaNetworkException(msg)
 
 
 class VeevaNetworkClient:
@@ -121,10 +125,17 @@ class VeevaSourceSubscriptionClient(VeevaNetworkClient):
         """
         response = requests.post(
             f'{self.base_url}systems/{self.system_name}/{self.subscription_type}_subscriptions/'
-            f'{self.subscription_name}/job'
+            f'{self.subscription_name}/job',
+            headers=self.admin_header
         )
         response.raise_for_status()
-        return response.json().get('job_id')
+        json = response.json()
+        status = json['responseStatus']
+        if status != 'SUCCESS':
+            _raise_exception(
+                f"The job could not be started. Status: {status} - {json['responseMessage']}"
+            )
+        return json.get('job_id')
 
     def _retrieve_network_process_job(self, job_resp_id, sleep_seconds=5):
         """
@@ -172,7 +183,13 @@ class VeevaSourceSubscriptionClient(VeevaNetworkClient):
                 headers=self.admin_header
             )
             response.raise_for_status()
-            job_status = response.json().get('job_status')
+            json = response.json()
+            status = json['responseStatus']
+            if status != 'SUCCESS':
+                _raise_exception(
+                    f"The job status could not be retrieved. Status: {status} - {json['errorType']}"
+                )
+            job_status = json.get('job_status')
             if job_status not in TERMINAL_STATES:
                 LOGGER.info(job_status)
                 time.sleep(sleep_seconds)

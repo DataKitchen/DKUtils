@@ -4,7 +4,7 @@ from unittest.mock import patch, call
 from requests.exceptions import HTTPError
 
 from dkutils.veeva_network_api.veeva_network_client import VeevaNetworkClient, VeevaSourceSubscriptionClient, \
-    VeevaTargetSubscriptionClient
+    VeevaTargetSubscriptionClient, VeevaNetworkException
 
 DNS = 'somewhere.com'
 USERNAME = 'someone@somewhere.com'
@@ -69,7 +69,7 @@ class TestVeevaNetworkClient(TestCase):
         base_url = f'https://{DNS}/api/{DEFAULT_VERSION}/'
         mock_requests.post.return_value = MockResponse(json={})
 
-        with self.assertRaises(ValueError) as cm:
+        with self.assertRaises(VeevaNetworkException) as cm:
             VeevaNetworkClient(
                 dns=DNS, username=USERNAME, password=PASSWORD, version=DEFAULT_VERSION
             )
@@ -125,12 +125,44 @@ class TestVeevaSourceSubscriptionClient(TestCase):
     @patch('dkutils.veeva_network_api.veeva_network_client.requests')
     def test_run_subscription_process_when_post_succeeds(self, mock_requests):
         job_id = "456"
-        mock_requests.post.return_value = MockResponse(json={"job_id": job_id})
+        json = {"responseStatus": "SUCCESS", "job_id": job_id}
+        mock_requests.post.return_value = MockResponse(json=json)
 
         self.assertEqual(job_id, self.client.run_subscription_process())
 
         mock_requests.post.assert_called_with(
-            f'{BASE_URL}systems/{SYSTEM_NAME}/{SUBSCRIPTION_TYPE}_subscriptions/{SUBSCRIPTION_NAME}/job'
+            f'{BASE_URL}systems/{SYSTEM_NAME}/{SUBSCRIPTION_TYPE}_subscriptions/{SUBSCRIPTION_NAME}/job',
+            headers=self.client.admin_header
+        )
+
+    @patch('dkutils.veeva_network_api.veeva_network_client.requests')
+    def test_run_subscription_process_when_job_fails_then_raises_value_error(self, mock_requests):
+        json = {
+            'responseStatus':
+                'FAILURE',
+            'responseMessage':
+                'Authentication failed for session id: null.; API error message: Authentication failed for session id: null.',
+            'errorCodes':
+                None,
+            'networkExceptionType': {
+                'resourceId': 'INVALID_SESSION_ID',
+                'parameters': [None]
+            },
+            'errors': [{
+                'type': 'INVALID_SESSION_ID',
+                'message': 'Authentication failed for session id: null.'
+            }],
+            'errorType':
+                'GENERAL'
+        }
+        mock_requests.post.return_value = MockResponse(json=json)
+
+        with self.assertRaises(VeevaNetworkException) as cm:
+            self.assertEqual("123", self.client.run_subscription_process())
+
+        self.assertEqual(
+            f"The job could not be started. Status: {json['responseStatus']} - {json['responseMessage']}",
+            cm.exception.args[0]
         )
 
     @patch('dkutils.veeva_network_api.veeva_network_client.requests')
@@ -149,7 +181,10 @@ class TestVeevaSourceSubscriptionClient(TestCase):
         self, mock_requests, mock_time
     ):
         mock_requests.get.side_effect = [
-            MockResponse(json={"job_status": "RUNNING"}),
+            MockResponse(json={
+                "responseStatus": "SUCCESS",
+                "job_status": "RUNNING"
+            }),
             MockResponse(raise_error=True)
         ]
 
@@ -165,10 +200,41 @@ class TestVeevaSourceSubscriptionClient(TestCase):
         ])
 
     @patch('dkutils.veeva_network_api.veeva_network_client.requests')
-    def test_retrieve_network_process_job_when_job_ends_in_unexpected_status(self, mock_requests):
-        mock_requests.get.return_value = MockResponse(json={"job_status": "FAILED"})
+    def test_retrieve_network_process_job_when_job_status_can_not_be_retried_then_raises_exception(
+        self, mock_requests
+    ):
+        json = {
+            'responseStatus': 'FAILURE',
+            'errors': [{
+                'type':
+                    'UNEXPECTED_ERROR',
+                'message':
+                    'Subscription and job not matched: job 123 does not belong to subscription 83'
+            }],
+            'errorType': 'UNEXPECTED_ERROR'
+        }
+        mock_requests.get.return_value = MockResponse(json=json)
 
-        with self.assertRaises(ValueError) as cm:
+        with self.assertRaises(VeevaNetworkException) as cm:
+            self.client.retrieve_network_process_job(job_resp_id="123")
+
+        self.assertEqual(
+            f"The job status could not be retrieved. Status: {json['responseStatus']} - {json['errorType']}",
+            cm.exception.args[0]
+        )
+
+        mock_requests.get.assert_has_calls([get_status_call(self.client)])
+
+    @patch('dkutils.veeva_network_api.veeva_network_client.requests')
+    def test_retrieve_network_process_job_when_job_ends_in_unexpected_status(self, mock_requests):
+        mock_requests.get.return_value = MockResponse(
+            json={
+                "responseStatus": "SUCCESS",
+                "job_status": "FAILED"
+            }
+        )
+
+        with self.assertRaises(VeevaNetworkException) as cm:
             self.client.retrieve_network_process_job(job_resp_id="123")
 
         self.assertEqual(
@@ -186,6 +252,7 @@ class TestVeevaSourceSubscriptionClient(TestCase):
         badRecordCount = 2
         mock_requests.get.return_value = MockResponse(
             json={
+                "responseStatus": "SUCCESS",
                 "job_status": "COMPLETE",
                 "errorCount": errorCount,
                 "recordCount": recordCount,
@@ -206,7 +273,12 @@ class TestVeevaTargetSubscriptionClient(TestCase):
 
     @patch('dkutils.veeva_network_api.veeva_network_client.requests')
     def setUp(self, mock_requests):
-        mock_requests.post.return_value = MockResponse(json={"sessionId": "123"})
+        mock_requests.post.return_value = MockResponse(
+            json={
+                "responseStatus": "SUCCESS",
+                "sessionId": "123"
+            }
+        )
 
         self.client = VeevaTargetSubscriptionClient(
             dns=DNS,
@@ -228,6 +300,7 @@ class TestVeevaTargetSubscriptionClient(TestCase):
         parenthco = "dad"
         badRecordCount = 2
         json = {
+            "responseStatus": "SUCCESS",
             "job_status": "COMPLETE",
             "jobExportCount": {
                 "ADDRESS": address,
