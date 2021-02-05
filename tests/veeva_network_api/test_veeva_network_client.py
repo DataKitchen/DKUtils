@@ -141,7 +141,8 @@ class TestVeevaSourceSubscriptionClient(TestCase):
             'responseStatus':
                 'FAILURE',
             'responseMessage':
-                'Authentication failed for session id: null.; API error message: Authentication failed for session id: null.',
+                'Authentication failed for session id: null.; '
+                'API error message: Authentication failed for session id: null.',
             'errorCodes':
                 None,
             'networkExceptionType': {
