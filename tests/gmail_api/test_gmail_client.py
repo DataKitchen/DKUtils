@@ -20,7 +20,9 @@ class TestGmailClient(TestCase):
     def tearDown(self):
         self.test_dir.cleanup()
 
-    def test_create_base64_encoded_token_when_credentials_path_does_not_exist_then_raises_gmailclientexception(self):
+    def test_create_base64_encoded_token_when_credentials_path_does_not_exist_then_raises_gmailclientexception(
+        self
+    ):
         with self.assertRaises(GmailClientException) as cm:
             create_base64_encoded_token(PARENT / "bogus", PARENT / "bogus")
         self.assertEqual("Credentials file must exist", cm.exception.args[0])
@@ -35,12 +37,19 @@ class TestGmailClient(TestCase):
 
         create_base64_encoded_token(credentials_file, base64_token_file)
 
-        mock_installed_app_flow.from_client_secrets_file.assert_called_once_with(credentials_file, [
-            'https://www.googleapis.com/auth/gmail.readonly'])
-        mock_installed_app_flow.from_client_secrets_file.return_value.run_local_server.assert_called_once_with(port=0)
+        mock_installed_app_flow.from_client_secrets_file.assert_called_once_with(
+            credentials_file, ['https://www.googleapis.com/auth/gmail.readonly']
+        )
+        mock_installed_app_flow.from_client_secrets_file.return_value.run_local_server.assert_called_once_with(
+            port=0
+        )
         mock_pickle.dumps.assert_called_once_with(
-            mock_installed_app_flow.from_client_secrets_file.return_value.run_local_server.return_value)
-        self.assertTrue(base64_token_file.exists(), f'{base64_token_file.name} should have been created')
+            mock_installed_app_flow.from_client_secrets_file.return_value.run_local_server.
+            return_value
+        )
+        self.assertTrue(
+            base64_token_file.exists(), f'{base64_token_file.name} should have been created'
+        )
         with base64_token_file.open("rb") as input:
             data = input.read()
         self.assertEqual(pickled_bytes, base64.b64decode(data))
