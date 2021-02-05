@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v1.3.3
+-------
+* Upgrade pandas requirement to >=1.1.2 to fix test failure
+
 v1.3.2
 -------
 * Fix bug in add_kitchen_staff

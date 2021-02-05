@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="DKUtils",
-    version="1.3.2",
+    version="1.3.3",
     author="DataKitchen",
     author_email="info@datakitchen.io",
     description="DataKitchen Utils Library",
@@ -20,7 +20,7 @@ setuptools.setup(
     install_requires=[
         "dataclasses>=0.6",
         "jira>=2.0.0",
-        "pandas>=1.0.4",
+        "pandas>=1.1.2",
         "paramiko>=2.7.2",
         "scp>=0.13.2",
         "Sphinx>=3.0.1",
