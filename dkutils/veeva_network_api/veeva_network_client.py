@@ -151,23 +151,7 @@ class VeevaSourceSubscriptionClient(VeevaNetworkClient):
         Returns
         -------
         dict
-            A dictionary containing the information about the job. For a source job a dictionary similar to the
-            following is returned:
-            {'source_subscription_errorcount': 0,
-             'source_subscription_recordcount': 0,
-             'source_subscription_badrecordcount': 0
-            }
-            For a target job a dictionary similar to the following is returned:
-            {
-                'target_subscription_ADDRESS_count': "123 anywhere",
-                'target_subscription_CUSTOMKEY_count': "whatever",
-                'target_subscription_HCO_count': 0,
-                'target_subscription_HCP_count': 0,
-                'target_subscription_LICENSE_count': "123abc",
-                'target_subscription_PARENTHCO_count': "something",
-                'target_subscription_badrecordcount': 0
-
-            }
+            A dictionary containing the information about the job.
         Raises
         ------
         HTTPError
@@ -217,9 +201,72 @@ class VeevaSourceSubscriptionClient(VeevaNetworkClient):
         -------
         dict
             A dictionary containing the information about the job.
-            {'source_subscription_errorcount': 0,
-             'source_subscription_recordcount': 0,
-             'source_subscription_badrecordcount': 0
+            {
+               "filesProcessed" : 1,
+               "errorCount" : 0,
+               "subscriptionName" : "CRM_Import",
+               "completed_date" : "2019-12-18T22:42:32.000Z",
+               "job_status" : "COMPLETE",
+               "job_id" : 10537,
+               "jobResultSummary" : {
+                  "CUSTOMKEY" : {
+                     "total" : 2,
+                     "recordsUpdated" : 0,
+                     "recordsSkipped" : 2,
+                     "newRecordsAdded" : 0,
+                     "recordsInvalidated" : 0,
+                     "recordsMerged" : 0
+                  },
+                  "HCP" : {
+                     "total" : 1,
+                     "recordsUpdated" : 0,
+                     "recordsSkipped" : 1,
+                     "recordsMerged" : 0,
+                     "recordsInvalidated" : 0,
+                     "newRecordsAdded" : 0
+                  },
+                  "ADDRESS" : {
+                     "total" : 1,
+                     "recordsUpdated" : 0,
+                     "recordsSkipped" : 1,
+                     "recordsInvalidated" : 0,
+                     "newRecordsAdded" : 0,
+                     "recordsMerged" : 0
+                  }
+               },
+               "durationInMilliseconds" : 3000,
+               "created_date" : "2019-12-18T22:42:29.000Z",
+               "subscriptionId" : 117,
+               "processedDataSummary" : {
+                  "HCP" : 1,
+                  "ADDRESS" : 1
+               },
+               "type" : "MANUAL",
+               "dataLoadSummary" : {
+                  "ADDRESS" : {
+                     "rowsRead" : 1,
+                     "rowsParsed" : 1
+                  },
+                  "HCP" : {
+                     "rowsParsed" : 1,
+                     "rowsRead" : 1
+                  }
+               },
+               "badRecordCount" : 0,
+               "recordCount" : 2,
+               "matchSummary" : {
+                  "HCP" : {
+                     "ACT" : 1,
+                     "notMatched" : 0,
+                     "ASK" : 0
+                  },
+                  "HCO" : {
+                     "ACT" : 0,
+                     "notMatched" : 0,
+                     "ASK" : 0
+                  }
+               },
+               "responseStatus" : "SUCCESS"
             }
 
         Raises
@@ -230,13 +277,7 @@ class VeevaSourceSubscriptionClient(VeevaNetworkClient):
         ValueError
             If the job reaches a terminal status other than COMPLETE
         """
-        json = self._retrieve_network_process_job(job_resp_id=job_resp_id)
-
-        return {
-            'source_subscription_errorcount': str(json.get('errorCount')),
-            'source_subscription_recordcount': str(json.get('recordCount')),
-            'source_subscription_badrecordcount': str(json.get('badRecordCount'))
-        }
+        return self._retrieve_network_process_job(job_resp_id=job_resp_id)
 
 
 class VeevaTargetSubscriptionClient(VeevaSourceSubscriptionClient):
@@ -288,14 +329,40 @@ class VeevaTargetSubscriptionClient(VeevaSourceSubscriptionClient):
         dict
             A dictionary containing the information about the job. A dictionary similar to the following is returned:
             {
-                'target_subscription_ADDRESS_count': "123 anywhere",
-                'target_subscription_CUSTOMKEY_count': "whatever",
-                'target_subscription_HCO_count': 0,
-                'target_subscription_HCP_count': 0,
-                'target_subscription_LICENSE_count': "123abc",
-                'target_subscription_PARENTHCO_count': "something",
-                'target_subscription_badrecordcount': 0
-
+              "responseStatus": "SUCCESS",
+              "subscriptionId": 15,
+              "subscriptionName": "targetSubscriptionCustomer",
+              "durationInMilliseconds": 2000,
+              "type": "MANUAL",
+              "errorCount": 0,
+              "badRecordCount": 0,
+              "exportReferenceCount": 0,
+              "exportFull": True,
+              "exportIncludeReference": False,
+              "exportUpdatedChildOnly": False,
+              "exportSetSubscriptionStateOnFull": False,
+              "exportFormat": "CSV",
+              "exportReferenceVersion": "4",
+              "exportActiveOnly": False,
+              "jobExportCount": {
+                "LICENSE": 3961,
+                "RELATION": 333,
+                "HCO": 819,
+                "HCP": 1060,
+                "ADDRESS": 1801,
+                "EXTERNALKEYS": 8038
+              },
+              "job_id": 10563,
+              "job_status": "COMPLETE",
+              "created_date": "2016-11-17T10:58:49.000-08:00",
+              "data_revision_first": "0",
+              "data_revision_last": "929335226137870335",
+              "export_package_path": "export/change_request/targetSubscriptionCustomer/exp_000001C5.zip",
+              "total_records_exported": "1879",
+              "completed_date": "2016-11-17T10:58:51.000-08:00",
+              "export_archive": "individual",
+              "exportFormatDelimiter":"|",
+              "exportFormatTextQualifier":"\""
             }
         Raises
         ------
@@ -305,14 +372,4 @@ class VeevaTargetSubscriptionClient(VeevaSourceSubscriptionClient):
         ValueError
             If the job reaches a terminal status other than COMPLETE
         """
-        json = self._retrieve_network_process_job(job_resp_id=job_resp_id)
-
-        return {
-            'target_subscription_ADDRESS_count': str(json.get('jobExportCount')['ADDRESS']),
-            'target_subscription_CUSTOMKEY_count': str(json.get('jobExportCount')['CUSTOMKEY']),
-            'target_subscription_HCO_count': str(json.get('jobExportCount')['HCO']),
-            'target_subscription_HCP_count': str(json.get('jobExportCount')['HCP']),
-            'target_subscription_LICENSE_count': str(json.get('jobExportCount')['LICENSE']),
-            'target_subscription_PARENTHCO_count': str(json.get('jobExportCount')['PARENTHCO']),
-            'target_subscription_badrecordcount': str(json.get('badRecordCount'))
-        }
+        return self._retrieve_network_process_job(job_resp_id=job_resp_id)

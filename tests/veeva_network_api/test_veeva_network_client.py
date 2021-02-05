@@ -248,21 +248,80 @@ class TestVeevaSourceSubscriptionClient(TestCase):
         errorCount = 0
         recordCount = 1
         badRecordCount = 2
-        mock_requests.get.return_value = MockResponse(
-            json={
-                "responseStatus": "SUCCESS",
-                "job_status": "COMPLETE",
-                "errorCount": errorCount,
-                "recordCount": recordCount,
-                "badRecordCount": badRecordCount
-            }
-        )
+        json = {
+            "filesProcessed": 1,
+            "errorCount": 0,
+            "subscriptionName": "CRM_Import",
+            "completed_date": "2019-12-18T22:42:32.000Z",
+            "job_status": "COMPLETE",
+            "job_id": 10537,
+            "jobResultSummary": {
+                "CUSTOMKEY": {
+                    "total": 2,
+                    "recordsUpdated": 0,
+                    "recordsSkipped": 2,
+                    "newRecordsAdded": 0,
+                    "recordsInvalidated": 0,
+                    "recordsMerged": 0
+                },
+                "HCP": {
+                    "total": 1,
+                    "recordsUpdated": 0,
+                    "recordsSkipped": 1,
+                    "recordsMerged": 0,
+                    "recordsInvalidated": 0,
+                    "newRecordsAdded": 0
+                },
+                "ADDRESS": {
+                    "total": 1,
+                    "recordsUpdated": 0,
+                    "recordsSkipped": 1,
+                    "recordsInvalidated": 0,
+                    "newRecordsAdded": 0,
+                    "recordsMerged": 0
+                }
+            },
+            "durationInMilliseconds": 3000,
+            "created_date": "2019-12-18T22:42:29.000Z",
+            "subscriptionId": 117,
+            "processedDataSummary": {
+                "HCP": 1,
+                "ADDRESS": 1
+            },
+            "type": "MANUAL",
+            "dataLoadSummary": {
+                "ADDRESS": {
+                    "rowsRead": 1,
+                    "rowsParsed": 1
+                },
+                "HCP": {
+                    "rowsParsed": 1,
+                    "rowsRead": 1
+                }
+            },
+            "badRecordCount": 0,
+            "recordCount": 2,
+            "matchSummary": {
+                "HCP": {
+                    "ACT": 1,
+                    "notMatched": 0,
+                    "ASK": 0
+                },
+                "HCO": {
+                    "ACT": 0,
+                    "notMatched": 0,
+                    "ASK": 0
+                }
+            },
+            "responseStatus": "SUCCESS"
+        }
+        mock_requests.get.return_value = MockResponse(json=json)
         expected = {
             'source_subscription_errorcount': str(errorCount),
             'source_subscription_recordcount': str(recordCount),
             'source_subscription_badrecordcount': str(badRecordCount)
         }
-        self.assertEqual(expected, self.client.retrieve_network_process_job(job_resp_id="123"))
+        self.assertEqual(json, self.client.retrieve_network_process_job(job_resp_id="123"))
 
         mock_requests.get.assert_has_calls([get_status_call(self.client)])
 
@@ -298,29 +357,69 @@ class TestVeevaTargetSubscriptionClient(TestCase):
         parenthco = "dad"
         badRecordCount = 2
         json = {
-            "responseStatus": "SUCCESS",
-            "job_status": "COMPLETE",
+            "responseStatus":
+                "SUCCESS",
+            "subscriptionId":
+                15,
+            "subscriptionName":
+                "targetSubscriptionCustomer",
+            "durationInMilliseconds":
+                2000,
+            "type":
+                "MANUAL",
+            "errorCount":
+                0,
+            "badRecordCount":
+                0,
+            "exportReferenceCount":
+                0,
+            "exportFull":
+                True,
+            "exportIncludeReference":
+                False,
+            "exportUpdatedChildOnly":
+                False,
+            "exportSetSubscriptionStateOnFull":
+                False,
+            "exportFormat":
+                "CSV",
+            "exportReferenceVersion":
+                "4",
+            "exportActiveOnly":
+                False,
             "jobExportCount": {
-                "ADDRESS": address,
-                "CUSTOMKEY": customkey,
-                "HCO": hco,
-                "HCP": hcp,
-                "LICENSE": license,
-                "PARENTHCO": parenthco
+                "LICENSE": 3961,
+                "RELATION": 333,
+                "HCO": 819,
+                "HCP": 1060,
+                "ADDRESS": 1801,
+                "EXTERNALKEYS": 8038
             },
-            "badRecordCount": badRecordCount
+            "job_id":
+                10563,
+            "job_status":
+                "COMPLETE",
+            "created_date":
+                "2016-11-17T10:58:49.000-08:00",
+            "data_revision_first":
+                "0",
+            "data_revision_last":
+                "929335226137870335",
+            "export_package_path":
+                "export/change_request/targetSubscriptionCustomer/exp_000001C5.zip",
+            "total_records_exported":
+                "1879",
+            "completed_date":
+                "2016-11-17T10:58:51.000-08:00",
+            "export_archive":
+                "individual",
+            "exportFormatDelimiter":
+                "|",
+            "exportFormatTextQualifier":
+                "\""
         }
         mock_requests.get.return_value = MockResponse(json=json)
-        expected = {
-            'target_subscription_ADDRESS_count': address,
-            'target_subscription_CUSTOMKEY_count': customkey,
-            'target_subscription_HCO_count': str(hco),
-            'target_subscription_HCP_count': str(hcp),
-            'target_subscription_LICENSE_count': str(license),
-            'target_subscription_PARENTHCO_count': parenthco,
-            'target_subscription_badrecordcount': str(badRecordCount)
-        }
 
-        self.assertEqual(expected, self.client.retrieve_network_process_job(job_resp_id="123"))
+        self.assertEqual(json, self.client.retrieve_network_process_job(job_resp_id="123"))
 
         mock_requests.get.assert_has_calls([get_status_call(self.client)])
