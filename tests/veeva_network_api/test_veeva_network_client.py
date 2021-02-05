@@ -138,13 +138,11 @@ class TestVeevaSourceSubscriptionClient(TestCase):
     @patch('dkutils.veeva_network_api.veeva_network_client.requests')
     def test_run_subscription_process_when_job_fails_then_raises_value_error(self, mock_requests):
         json = {
-            'responseStatus':
-                'FAILURE',
+            'responseStatus': 'FAILURE',
             'responseMessage':
                 'Authentication failed for session id: null.; '
                 'API error message: Authentication failed for session id: null.',
-            'errorCodes':
-                None,
+            'errorCodes': None,
             'networkExceptionType': {
                 'resourceId': 'INVALID_SESSION_ID',
                 'parameters': [None]
@@ -153,8 +151,7 @@ class TestVeevaSourceSubscriptionClient(TestCase):
                 'type': 'INVALID_SESSION_ID',
                 'message': 'Authentication failed for session id: null.'
             }],
-            'errorType':
-                'GENERAL'
+            'errorType': 'GENERAL'
         }
         mock_requests.post.return_value = MockResponse(json=json)
 
