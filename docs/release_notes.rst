@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v1.4.0
+-------
+* Add api for veeva network
+
 v1.3.3
 -------
 * Upgrade pandas requirement to >=1.1.2 to fix test failure
