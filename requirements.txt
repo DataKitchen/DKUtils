@@ -1,6 +1,6 @@
 dataclasses==0.6
 jira==2.0.0
-pandas==1.0.4
+pandas==1.1.2
 paramiko==2.7.2
 scp==0.13.2
 Sphinx==3.0.1
