@@ -5,7 +5,9 @@ import requests
 
 LOGGER = logging.getLogger()
 
-TERMINAL_STATES = {"CANCELED", "COMPLETE", "FAILED", "INTERRUPTED", "KILLED", "PARKED", "PAUSED", "SUSPENDED"}
+TERMINAL_STATES = {
+    "CANCELED", "COMPLETE", "FAILED", "INTERRUPTED", "KILLED", "PARKED", "PAUSED", "SUSPENDED"
+}
 
 DEFAULT_VERSION = "v16.0"
 
@@ -16,6 +18,7 @@ def _raise_exception(msg):
 
 
 class VeevaNetworkClient:
+
     def __init__(self, dns, username, password, version):
         """
         Create a client for accessing Veeva Network. This class should not be instantiated directly. You should use
@@ -43,13 +46,20 @@ class VeevaNetworkClient:
         self.base_url = f'https://{dns}/api/{version if version else "v16.0"}/'
 
         LOGGER.info(f'VEEVA NETWORK: Attempting Authenticating')
-        response = requests.post(self.base_url + 'auth', data={'username': username, 'password': password})
+        response = requests.post(
+            self.base_url + 'auth', data={
+                'username': username,
+                'password': password
+            }
+        )
         response.raise_for_status()
 
         # The headers are then passed through as a request authorization header
-        self.admin_header = {'Authorization': response.json().get('sessionId'),
-                             'Content-type': 'application/json',
-                             'Accept': 'application/json'}
+        self.admin_header = {
+            'Authorization': response.json().get('sessionId'),
+            'Content-type': 'application/json',
+            'Accept': 'application/json'
+        }
 
         if self.admin_header['Authorization'] is None:
             _raise_exception('Could not get an authorization header')
@@ -59,7 +69,9 @@ class VeevaNetworkClient:
 
 class VeevaSourceSubscriptionClient(VeevaNetworkClient):
 
-    def __init__(self, dns, username, password, subscription_name, system_name, version=DEFAULT_VERSION):
+    def __init__(
+        self, dns, username, password, subscription_name, system_name, version=DEFAULT_VERSION
+    ):
         """
         Create a client that enables you to manage source subscriptions that import and export data to
         and from the Veeva Network.
@@ -109,7 +121,8 @@ class VeevaSourceSubscriptionClient(VeevaNetworkClient):
         """
         response = requests.post(
             f'{self.base_url}systems/{self.system_name}/{self.subscription_type}_subscriptions/'
-            f'{self.subscription_name}/job')
+            f'{self.subscription_name}/job'
+        )
         response.raise_for_status()
         return response.json().get('job_id')
 
@@ -156,7 +169,8 @@ class VeevaSourceSubscriptionClient(VeevaNetworkClient):
             response = requests.get(
                 f'{self.base_url}systems/{self.system_name}/{self.subscription_type}_subscriptions/'
                 f'{self.subscription_name}/job/{job_resp_id}',
-                headers=self.admin_header)
+                headers=self.admin_header
+            )
             response.raise_for_status()
             job_status = response.json().get('job_status')
             if job_status not in TERMINAL_STATES:
@@ -164,8 +178,10 @@ class VeevaSourceSubscriptionClient(VeevaNetworkClient):
                 time.sleep(sleep_seconds)
             else:
                 if job_status == 'SUSPENDED':
-                    _raise_exception("VEEVA NETWORK: The job is scheduled and is waiting for shared resources prior to "
-                                     "becoming active.")
+                    _raise_exception(
+                        "VEEVA NETWORK: The job is scheduled and is waiting for shared resources prior to "
+                        "becoming active."
+                    )
                 if job_status == 'COMPLETE':
                     break
                 _raise_exception(f'The job has terminated with an unexpected status: {job_status}')
@@ -199,15 +215,18 @@ class VeevaSourceSubscriptionClient(VeevaNetworkClient):
         """
         json = self._retrieve_network_process_job(job_resp_id=job_resp_id)
 
-        return {'source_subscription_errorcount': str(json.get('errorCount')),
-                'source_subscription_recordcount': str(json.get('recordCount')),
-                'source_subscription_badrecordcount': str(json.get('badRecordCount'))
-                }
+        return {
+            'source_subscription_errorcount': str(json.get('errorCount')),
+            'source_subscription_recordcount': str(json.get('recordCount')),
+            'source_subscription_badrecordcount': str(json.get('badRecordCount'))
+        }
 
 
 class VeevaTargetSubscriptionClient(VeevaSourceSubscriptionClient):
 
-    def __init__(self, dns, username, password, subscription_name, system_name, version=DEFAULT_VERSION):
+    def __init__(
+        self, dns, username, password, subscription_name, system_name, version=DEFAULT_VERSION
+    ):
         """
         Create a client that enables you to manage target subscriptions that import and export data to
         and from the Veeva Network.
@@ -272,16 +291,11 @@ class VeevaTargetSubscriptionClient(VeevaSourceSubscriptionClient):
         json = self._retrieve_network_process_job(job_resp_id=job_resp_id)
 
         return {
-            'target_subscription_ADDRESS_count': str(
-                json.get('jobExportCount')['ADDRESS']),
-            'target_subscription_CUSTOMKEY_count': str(
-                json.get('jobExportCount')['CUSTOMKEY']),
+            'target_subscription_ADDRESS_count': str(json.get('jobExportCount')['ADDRESS']),
+            'target_subscription_CUSTOMKEY_count': str(json.get('jobExportCount')['CUSTOMKEY']),
             'target_subscription_HCO_count': str(json.get('jobExportCount')['HCO']),
             'target_subscription_HCP_count': str(json.get('jobExportCount')['HCP']),
-            'target_subscription_LICENSE_count': str(
-                json.get('jobExportCount')['LICENSE']),
-            'target_subscription_PARENTHCO_count': str(
-                json.get('jobExportCount')['PARENTHCO']),
+            'target_subscription_LICENSE_count': str(json.get('jobExportCount')['LICENSE']),
+            'target_subscription_PARENTHCO_count': str(json.get('jobExportCount')['PARENTHCO']),
             'target_subscription_badrecordcount': str(json.get('badRecordCount'))
-
         }
