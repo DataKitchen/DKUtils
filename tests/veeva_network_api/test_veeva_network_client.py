@@ -17,6 +17,15 @@ DEFAULT_VERSION = 'v16.0'
 VERSION = 'v17.0'
 BASE_URL = f'https://{DNS}/api/{DEFAULT_VERSION}/'
 JOB_RESPONSE_ID = "123"
+MOCK_ENVIRON = {
+    "VEEVA_DNS": DNS,
+    "VEEVA_USERNAME": USERNAME,
+    "VEEVA_PASSWORD": PASSWORD,
+    "VEEVA_SYSTEM_NAME": SYSTEM_NAME,
+    "VEEVA_SUBSCRIPTION_TYPE": SUBSCRIPTION_TYPE,
+    "VEEVA_SUBSCRIPTION_NAME": SUBSCRIPTION_NAME,
+    "VEEVA_VERSION": DEFAULT_VERSION
+}
 
 
 def get_status_call(client):
@@ -147,6 +156,15 @@ class TestVeevaNetworkClient(TestCase):
             }
         )
         self.assertEqual(base_url, client.base_url)
+
+    @patch.dict('dkutils.veeva_network_api.veeva_network_client.os.environ', MOCK_ENVIRON)
+    @patch('dkutils.veeva_network_api.veeva_network_client.requests')
+    def test_create_veeva_network_subscription_client_when_no_parameters_then_get_from_environment(
+        self, mock_requests
+    ):
+        mock_requests.post.return_value = MockResponse(json={"sessionId": "123"})
+
+        client = create_veeva_network_subscription_client()
 
 
 class TestVeevaSourceSubscriptionClient(TestCase):

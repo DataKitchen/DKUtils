@@ -1,5 +1,6 @@
 import logging
 import time
+import os
 from enum import Enum
 
 import requests
@@ -19,13 +20,13 @@ def _raise_exception(msg):
 
 
 def create_veeva_network_subscription_client(
-    dns,
-    username,
-    password,
-    subscription_name,
-    subScription_type,
-    system_name,
-    version=DEFAULT_VERSION
+    dns=None,
+    username=None,
+    password=None,
+    subscription_name=None,
+    subScription_type=None,
+    system_name=None,
+    version=None
 ):
     """
     Create a client that enables you to manage subscriptions that import and export data to
@@ -33,20 +34,27 @@ def create_veeva_network_subscription_client(
 
     Parameters
     ----------
-    dns: str
-        is the URL for your API service
+    dns: str, opt
+        is the URL for your API service, if this variable is absent the the value will be obtained from the
+        environment variable VEEVA_DNS
     username
-        the user ID for Network; for example, john.smith@veevanetwork.com.
-    password: str
-        the password for the user ID.
-    system_name: str
-        is the unique name of the system
-    subscription_name: str
-        is the unique name of the subscription
-    subScription_type: VeevaNetworkSubscriptionType
+        the user ID for Network; for example, john.smith@veevanetwork.com. if this variable is absent the the value will
+         be obtained from the environment variable VEEVA_USERNAME
+    password: str, opt
+        the password for the user ID. if this variable is absent the the value will be obtained from the
+        environment variable VEEVA_PASSWORD
+    system_name: str, opt
+        is the unique name of the system if this variable is absent the the value will be obtained from the
+        environment variable VEEVA_SYSTEM_NAME
+    subscription_name: str, opt
+        is the unique name of the subscription if this variable is absent the the value will be obtained from the
+        environment variable VEEVA_SUBSCRIPTION_NAME
+    subScription_type: VeevaNetworkSubscriptionType if this variable is absent the the value will be obtained from the
+        environment variable VEEVA_SUBSCRIPTION_TYPE
         the type of subscription
-    version: str
-        is the API version
+    version: str, opt
+        is the API version if this variable is absent the the value will be obtained from the
+        environment variable
 
     Raises
     ------
@@ -57,13 +65,28 @@ def create_veeva_network_subscription_client(
         if subscription_type is not VeevaNetworkSubscriptionType.SOURCE or VeevaNetworkSubscriptionType.TARGET
         If the authorization header is not available
     """
+    if not dns:
+        dns = os.environ['VEEVA_DNS']
+    if not username:
+        username = os.environ['VEEVA_USERNAME']
+    if not password:
+        password = os.environ['VEEVA_PASSWORD']
+    if not system_name:
+        system_name = os.environ['VEEVA_SYSTEM_NAME']
+    if not subscription_name:
+        subscription_name = os.environ['VEEVA_SUBSCRIPTION_NAME']
+    if not subScription_type:
+        subScription_type = os.environ['VEEVA_SUBSCRIPTION_TYPE']
+    if not version:
+        version = os.environ.get("VEEVA_VERSION", DEFAULT_VERSION)
     if subScription_type == VeevaNetworkSubscriptionType.SOURCE:
         return VeevaSourceSubscriptionClient(
             dns=dns,
             username=username,
             password=password,
             subscription_name=subscription_name,
-            system_name=system_name
+            system_name=system_name,
+            version=version
         )
     elif subScription_type == VeevaNetworkSubscriptionType.TARGET:
         return VeevaTargetSubscriptionClient(
@@ -71,7 +94,8 @@ def create_veeva_network_subscription_client(
             username=username,
             password=password,
             subscription_name=subscription_name,
-            system_name=system_name
+            system_name=system_name,
+            version=version
         )
     _raise_exception(
         f"Subscription type must be either VeevaNetworkSubscriptionType.SOURCE or "
