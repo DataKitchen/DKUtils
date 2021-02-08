@@ -5,7 +5,7 @@ from requests.exceptions import HTTPError
 
 from dkutils.veeva_network_api.veeva_network_client import VeevaNetworkClient, VeevaSourceSubscriptionClient, \
     VeevaTargetSubscriptionClient, VeevaNetworkException, create_veeva_network_subscription_client, \
-    VeevaNetworkSubscriptionType
+    VeevaNetworkSubscriptionType, run_subscription_job
 
 DNS = 'somewhere.com'
 USERNAME = 'someone@somewhere.com'
@@ -101,7 +101,7 @@ class TestVeevaNetworkClient(TestCase):
                 password=PASSWORD,
                 system_name=SYSTEM_NAME,
                 subscription_name=SUBSCRIPTION_NAME,
-                subScription_type='bogus'
+                subscription_type='bogus'
             )
         self.assertEqual(
             'Subscription type must be either VeevaNetworkSubscriptionType.SOURCE or '
@@ -120,7 +120,7 @@ class TestVeevaNetworkClient(TestCase):
             password=PASSWORD,
             system_name=SYSTEM_NAME,
             subscription_name=SUBSCRIPTION_NAME,
-            subScription_type=VeevaNetworkSubscriptionType.SOURCE
+            subscription_type=VeevaNetworkSubscriptionType.SOURCE
         )
         self.assertIsInstance(client, VeevaSourceSubscriptionClient)
 
@@ -136,7 +136,7 @@ class TestVeevaNetworkClient(TestCase):
             password=PASSWORD,
             system_name=SYSTEM_NAME,
             subscription_name=SUBSCRIPTION_NAME,
-            subScription_type=VeevaNetworkSubscriptionType.TARGET
+            subscription_type=VeevaNetworkSubscriptionType.TARGET
         )
         self.assertIsInstance(client, VeevaTargetSubscriptionClient)
 
@@ -164,7 +164,34 @@ class TestVeevaNetworkClient(TestCase):
     ):
         mock_requests.post.return_value = MockResponse(json={"sessionId": "123"})
 
-        client = create_veeva_network_subscription_client()
+        create_veeva_network_subscription_client()
+
+    @patch.dict('dkutils.veeva_network_api.veeva_network_client.os.environ', MOCK_ENVIRON)
+    @patch(
+        'dkutils.veeva_network_api.veeva_network_client.create_veeva_network_subscription_client'
+    )
+    def test_run_subscription_job(self, mock_create_veeva_network_subscription_client):
+        json = {}
+        mock_create_veeva_network_subscription_client.return_value.run_subscription_process.return_value \
+            = JOB_RESPONSE_ID
+        mock_create_veeva_network_subscription_client.return_value.retrieve_network_process_job.return_value = json
+
+        self.assertEqual(json, run_subscription_job())
+
+        mock_create_veeva_network_subscription_client.assert_called_once_with(
+            dns=None,
+            username=None,
+            password=None,
+            subscription_name=None,
+            subscription_type=None,
+            system_name=None,
+            version=None
+        )
+        mock_create_veeva_network_subscription_client.return_value.run_subscription_process.assert_called_once(
+        )
+        mock_create_veeva_network_subscription_client.return_value.retrieve_network_process_job.assert_called_once_with(
+            JOB_RESPONSE_ID
+        )
 
 
 class TestVeevaSourceSubscriptionClient(TestCase):
