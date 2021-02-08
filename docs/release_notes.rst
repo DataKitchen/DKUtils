@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v1.4.1
+-------
+* Add create_veeva_network_subscription_client function
+
 v1.4.0
 -------
 * Add api for veeva network

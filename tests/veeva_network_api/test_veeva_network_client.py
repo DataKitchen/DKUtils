@@ -4,7 +4,8 @@ from unittest.mock import patch, call
 from requests.exceptions import HTTPError
 
 from dkutils.veeva_network_api.veeva_network_client import VeevaNetworkClient, VeevaSourceSubscriptionClient, \
-    VeevaTargetSubscriptionClient, VeevaNetworkException
+    VeevaTargetSubscriptionClient, VeevaNetworkException, create_veeva_network_subscription_client, \
+    VeevaNetworkSubscriptionType
 
 DNS = 'somewhere.com'
 USERNAME = 'someone@somewhere.com'
@@ -16,6 +17,15 @@ DEFAULT_VERSION = 'v16.0'
 VERSION = 'v17.0'
 BASE_URL = f'https://{DNS}/api/{DEFAULT_VERSION}/'
 JOB_RESPONSE_ID = "123"
+MOCK_ENVIRON = {
+    "VEEVA_DNS": DNS,
+    "VEEVA_USERNAME": USERNAME,
+    "VEEVA_PASSWORD": PASSWORD,
+    "VEEVA_SYSTEM_NAME": SYSTEM_NAME,
+    "VEEVA_SUBSCRIPTION_TYPE": SUBSCRIPTION_TYPE,
+    "VEEVA_SUBSCRIPTION_NAME": SUBSCRIPTION_NAME,
+    "VEEVA_VERSION": DEFAULT_VERSION
+}
 
 
 def get_status_call(client):
@@ -81,6 +91,55 @@ class TestVeevaNetworkClient(TestCase):
             }
         )
 
+    def test_create_veeva_network_subscription_client_when_invalid_subscription_type_then_raises_exception(
+        self
+    ):
+        with self.assertRaises(VeevaNetworkException) as cm:
+            create_veeva_network_subscription_client(
+                dns=DNS,
+                username=USERNAME,
+                password=PASSWORD,
+                system_name=SYSTEM_NAME,
+                subscription_name=SUBSCRIPTION_NAME,
+                subScription_type='bogus'
+            )
+        self.assertEqual(
+            'Subscription type must be either VeevaNetworkSubscriptionType.SOURCE or '
+            'VeevaNetworkSubscriptionType.TARGET but was bogus', cm.exception.args[0]
+        )
+
+    @patch('dkutils.veeva_network_api.veeva_network_client.requests')
+    def test_create_veeva_network_subscription_client_when_subscription_type_source(
+        self, mock_requests
+    ):
+        mock_requests.post.return_value = MockResponse(json={"sessionId": "123"})
+
+        client = create_veeva_network_subscription_client(
+            dns=DNS,
+            username=USERNAME,
+            password=PASSWORD,
+            system_name=SYSTEM_NAME,
+            subscription_name=SUBSCRIPTION_NAME,
+            subScription_type=VeevaNetworkSubscriptionType.SOURCE
+        )
+        self.assertIsInstance(client, VeevaSourceSubscriptionClient)
+
+    @patch('dkutils.veeva_network_api.veeva_network_client.requests')
+    def test_create_veeva_network_subscription_client_when_subscription_type_target(
+        self, mock_requests
+    ):
+        mock_requests.post.return_value = MockResponse(json={"sessionId": "123"})
+
+        client = create_veeva_network_subscription_client(
+            dns=DNS,
+            username=USERNAME,
+            password=PASSWORD,
+            system_name=SYSTEM_NAME,
+            subscription_name=SUBSCRIPTION_NAME,
+            subScription_type=VeevaNetworkSubscriptionType.TARGET
+        )
+        self.assertIsInstance(client, VeevaTargetSubscriptionClient)
+
     @patch('dkutils.veeva_network_api.veeva_network_client.requests')
     def test_constructor(self, mock_requests):
         base_url = f'https://{DNS}/api/{DEFAULT_VERSION}/'
@@ -97,6 +156,15 @@ class TestVeevaNetworkClient(TestCase):
             }
         )
         self.assertEqual(base_url, client.base_url)
+
+    @patch.dict('dkutils.veeva_network_api.veeva_network_client.os.environ', MOCK_ENVIRON)
+    @patch('dkutils.veeva_network_api.veeva_network_client.requests')
+    def test_create_veeva_network_subscription_client_when_no_parameters_then_get_from_environment(
+        self, mock_requests
+    ):
+        mock_requests.post.return_value = MockResponse(json={"sessionId": "123"})
+
+        client = create_veeva_network_subscription_client()
 
 
 class TestVeevaSourceSubscriptionClient(TestCase):

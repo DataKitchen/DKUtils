@@ -1,5 +1,7 @@
 import logging
 import time
+import os
+from enum import Enum
 
 import requests
 
@@ -12,13 +14,103 @@ TERMINAL_STATES = {
 DEFAULT_VERSION = "v16.0"
 
 
+def _raise_exception(msg):
+    LOGGER.error(msg)
+    raise VeevaNetworkException(msg)
+
+
+def create_veeva_network_subscription_client(
+    dns=None,
+    username=None,
+    password=None,
+    subscription_name=None,
+    subScription_type=None,
+    system_name=None,
+    version=None
+):
+    """
+    Create a client that enables you to manage subscriptions that import and export data to
+    and from the Veeva Network.
+
+    Parameters
+    ----------
+    dns: str, opt
+        is the URL for your API service, if this variable is absent the the value will be obtained from the
+        environment variable VEEVA_DNS
+    username
+        the user ID for Network; for example, john.smith@veevanetwork.com. if this variable is absent the the value will
+         be obtained from the environment variable VEEVA_USERNAME
+    password: str, opt
+        the password for the user ID. if this variable is absent the the value will be obtained from the
+        environment variable VEEVA_PASSWORD
+    system_name: str, opt
+        is the unique name of the system if this variable is absent the the value will be obtained from the
+        environment variable VEEVA_SYSTEM_NAME
+    subscription_name: str, opt
+        is the unique name of the subscription if this variable is absent the the value will be obtained from the
+        environment variable VEEVA_SUBSCRIPTION_NAME
+    subScription_type: VeevaNetworkSubscriptionType if this variable is absent the the value will be obtained from the
+        environment variable VEEVA_SUBSCRIPTION_TYPE
+        the type of subscription
+    version: str, opt
+        is the API version if this variable is absent the the value will be obtained from the
+        environment variable
+
+    Raises
+    ------
+    HTTPError
+        If the request fails
+
+    VeevaNetworkException
+        if subscription_type is not VeevaNetworkSubscriptionType.SOURCE or VeevaNetworkSubscriptionType.TARGET
+        If the authorization header is not available
+    """
+    if not dns:
+        dns = os.environ['VEEVA_DNS']
+    if not username:
+        username = os.environ['VEEVA_USERNAME']
+    if not password:
+        password = os.environ['VEEVA_PASSWORD']
+    if not system_name:
+        system_name = os.environ['VEEVA_SYSTEM_NAME']
+    if not subscription_name:
+        subscription_name = os.environ['VEEVA_SUBSCRIPTION_NAME']
+    if not subScription_type:
+        subScription_type = VeevaNetworkSubscriptionType[
+            os.environ['VEEVA_SUBSCRIPTION_TYPE'].upper()]
+    if not version:
+        version = os.environ.get("VEEVA_VERSION", DEFAULT_VERSION)
+    if subScription_type == VeevaNetworkSubscriptionType.SOURCE:
+        return VeevaSourceSubscriptionClient(
+            dns=dns,
+            username=username,
+            password=password,
+            subscription_name=subscription_name,
+            system_name=system_name,
+            version=version
+        )
+    elif subScription_type == VeevaNetworkSubscriptionType.TARGET:
+        return VeevaTargetSubscriptionClient(
+            dns=dns,
+            username=username,
+            password=password,
+            subscription_name=subscription_name,
+            system_name=system_name,
+            version=version
+        )
+    _raise_exception(
+        f"Subscription type must be either VeevaNetworkSubscriptionType.SOURCE or "
+        f"VeevaNetworkSubscriptionType.TARGET but was {subScription_type}"
+    )
+
+
 class VeevaNetworkException(Exception):
     pass
 
 
-def _raise_exception(msg):
-    LOGGER.error(msg)
-    raise VeevaNetworkException(msg)
+class VeevaNetworkSubscriptionType(str, Enum):
+    SOURCE = 'source',
+    TARGET = 'target'
 
 
 class VeevaNetworkClient:
@@ -105,7 +197,7 @@ class VeevaSourceSubscriptionClient(VeevaNetworkClient):
         """
         self.subscription_name = subscription_name
         self.system_name = system_name
-        self.subscription_type = 'source'
+        self.subscription_type = VeevaNetworkSubscriptionType.SOURCE.value
         super().__init__(dns, username, password, version)
 
     def run_subscription_process(self):
@@ -313,7 +405,7 @@ class VeevaTargetSubscriptionClient(VeevaSourceSubscriptionClient):
             If the authorization header is not available
         """
         super().__init__(dns, username, password, subscription_name, system_name, version)
-        self.subscription_type = 'target'
+        self.subscription_type = VeevaNetworkSubscriptionType.TARGET.value
 
     def retrieve_network_process_job(self, job_resp_id):
         """
