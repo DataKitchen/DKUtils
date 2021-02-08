@@ -24,7 +24,7 @@ def create_veeva_network_subscription_client(
     username=None,
     password=None,
     subscription_name=None,
-    subScription_type=None,
+    subscription_type=None,
     system_name=None,
     version=None
 ):
@@ -49,7 +49,7 @@ def create_veeva_network_subscription_client(
     subscription_name: str, opt
         is the unique name of the subscription if this variable is absent the the value will be obtained from the
         environment variable VEEVA_SUBSCRIPTION_NAME
-    subScription_type: VeevaNetworkSubscriptionType if this variable is absent the the value will be obtained from the
+    subscription_type: VeevaNetworkSubscriptionType if this variable is absent the the value will be obtained from the
         environment variable VEEVA_SUBSCRIPTION_TYPE
         the type of subscription
     version: str, opt
@@ -75,12 +75,12 @@ def create_veeva_network_subscription_client(
         system_name = os.environ['VEEVA_SYSTEM_NAME']
     if not subscription_name:
         subscription_name = os.environ['VEEVA_SUBSCRIPTION_NAME']
-    if not subScription_type:
-        subScription_type = VeevaNetworkSubscriptionType[
+    if not subscription_type:
+        subscription_type = VeevaNetworkSubscriptionType[
             os.environ['VEEVA_SUBSCRIPTION_TYPE'].upper()]
     if not version:
         version = os.environ.get("VEEVA_VERSION", DEFAULT_VERSION)
-    if subScription_type == VeevaNetworkSubscriptionType.SOURCE:
+    if subscription_type == VeevaNetworkSubscriptionType.SOURCE:
         return VeevaSourceSubscriptionClient(
             dns=dns,
             username=username,
@@ -89,7 +89,7 @@ def create_veeva_network_subscription_client(
             system_name=system_name,
             version=version
         )
-    elif subScription_type == VeevaNetworkSubscriptionType.TARGET:
+    elif subscription_type == VeevaNetworkSubscriptionType.TARGET:
         return VeevaTargetSubscriptionClient(
             dns=dns,
             username=username,
@@ -100,8 +100,175 @@ def create_veeva_network_subscription_client(
         )
     _raise_exception(
         f"Subscription type must be either VeevaNetworkSubscriptionType.SOURCE or "
-        f"VeevaNetworkSubscriptionType.TARGET but was {subScription_type}"
+        f"VeevaNetworkSubscriptionType.TARGET but was {subscription_type}"
     )
+
+
+def run_subscription_job(
+    dns=None,
+    username=None,
+    password=None,
+    subscription_name=None,
+    subscription_type=None,
+    system_name=None,
+    version=None
+):
+    """
+    This function will run a subscription job and poll until the job has reached a terminal state.
+
+    Parameters
+    ----------
+    dns: str, opt
+        is the URL for your API service, if this variable is absent the the value will be obtained from the
+        environment variable VEEVA_DNS
+    username
+        the user ID for Network; for example, john.smith@veevanetwork.com. if this variable is absent the the value will
+         be obtained from the environment variable VEEVA_USERNAME
+    password: str, opt
+        the password for the user ID. if this variable is absent the the value will be obtained from the
+        environment variable VEEVA_PASSWORD
+    system_name: str, opt
+        is the unique name of the system if this variable is absent the the value will be obtained from the
+        environment variable VEEVA_SYSTEM_NAME
+    subscription_name: str, opt
+        is the unique name of the subscription if this variable is absent the the value will be obtained from the
+        environment variable VEEVA_SUBSCRIPTION_NAME
+    subscription_type: VeevaNetworkSubscriptionType if this variable is absent the the value will be obtained from the
+        environment variable VEEVA_SUBSCRIPTION_TYPE
+        the type of subscription
+    version: str, opt
+        is the API version if this variable is absent the the value will be obtained from the
+        environment variable
+
+    Returns
+    -------
+    dict
+        A dictionary containing the information about the job.
+        For a source subscription the will be similar to the following:
+        {
+           "filesProcessed" : 1,
+           "errorCount" : 0,
+           "subscriptionName" : "CRM_Import",
+           "completed_date" : "2019-12-18T22:42:32.000Z",
+           "job_status" : "COMPLETE",
+           "job_id" : 10537,
+           "jobResultSummary" : {
+              "CUSTOMKEY" : {
+                 "total" : 2,
+                 "recordsUpdated" : 0,
+                 "recordsSkipped" : 2,
+                 "newRecordsAdded" : 0,
+                 "recordsInvalidated" : 0,
+                 "recordsMerged" : 0
+              },
+              "HCP" : {
+                 "total" : 1,
+                 "recordsUpdated" : 0,
+                 "recordsSkipped" : 1,
+                 "recordsMerged" : 0,
+                 "recordsInvalidated" : 0,
+                 "newRecordsAdded" : 0
+              },
+              "ADDRESS" : {
+                 "total" : 1,
+                 "recordsUpdated" : 0,
+                 "recordsSkipped" : 1,
+                 "recordsInvalidated" : 0,
+                 "newRecordsAdded" : 0,
+                 "recordsMerged" : 0
+              }
+           },
+           "durationInMilliseconds" : 3000,
+           "created_date" : "2019-12-18T22:42:29.000Z",
+           "subscriptionId" : 117,
+           "processedDataSummary" : {
+              "HCP" : 1,
+              "ADDRESS" : 1
+           },
+           "type" : "MANUAL",
+           "dataLoadSummary" : {
+              "ADDRESS" : {
+                 "rowsRead" : 1,
+                 "rowsParsed" : 1
+              },
+              "HCP" : {
+                 "rowsParsed" : 1,
+                 "rowsRead" : 1
+              }
+           },
+           "badRecordCount" : 0,
+           "recordCount" : 2,
+           "matchSummary" : {
+              "HCP" : {
+                 "ACT" : 1,
+                 "notMatched" : 0,
+                 "ASK" : 0
+              },
+              "HCO" : {
+                 "ACT" : 0,
+                 "notMatched" : 0,
+                 "ASK" : 0
+              }
+           },
+           "responseStatus" : "SUCCESS"
+        }
+        For a target source a dictionary similar to the following is returned:
+        {
+          "responseStatus": "SUCCESS",
+          "subscriptionId": 15,
+          "subscriptionName": "targetSubscriptionCustomer",
+          "durationInMilliseconds": 2000,
+          "type": "MANUAL",
+          "errorCount": 0,
+          "badRecordCount": 0,
+          "exportReferenceCount": 0,
+          "exportFull": True,
+          "exportIncludeReference": False,
+          "exportUpdatedChildOnly": False,
+          "exportSetSubscriptionStateOnFull": False,
+          "exportFormat": "CSV",
+          "exportReferenceVersion": "4",
+          "exportActiveOnly": False,
+          "jobExportCount": {
+            "LICENSE": 3961,
+            "RELATION": 333,
+            "HCO": 819,
+            "HCP": 1060,
+            "ADDRESS": 1801,
+            "EXTERNALKEYS": 8038
+          },
+          "job_id": 10563,
+          "job_status": "COMPLETE",
+          "created_date": "2016-11-17T10:58:49.000-08:00",
+          "data_revision_first": "0",
+          "data_revision_last": "929335226137870335",
+          "export_package_path": "export/change_request/targetSubscriptionCustomer/exp_000001C5.zip",
+          "total_records_exported": "1879",
+          "completed_date": "2016-11-17T10:58:51.000-08:00",
+          "export_archive": "individual",
+          "exportFormatDelimiter":"|",
+          "exportFormatTextQualifier":"\""
+        }
+
+    Raises
+    ------
+    HTTPError
+        If the request fails
+
+    ValueError
+        If the job reaches a terminal status other than COMPLETE
+    """
+    client = create_veeva_network_subscription_client(
+        dns=dns,
+        username=username,
+        password=password,
+        subscription_name=subscription_name,
+        subscription_type=subscription_type,
+        system_name=system_name,
+        version=version
+    )
+    job = client.run_subscription_process()
+    return client.retrieve_network_process_job(job)
 
 
 class VeevaNetworkException(Exception):
