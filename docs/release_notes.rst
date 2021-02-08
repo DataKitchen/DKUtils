@@ -1,11 +1,11 @@
 Release Notes
 =============
 
-v1.4.2
+v1.6.0
 -------
 * Add run_subscription_job function
 
-v1.4.1
+v1.5.0
 -------
 * Add create_veeva_network_subscription_client function
 
