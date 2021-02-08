@@ -76,7 +76,8 @@ def create_veeva_network_subscription_client(
     if not subscription_name:
         subscription_name = os.environ['VEEVA_SUBSCRIPTION_NAME']
     if not subScription_type:
-        subScription_type = os.environ['VEEVA_SUBSCRIPTION_TYPE']
+        subScription_type = VeevaNetworkSubscriptionType[
+            os.environ['VEEVA_SUBSCRIPTION_TYPE'].upper()]
     if not version:
         version = os.environ.get("VEEVA_VERSION", DEFAULT_VERSION)
     if subScription_type == VeevaNetworkSubscriptionType.SOURCE:
