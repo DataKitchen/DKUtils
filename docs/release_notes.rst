@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v1.7.0
+------
+* Log response content when a request to the DataKitchen REST API fails
+
 v1.6.0
 -------
 * Add run_subscription_job function
