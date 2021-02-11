@@ -1,5 +1,6 @@
 import copy
 import json
+import logging
 import os
 import traceback
 from functools import cmp_to_key
@@ -29,6 +30,8 @@ from dkutils.dictionary_comparator import DictionaryComparator
 from dkutils.validation import get_max_concurrency, skip_token_validation
 from dkutils.wait_loop import WaitLoop
 from .datetime_utils import get_utc_timestamp
+
+logger = logging.getLogger()
 
 # The servings API endpoint retrieves only 10 order runs by default. To retrieve them all, assume
 # 100K exceeds the max order runs a given order will ever contain.
@@ -248,7 +251,14 @@ class DataKitchenClient:
             response = api_request(api_path, headers=self._headers, json=kwargs)
         else:
             response = api_request(api_path, headers=self._headers, data=kwargs)
-        response.raise_for_status()
+
+        try:
+            response.raise_for_status()
+        except Exception:
+            logger.error(f'API call ({api_path}) failed: {response.reason}')
+            logger.error(f'Response Content:\n{response.content}')
+            raise
+
         return response
 
     def _validate_token(self):
