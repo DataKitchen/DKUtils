@@ -1,6 +1,13 @@
 import base64
+import logging
+import mimetypes
 import os
 import pickle
+from email.mime.audio import MIMEAudio
+from email.mime.base import MIMEBase
+from email.mime.image import MIMEImage
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from enum import Enum
 from pathlib import Path
 from typing import List
@@ -8,6 +15,11 @@ from typing import List
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
+
+from dkutils.constants import GMAIL_APPROVAL_STRIING, GMAIL_SLEEP_SECONDS, GMAIL_MAX_WAIT
+from dkutils.wait_loop import WaitLoop
+
+LOGGER = logging.getLogger()
 
 
 class GmailClientException(Exception):
@@ -129,6 +141,75 @@ def get_object_from_environment(environment_variable_name):
     return pickle.loads(decoded)
 
 
+def create_message(sender, to, subject, message_text):
+    """Create a message for an email.
+
+    Args:
+      sender: Email address of the sender.
+      to: Email address of the receiver.
+      subject: The subject of the email message.
+      message_text: The text of the email message.
+
+    Returns:
+      An object containing a base64url encoded email object.
+    """
+    message = MIMEText(message_text)
+    message['to'] = to
+    message['from'] = sender
+    message['subject'] = subject
+    b64_bytes = base64.urlsafe_b64encode(message.as_bytes())
+    b64_string = b64_bytes.decode()
+    return {'raw': b64_string}
+
+
+def create_message_with_attachment(sender, to, subject, message_text, file):
+    """Create a message for an email.
+
+    Args:
+      sender: Email address of the sender.
+      to: Email address of the receiver.
+      subject: The subject of the email message.
+      message_text: The text of the email message.
+      file: The path to the file to be attached.
+
+    Returns:
+      An object containing a base64url encoded email object.
+    """
+    message = MIMEMultipart()
+    message['to'] = to
+    message['from'] = sender
+    message['subject'] = subject
+
+    msg = MIMEText(message_text)
+    message.attach(msg)
+
+    content_type, encoding = mimetypes.guess_type(file)
+
+    if content_type is None or encoding is not None:
+        content_type = 'application/octet-stream'
+    maintype, subtype = content_type.split('/', 1)
+    if maintype == 'text':
+        with open(file) as fp:
+            # Note: we should handle calculating the charset
+            msg = MIMEText(fp.read(), _subtype=subtype)
+    elif maintype == 'image':
+        with open(file, 'rb') as fp:
+            msg = MIMEImage(fp.read(), _subtype=subtype)
+    elif maintype == 'audio':
+        with open(file, 'rb') as fp:
+            msg = MIMEAudio(fp.read(), _subtype=subtype)
+    else:
+        with open(file, 'rb') as fp:
+            msg = MIMEBase(maintype, subtype)
+            msg.set_payload(fp.read())
+    filename = os.path.basename(file)
+    msg.add_header('Content-Disposition', 'attachment', filename=filename)
+    message.attach(msg)
+    b64_bytes = base64.urlsafe_b64encode(message.as_bytes())
+    b64_string = b64_bytes.decode()
+    return {'raw': b64_string}
+
+
 class GMailClient:
 
     def __init__(self, credentials: Credentials):
@@ -144,3 +225,67 @@ class GMailClient:
             the credentials needed to access the API
         """
         self.service = build('gmail', 'v1', credentials=credentials)
+
+    def send_message(self, message, user_id='me'):
+        """Send an email message.
+
+        Parameters
+        ----------
+        message: str
+            the message to be sent
+        user_id: str, optional
+            User's email address. The special value "me" will be used to indicate the authenticated user if no value is
+            provided
+
+        Returns:
+          dict:
+            the sent message
+
+        """
+
+        message = (self.service.users().messages().send(userId=user_id, body=message).execute())
+        LOGGER.debug(f'Message Id: {message["id"]}')
+        return message
+
+    def has_approval(
+        self,
+        subject,
+        approval_string=GMAIL_APPROVAL_STRIING,
+        sleep_seconds=GMAIL_SLEEP_SECONDS,
+        max_wait=GMAIL_MAX_WAIT
+    ):
+        """
+        This function can be used to determine if a response has been received containing the specified approval
+        string. The given subject is used to retrieve messages of interest. This function will poll for new email
+        every sleep seconds until the max wait seconds have been exceeded.
+        Parameters
+        ----------
+        subject: str
+            The subject to use to retrieve messages from the inbox
+        approval_string: str, opt
+            If the message body of a message retrieved starts with the given string True will be returned by the
+            function indicating that approval has been received. Will default to Approved if not specified
+        sleep_seconds: int, opt
+            the number of seconds to wait between retrieving email. If not specified will default to 10
+        max_wait: int, opt
+            the maximum number of seconds to wait for approval to be recieved. If not specified will default to 30
+
+        Returns
+        -------
+            True or False with True indicating that approval has been received
+        """
+        wait_loop = WaitLoop(sleep_seconds, max_wait)
+        while wait_loop:
+            results = self.service.users().messages().list(
+                userId='me', labelIds=['INBOX'], q=f'subject: {subject}'
+            ).execute()
+            messages = results.get('messages', [])
+            if messages:
+                for message in messages:
+                    msg = self.service.users().messages().get(
+                        userId='me', id=message['id']
+                    ).execute()
+                    LOGGER.info(f'Email reply received: {msg["snippet"]}')
+                    return msg['snippet'].lower().startswith(approval_string.lower())
+        LOGGER.warn("No reply was found")
+        return False
