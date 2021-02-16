@@ -31,7 +31,7 @@ from dkutils.validation import get_max_concurrency, skip_token_validation
 from dkutils.wait_loop import WaitLoop
 from .datetime_utils import get_utc_timestamp
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 # The servings API endpoint retrieves only 10 order runs by default. To retrieve them all, assume
 # 100K exceeds the max order runs a given order will ever contain.
@@ -255,8 +255,8 @@ class DataKitchenClient:
         try:
             response.raise_for_status()
         except Exception:
-            logger.error(f'API call ({api_path}) failed: {response.reason}')
-            logger.error(f'Response Content:\n{response.content}')
+            if not skip_token_validation():
+                logger.error(f'Response Content:\n{response.content}')
             raise
 
         return response

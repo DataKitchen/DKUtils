@@ -5,7 +5,7 @@ from enum import Enum
 
 import requests
 
-LOGGER = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 TERMINAL_STATES = {
     "CANCELED", "COMPLETE", "FAILED", "INTERRUPTED", "KILLED", "PARKED", "PAUSED", "SUSPENDED"
@@ -15,7 +15,7 @@ DEFAULT_VERSION = "v16.0"
 
 
 def _raise_exception(msg):
-    LOGGER.error(msg)
+    logger.error(msg)
     raise VeevaNetworkException(msg)
 
 
@@ -308,7 +308,7 @@ class VeevaNetworkClient:
         """
         self.base_url = f'https://{dns}/api/{version if version else "v16.0"}/'
 
-        LOGGER.info(f'VEEVA NETWORK: Attempting Authenticating')
+        logger.info(f'VEEVA NETWORK: Attempting Authenticating')
         response = requests.post(
             self.base_url + 'auth', data={
                 'username': username,
@@ -327,7 +327,7 @@ class VeevaNetworkClient:
         if self.admin_header['Authorization'] is None:
             _raise_exception('Could not get an authorization header')
         else:
-            LOGGER.info(f'VEEVA NETWORK: Authentication Successful!')
+            logger.info(f'VEEVA NETWORK: Authentication Successful!')
 
 
 class VeevaSourceSubscriptionClient(VeevaNetworkClient):
@@ -434,7 +434,7 @@ class VeevaSourceSubscriptionClient(VeevaNetworkClient):
                 )
             job_status = json.get('job_status')
             if job_status not in TERMINAL_STATES:
-                LOGGER.info(job_status)
+                logger.info(job_status)
                 time.sleep(sleep_seconds)
             else:
                 if job_status == 'SUSPENDED':

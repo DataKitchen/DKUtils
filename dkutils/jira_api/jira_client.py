@@ -1,3 +1,4 @@
+import logging
 import pandas as pd
 
 from jira import JIRA
@@ -7,6 +8,8 @@ DEFAULT_FIELDS = [
     'created', 'creator', 'assignee', 'status', 'issuetype', 'priority', 'summary', 'description',
     'resolution', 'resolutiondate'
 ]
+
+logger = logging.getLogger(__name__)
 
 
 class JiraClient:
@@ -58,7 +61,7 @@ class JiraClient:
                 )
             self._client.transition_issue(issue, transition_id)
         except JIRAError:
-            print(f'Error: Issue "{issue_key}" does not exist.')
+            logger.error(f'Error: Issue "{issue_key}" does not exist.')
             raise
 
     def add_comment(self, issue_key, comment):
@@ -84,7 +87,7 @@ class JiraClient:
         try:
             return self._client.add_comment(issue_key, comment)
         except JIRAError:
-            print(f'Error: Issue "{issue_key}" does not exist.')
+            logger.error(f'Error: Issue "{issue_key}" does not exist.')
             raise
 
     def get_issue_field(self, issue, field):
@@ -119,7 +122,7 @@ class JiraClient:
             else:
                 return str(field_value)
         except AttributeError:
-            print(f'Field "{field}" does not exist for issue "{issue}."')
+            logger.error(f'Field "{field}" does not exist for issue "{issue}."')
             raise
 
     def get_issues(self, project, fields=DEFAULT_FIELDS):
