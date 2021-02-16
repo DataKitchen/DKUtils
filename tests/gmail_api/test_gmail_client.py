@@ -19,9 +19,6 @@ TO = "someone@somewhere.com"
 FROM = "person@elsewher.com"
 SUBJECT = "Good News"
 MSG_TEXT = "This is an important message for you"
-ENCODED_MSG = "Q29udGVudC1UeXBlOiB0ZXh0L3BsYWluOyBjaGFyc2V0PSJ1cy1hc2NpaSIKTUlNRS1WZXJzaW9uOiAxLjAKQ29udGVu" \
-              "dC1UcmFuc2Zlci1FbmNvZGluZzogN2JpdAp0bzogc29tZW9uZUBzb21ld2hlcmUuY29tCmZyb206IHBlcnNvbkBlbHNld2hlc" \
-              "i5jb20Kc3ViamVjdDogR29vZCBOZXdzCgpUaGlzIGlzIGFuIGltcG9ydGFudCBtZXNzYWdlIGZvciB5b3U="
 MESSAGE = {}
 SENT_MESSAGE = {"id": "123"}
 
