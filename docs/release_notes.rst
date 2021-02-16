@@ -1,6 +1,26 @@
 Release Notes
 =============
 
+v1.8.0
+------
+* Add gmail_api
+
+v1.7.0
+------
+* Log response content when a request to the DataKitchen REST API fails
+
+v1.6.0
+-------
+* Add run_subscription_job function
+
+v1.5.0
+-------
+* Add create_veeva_network_subscription_client function
+
+v1.4.0
+-------
+* Add api for veeva network
+
 v1.3.3
 -------
 * Upgrade pandas requirement to >=1.1.2 to fix test failure

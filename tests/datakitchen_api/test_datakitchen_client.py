@@ -53,6 +53,14 @@ class MockResponse:
     def text(self):
         return self._text
 
+    @property
+    def content(self):
+        return 'RESPONSE CONTENT'
+
+    @property
+    def reason(self):
+        return 'BAD REQUEST'
+
     def raise_for_status(self):
         if self._raise_error:
             raise HTTPError('Failed API Call')
