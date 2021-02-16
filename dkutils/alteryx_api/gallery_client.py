@@ -10,10 +10,7 @@ from requests_oauthlib import OAuth1
 
 from dkutils.wait_loop import WaitLoop
 
-if 'LOGGER' not in globals():
-    LOGGER = logging.getLogger()
-    LOGGER.addHandler(logging.StreamHandler())
-    LOGGER.setLevel(logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 class GalleryException(Exception):
@@ -378,7 +375,7 @@ class GalleryClient:
         while wait:
             if job_info.status != 'Completed':
                 job_info = self.get_job_status(job_id)
-                LOGGER.info(f'Current status: {job_info.status}')
+                logger.info(f'Current status: {job_info.status}')
             else:
                 return job_info
         raise GalleryException(f'Timed out after: {max_wait_seconds} seconds')
