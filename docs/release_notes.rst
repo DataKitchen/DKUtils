@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v1.8.0
+------
+* Add gmail_api
+
 v1.7.1
 ------
 * Standardize logging

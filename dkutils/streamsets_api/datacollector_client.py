@@ -50,7 +50,7 @@ class DataCollectorClient:
     def _validate_pipline_id(self, pipeline_id):
         """Ensure that the pipeline_id is given"""
         if not pipeline_id:
-            raise ValueError(f'pipeline_id is required')
+            raise ValueError('pipeline_id is required')
 
     def _api_request(self, http_method, *args, **kwargs):
         """
