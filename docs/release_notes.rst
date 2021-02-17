@@ -5,6 +5,12 @@ v1.8.0
 ------
 * Add gmail_api
 
+v1.7.1
+------
+* Standardize logging
+* Remove redundant log message in DataKithenClient _api_request
+* Do not log response content when validating or refreshing a token - these exceptions are already handled properly
+
 v1.7.0
 ------
 * Log response content when a request to the DataKitchen REST API fails
