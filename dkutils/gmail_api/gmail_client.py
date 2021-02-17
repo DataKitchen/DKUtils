@@ -16,10 +16,10 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 
-from dkutils.constants import GMAIL_APPROVAL_STRIING, GMAIL_SLEEP_SECONDS, GMAIL_MAX_WAIT
+from dkutils.constants import GMAIL_APPROVAL_STRING, GMAIL_SLEEP_SECONDS, GMAIL_MAX_WAIT_SECONDS
 from dkutils.wait_loop import WaitLoop
 
-LOGGER = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 class GmailClientException(Exception):
@@ -150,8 +150,10 @@ def create_message(sender, to, subject, message_text):
       subject: The subject of the email message.
       message_text: The text of the email message.
 
-    Returns:
-      An object containing a base64url encoded email object.
+    Returns
+    ________
+        object
+        An object containing a base64url encoded email object.
     """
     message = MIMEText(message_text)
     message['to'] = to
@@ -172,8 +174,10 @@ def create_message_with_attachment(sender, to, subject, message_text, file):
       message_text: The text of the email message.
       file: The path to the file to be attached.
 
-    Returns:
-      An object containing a base64url encoded email object.
+    Returns
+    -------
+        object
+        An object containing a base64url encoded email object.
     """
     message = MIMEMultipart()
     message['to'] = to
@@ -218,7 +222,7 @@ class GMailClient:
         the create_base64_encoded_token function can be used to initially create a set of credentials which are
         base64 encoded in a file that can be looded into vault. This value from vault can then be used as an
         environment variable in a variation. The get_object_from_environment can be used to reconstitute the
-        credentials from the environment variable. Soo
+        credentials from the environment variable.
         Parameters
         ----------
         credentials: Credentials
@@ -237,22 +241,22 @@ class GMailClient:
             User's email address. The special value "me" will be used to indicate the authenticated user if no value is
             provided
 
-        Returns:
+        Returns
+        _______
           dict:
             the sent message
-
         """
 
         message = (self.service.users().messages().send(userId=user_id, body=message).execute())
-        LOGGER.debug(f'Message Id: {message["id"]}')
+        logger.debug(f'Message Id: {message["id"]}')
         return message
 
     def has_approval(
         self,
         subject,
-        approval_string=GMAIL_APPROVAL_STRIING,
+        approval_string=GMAIL_APPROVAL_STRING,
         sleep_seconds=GMAIL_SLEEP_SECONDS,
-        max_wait=GMAIL_MAX_WAIT
+        max_wait=GMAIL_MAX_WAIT_SECONDS
     ):
         """
         This function can be used to determine if a response has been received containing the specified approval
@@ -272,7 +276,8 @@ class GMailClient:
 
         Returns
         -------
-            True or False with True indicating that approval has been received
+            bool
+                True or False with True indicating that approval has been received
         """
         wait_loop = WaitLoop(sleep_seconds, max_wait)
         while wait_loop:
@@ -285,7 +290,7 @@ class GMailClient:
                     msg = self.service.users().messages().get(
                         userId='me', id=message['id']
                     ).execute()
-                    LOGGER.info(f'Email reply received: {msg["snippet"]}')
+                    logger.info(f'Email reply received: {msg["snippet"]}')
                     return msg['snippet'].lower().startswith(approval_string.lower())
-        LOGGER.warn("No reply was found")
+        logger.warn("No reply was found")
         return False

@@ -5,7 +5,7 @@ from pathlib import Path
 from unittest import TestCase
 from unittest.mock import patch, call, MagicMock
 
-from dkutils.constants import GMAIL_APPROVAL_STRIING
+from dkutils.constants import GMAIL_APPROVAL_STRING
 from dkutils.gmail_api.gmail_client import create_base64_encoded_token, GmailClientException, \
     get_object_from_environment, GMailClient, create_message, create_message_with_attachment
 
@@ -278,7 +278,7 @@ class TestGmailClient(TestCase):
         mock_list = mock_messages.list
         mock_list.return_value.execute.return_value = {'messages': [{'id': msg_id}]}
         mock_get = mock_messages.get
-        response_text = f"{GMAIL_APPROVAL_STRIING} for use"
+        response_text = f"{GMAIL_APPROVAL_STRING} for use"
         mock_get.return_value.execute.return_value = {'snippet': response_text}
 
         self.assertTrue(self.client.has_approval(subject=SUBJECT))
