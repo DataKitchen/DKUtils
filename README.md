@@ -1,6 +1,5 @@
 # DKUtils
 
-
 This python package is intended to house utility functions and classes that are used in DataKitchen recipes.
 
 Building and testing this module is conveniently done using Make. Issue the `make` command to see a list
