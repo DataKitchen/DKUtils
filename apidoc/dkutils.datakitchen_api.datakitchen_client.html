@@ -1,0 +1,1028 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>dkutils.datakitchen_api.datakitchen_client module &mdash; DKUtils 1.8.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="dkutils.datakitchen_api.datetime_utils module" href="dkutils.datakitchen_api.datetime_utils.html" />
+    <link rel="prev" title="dkutils.datakitchen_api package" href="dkutils.datakitchen_api.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> DKUtils
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="dkutils.html">dkutils package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="dkutils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dkutils.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guide.html">Development Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#development-process">Development Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#deployment-checklist">Deployment Checklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#code-formatting-and-standards">Code formatting and standards</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#pre-commit-anchor">pre-commit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#flake8-anchor">Flake8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#yapf-anchor">YAPF</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#documentation-best-practices">Documentation Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#versioning">Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#makefile">Makefile</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-8-0">v1.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-7-1">v1.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-7-0">v1.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-6-0">v1.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-5-0">v1.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-4-0">v1.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-3">v1.3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-2">v1.3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-1">v1.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-0">v1.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-2-0">v1.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-1-0">v1.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-0-1">v1.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-0-0">v1.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-16-0">v0.16.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-15-0">v0.15.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-14-0">v0.14.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-13-0">v0.13.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-12-0">v0.12.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-11-0">v0.11.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-10-2">v0.10.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-10-1">v0.10.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-10-0">v0.10.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-9-0">v0.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-8-2">v0.8.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-8-1">v0.8.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-8-0">v0.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-7-1">v0.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-7-0">v0.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-6-1">v0.6.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-6-0">v0.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-5-0">v0.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-4-0">v0.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-3-0">v0.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-2-0">v0.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-1-0">v0.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-4">v0.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-3">v0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-2">v0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-1">v0.0.1</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DKUtils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">dkutils</a> &raquo;</li>
+        
+          <li><a href="dkutils.html">dkutils package</a> &raquo;</li>
+        
+          <li><a href="dkutils.datakitchen_api.html">dkutils.datakitchen_api package</a> &raquo;</li>
+        
+      <li>dkutils.datakitchen_api.datakitchen_client module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/apidoc/dkutils.datakitchen_api.datakitchen_client.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="dkutils.datakitchen_api.datetime_utils.html" class="btn btn-neutral float-right" title="dkutils.datakitchen_api.datetime_utils module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="dkutils.datakitchen_api.html" class="btn btn-neutral float-left" title="dkutils.datakitchen_api package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-dkutils.datakitchen_api.datakitchen_client">
+<span id="dkutils-datakitchen-api-datakitchen-client-module"></span><h1>dkutils.datakitchen_api.datakitchen_client module<a class="headerlink" href="#module-dkutils.datakitchen_api.datakitchen_client" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient">
+<em class="property">class </em><code class="sig-prename descclassname">dkutils.datakitchen_api.datakitchen_client.</code><code class="sig-name descname">DataKitchenClient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em>, <em class="sig-param"><span class="n">base_url</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">kitchen</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">recipe</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">variation</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Client object for invoking DataKitchen API calls. If the API call requires a kitchen,
+recipe, and/or variation, you must set those fields on the client instance prior to
+invoking those methods (or set them via the constructor when a class instance is
+created).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – Username to authenticate and obtain a session token via the DataKitchen login API.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – Password to authenticate and obtain a session token via the DataKitchen login API.</p></li>
+<li><p><strong>base_url</strong> (<em>str</em><em>, </em><em>optional</em>) – Base DataKitchen Platform URL</p></li>
+<li><p><strong>kitchen</strong> (<em>str</em><em>, </em><em>optional</em>) – Kitchen to use in API requests</p></li>
+<li><p><strong>recipe</strong> (<em>str</em><em>, </em><em>optional</em>) – Recipe to use in API requests</p></li>
+<li><p><strong>variation</strong> (<em>str</em><em>, </em><em>optional</em>) – Variation to use in API requests</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em>, <em class="sig-param"><span class="n">base_url</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">kitchen</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">recipe</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">variation</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Client object for invoking DataKitchen API calls. If the API call requires a kitchen,
+recipe, and/or variation, you must set those fields on the client instance prior to
+invoking those methods (or set them via the constructor when a class instance is
+created).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – Username to authenticate and obtain a session token via the DataKitchen login API.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – Password to authenticate and obtain a session token via the DataKitchen login API.</p></li>
+<li><p><strong>base_url</strong> (<em>str</em><em>, </em><em>optional</em>) – Base DataKitchen Platform URL</p></li>
+<li><p><strong>kitchen</strong> (<em>str</em><em>, </em><em>optional</em>) – Kitchen to use in API requests</p></li>
+<li><p><strong>recipe</strong> (<em>str</em><em>, </em><em>optional</em>) – Recipe to use in API requests</p></li>
+<li><p><strong>variation</strong> (<em>str</em><em>, </em><em>optional</em>) – Variation to use in API requests</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.add_kitchen_staff">
+<code class="sig-name descname">add_kitchen_staff</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">new_kitchen_staff</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.add_kitchen_staff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.add_kitchen_staff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the given email addresses to the kitchen staff for the current kitchen. Email addresses that are already
+part of the existing kitchen staff will be ignored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_kitchen_staff</strong> (<em>list</em>) – A list containing the email addresses to be added to the kitchen staff</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the request fails.</p></li>
+<li><p><strong>ValueError</strong> – If the kitchen attribute is not set</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.compare_overrides">
+<code class="sig-name descname">compare_overrides</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">other</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.compare_overrides"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.compare_overrides" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compare the overrides in the current kitchen to those of the specified kitchen. If other is None then
+the comparison is done against the parent kitchen</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the request fails.</p></li>
+<li><p><strong>ValueError</strong> – If the kitchen attribute is not set
+    If the name of the specified kitchen doesn’t match any available kitchen</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A DictionaryCompparator which can be used to get the results of the comparison</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="dkutils.dictionary_comparator.html#dkutils.dictionary_comparator.DictionaryComparator" title="dkutils.dictionary_comparator.DictionaryComparator">DictionaryComparator</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.create_and_monitor_orders">
+<code class="sig-name descname">create_and_monitor_orders</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">orders_details</span></em>, <em class="sig-param"><span class="n">sleep_secs</span></em>, <em class="sig-param"><span class="n">duration_secs</span></em>, <em class="sig-param"><span class="n">max_concurrent</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.create_and_monitor_orders"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.create_and_monitor_orders" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create the specified orders and wait for them to complete (or timeout after the specified
+duration_secs).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>orders_details</strong> (<em>list</em>) – <p>List of order_details, each of which contains the kitchen, recipe, and variation of
+the order to create, as well as an optional dictionary of parameters. An example
+order_details item is of the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;kitchen&quot;</span><span class="p">:</span> <span class="s2">&quot;IM_Development&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;recipe&quot;</span><span class="p">:</span> <span class="s2">&quot;Demo_Recipe_Replay&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;variation&quot;</span><span class="p">:</span> <span class="s2">&quot;Process_Daily_Data&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;DT&quot;</span><span class="p">:</span> <span class="s2">&quot;20200529&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p></li>
+<li><p><strong>sleep_secs</strong> (<em>int</em>) – Number of seconds to sleep in between loop executions.</p></li>
+<li><p><strong>duration_secs</strong> (<em>int</em>) – Max duration in seconds after which the loop will exit.</p></li>
+<li><p><strong>max_concurrent</strong> (<em>integer</em><em> or </em><em>None</em>) – Max number of orders to kick off concurrently. If None, all orders will be kicked off
+concurrently.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>List of 3 lists: [completed orders, active orders, queued orders]. If all the
+orders completed in the provided duration_secs, then active orders and queued orders
+will be empty lists. The completed orders and active orders lists contain the
+orders_details entries with order_id, order_run_id, and order_status fields appended to
+each entry. These additional fields will all be populated in the completed orders list.
+However, the order_run_id and order_run_status fields may be None if the timeout
+occurred before the order run id for the created order was obtained. The final queued
+orders list contains a copy of the order_details entries that never made it out of the
+queue, with no additional fields added. An example order_details entry for the
+completed orders and active orders array will be of the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;kitchen&quot;</span><span class="p">:</span> <span class="s2">&quot;IM_Development&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;recipe&quot;</span><span class="p">:</span> <span class="s2">&quot;Demo_Recipe_Replay&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;variation&quot;</span><span class="p">:</span> <span class="s2">&quot;Process_Daily_Data&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;DT&quot;</span><span class="p">:</span> <span class="s2">&quot;20200529&quot;</span>
+    <span class="p">}</span>
+    <span class="s2">&quot;order_id&quot;</span><span class="p">:</span> <span class="s2">&quot;dc90de6e-a12b-11ea-8ba5-96323db651da&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;order_run_id&quot;</span><span class="p">:</span> <span class="s2">&quot;f9b107a8-a12b-11ea-a95a-72553da658b3&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;order_run_status&quot;</span><span class="p">:</span> <span class="s2">&quot;COMPLETED_SERVING&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.create_order">
+<code class="sig-name descname">create_order</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parameters</span><span class="o">=</span><span class="default_value">{}</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.create_order"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.create_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new order. Kitchen, recipe and variation attributes must be set prior to invoking
+this method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parameters</strong> (<em>dict</em><em>, </em><em>optional</em>) – Dictionary of variable overrides (default is empty dictionary)</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>HTTPError</strong> – If the request fails.</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code> object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>requests.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_kitchen_staff">
+<code class="sig-name descname">get_kitchen_staff</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.get_kitchen_staff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_kitchen_staff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list containing the email addresses of the kitchen staff for the current kitchen</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the request fails.</p></li>
+<li><p><strong>ValueError</strong> – If the kitchen attribute is not set
+    If the name in the given kitchen_info does not match that of the current kitchen</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list containing the email address of the kitchen staff</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_run_details">
+<code class="sig-name descname">get_order_run_details</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">order_run_id</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.get_order_run_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_run_details" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the details of an order run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>order_run_id</strong> (<em>str</em>) – Order run id for which to retrieve details</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>HTTPError</strong> – If the request fails.</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><p>Order run details of the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;order_id&quot;</span><span class="p">:</span> <span class="s2">&quot;ca789c92-8bb6-11ea-883f-46ee3c6afcbf&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;hid&quot;</span><span class="p">:</span> <span class="s2">&quot;cd463d80-8bb6-11ea-97c5-8a10ccb96113&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;recipe_id&quot;</span><span class="p">:</span> <span class="s2">&quot;ce7b696e-8bb6-11ea-97c5-8a10ccb96113&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;SERVING_ERROR&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;variation_name&quot;</span><span class="p">:</span> <span class="s2">&quot;sub_workflow&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;recipe_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Sub_Workflow&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;run_time_variables&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;CAT&quot;</span><span class="p">:</span> <span class="s2">&quot;CLS&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;CurrentKitchen&quot;</span><span class="p">:</span> <span class="s2">&quot;Add_Real_Data_and_Infrastructure&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;CurrentOrderId&quot;</span><span class="p">:</span> <span class="s2">&quot;ca789c92-8bb6-11ea-883f-46ee3c6afcbf&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;CurrentOrderRunId&quot;</span><span class="p">:</span> <span class="s2">&quot;cd463d80-8bb6-11ea-97c5-8a10ccb96113&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;CurrentVariation&quot;</span><span class="p">:</span> <span class="s2">&quot;sub_workflow&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;DH&quot;</span><span class="p">:</span> <span class="s2">&quot;12&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;DT&quot;</span><span class="p">:</span> <span class="s2">&quot;20200426&quot;</span><span class="p">,</span>
+        <span class="o">...</span>
+        <span class="o">...</span>
+        <span class="o">...</span>
+        <span class="s2">&quot;tableauConfig&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;url_login&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;selenium_url&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;content_url&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;orderrun_status&quot;</span><span class="p">:</span> <span class="s2">&quot;Error in OrderRun&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;resumed_by&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+    <span class="s2">&quot;scheduled_start_time&quot;</span><span class="p">:</span> <span class="mi">1588342778543</span><span class="p">,</span>
+    <span class="s2">&quot;variation&quot;</span><span class="p">:</span> <span class="p">{},</span>
+    <span class="s2">&quot;state&quot;</span><span class="p">:</span> <span class="s2">&quot;unknown DKNodeStatus&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_run_status">
+<code class="sig-name descname">get_order_run_status</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">order_run_id</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.get_order_run_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_run_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the status of the provided order run. If the order run isn’t found, return None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>order_run_id</strong> (<em>str</em>) – Order run for which to retrieve status</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>One of PLANNED_SERVING, ACTIVE_SERVING, COMPLETED_SERVING, STOPPED_SERVING,
+SERVING_ERROR, SERVING_RERAN, or None if the order run is not found.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or none</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_runs">
+<code class="sig-name descname">get_order_runs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">order_id</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.get_order_runs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_runs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve all the order runs associated with the provided order. The kitchen attribute
+must be set prior to invoking this method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>order_id</strong> (<em>str</em>) – Order id for which to retrieve order runs</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>None if no order runs are found. Otherwise, return a list of order run details. Each order
+run details entry is of the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;order_id&quot;</span><span class="p">:</span> <span class="s2">&quot;71d8a966-38e0-11ea-8cf9-a6bbea194887&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;COMPLETED_SERVING&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;orderrun_status&quot;</span><span class="p">:</span> <span class="s2">&quot;OrderRun Completed&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;hid&quot;</span><span class="p">:</span> <span class="s2">&quot;a8978ddc-83c7-11ea-88ba-9a815c325cee&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;variation_name&quot;</span><span class="p">:</span> <span class="s2">&quot;dk_agent_checker_run_hourly&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;timings&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;start-time&quot;</span><span class="p">:</span> <span class="mi">1587470413845</span><span class="p">,</span>
+      <span class="s2">&quot;end-time&quot;</span><span class="p">:</span> <span class="mi">1587470432441</span><span class="p">,</span>
+      <span class="s2">&quot;duration&quot;</span><span class="p">:</span> <span class="mi">18596</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_status">
+<code class="sig-name descname">get_order_status</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">time_period_hours</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">order_id_regex</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">order_status</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">order_run_status</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">order_run_count</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.get_order_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the order (and associated order runs) status details based on the applied
+filters. To filter based on recipe and variation, ensure these properties are set on this
+client. Alternatively, set recipe and/or variation to None to remove filtering based on
+these properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time_period_hours</strong> (<em>int</em><em>, </em><em>optional</em>) – Limit retrieved orders to those that started less than the provided number of hours ago.</p></li>
+<li><p><strong>order_id_regex</strong> (<em>string</em><em>, </em><em>optional</em>) – Filter retrieved orders based on this provided order id regular expression</p></li>
+<li><p><strong>order_status</strong> (<em>string</em><em>, </em><em>optional</em>) – Filter retrieved orders with this provided order status</p></li>
+<li><p><strong>order_run_status</strong> (<em>string</em><em>, </em><em>optional</em>) – Filter retrieved order run with this provided order run status</p></li>
+<li><p><strong>order_run_count</strong> (<em>int</em><em>, </em><em>optional</em>) – Limit the number of retrieved order runs (default is 3)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the request fails.</p></li>
+<li><p><strong>ValueError</strong> – If the kitchen attribute is not set</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><p><strong>order_runs</strong> –</p>
+<p>A list of order runs sorted from most recent start-time to oldest in the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;hid&#39;</span><span class="p">:</span> <span class="s1">&#39;66152846-e0ee-11ea-8280-12128c919b99&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;order_id&#39;</span><span class="p">:</span> <span class="s1">&#39;a8f9ac78-e0ed-11ea-b3f4-56a20effdf97&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;orderrun_status&#39;</span><span class="p">:</span> <span class="s1">&#39;OrderRun Completed&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;COMPLETED_SERVING&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;timings&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;duration&#39;</span><span class="p">:</span> <span class="mi">22261</span><span class="p">,</span>
+            <span class="s1">&#39;end-time&#39;</span><span class="p">:</span> <span class="mi">1597712533033</span><span class="p">,</span>
+            <span class="s1">&#39;start-time&#39;</span><span class="p">:</span> <span class="mi">1597712510772</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;hid&#39;</span><span class="p">:</span> <span class="s1">&#39;3f57a7d0-e0ec-11ea-a65f-5edd64ee22f9&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;order_id&#39;</span><span class="p">:</span> <span class="s1">&#39;3942feda-e0ec-11ea-a00e-56a20effdf97&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;orderrun_status&#39;</span><span class="p">:</span> <span class="s1">&#39;OrderRun Completed&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;COMPLETED_SERVING&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;timings&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;duration&#39;</span><span class="p">:</span> <span class="mi">22676</span><span class="p">,</span>
+            <span class="s1">&#39;end-time&#39;</span><span class="p">:</span> <span class="mi">1597711609459</span><span class="p">,</span>
+            <span class="s1">&#39;start-time&#39;</span><span class="p">:</span> <span class="mi">1597711586783</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;variation_name&#39;</span><span class="p">:</span> <span class="s1">&#39;variation1&#39;</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_override_names_that_do_not_exist">
+<code class="sig-name descname">get_override_names_that_do_not_exist</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">override_names</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.get_override_names_that_do_not_exist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_override_names_that_do_not_exist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a set of override names that could exist in the kitchen, return a set of the names of any that do not
+exist in the kitchen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>override_names</strong> (<em>set</em>) – A set of override names that could exist in the kitchen</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the request fails.</p></li>
+<li><p><strong>ValueError</strong> – If the kitchen attribute is not set
+    If the set of overrides is empty</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The set of any of given override names to do not exist in the kitchen. If all of the override names exist
+then an empty set will be returned.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>set</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_override_names_that_exist">
+<code class="sig-name descname">get_override_names_that_exist</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">override_names</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.get_override_names_that_exist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_override_names_that_exist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a set of override names that could exist in the kitchen, return a set of the names of that exist in the
+kitchen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>override_names</strong> (<em>set</em>) – A set of override names that could exist in the kitchen</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the request fails.</p></li>
+<li><p><strong>ValueError</strong> – If the kitchen attribute is not set
+    If the set of overrides is empty</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The set of any of given override names that exist in the kitchen. If none of the override names exist
+then an empty set will be returned.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>set</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_overrides">
+<code class="sig-name descname">get_overrides</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">override_names</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.get_overrides"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_overrides" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dictionary containing the overrides for the current kitchen or if override_names is specified a
+subset of overrides</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the request fails.</p></li>
+<li><p><strong>ValueError</strong> – If the kitchen attribute is not set
+    If the name in the given kitchen_info does not match that of the current kitchen
+    If any of the names in override_names are not available in the current kitchen</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary containing the overrides</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_recipes">
+<code class="sig-name descname">get_recipes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.get_recipes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_recipes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dictionary whose keys are the recipe names and values contain a list of the variation names</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the request fails.</p></li>
+<li><p><strong>ValueError</strong> – If the kitchen attribute is not set
+    If the current user is not in the kitchen_staff</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>A list containing the recipe names.
+For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span> <span class="s1">&#39;Demo_Azure&#39;</span><span class="p">,</span> <span class="s1">&#39;Demo_NiFi&#39;</span> <span class="p">]</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_variations">
+<code class="sig-name descname">get_variations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.get_variations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_variations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dictionary that contains the variation-list from the variations.json file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the request fails.</p></li>
+<li><p><strong>ValueError</strong> – If the recipe attribute is not set</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>A dictionary containing the information from the variations.json file.
+For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="s2">&quot;some_variation&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A descript of the variation&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;graph-setting&quot;</span><span class="p">:</span> <span class="s2">&quot;a_graph_setting&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.monitor_order_run">
+<code class="sig-name descname">monitor_order_run</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sleep_secs</span></em>, <em class="sig-param"><span class="n">duration_secs</span></em>, <em class="sig-param"><span class="n">order_run_id</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.monitor_order_run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.monitor_order_run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for the specified order run to complete and return completion status when finished.
+If the order run takes &gt; duration_secs, return None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sleep_secs</strong> (<em>int</em>) – Number of seconds to sleep in between loop executions.</p></li>
+<li><p><strong>duration_secs</strong> (<em>int</em>) – Max duration in seconds after which the loop will exit.</p></li>
+<li><p><strong>order_run_id</strong> (<em>str</em>) – Order run for which to wait until it’s completed</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>One of PLANNED_SERVING, ACTIVE_SERVING, COMPLETED_SERVING, STOPPED_SERVING,
+SERVING_ERROR, SERVING_RERAN, or None if the order run is not found.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or none</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.monitor_order_runs">
+<code class="sig-name descname">monitor_order_runs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sleep_secs</span></em>, <em class="sig-param"><span class="n">duration_secs</span></em>, <em class="sig-param"><span class="n">order_run_ids</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.monitor_order_runs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.monitor_order_runs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for the specified order runs to complete and return completion status when finished.
+If the order runs take &gt; duration_secs, return None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sleep_secs</strong> (<em>int</em>) – Number of seconds to sleep in between loop executions.</p></li>
+<li><p><strong>duration_secs</strong> (<em>int</em>) – Max duration in seconds after which the loop will exit.</p></li>
+<li><p><strong>order_run_ids</strong> (<em>dict</em>) – Dictionary keyed by order run id and valued by kitchen for the order runs to wait
+for completion.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary keyed by order run id and valued by one of PLANNED_SERVING, ACTIVE_SERVING,
+COMPLETED_SERVING, STOPPED_SERVING, SERVING_ERROR, SERVING_RERAN, or None if the order
+run is not found.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict or none</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.resume_and_monitor_orders">
+<code class="sig-name descname">resume_and_monitor_orders</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">order_runs_details</span></em>, <em class="sig-param"><span class="n">sleep_secs</span></em>, <em class="sig-param"><span class="n">duration_secs</span></em>, <em class="sig-param"><span class="n">max_concurrent</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.resume_and_monitor_orders"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.resume_and_monitor_orders" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resume the specified order runs and wait for them to complete (or timeout after the
+specified duration_secs).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>order_runs_details</strong> (<em>list</em>) – <p>List of order_runs_details, each of which contains the kitchen and order run id. An
+example order_run_details item is of the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;kitchen&quot;</span><span class="p">:</span> <span class="s2">&quot;IM_Development&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;order_run_id&quot;</span><span class="p">:</span> <span class="s2">&quot;84e77b50-a1f3-11ea-aaaf-521d4744de4c&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p></li>
+<li><p><strong>sleep_secs</strong> (<em>int</em>) – Number of seconds to sleep in between loop executions.</p></li>
+<li><p><strong>duration_secs</strong> (<em>int</em>) – Max duration in seconds after which the loop will exit.</p></li>
+<li><p><strong>max_concurrent</strong> (<em>integer</em><em> or </em><em>None</em>) – Max number of orders to kick off concurrently. If None, all orders will be kicked off
+concurrently.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>List of 3 lists: [completed orders, active orders, queued orders]. If all the
+orders completed in the provided duration_secs, then active orders and queued orders
+will be empty lists. The completed orders and active orders lists contain the
+orders_details entries with order_id, order_run_id, and order_status fields appended to
+each entry. These additional fields will all be populated in the completed orders list.
+However, the order_run_id and order_run_status fields may be None if the timeout
+occurred before the order run id for the created order was obtained. The final queued
+orders list contains a copy of the order_details entries that never made it out of the
+queue, with no additional fields added. An example order_details entry for the
+completed orders and active orders array will be of the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;kitchen&quot;</span><span class="p">:</span> <span class="s2">&quot;IM_Development&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;order_id&quot;</span><span class="p">:</span> <span class="s2">&quot;dc90de6e-a12b-11ea-8ba5-96323db651da&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;order_run_id&quot;</span><span class="p">:</span> <span class="s2">&quot;f9b107a8-a12b-11ea-a95a-72553da658b3&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;order_run_status&quot;</span><span class="p">:</span> <span class="s2">&quot;COMPLETED_SERVING&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.resume_order_run">
+<code class="sig-name descname">resume_order_run</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">order_run_id</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.resume_order_run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.resume_order_run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resume a failed order run. Kitchen attribute must be set prior to invoking this method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>order_run_id</strong> (<em>str</em>) – Failed order run id to resume.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>HTTPError</strong> – If the request fails.</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code> object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>requests.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.set_kitchen">
+<code class="sig-name descname">set_kitchen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">kitchen</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.set_kitchen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.set_kitchen" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.set_recipe">
+<code class="sig-name descname">set_recipe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">recipe</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.set_recipe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.set_recipe" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.set_variation">
+<code class="sig-name descname">set_variation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">variation</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.set_variation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.set_variation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.update_kitchen_staff">
+<code class="sig-name descname">update_kitchen_staff</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">kitchen_staff</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.update_kitchen_staff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.update_kitchen_staff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the kitchen staff for the current kitchen</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>list</strong> – A list containing the email addresses of the kitchen staff</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the request fails.</p></li>
+<li><p><strong>ValueError</strong> – If the kitchen attribute is not set
+    If the current user is not in the kitchen_staff</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.update_kitchen_vault">
+<code class="sig-name descname">update_kitchen_vault</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">prefix</span></em>, <em class="sig-param"><span class="n">vault_token</span></em>, <em class="sig-param"><span class="n">vault_url</span><span class="o">=</span><span class="default_value">'https://vault2.datakitchen.io:8200'</span></em>, <em class="sig-param"><span class="n">private</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">inheritable</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.update_kitchen_vault"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.update_kitchen_vault" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the custom vault configuration for a Kitchen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prefix</strong> (<em>str</em>) – Prefix specifying the vault location (e.g. Implementation/dev).</p></li>
+<li><p><strong>vault_token</strong> (<em>str</em>) – Token for the custom vault.</p></li>
+<li><p><strong>vault_url</strong> (<em>str</em><em>, </em><em>optional</em>) – Vault URL (default: <a class="reference external" href="https://vault2.datakitchen.io:8200">https://vault2.datakitchen.io:8200</a>).</p></li>
+<li><p><strong>private</strong> (<em>str</em><em>, </em><em>optional</em>) – Set to True if this is a private vault service, otherwise set to False (default: False)</p></li>
+<li><p><strong>inheritable</strong> (<em>str</em><em>, </em><em>optional</em>) – Set to True if this vault should be inherited by child kitchens, otherwise set to false
+(default: True).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>HTTPError</strong> – If the request fails.</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code> object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>requests.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.update_overrides">
+<code class="sig-name descname">update_overrides</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">overrides</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.update_overrides"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.update_overrides" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the overrides for the current kitchen</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dict</strong> – A dictionary containing the overrides</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the request fails.</p></li>
+<li><p><strong>ValueError</strong> – If the kitchen attribute is not set
+    If the name in the given kitchen_info does not match that of the current kitchen</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.kitchen">
+<em class="property">property </em><code class="sig-name descname">kitchen</code><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.kitchen" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.recipe">
+<em class="property">property </em><code class="sig-name descname">recipe</code><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.recipe" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.variation">
+<em class="property">property </em><code class="sig-name descname">variation</code><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.variation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="dkutils.datakitchen_api.datakitchen_client.create_using_context">
+<code class="sig-prename descclassname">dkutils.datakitchen_api.datakitchen_client.</code><code class="sig-name descname">create_using_context</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span><span class="o">=</span><span class="default_value">'default'</span></em>, <em class="sig-param"><span class="n">kitchen</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">recipe</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">variation</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#create_using_context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.create_using_context" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a factory method that can be used to create a client using the context created by
+DKCloudCommand</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>context</strong> (<em>str</em><em>, </em><em>optional</em>) – The name of a context created by DKCloudCommand</p></li>
+<li><p><strong>kitchen</strong> (<em>str</em><em>, </em><em>optional</em>) – Kitchen to use in API requests</p></li>
+<li><p><strong>recipe</strong> (<em>str</em><em>, </em><em>optional</em>) – Recipe to use in API requests</p></li>
+<li><p><strong>variation</strong> (<em>str</em><em>, </em><em>optional</em>) – Variation to use in API requests</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Client object for invoking DataKitchen API calls</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient" title="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient">DataKitchenClient</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="dkutils.datakitchen_api.datakitchen_client.ensure_and_get_kitchen">
+<code class="sig-prename descclassname">dkutils.datakitchen_api.datakitchen_client.</code><code class="sig-name descname">ensure_and_get_kitchen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">kitchen</span></em>, <em class="sig-param"><span class="n">kitchens</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#ensure_and_get_kitchen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.ensure_and_get_kitchen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ensure the provided kitchens dictionary contains the provided kitchen and if so, return
+its kitchen info. Otherwise, raise an exception.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kitchen</strong> (<em>str</em>) – Name of the kitchen</p></li>
+<li><p><strong>kitchens</strong> (<em>dict</em>) – Dictionary keyed by kitchen name and valued by a dictionary of kitchen info</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If provided kitchen name doesn’t exist in the provided kitchens dictionary</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Kitchen info</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="dkutils.datakitchen_api.datetime_utils.html" class="btn btn-neutral float-right" title="dkutils.datakitchen_api.datetime_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="dkutils.datakitchen_api.html" class="btn btn-neutral float-left" title="dkutils.datakitchen_api package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, DataKitchen
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

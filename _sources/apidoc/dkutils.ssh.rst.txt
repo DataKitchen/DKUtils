@@ -1,0 +1,15 @@
+dkutils.ssh package
+===================
+
+.. automodule:: dkutils.ssh
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   dkutils.ssh.remote_client

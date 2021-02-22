@@ -1,0 +1,1597 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>dkutils.datakitchen_api.datakitchen_client &mdash; DKUtils 1.8.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> DKUtils
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../apidoc/modules.html">Code Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../apidoc/dkutils.html">dkutils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../apidoc/dkutils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../apidoc/dkutils.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guide.html">Development Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#development-process">Development Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#deployment-checklist">Deployment Checklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#code-formatting-and-standards">Code formatting and standards</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#pre-commit-anchor">pre-commit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#flake8-anchor">Flake8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#yapf-anchor">YAPF</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#documentation-best-practices">Documentation Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#versioning">Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#makefile">Makefile</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-8-0">v1.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-7-1">v1.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-7-0">v1.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-6-0">v1.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-5-0">v1.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-4-0">v1.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-3">v1.3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-2">v1.3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-1">v1.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-0">v1.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-2-0">v1.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-1-0">v1.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-0-1">v1.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-0-0">v1.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-16-0">v0.16.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-15-0">v0.15.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-14-0">v0.14.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-13-0">v0.13.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-12-0">v0.12.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-11-0">v0.11.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-10-2">v0.10.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-10-1">v0.10.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-10-0">v0.10.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-9-0">v0.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-8-2">v0.8.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-8-1">v0.8.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-8-0">v0.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-7-1">v0.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-7-0">v0.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-6-1">v0.6.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-6-0">v0.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-5-0">v0.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-4-0">v0.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-3-0">v0.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-2-0">v0.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-1-0">v0.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-4">v0.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-3">v0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-2">v0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-1">v0.0.1</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DKUtils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>dkutils.datakitchen_api.datakitchen_client</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for dkutils.datakitchen_api.datakitchen_client</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cmp_to_key</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">requests.exceptions</span> <span class="kn">import</span> <span class="n">HTTPError</span>
+
+<span class="kn">from</span> <span class="nn">dkutils.constants</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">API_GET</span><span class="p">,</span>
+    <span class="n">API_POST</span><span class="p">,</span>
+    <span class="n">API_PUT</span><span class="p">,</span>
+    <span class="n">DEFAULT_DATAKITCHEN_URL</span><span class="p">,</span>
+    <span class="n">DEFAULT_VAULT_URL</span><span class="p">,</span>
+    <span class="n">KITCHEN</span><span class="p">,</span>
+    <span class="n">KITCHEN_STAFF</span><span class="p">,</span>
+    <span class="n">ORDER_ID</span><span class="p">,</span>
+    <span class="n">ORDER_RUN_ID</span><span class="p">,</span>
+    <span class="n">ORDER_RUN_STATUS</span><span class="p">,</span>
+    <span class="n">RECIPE_OVERRIDES</span><span class="p">,</span>
+    <span class="n">PARAMETERS</span><span class="p">,</span>
+    <span class="n">PARENT_KITCHEN</span><span class="p">,</span>
+    <span class="n">RECIPE</span><span class="p">,</span>
+    <span class="n">STOPPED_STATUS_TYPES</span><span class="p">,</span>
+    <span class="n">VARIATION</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">dkutils.dictionary_comparator</span> <span class="kn">import</span> <span class="n">DictionaryComparator</span>
+<span class="kn">from</span> <span class="nn">dkutils.validation</span> <span class="kn">import</span> <span class="n">get_max_concurrency</span><span class="p">,</span> <span class="n">skip_token_validation</span>
+<span class="kn">from</span> <span class="nn">dkutils.wait_loop</span> <span class="kn">import</span> <span class="n">WaitLoop</span>
+<span class="kn">from</span> <span class="nn">.datetime_utils</span> <span class="kn">import</span> <span class="n">get_utc_timestamp</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># The servings API endpoint retrieves only 10 order runs by default. To retrieve them all, assume</span>
+<span class="c1"># 100K exceeds the max order runs a given order will ever contain.</span>
+<span class="n">DEFAULT_SERVINGS_COUNT</span> <span class="o">=</span> <span class="mi">100000</span>
+
+
+<div class="viewcode-block" id="create_using_context"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.create_using_context">[docs]</a><span class="k">def</span> <span class="nf">create_using_context</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">kitchen</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">recipe</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">variation</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is a factory method that can be used to create a client using the context created by</span>
+<span class="sd">    DKCloudCommand</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    context: str, optional</span>
+<span class="sd">        The name of a context created by DKCloudCommand</span>
+<span class="sd">    kitchen : str, optional</span>
+<span class="sd">        Kitchen to use in API requests</span>
+<span class="sd">    recipe : str, optional</span>
+<span class="sd">        Recipe to use in API requests</span>
+<span class="sd">    variation : str, optional</span>
+<span class="sd">        Variation to use in API requests</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    DataKitchenClient</span>
+<span class="sd">        Client object for invoking DataKitchen API calls</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">context_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;~/.dk/</span><span class="si">{</span><span class="n">context</span><span class="si">}</span><span class="s1">/config.json&#39;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">context_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">DataKitchenClient</span><span class="p">(</span>
+            <span class="n">username</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;dk-cloud-username&#39;</span><span class="p">],</span>
+            <span class="n">password</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;dk-cloud-password&#39;</span><span class="p">],</span>
+            <span class="n">base_url</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;dk-cloud-ip&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;dk-cloud-port&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">kitchen</span><span class="o">=</span><span class="n">kitchen</span><span class="p">,</span>
+            <span class="n">recipe</span><span class="o">=</span><span class="n">recipe</span><span class="p">,</span>
+            <span class="n">variation</span><span class="o">=</span><span class="n">variation</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ensure_and_get_kitchen"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.ensure_and_get_kitchen">[docs]</a><span class="k">def</span> <span class="nf">ensure_and_get_kitchen</span><span class="p">(</span><span class="n">kitchen</span><span class="p">,</span> <span class="n">kitchens</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Ensure the provided kitchens dictionary contains the provided kitchen and if so, return</span>
+<span class="sd">    its kitchen info. Otherwise, raise an exception.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    kitchen : str</span>
+<span class="sd">        Name of the kitchen</span>
+<span class="sd">    kitchens : dict</span>
+<span class="sd">        Dictionary keyed by kitchen name and valued by a dictionary of kitchen info</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If provided kitchen name doesn&#39;t exist in the provided kitchens dictionary</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        Kitchen info</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">kitchen</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kitchens</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;No kitchen with the name: </span><span class="si">{</span><span class="n">kitchen</span><span class="si">}</span><span class="s1"> was found in the available kitchens&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">kitchens</span><span class="p">[</span><span class="n">kitchen</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="DataKitchenClient"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient">[docs]</a><span class="k">class</span> <span class="nc">DataKitchenClient</span><span class="p">:</span>
+
+<div class="viewcode-block" id="DataKitchenClient.__init__"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">base_url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kitchen</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">recipe</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">variation</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Client object for invoking DataKitchen API calls. If the API call requires a kitchen,</span>
+<span class="sd">        recipe, and/or variation, you must set those fields on the client instance prior to</span>
+<span class="sd">        invoking those methods (or set them via the constructor when a class instance is</span>
+<span class="sd">        created).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        username : str</span>
+<span class="sd">          Username to authenticate and obtain a session token via the DataKitchen login API.</span>
+<span class="sd">        password : str</span>
+<span class="sd">          Password to authenticate and obtain a session token via the DataKitchen login API.</span>
+<span class="sd">        base_url: str, optional</span>
+<span class="sd">            Base DataKitchen Platform URL</span>
+<span class="sd">        kitchen : str, optional</span>
+<span class="sd">            Kitchen to use in API requests</span>
+<span class="sd">        recipe : str, optional</span>
+<span class="sd">            Recipe to use in API requests</span>
+<span class="sd">        variation : str, optional</span>
+<span class="sd">            Variation to use in API requests</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_username</span> <span class="o">=</span> <span class="n">username</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_password</span> <span class="o">=</span> <span class="n">password</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span> <span class="o">=</span> <span class="n">base_url</span> <span class="k">if</span> <span class="n">base_url</span> <span class="k">else</span> <span class="n">DEFAULT_DATAKITCHEN_URL</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_token</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_headers</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_token</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span> <span class="o">=</span> <span class="n">kitchen</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span> <span class="o">=</span> <span class="n">recipe</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variation</span> <span class="o">=</span> <span class="n">variation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_valid_attributes</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">kitchen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kitchen</span>
+
+    <span class="nd">@kitchen</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">kitchen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kitchen</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kitchen</span> <span class="o">=</span> <span class="n">kitchen</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_valid_attributes</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="DataKitchenClient.set_kitchen"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.set_kitchen">[docs]</a>    <span class="k">def</span> <span class="nf">set_kitchen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kitchen</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span> <span class="o">=</span> <span class="n">kitchen</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">recipe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recipe</span>
+
+    <span class="nd">@recipe</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">recipe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recipe</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_recipe</span> <span class="o">=</span> <span class="n">recipe</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_valid_attributes</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="DataKitchenClient.set_recipe"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.set_recipe">[docs]</a>    <span class="k">def</span> <span class="nf">set_recipe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recipe</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span> <span class="o">=</span> <span class="n">recipe</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">variation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_variation</span>
+
+    <span class="nd">@variation</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">variation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variation</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_variation</span> <span class="o">=</span> <span class="n">variation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_valid_attributes</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="DataKitchenClient.set_variation"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.set_variation">[docs]</a>    <span class="k">def</span> <span class="nf">set_variation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variation</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variation</span> <span class="o">=</span> <span class="n">variation</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+    <span class="k">def</span> <span class="nf">_ensure_attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Ensure the properties required for the API request are all defined.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">sort_args</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Sort so attributes are processed in Kitchen, Recipe, Variation order</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">if</span> <span class="n">KITCHEN</span> <span class="o">==</span> <span class="n">a</span><span class="p">:</span>
+                <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="k">if</span> <span class="n">RECIPE</span> <span class="o">==</span> <span class="n">a</span> <span class="ow">and</span> <span class="n">VARIATION</span> <span class="o">==</span> <span class="n">b</span><span class="p">:</span>
+                <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="k">if</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">:</span>
+                <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">0</span>
+            <span class="k">return</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valid_attributes</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">invalid_attributes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">attributes_to_check</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">VARIATION</span> <span class="ow">in</span> <span class="n">attributes_to_check</span><span class="p">:</span>
+            <span class="n">attributes_to_check</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">RECIPE</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">RECIPE</span> <span class="ow">in</span> <span class="n">attributes_to_check</span><span class="p">:</span>
+            <span class="n">attributes_to_check</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">KITCHEN</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">attr_name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">attributes_to_check</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">cmp_to_key</span><span class="p">(</span><span class="n">sort_args</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">invalid_attributes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">attr_name</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">attr_name</span> <span class="o">==</span> <span class="n">RECIPE</span> <span class="ow">and</span> <span class="n">KITCHEN</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">invalid_attributes</span><span class="p">:</span>
+                <span class="n">recipes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_recipes</span><span class="p">()</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">recipes</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="si">}</span><span class="s1"> is not one of the available recipes: </span><span class="si">{</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">recipes</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+                    <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">attr_name</span> <span class="o">==</span> <span class="n">VARIATION</span> <span class="ow">and</span> <span class="n">RECIPE</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">invalid_attributes</span> <span class="ow">and</span> <span class="n">KITCHEN</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">invalid_attributes</span><span class="p">:</span>
+                <span class="n">variations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_variations</span><span class="p">()</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">variation</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">variations</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">variation</span><span class="si">}</span><span class="s1"> is not one of the available variations: </span><span class="si">{</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">variations</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+                    <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">invalid_attributes</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Undefined attributes: </span><span class="si">{</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">invalid_attributes</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_valid_attributes</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">_api_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_method</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">is_json</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make HTTP request to arbitrary API endpoint, with optional parameters as payload.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        http_method : str</span>
+<span class="sd">            HTTP method to use when making API request.</span>
+<span class="sd">        *args : list</span>
+<span class="sd">            Variable length list of strings to construct endpoint path.</span>
+<span class="sd">        is_json : bool</span>
+<span class="sd">            Set to False if payload/response is not JSON data.</span>
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            Arbitrary keyword arguments to construct request payload.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        requests.Response</span>
+<span class="sd">            :class:`Response &lt;Response&gt;` object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">skip_token_validation</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_token</span><span class="p">()</span>
+        <span class="n">api_request</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">requests</span><span class="p">,</span> <span class="n">http_method</span><span class="p">)</span>
+        <span class="n">api_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span><span class="si">}</span><span class="s1">/v2/</span><span class="si">{</span><span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">if</span> <span class="n">is_json</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">api_request</span><span class="p">(</span><span class="n">api_path</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">api_request</span><span class="p">(</span><span class="n">api_path</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">skip_token_validation</span><span class="p">():</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Response Content:</span><span class="se">\n</span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">raise</span>
+
+        <span class="k">return</span> <span class="n">response</span>
+
+    <span class="k">def</span> <span class="nf">_validate_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Validate the current token.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        boolean</span>
+<span class="sd">            True if the current token is valid, False otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_GET</span><span class="p">,</span> <span class="s1">&#39;validatetoken&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="n">HTTPError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">_refresh_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Validate the existing token. If invalid, refresh the token by logging into the DataKitchen</span>
+<span class="sd">        platform via the login API to retrieve a fresh token. Reset the current headers if the</span>
+<span class="sd">        token is refreshed.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the login request fails to obtain a new token (e.g. login credentials are invalid).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_token</span><span class="p">():</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span>
+            <span class="n">API_POST</span><span class="p">,</span> <span class="s1">&#39;login&#39;</span><span class="p">,</span> <span class="n">is_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_username</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_password</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_headers</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_set_headers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the headers dictionary with the current token.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;Bearer </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_token</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">}</span>
+
+<div class="viewcode-block" id="DataKitchenClient.create_order"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.create_order">[docs]</a>    <span class="k">def</span> <span class="nf">create_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new order. Kitchen, recipe and variation attributes must be set prior to invoking</span>
+<span class="sd">        this method.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        parameters : dict, optional</span>
+<span class="sd">            Dictionary of variable overrides (default is empty dictionary)</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        ------</span>
+<span class="sd">        requests.Response</span>
+<span class="sd">            :class:`Response &lt;Response&gt;` object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_attributes</span><span class="p">(</span><span class="n">KITCHEN</span><span class="p">,</span> <span class="n">RECIPE</span><span class="p">,</span> <span class="n">VARIATION</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span>
+            <span class="n">API_PUT</span><span class="p">,</span>
+            <span class="s1">&#39;order&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;create&#39;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">variation</span><span class="p">,</span>
+            <span class="n">schedule</span><span class="o">=</span><span class="s1">&#39;now&#39;</span><span class="p">,</span>
+            <span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataKitchenClient.resume_order_run"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.resume_order_run">[docs]</a>    <span class="k">def</span> <span class="nf">resume_order_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resume a failed order run. Kitchen attribute must be set prior to invoking this method.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        order_run_id : str</span>
+<span class="sd">            Failed order run id to resume.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        ------</span>
+<span class="sd">        requests.Response</span>
+<span class="sd">            :class:`Response &lt;Response&gt;` object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_attributes</span><span class="p">(</span><span class="n">KITCHEN</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span>
+            <span class="n">API_PUT</span><span class="p">,</span> <span class="s1">&#39;order&#39;</span><span class="p">,</span> <span class="s1">&#39;resume&#39;</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">,</span> <span class="n">kitchen_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataKitchenClient.get_order_runs"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_runs">[docs]</a>    <span class="k">def</span> <span class="nf">get_order_runs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve all the order runs associated with the provided order. The kitchen attribute</span>
+<span class="sd">        must be set prior to invoking this method.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        order_id : str</span>
+<span class="sd">            Order id for which to retrieve order runs</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        ------</span>
+<span class="sd">        list or None</span>
+<span class="sd">            None if no order runs are found. Otherwise, return a list of order run details. Each order</span>
+<span class="sd">            run details entry is of the form::</span>
+
+<span class="sd">                {</span>
+<span class="sd">                    &quot;order_id&quot;: &quot;71d8a966-38e0-11ea-8cf9-a6bbea194887&quot;,</span>
+<span class="sd">                    &quot;status&quot;: &quot;COMPLETED_SERVING&quot;,</span>
+<span class="sd">                    &quot;orderrun_status&quot;: &quot;OrderRun Completed&quot;,</span>
+<span class="sd">                    &quot;hid&quot;: &quot;a8978ddc-83c7-11ea-88ba-9a815c325cee&quot;,</span>
+<span class="sd">                    &quot;variation_name&quot;: &quot;dk_agent_checker_run_hourly&quot;,</span>
+<span class="sd">                    &quot;timings&quot;: {</span>
+<span class="sd">                      &quot;start-time&quot;: 1587470413845,</span>
+<span class="sd">                      &quot;end-time&quot;: 1587470432441,</span>
+<span class="sd">                      &quot;duration&quot;: 18596</span>
+<span class="sd">                    }</span>
+<span class="sd">                }</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_attributes</span><span class="p">(</span><span class="n">KITCHEN</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">api_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span>
+                <span class="n">API_GET</span><span class="p">,</span> <span class="s1">&#39;order&#39;</span><span class="p">,</span> <span class="s1">&#39;servings&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">,</span> <span class="n">order_id</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">DEFAULT_SERVINGS_COUNT</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">api_response</span><span class="p">[</span><span class="s1">&#39;servings&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="n">HTTPError</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;No order runs found for provided order id (</span><span class="si">{</span><span class="n">order_id</span><span class="si">}</span><span class="s1">) in kitchen </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataKitchenClient.get_order_run_details"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_run_details">[docs]</a>    <span class="k">def</span> <span class="nf">get_order_run_details</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve the details of an order run.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        order_run_id : str</span>
+<span class="sd">            Order run id for which to retrieve details</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        ------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Order run details of the form::</span>
+
+<span class="sd">                {</span>
+<span class="sd">                    &quot;order_id&quot;: &quot;ca789c92-8bb6-11ea-883f-46ee3c6afcbf&quot;,</span>
+<span class="sd">                    &quot;hid&quot;: &quot;cd463d80-8bb6-11ea-97c5-8a10ccb96113&quot;,</span>
+<span class="sd">                    &quot;recipe_id&quot;: &quot;ce7b696e-8bb6-11ea-97c5-8a10ccb96113&quot;,</span>
+<span class="sd">                    &quot;status&quot;: &quot;SERVING_ERROR&quot;,</span>
+<span class="sd">                    &quot;variation_name&quot;: &quot;sub_workflow&quot;,</span>
+<span class="sd">                    &quot;recipe_name&quot;: &quot;Sub_Workflow&quot;,</span>
+<span class="sd">                    &quot;run_time_variables&quot;: {</span>
+<span class="sd">                        &quot;CAT&quot;: &quot;CLS&quot;,</span>
+<span class="sd">                        &quot;CurrentKitchen&quot;: &quot;Add_Real_Data_and_Infrastructure&quot;,</span>
+<span class="sd">                        &quot;CurrentOrderId&quot;: &quot;ca789c92-8bb6-11ea-883f-46ee3c6afcbf&quot;,</span>
+<span class="sd">                        &quot;CurrentOrderRunId&quot;: &quot;cd463d80-8bb6-11ea-97c5-8a10ccb96113&quot;,</span>
+<span class="sd">                        &quot;CurrentVariation&quot;: &quot;sub_workflow&quot;,</span>
+<span class="sd">                        &quot;DH&quot;: &quot;12&quot;,</span>
+<span class="sd">                        &quot;DT&quot;: &quot;20200426&quot;,</span>
+<span class="sd">                        ...</span>
+<span class="sd">                        ...</span>
+<span class="sd">                        ...</span>
+<span class="sd">                        &quot;tableauConfig&quot;: {</span>
+<span class="sd">                            &quot;username&quot;: &quot;&quot;,</span>
+<span class="sd">                            &quot;password&quot;: &quot;&quot;,</span>
+<span class="sd">                            &quot;url_login&quot;: &quot;&quot;,</span>
+<span class="sd">                            &quot;url&quot;: &quot;&quot;,</span>
+<span class="sd">                            &quot;selenium_url&quot;: &quot;&quot;,</span>
+<span class="sd">                            &quot;content_url&quot;: &quot;&quot;</span>
+<span class="sd">                        }</span>
+<span class="sd">                    },</span>
+<span class="sd">                    &quot;orderrun_status&quot;: &quot;Error in OrderRun&quot;,</span>
+<span class="sd">                    &quot;resumed_by&quot;: null,</span>
+<span class="sd">                    &quot;scheduled_start_time&quot;: 1588342778543,</span>
+<span class="sd">                    &quot;variation&quot;: {},</span>
+<span class="sd">                    &quot;state&quot;: &quot;unknown DKNodeStatus&quot;</span>
+<span class="sd">                }</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_attributes</span><span class="p">(</span><span class="n">KITCHEN</span><span class="p">)</span>
+        <span class="n">api_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span>
+            <span class="n">API_POST</span><span class="p">,</span>
+            <span class="s1">&#39;order&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;details&#39;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">,</span>
+            <span class="n">logs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">serving_hid</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">order_run_id</span><span class="p">),</span>
+            <span class="n">servingjson</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">summary</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">testresults</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">timingresults</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">api_response</span><span class="p">[</span><span class="s1">&#39;servings&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="DataKitchenClient.get_order_run_status"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_run_status">[docs]</a>    <span class="k">def</span> <span class="nf">get_order_run_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve the status of the provided order run. If the order run isn&#39;t found, return None.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        order_run_id : str</span>
+<span class="sd">            Order run for which to retrieve status</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str or none</span>
+<span class="sd">            One of PLANNED_SERVING, ACTIVE_SERVING, COMPLETED_SERVING, STOPPED_SERVING,</span>
+<span class="sd">            SERVING_ERROR, SERVING_RERAN, or None if the order run is not found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_attributes</span><span class="p">(</span><span class="n">KITCHEN</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_order_run_details</span><span class="p">(</span><span class="n">order_run_id</span><span class="p">)[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="n">HTTPError</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Order run retrieval failure:</span><span class="se">\n</span><span class="si">{</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="DataKitchenClient.monitor_order_run"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.monitor_order_run">[docs]</a>    <span class="k">def</span> <span class="nf">monitor_order_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sleep_secs</span><span class="p">,</span> <span class="n">duration_secs</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Wait for the specified order run to complete and return completion status when finished.</span>
+<span class="sd">        If the order run takes &gt; duration_secs, return None.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        sleep_secs : int</span>
+<span class="sd">            Number of seconds to sleep in between loop executions.</span>
+<span class="sd">        duration_secs : int</span>
+<span class="sd">            Max duration in seconds after which the loop will exit.</span>
+<span class="sd">        order_run_id : str</span>
+<span class="sd">            Order run for which to wait until it&#39;s completed</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str or none</span>
+<span class="sd">            One of PLANNED_SERVING, ACTIVE_SERVING, COMPLETED_SERVING, STOPPED_SERVING,</span>
+<span class="sd">            SERVING_ERROR, SERVING_RERAN, or None if the order run is not found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">order_run_ids</span> <span class="o">=</span> <span class="p">{</span><span class="n">order_run_id</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">}</span>
+        <span class="n">order_run_statuses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">monitor_order_runs</span><span class="p">(</span><span class="n">sleep_secs</span><span class="p">,</span> <span class="n">duration_secs</span><span class="p">,</span> <span class="n">order_run_ids</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">order_run_statuses</span><span class="p">[</span><span class="n">order_run_id</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="DataKitchenClient.monitor_order_runs"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.monitor_order_runs">[docs]</a>    <span class="k">def</span> <span class="nf">monitor_order_runs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sleep_secs</span><span class="p">,</span> <span class="n">duration_secs</span><span class="p">,</span> <span class="n">order_run_ids</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Wait for the specified order runs to complete and return completion status when finished.</span>
+<span class="sd">        If the order runs take &gt; duration_secs, return None.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        sleep_secs : int</span>
+<span class="sd">            Number of seconds to sleep in between loop executions.</span>
+<span class="sd">        duration_secs : int</span>
+<span class="sd">            Max duration in seconds after which the loop will exit.</span>
+<span class="sd">        order_run_ids : dict</span>
+<span class="sd">            Dictionary keyed by order run id and valued by kitchen for the order runs to wait</span>
+<span class="sd">            for completion.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict or none</span>
+<span class="sd">            Dictionary keyed by order run id and valued by one of PLANNED_SERVING, ACTIVE_SERVING,</span>
+<span class="sd">            COMPLETED_SERVING, STOPPED_SERVING, SERVING_ERROR, SERVING_RERAN, or None if the order</span>
+<span class="sd">            run is not found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">wait_loop</span> <span class="o">=</span> <span class="n">WaitLoop</span><span class="p">(</span><span class="n">sleep_secs</span><span class="p">,</span> <span class="n">duration_secs</span><span class="p">)</span>
+        <span class="n">completed_order_runs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">while</span> <span class="n">wait_loop</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">order_run_id</span><span class="p">,</span> <span class="n">kitchen</span> <span class="ow">in</span> <span class="n">order_run_ids</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">order_run_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">completed_order_runs</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span> <span class="o">=</span> <span class="n">kitchen</span>
+                    <span class="n">order_run_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_order_run_status</span><span class="p">(</span><span class="n">order_run_id</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">order_run_status</span> <span class="ow">in</span> <span class="n">STOPPED_STATUS_TYPES</span><span class="p">:</span>
+                        <span class="n">completed_order_runs</span><span class="p">[</span><span class="n">order_run_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">order_run_status</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">order_run_ids</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">completed_order_runs</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">completed_order_runs</span>
+
+        <span class="k">for</span> <span class="n">order_run_id</span> <span class="ow">in</span> <span class="n">order_run_ids</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">order_run_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">completed_order_runs</span><span class="p">:</span>
+                <span class="n">completed_order_runs</span><span class="p">[</span><span class="n">order_run_id</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">completed_order_runs</span></div>
+
+<div class="viewcode-block" id="DataKitchenClient.create_and_monitor_orders"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.create_and_monitor_orders">[docs]</a>    <span class="k">def</span> <span class="nf">create_and_monitor_orders</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">orders_details</span><span class="p">,</span> <span class="n">sleep_secs</span><span class="p">,</span> <span class="n">duration_secs</span><span class="p">,</span> <span class="n">max_concurrent</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create the specified orders and wait for them to complete (or timeout after the specified</span>
+<span class="sd">        duration_secs).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        orders_details : list</span>
+<span class="sd">            List of order_details, each of which contains the kitchen, recipe, and variation of</span>
+<span class="sd">            the order to create, as well as an optional dictionary of parameters. An example</span>
+<span class="sd">            order_details item is of the form::</span>
+
+<span class="sd">                {</span>
+<span class="sd">                    &quot;kitchen&quot;: &quot;IM_Development&quot;,</span>
+<span class="sd">                    &quot;recipe&quot;: &quot;Demo_Recipe_Replay&quot;,</span>
+<span class="sd">                    &quot;variation&quot;: &quot;Process_Daily_Data&quot;,</span>
+<span class="sd">                    &quot;parameters&quot;: {</span>
+<span class="sd">                        &quot;DT&quot;: &quot;20200529&quot;</span>
+<span class="sd">                    }</span>
+<span class="sd">                }</span>
+
+<span class="sd">        sleep_secs : int</span>
+<span class="sd">            Number of seconds to sleep in between loop executions.</span>
+<span class="sd">        duration_secs : int</span>
+<span class="sd">            Max duration in seconds after which the loop will exit.</span>
+<span class="sd">        max_concurrent : integer or None</span>
+<span class="sd">            Max number of orders to kick off concurrently. If None, all orders will be kicked off</span>
+<span class="sd">            concurrently.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list</span>
+<span class="sd">            List of 3 lists: [completed orders, active orders, queued orders]. If all the</span>
+<span class="sd">            orders completed in the provided duration_secs, then active orders and queued orders</span>
+<span class="sd">            will be empty lists. The completed orders and active orders lists contain the</span>
+<span class="sd">            orders_details entries with order_id, order_run_id, and order_status fields appended to</span>
+<span class="sd">            each entry. These additional fields will all be populated in the completed orders list.</span>
+<span class="sd">            However, the order_run_id and order_run_status fields may be None if the timeout</span>
+<span class="sd">            occurred before the order run id for the created order was obtained. The final queued</span>
+<span class="sd">            orders list contains a copy of the order_details entries that never made it out of the</span>
+<span class="sd">            queue, with no additional fields added. An example order_details entry for the</span>
+<span class="sd">            completed orders and active orders array will be of the form::</span>
+
+<span class="sd">                {</span>
+<span class="sd">                    &quot;kitchen&quot;: &quot;IM_Development&quot;,</span>
+<span class="sd">                    &quot;recipe&quot;: &quot;Demo_Recipe_Replay&quot;,</span>
+<span class="sd">                    &quot;variation&quot;: &quot;Process_Daily_Data&quot;,</span>
+<span class="sd">                    &quot;parameters&quot;: {</span>
+<span class="sd">                        &quot;DT&quot;: &quot;20200529&quot;</span>
+<span class="sd">                    }</span>
+<span class="sd">                    &quot;order_id&quot;: &quot;dc90de6e-a12b-11ea-8ba5-96323db651da&quot;,</span>
+<span class="sd">                    &quot;order_run_id&quot;: &quot;f9b107a8-a12b-11ea-a95a-72553da658b3&quot;,</span>
+<span class="sd">                    &quot;order_run_status&quot;: &quot;COMPLETED_SERVING&quot;,</span>
+<span class="sd">                }</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Orders will be popped of this queue, so create a copy of orders_details in reverse order</span>
+        <span class="n">queued_orders</span> <span class="o">=</span> <span class="p">[</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">od</span><span class="p">)</span> <span class="k">for</span> <span class="n">od</span> <span class="ow">in</span> <span class="n">orders_details</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+
+        <span class="c1"># Ensure max concurrent variable is valid</span>
+        <span class="n">num_total_orders</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">queued_orders</span><span class="p">)</span>
+        <span class="n">max_concurrent</span> <span class="o">=</span> <span class="n">get_max_concurrency</span><span class="p">(</span><span class="n">num_total_orders</span><span class="p">,</span> <span class="n">max_concurrent</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">create_order</span><span class="p">(</span><span class="n">order_details</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span> <span class="o">=</span> <span class="n">order_details</span><span class="p">[</span><span class="n">KITCHEN</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span> <span class="o">=</span> <span class="n">order_details</span><span class="p">[</span><span class="n">RECIPE</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">variation</span> <span class="o">=</span> <span class="n">order_details</span><span class="p">[</span><span class="n">VARIATION</span><span class="p">]</span>
+            <span class="n">parameters</span> <span class="o">=</span> <span class="n">order_details</span><span class="p">[</span><span class="n">PARAMETERS</span><span class="p">]</span> <span class="k">if</span> <span class="n">PARAMETERS</span> <span class="ow">in</span> <span class="n">order_details</span> <span class="k">else</span> <span class="p">{}</span>
+            <span class="n">order_details</span><span class="p">[</span><span class="n">ORDER_ID</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_order</span><span class="p">(</span><span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="n">ORDER_ID</span><span class="p">]</span>
+            <span class="n">order_details</span><span class="p">[</span><span class="n">ORDER_RUN_ID</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">order_details</span><span class="p">[</span><span class="n">ORDER_RUN_STATUS</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="n">order_details</span>
+
+        <span class="c1"># Create initial orders</span>
+        <span class="n">active_orders</span> <span class="o">=</span> <span class="p">[</span><span class="n">create_order</span><span class="p">(</span><span class="n">queued_orders</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_concurrent</span><span class="p">)]</span>
+        <span class="n">completed_orders</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">wait_loop</span> <span class="o">=</span> <span class="n">WaitLoop</span><span class="p">(</span><span class="n">sleep_secs</span><span class="p">,</span> <span class="n">duration_secs</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">wait_loop</span><span class="p">:</span>
+            <span class="n">cur_completed_orders</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">active_order</span> <span class="ow">in</span> <span class="n">active_orders</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span> <span class="o">=</span> <span class="n">active_order</span><span class="p">[</span><span class="n">KITCHEN</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">active_order</span><span class="p">[</span><span class="n">ORDER_RUN_ID</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">active_order</span><span class="p">[</span><span class="n">ORDER_RUN_STATUS</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_order_run_status</span><span class="p">(</span>
+                        <span class="n">active_order</span><span class="p">[</span><span class="n">ORDER_RUN_ID</span><span class="p">]</span>
+                    <span class="p">)</span>
+                    <span class="k">if</span> <span class="n">active_order</span><span class="p">[</span><span class="n">ORDER_RUN_STATUS</span><span class="p">]</span> <span class="ow">in</span> <span class="n">STOPPED_STATUS_TYPES</span><span class="p">:</span>
+                        <span class="n">completed_orders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">active_order</span><span class="p">)</span>
+                        <span class="n">cur_completed_orders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">active_order</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">order_runs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_order_runs</span><span class="p">(</span><span class="n">active_order</span><span class="p">[</span><span class="n">ORDER_ID</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">order_runs</span><span class="p">:</span>
+                        <span class="n">active_order</span><span class="p">[</span><span class="n">ORDER_RUN_ID</span><span class="p">]</span> <span class="o">=</span> <span class="n">order_runs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;hid&#39;</span><span class="p">]</span>
+
+            <span class="k">for</span> <span class="n">completed_order</span> <span class="ow">in</span> <span class="n">cur_completed_orders</span><span class="p">:</span>
+                <span class="n">active_orders</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">completed_order</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">queued_orders</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">active_orders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">create_order</span><span class="p">(</span><span class="n">queued_orders</span><span class="o">.</span><span class="n">pop</span><span class="p">()))</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">active_orders</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="k">return</span> <span class="n">completed_orders</span><span class="p">,</span> <span class="n">active_orders</span><span class="p">,</span> <span class="n">queued_orders</span></div>
+
+<div class="viewcode-block" id="DataKitchenClient.resume_and_monitor_orders"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.resume_and_monitor_orders">[docs]</a>    <span class="k">def</span> <span class="nf">resume_and_monitor_orders</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">order_runs_details</span><span class="p">,</span> <span class="n">sleep_secs</span><span class="p">,</span> <span class="n">duration_secs</span><span class="p">,</span> <span class="n">max_concurrent</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resume the specified order runs and wait for them to complete (or timeout after the</span>
+<span class="sd">        specified duration_secs).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        order_runs_details : list</span>
+<span class="sd">            List of order_runs_details, each of which contains the kitchen and order run id. An</span>
+<span class="sd">            example order_run_details item is of the form::</span>
+
+<span class="sd">                {</span>
+<span class="sd">                    &quot;kitchen&quot;: &quot;IM_Development&quot;,</span>
+<span class="sd">                    &quot;order_run_id&quot;: &quot;84e77b50-a1f3-11ea-aaaf-521d4744de4c&quot;</span>
+<span class="sd">                }</span>
+<span class="sd">        sleep_secs : int</span>
+<span class="sd">            Number of seconds to sleep in between loop executions.</span>
+<span class="sd">        duration_secs : int</span>
+<span class="sd">            Max duration in seconds after which the loop will exit.</span>
+<span class="sd">        max_concurrent : integer or None</span>
+<span class="sd">            Max number of orders to kick off concurrently. If None, all orders will be kicked off</span>
+<span class="sd">            concurrently.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list</span>
+<span class="sd">            List of 3 lists: [completed orders, active orders, queued orders]. If all the</span>
+<span class="sd">            orders completed in the provided duration_secs, then active orders and queued orders</span>
+<span class="sd">            will be empty lists. The completed orders and active orders lists contain the</span>
+<span class="sd">            orders_details entries with order_id, order_run_id, and order_status fields appended to</span>
+<span class="sd">            each entry. These additional fields will all be populated in the completed orders list.</span>
+<span class="sd">            However, the order_run_id and order_run_status fields may be None if the timeout</span>
+<span class="sd">            occurred before the order run id for the created order was obtained. The final queued</span>
+<span class="sd">            orders list contains a copy of the order_details entries that never made it out of the</span>
+<span class="sd">            queue, with no additional fields added. An example order_details entry for the</span>
+<span class="sd">            completed orders and active orders array will be of the form::</span>
+
+<span class="sd">                {</span>
+<span class="sd">                    &quot;kitchen&quot;: &quot;IM_Development&quot;,</span>
+<span class="sd">                    &quot;order_id&quot;: &quot;dc90de6e-a12b-11ea-8ba5-96323db651da&quot;,</span>
+<span class="sd">                    &quot;order_run_id&quot;: &quot;f9b107a8-a12b-11ea-a95a-72553da658b3&quot;,</span>
+<span class="sd">                    &quot;order_run_status&quot;: &quot;COMPLETED_SERVING&quot;,</span>
+<span class="sd">                }</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Order runs will be popped of this queue, so create a copy of order_runs_details in</span>
+        <span class="c1"># reverse order</span>
+        <span class="n">queued_orders</span> <span class="o">=</span> <span class="p">[</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">od</span><span class="p">)</span> <span class="k">for</span> <span class="n">od</span> <span class="ow">in</span> <span class="n">order_runs_details</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+
+        <span class="c1"># Ensure max concurrent variable is valid</span>
+        <span class="n">num_total_orders</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">queued_orders</span><span class="p">)</span>
+        <span class="n">max_concurrent</span> <span class="o">=</span> <span class="n">get_max_concurrency</span><span class="p">(</span><span class="n">num_total_orders</span><span class="p">,</span> <span class="n">max_concurrent</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">resume_order</span><span class="p">(</span><span class="n">order_run_details</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span> <span class="o">=</span> <span class="n">order_run_details</span><span class="p">[</span><span class="n">KITCHEN</span><span class="p">]</span>
+            <span class="n">order_run_details</span><span class="p">[</span><span class="n">ORDER_ID</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resume_order_run</span><span class="p">(</span><span class="n">order_run_details</span><span class="p">[</span><span class="n">ORDER_RUN_ID</span><span class="p">]</span>
+                                                                <span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="n">ORDER_ID</span><span class="p">]</span>
+            <span class="n">order_run_details</span><span class="p">[</span><span class="n">ORDER_RUN_ID</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">order_run_details</span><span class="p">[</span><span class="n">ORDER_RUN_STATUS</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="n">order_run_details</span>
+
+        <span class="c1"># Used to differentiate the resumed order runs from the order runs they were resumed from</span>
+        <span class="n">resume_start_time</span> <span class="o">=</span> <span class="n">get_utc_timestamp</span><span class="p">()</span>
+
+        <span class="c1"># Create initial orders</span>
+        <span class="n">active_orders</span> <span class="o">=</span> <span class="p">[</span><span class="n">resume_order</span><span class="p">(</span><span class="n">queued_orders</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_concurrent</span><span class="p">)]</span>
+        <span class="n">completed_orders</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">wait_loop</span> <span class="o">=</span> <span class="n">WaitLoop</span><span class="p">(</span><span class="n">sleep_secs</span><span class="p">,</span> <span class="n">duration_secs</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">wait_loop</span><span class="p">:</span>
+            <span class="n">cur_completed_orders</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">active_order</span> <span class="ow">in</span> <span class="n">active_orders</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span> <span class="o">=</span> <span class="n">active_order</span><span class="p">[</span><span class="n">KITCHEN</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">active_order</span><span class="p">[</span><span class="n">ORDER_RUN_ID</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">active_order</span><span class="p">[</span><span class="n">ORDER_RUN_STATUS</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_order_run_status</span><span class="p">(</span>
+                        <span class="n">active_order</span><span class="p">[</span><span class="n">ORDER_RUN_ID</span><span class="p">]</span>
+                    <span class="p">)</span>
+                    <span class="k">if</span> <span class="n">active_order</span><span class="p">[</span><span class="n">ORDER_RUN_STATUS</span><span class="p">]</span> <span class="ow">in</span> <span class="n">STOPPED_STATUS_TYPES</span><span class="p">:</span>
+                        <span class="n">completed_orders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">active_order</span><span class="p">)</span>
+                        <span class="n">cur_completed_orders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">active_order</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">order_runs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_order_runs</span><span class="p">(</span><span class="n">active_order</span><span class="p">[</span><span class="n">ORDER_ID</span><span class="p">])</span>
+
+                    <span class="c1"># Ensure the latest order run is the resumed one and not the run from which it</span>
+                    <span class="c1"># was resumed.</span>
+                    <span class="k">if</span> <span class="n">order_runs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;timings&#39;</span><span class="p">][</span><span class="s1">&#39;start-time&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">resume_start_time</span><span class="p">:</span>
+                        <span class="n">active_order</span><span class="p">[</span><span class="n">ORDER_RUN_ID</span><span class="p">]</span> <span class="o">=</span> <span class="n">order_runs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;hid&#39;</span><span class="p">]</span>
+
+            <span class="k">for</span> <span class="n">completed_order</span> <span class="ow">in</span> <span class="n">cur_completed_orders</span><span class="p">:</span>
+                <span class="n">active_orders</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">completed_order</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">queued_orders</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">active_orders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resume_order</span><span class="p">(</span><span class="n">queued_orders</span><span class="o">.</span><span class="n">pop</span><span class="p">()))</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">active_orders</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="k">return</span> <span class="n">completed_orders</span><span class="p">,</span> <span class="n">active_orders</span><span class="p">,</span> <span class="n">queued_orders</span></div>
+
+<div class="viewcode-block" id="DataKitchenClient.update_kitchen_vault"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.update_kitchen_vault">[docs]</a>    <span class="k">def</span> <span class="nf">update_kitchen_vault</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">prefix</span><span class="p">,</span>
+        <span class="n">vault_token</span><span class="p">,</span>
+        <span class="n">vault_url</span><span class="o">=</span><span class="n">DEFAULT_VAULT_URL</span><span class="p">,</span>
+        <span class="n">private</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">inheritable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the custom vault configuration for a Kitchen.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        prefix : str</span>
+<span class="sd">            Prefix specifying the vault location (e.g. Implementation/dev).</span>
+<span class="sd">        vault_token : str</span>
+<span class="sd">            Token for the custom vault.</span>
+<span class="sd">        vault_url : str, optional</span>
+<span class="sd">            Vault URL (default: https://vault2.datakitchen.io:8200).</span>
+<span class="sd">        private : str, optional</span>
+<span class="sd">            Set to True if this is a private vault service, otherwise set to False (default: False)</span>
+<span class="sd">        inheritable : str, optional</span>
+<span class="sd">            Set to True if this vault should be inherited by child kitchens, otherwise set to false</span>
+<span class="sd">            (default: True).</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        ------</span>
+<span class="sd">        requests.Response</span>
+<span class="sd">            :class:`Response &lt;Response&gt;` object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_attributes</span><span class="p">(</span><span class="n">KITCHEN</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;config&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s1">&#39;inheritable&#39;</span><span class="p">:</span> <span class="n">inheritable</span><span class="p">,</span>
+                    <span class="s1">&#39;prefix&#39;</span><span class="p">:</span> <span class="n">prefix</span><span class="p">,</span>
+                    <span class="s1">&#39;private&#39;</span><span class="p">:</span> <span class="n">private</span><span class="p">,</span>
+                    <span class="s1">&#39;service&#39;</span><span class="p">:</span> <span class="s1">&#39;custom&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;token&#39;</span><span class="p">:</span> <span class="n">vault_token</span><span class="p">,</span>
+                    <span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="n">vault_url</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_POST</span><span class="p">,</span> <span class="s1">&#39;vault&#39;</span><span class="p">,</span> <span class="s1">&#39;config&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">payload</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_kitchens_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get information about available kitchens</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            A dictionary keyed by kitchen name containing information about each kitchen.</span>
+<span class="sd">            For example::</span>
+
+<span class="sd">                {&quot;test_kitchen&quot;: {</span>
+<span class="sd">                    &#39;_created&#39;: None,</span>
+<span class="sd">                    &#39;_finished&#39;: False,</span>
+<span class="sd">                    &#39;created_time&#39;: 1582037782076,</span>
+<span class="sd">                    &#39;creator_user&#39;: &#39;&#39;,</span>
+<span class="sd">                    &#39;customer&#39;: &#39;Implementation&#39;,</span>
+<span class="sd">                    &#39;description&#39;: &#39;Implementation Customer development environment.&#39;,</span>
+<span class="sd">                    &#39;git_name&#39;: &#39;im&#39;,</span>
+<span class="sd">                    &#39;git_org&#39;: &#39;DKImplementation&#39;,</span>
+<span class="sd">                    &#39;kitchen-staff&#39;: [],</span>
+<span class="sd">                    &#39;mesos-constraint&#39;: True,</span>
+<span class="sd">                    &#39;mesos-group&#39;: &#39;implementation_dev&#39;,</span>
+<span class="sd">                    &#39;name&#39;: &#39;IM_Development&#39;,</span>
+<span class="sd">                    &#39;parent-kitchen&#39;: &#39;IM_Production&#39;,</span>
+<span class="sd">                    &#39;recipeoverrides&#39;: {&#39;DKUtilsVersion&#39;: &#39;0.5.0&#39;},</span>
+<span class="sd">                    &#39;recipes&#39;: [&#39;Utility_Wizard_Ingredients&#39;],</span>
+<span class="sd">                    &#39;restrict-recipes&#39;: False,</span>
+<span class="sd">                    &#39;settings&#39;: {</span>
+<span class="sd">                        &#39;agile-tools&#39;: None,</span>
+<span class="sd">                        &#39;alerts&#39;: {</span>
+<span class="sd">                            &#39;orderrunError&#39;: None, &#39;orderrunOverDuration&#39;: None,</span>
+<span class="sd">                            &#39;orderrunStart&#39;: None, &#39;orderrunSuccess&#39;: None},</span>
+<span class="sd">                        &#39;backup&#39;: {</span>
+<span class="sd">                            &#39;backup_enabled&#39;: False, &#39;backup_failure_email&#39;: None,</span>
+<span class="sd">                            &#39;backup_success_email&#39;: None, &#39;export_key_timing&#39;: False,</span>
+<span class="sd">                            &#39;export_node_timing&#39;: False, &#39;export_test_data&#39;: False,</span>
+<span class="sd">                            &#39;last_backup&#39;: None, &#39;s3_access_key&#39;: None, &#39;s3_bucket&#39;: None,</span>
+<span class="sd">                            &#39;s3_secret_key&#39;: None, &#39;target_folder&#39;: None}},</span>
+<span class="sd">                    &#39;wizard-status&#39;: {}</span>
+<span class="sd">                }}</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">kitchens</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">kitchen</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_GET</span><span class="p">,</span> <span class="s1">&#39;kitchen&#39;</span><span class="p">,</span> <span class="s1">&#39;list&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;kitchens&#39;</span><span class="p">]:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">kitchen</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">kitchens</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s1">&#39;More than 1 kitchen with the name: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1"> found in list of kitchens&#39;</span>
+                <span class="p">)</span>
+            <span class="n">kitchens</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">kitchen</span>
+        <span class="k">return</span> <span class="n">kitchens</span>
+
+    <span class="k">def</span> <span class="nf">_get_kitchen_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets information about the current kitchen</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the kitchen attribute is not set</span>
+<span class="sd">            if more than one entry is found with the kitchen name</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            A dictionary containing information specific to the current kitchen in the form::</span>
+
+<span class="sd">                {</span>
+<span class="sd">                    &#39;_created&#39;: None,</span>
+<span class="sd">                    &#39;_finished&#39;: False,</span>
+<span class="sd">                    &#39;created_time&#39;: 1582037782076,</span>
+<span class="sd">                    &#39;creator_user&#39;: &#39;&#39;,</span>
+<span class="sd">                    &#39;customer&#39;: &#39;Implementation&#39;,</span>
+<span class="sd">                    &#39;description&#39;: &#39;Implementation Customer development environment.&#39;,</span>
+<span class="sd">                    &#39;git_name&#39;: &#39;im&#39;,</span>
+<span class="sd">                    &#39;git_org&#39;: &#39;DKImplementation&#39;,</span>
+<span class="sd">                    &#39;kitchen-staff&#39;: [],</span>
+<span class="sd">                    &#39;mesos-constraint&#39;: True,</span>
+<span class="sd">                    &#39;mesos-group&#39;: &#39;implementation_dev&#39;,</span>
+<span class="sd">                    &#39;name&#39;: &#39;IM_Development&#39;,</span>
+<span class="sd">                    &#39;parent-kitchen&#39;: &#39;IM_Production&#39;,</span>
+<span class="sd">                    &#39;recipeoverrides&#39;: {&#39;DKUtilsVersion&#39;: &#39;0.5.0&#39;},</span>
+<span class="sd">                    &#39;recipes&#39;: [&#39;Utility_Wizard_Ingredients&#39;],</span>
+<span class="sd">                    &#39;restrict-recipes&#39;: False,</span>
+<span class="sd">                    &#39;settings&#39;: {</span>
+<span class="sd">                        &#39;agile-tools&#39;: None,</span>
+<span class="sd">                        &#39;alerts&#39;: {</span>
+<span class="sd">                            &#39;orderrunError&#39;: None, &#39;orderrunOverDuration&#39;: None,</span>
+<span class="sd">                            &#39;orderrunStart&#39;: None, &#39;orderrunSuccess&#39;: None},</span>
+<span class="sd">                        &#39;backup&#39;: {</span>
+<span class="sd">                            &#39;backup_enabled&#39;: False, &#39;backup_failure_email&#39;: None,</span>
+<span class="sd">                            &#39;backup_success_email&#39;: None, &#39;export_key_timing&#39;: False,</span>
+<span class="sd">                            &#39;export_node_timing&#39;: False, &#39;export_test_data&#39;: False,</span>
+<span class="sd">                            &#39;last_backup&#39;: None, &#39;s3_access_key&#39;: None, &#39;s3_bucket&#39;: None,</span>
+<span class="sd">                            &#39;s3_secret_key&#39;: None, &#39;target_folder&#39;: None}},</span>
+<span class="sd">                    &#39;wizard-status&#39;: {}</span>
+<span class="sd">                }</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_attributes</span><span class="p">(</span><span class="n">KITCHEN</span><span class="p">)</span>
+        <span class="n">kitchens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_kitchens_info</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">ensure_and_get_kitchen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">,</span> <span class="n">kitchens</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_update_kitchen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kitchen_info</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                Updates information about the current kitchen</span>
+
+<span class="sd">                Parameters</span>
+<span class="sd">                ----------</span>
+<span class="sd">                kitchen_info : dict</span>
+<span class="sd">                    A dictionary containing information about the current kitchen in the form::</span>
+
+<span class="sd">                        {</span>
+<span class="sd">                            &#39;_created&#39;: None,</span>
+<span class="sd">                            &#39;_finished&#39;: False,</span>
+<span class="sd">                            &#39;created_time&#39;: 1582037782076,</span>
+<span class="sd">                            &#39;creator_user&#39;: &#39;&#39;,</span>
+<span class="sd">                            &#39;customer&#39;: &#39;Implementation&#39;,</span>
+<span class="sd">                            &#39;description&#39;: &#39;Implementation Customer development environment.&#39;,</span>
+<span class="sd">                            &#39;git_name&#39;: &#39;im&#39;,</span>
+<span class="sd">                            &#39;git_org&#39;: &#39;DKImplementation&#39;,</span>
+<span class="sd">                            &#39;kitchen-staff&#39;: [],</span>
+<span class="sd">                            &#39;mesos-constraint&#39;: True,</span>
+<span class="sd">                            &#39;mesos-group&#39;: &#39;implementation_dev&#39;,</span>
+<span class="sd">                            &#39;name&#39;: &#39;IM_Development&#39;,</span>
+<span class="sd">                            &#39;parent-kitchen&#39;: &#39;IM_Production&#39;,</span>
+<span class="sd">                            &#39;recipeoverrides&#39;: {&#39;DKUtilsVersion&#39;: &#39;0.5.0&#39;},</span>
+<span class="sd">                            &#39;recipes&#39;: [&#39;Utility_Wizard_Ingredients&#39;],</span>
+<span class="sd">                            &#39;restrict-recipes&#39;: False,</span>
+<span class="sd">                            &#39;settings&#39;: {</span>
+<span class="sd">                                &#39;agile-tools&#39;: None,</span>
+<span class="sd">                                &#39;alerts&#39;: {</span>
+<span class="sd">                                    &#39;orderrunError&#39;: None, &#39;orderrunOverDuration&#39;: None,</span>
+<span class="sd">                                    &#39;orderrunStart&#39;: None, &#39;orderrunSuccess&#39;: None},</span>
+<span class="sd">                                &#39;backup&#39;: {</span>
+<span class="sd">                                    &#39;backup_enabled&#39;: False, &#39;backup_failure_email&#39;: None,</span>
+<span class="sd">                                    &#39;backup_success_email&#39;: None, &#39;export_key_timing&#39;: False,</span>
+<span class="sd">                                    &#39;export_node_timing&#39;: False, &#39;export_test_data&#39;: False,</span>
+<span class="sd">                                    &#39;last_backup&#39;: None, &#39;s3_access_key&#39;: None, &#39;s3_bucket&#39;: None,</span>
+<span class="sd">                                    &#39;s3_secret_key&#39;: None, &#39;target_folder&#39;: None}},</span>
+<span class="sd">                            &#39;wizard-status&#39;: {}</span>
+<span class="sd">                        }</span>
+
+<span class="sd">                Raises</span>
+<span class="sd">                ------</span>
+<span class="sd">                HTTPError</span>
+<span class="sd">                    If the request fails.</span>
+<span class="sd">                ValueError</span>
+<span class="sd">                    If the kitchen attribute is not set</span>
+<span class="sd">                    If the name in the given kitchen_info does not match that of the current kitchen</span>
+
+<span class="sd">                &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_attributes</span><span class="p">(</span><span class="n">KITCHEN</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">kitchen_info</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="p">(</span>
+                <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s1">&#39;Name in kitchen_info: </span><span class="si">{</span><span class="n">kitchen_info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1"> does not match current kitchen: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;kitchen.json&quot;</span><span class="p">:</span> <span class="n">kitchen_info</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_POST</span><span class="p">,</span> <span class="s1">&#39;kitchen&#39;</span><span class="p">,</span> <span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">,</span> <span class="o">**</span><span class="n">payload</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DataKitchenClient.get_overrides"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_overrides">[docs]</a>    <span class="k">def</span> <span class="nf">get_overrides</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">override_names</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a dictionary containing the overrides for the current kitchen or if override_names is specified a</span>
+<span class="sd">        subset of overrides</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the kitchen attribute is not set</span>
+<span class="sd">            If the name in the given kitchen_info does not match that of the current kitchen</span>
+<span class="sd">            If any of the names in override_names are not available in the current kitchen</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            A dictionary containing the overrides</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">overrides</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_kitchen_info</span><span class="p">()[</span><span class="n">RECIPE_OVERRIDES</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">override_names</span><span class="p">:</span>
+            <span class="n">missing</span> <span class="o">=</span> <span class="n">override_names</span> <span class="o">-</span> <span class="n">overrides</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">missing</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s1">&#39;The following overrides are not available in the kitchen: </span><span class="si">{</span><span class="n">missing</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="p">)</span>
+            <span class="n">overrides</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">overrides</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">override_names</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">overrides</span></div>
+
+<div class="viewcode-block" id="DataKitchenClient.update_overrides"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.update_overrides">[docs]</a>    <span class="k">def</span> <span class="nf">update_overrides</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">overrides</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the overrides for the current kitchen</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        dict</span>
+<span class="sd">            A dictionary containing the overrides</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the kitchen attribute is not set</span>
+<span class="sd">            If the name in the given kitchen_info does not match that of the current kitchen</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">kitchen_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_kitchen_info</span><span class="p">()</span>
+        <span class="n">kitchen_info</span><span class="p">[</span><span class="n">RECIPE_OVERRIDES</span><span class="p">]</span> <span class="o">=</span> <span class="n">overrides</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_kitchen</span><span class="p">(</span><span class="n">kitchen_info</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataKitchenClient.compare_overrides"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.compare_overrides">[docs]</a>    <span class="k">def</span> <span class="nf">compare_overrides</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compare the overrides in the current kitchen to those of the specified kitchen. If other is None then</span>
+<span class="sd">        the comparison is done against the parent kitchen</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the kitchen attribute is not set</span>
+<span class="sd">            If the name of the specified kitchen doesn&#39;t match any available kitchen</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        _______</span>
+<span class="sd">        DictionaryComparator</span>
+<span class="sd">            A DictionaryCompparator which can be used to get the results of the comparison</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_attributes</span><span class="p">(</span><span class="n">KITCHEN</span><span class="p">)</span>
+        <span class="n">kitchens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_kitchens_info</span><span class="p">()</span>
+        <span class="n">my_kitchen_info</span> <span class="o">=</span> <span class="n">ensure_and_get_kitchen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">,</span> <span class="n">kitchens</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">other</span><span class="p">:</span>
+            <span class="n">other</span> <span class="o">=</span> <span class="n">my_kitchen_info</span><span class="p">[</span><span class="n">PARENT_KITCHEN</span><span class="p">]</span>
+        <span class="n">ensure_and_get_kitchen</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">kitchens</span><span class="p">)</span>
+        <span class="n">my_overrides</span> <span class="o">=</span> <span class="n">my_kitchen_info</span><span class="p">[</span><span class="n">RECIPE_OVERRIDES</span><span class="p">]</span>
+        <span class="n">other_overrides</span> <span class="o">=</span> <span class="n">kitchens</span><span class="p">[</span><span class="n">other</span><span class="p">][</span><span class="n">RECIPE_OVERRIDES</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">DictionaryComparator</span><span class="p">(</span><span class="n">my_overrides</span><span class="p">,</span> <span class="n">other_overrides</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataKitchenClient.get_override_names_that_do_not_exist"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_override_names_that_do_not_exist">[docs]</a>    <span class="k">def</span> <span class="nf">get_override_names_that_do_not_exist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">override_names</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Given a set of override names that could exist in the kitchen, return a set of the names of any that do not</span>
+<span class="sd">        exist in the kitchen.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">            override_names : set</span>
+<span class="sd">                A set of override names that could exist in the kitchen</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the kitchen attribute is not set</span>
+<span class="sd">            If the set of overrides is empty</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        set</span>
+<span class="sd">            The set of any of given override names to do not exist in the kitchen. If all of the override names exist</span>
+<span class="sd">            then an empty set will be returned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">override_names</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;At least one override must be specified&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">override_names</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_overrides</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="DataKitchenClient.get_override_names_that_exist"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_override_names_that_exist">[docs]</a>    <span class="k">def</span> <span class="nf">get_override_names_that_exist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">override_names</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Given a set of override names that could exist in the kitchen, return a set of the names of that exist in the</span>
+<span class="sd">        kitchen.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">            override_names : set</span>
+<span class="sd">                A set of override names that could exist in the kitchen</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the kitchen attribute is not set</span>
+<span class="sd">            If the set of overrides is empty</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        set</span>
+<span class="sd">            The set of any of given override names that exist in the kitchen. If none of the override names exist</span>
+<span class="sd">            then an empty set will be returned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">override_names</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;At least one override must be specified&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">override_names</span> <span class="o">&amp;</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_overrides</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="DataKitchenClient.get_kitchen_staff"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_kitchen_staff">[docs]</a>    <span class="k">def</span> <span class="nf">get_kitchen_staff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a list containing the email addresses of the kitchen staff for the current kitchen</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the kitchen attribute is not set</span>
+<span class="sd">            If the name in the given kitchen_info does not match that of the current kitchen</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list</span>
+<span class="sd">            A list containing the email address of the kitchen staff</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_kitchen_info</span><span class="p">()[</span><span class="n">KITCHEN_STAFF</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="DataKitchenClient.update_kitchen_staff"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.update_kitchen_staff">[docs]</a>    <span class="k">def</span> <span class="nf">update_kitchen_staff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kitchen_staff</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the kitchen staff for the current kitchen</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        list</span>
+<span class="sd">            A list containing the email addresses of the kitchen staff</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the kitchen attribute is not set</span>
+<span class="sd">            If the current user is not in the kitchen_staff</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_username</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kitchen_staff</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Current user: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_username</span><span class="si">}</span><span class="s2"> can not be removed from kitchen staff&quot;</span>
+            <span class="p">)</span>
+        <span class="n">kitchen_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_kitchen_info</span><span class="p">()</span>
+        <span class="n">kitchen_info</span><span class="p">[</span><span class="n">KITCHEN_STAFF</span><span class="p">]</span> <span class="o">=</span> <span class="n">kitchen_staff</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_kitchen</span><span class="p">(</span><span class="n">kitchen_info</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataKitchenClient.add_kitchen_staff"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.add_kitchen_staff">[docs]</a>    <span class="k">def</span> <span class="nf">add_kitchen_staff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_kitchen_staff</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds the given email addresses to the kitchen staff for the current kitchen. Email addresses that are already</span>
+<span class="sd">        part of the existing kitchen staff will be ignored.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_kitchen_staff : list</span>
+<span class="sd">            A list containing the email addresses to be added to the kitchen staff</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the kitchen attribute is not set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">kitchen_staff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_kitchen_staff</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">kitchen_staff</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">for</span> <span class="n">staff_member</span> <span class="ow">in</span> <span class="n">new_kitchen_staff</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">staff_member</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kitchen_staff</span><span class="p">:</span>
+                <span class="n">kitchen_staff</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">staff_member</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_kitchen_staff</span><span class="p">(</span><span class="n">kitchen_staff</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataKitchenClient.get_recipes"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_recipes">[docs]</a>    <span class="k">def</span> <span class="nf">get_recipes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a dictionary whose keys are the recipe names and values contain a list of the variation names</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the kitchen attribute is not set</span>
+<span class="sd">            If the current user is not in the kitchen_staff</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list</span>
+<span class="sd">            A list containing the recipe names.</span>
+<span class="sd">            For example::</span>
+
+<span class="sd">                [ &#39;Demo_Azure&#39;, &#39;Demo_NiFi&#39; ]</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_attributes</span><span class="p">(</span><span class="n">KITCHEN</span><span class="p">)</span>
+        <span class="n">kitchens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_kitchens_info</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kitchens</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="si">}</span><span class="s1"> is not one of the available kitchens: </span><span class="si">{</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">kitchens</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">kitchens</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">][</span><span class="s1">&#39;kitchen-staff&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_username</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kitchens</span><span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">][</span><span class="s1">&#39;kitchen-staff&#39;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="si">}</span><span class="s1"> is not available to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_username</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_GET</span><span class="p">,</span> <span class="s1">&#39;kitchen&#39;</span><span class="p">,</span> <span class="s1">&#39;recipenames&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;recipes&#39;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="DataKitchenClient.get_order_status"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_status">[docs]</a>    <span class="k">def</span> <span class="nf">get_order_status</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">time_period_hours</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">order_id_regex</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">order_status</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">order_run_status</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">order_run_count</span><span class="o">=</span><span class="mi">3</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve the order (and associated order runs) status details based on the applied</span>
+<span class="sd">        filters. To filter based on recipe and variation, ensure these properties are set on this</span>
+<span class="sd">        client. Alternatively, set recipe and/or variation to None to remove filtering based on</span>
+<span class="sd">        these properties.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        time_period_hours : int, optional</span>
+<span class="sd">            Limit retrieved orders to those that started less than the provided number of hours ago.</span>
+<span class="sd">        order_id_regex : string, optional</span>
+<span class="sd">            Filter retrieved orders based on this provided order id regular expression</span>
+<span class="sd">        order_status : string, optional</span>
+<span class="sd">            Filter retrieved orders with this provided order status</span>
+<span class="sd">        order_run_status : string, optional</span>
+<span class="sd">            Filter retrieved order run with this provided order run status</span>
+<span class="sd">        order_run_count : int, optional</span>
+<span class="sd">            Limit the number of retrieved order runs (default is 3)</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the kitchen attribute is not set</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        order_runs : list</span>
+<span class="sd">            A list of order runs sorted from most recent start-time to oldest in the form::</span>
+
+<span class="sd">                [</span>
+<span class="sd">                    {</span>
+<span class="sd">                        &#39;hid&#39;: &#39;66152846-e0ee-11ea-8280-12128c919b99&#39;,</span>
+<span class="sd">                        &#39;order_id&#39;: &#39;a8f9ac78-e0ed-11ea-b3f4-56a20effdf97&#39;,</span>
+<span class="sd">                        &#39;orderrun_status&#39;: &#39;OrderRun Completed&#39;,</span>
+<span class="sd">                        &#39;status&#39;: &#39;COMPLETED_SERVING&#39;,</span>
+<span class="sd">                        &#39;timings&#39;: {</span>
+<span class="sd">                            &#39;duration&#39;: 22261,</span>
+<span class="sd">                            &#39;end-time&#39;: 1597712533033,</span>
+<span class="sd">                            &#39;start-time&#39;: 1597712510772</span>
+<span class="sd">                        }</span>
+<span class="sd">                    },</span>
+<span class="sd">                    {</span>
+<span class="sd">                        &#39;hid&#39;: &#39;3f57a7d0-e0ec-11ea-a65f-5edd64ee22f9&#39;,</span>
+<span class="sd">                        &#39;order_id&#39;: &#39;3942feda-e0ec-11ea-a00e-56a20effdf97&#39;,</span>
+<span class="sd">                        &#39;orderrun_status&#39;: &#39;OrderRun Completed&#39;,</span>
+<span class="sd">                        &#39;status&#39;: &#39;COMPLETED_SERVING&#39;,</span>
+<span class="sd">                        &#39;timings&#39;: {</span>
+<span class="sd">                            &#39;duration&#39;: 22676,</span>
+<span class="sd">                            &#39;end-time&#39;: 1597711609459,</span>
+<span class="sd">                            &#39;start-time&#39;: 1597711586783</span>
+<span class="sd">                        },</span>
+<span class="sd">                        &#39;variation_name&#39;: &#39;variation1&#39;</span>
+<span class="sd">                    }</span>
+<span class="sd">                ]</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_attributes</span><span class="p">(</span><span class="n">KITCHEN</span><span class="p">)</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="n">RECIPE</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">variation</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="n">VARIATION</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">variation</span>
+        <span class="k">if</span> <span class="n">time_period_hours</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;timePeriod&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time_period_hours</span>
+        <span class="k">if</span> <span class="n">order_id_regex</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;search&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">order_id_regex</span>
+        <span class="k">if</span> <span class="n">order_status</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;orderStatus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">order_status</span>
+        <span class="k">if</span> <span class="n">order_run_status</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;orderRunStatus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">order_run_status</span>
+        <span class="k">if</span> <span class="n">order_run_count</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;servingsCount&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">order_run_count</span>
+
+        <span class="n">response_json</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_GET</span><span class="p">,</span> <span class="s1">&#39;order&#39;</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+        <span class="n">order_runs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="s1">&#39;servings&#39;</span> <span class="ow">in</span> <span class="n">response_json</span> <span class="ow">and</span> <span class="n">response_json</span><span class="p">[</span><span class="s1">&#39;servings&#39;</span><span class="p">]:</span>
+            <span class="k">for</span> <span class="n">order</span> <span class="ow">in</span> <span class="n">response_json</span><span class="p">[</span><span class="s1">&#39;servings&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="n">order_runs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">order</span><span class="p">[</span><span class="s1">&#39;servings&#39;</span><span class="p">])</span>
+
+        <span class="k">def</span> <span class="nf">sort_start_time</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">value</span><span class="p">[</span><span class="s1">&#39;timings&#39;</span><span class="p">][</span><span class="s1">&#39;start-time&#39;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">order_runs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">sort_start_time</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataKitchenClient.get_variations"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_variations">[docs]</a>    <span class="k">def</span> <span class="nf">get_variations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a dictionary that contains the variation-list from the variations.json file</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the recipe attribute is not set</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            A dictionary containing the information from the variations.json file.</span>
+<span class="sd">            For example::</span>
+
+<span class="sd">                { &quot;some_variation&quot;: {</span>
+<span class="sd">                    &quot;description&quot;: &quot;A descript of the variation&quot;,</span>
+<span class="sd">                    &quot;graph-setting&quot;: &quot;a_graph_setting&quot;</span>
+<span class="sd">                    }</span>
+<span class="sd">                }</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_attributes</span><span class="p">(</span><span class="n">RECIPE</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span>
+            <span class="n">API_GET</span><span class="p">,</span> <span class="s1">&#39;recipe&#39;</span><span class="p">,</span> <span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="p">,</span> <span class="s2">&quot;variations.json&quot;</span>
+        <span class="p">)</span>
+        <span class="n">contents</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;contents&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">contents</span><span class="p">[</span><span class="s1">&#39;variation-list&#39;</span><span class="p">]</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, DataKitchen
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

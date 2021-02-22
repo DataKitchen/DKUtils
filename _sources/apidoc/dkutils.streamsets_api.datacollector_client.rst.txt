@@ -1,0 +1,7 @@
+dkutils.streamsets\_api.datacollector\_client module
+====================================================
+
+.. automodule:: dkutils.streamsets_api.datacollector_client
+   :members:
+   :undoc-members:
+   :show-inheritance:

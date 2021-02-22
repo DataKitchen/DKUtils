@@ -1,0 +1,7 @@
+dkutils.jira\_api.jira\_client module
+=====================================
+
+.. automodule:: dkutils.jira_api.jira_client
+   :members:
+   :undoc-members:
+   :show-inheritance:

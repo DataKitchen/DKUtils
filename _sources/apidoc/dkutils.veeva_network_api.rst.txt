@@ -1,0 +1,15 @@
+dkutils.veeva\_network\_api package
+===================================
+
+.. automodule:: dkutils.veeva_network_api
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   dkutils.veeva_network_api.veeva_network_client

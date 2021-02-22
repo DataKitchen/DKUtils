@@ -1,0 +1,781 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>dkutils.alteryx_api.gallery_client module &mdash; DKUtils 1.8.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="dkutils.datakitchen_api package" href="dkutils.datakitchen_api.html" />
+    <link rel="prev" title="dkutils.alteryx_api package" href="dkutils.alteryx_api.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> DKUtils
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="dkutils.html">dkutils package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="dkutils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dkutils.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guide.html">Development Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#development-process">Development Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#deployment-checklist">Deployment Checklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#code-formatting-and-standards">Code formatting and standards</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#pre-commit-anchor">pre-commit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#flake8-anchor">Flake8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#yapf-anchor">YAPF</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#documentation-best-practices">Documentation Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#versioning">Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#makefile">Makefile</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-8-0">v1.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-7-1">v1.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-7-0">v1.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-6-0">v1.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-5-0">v1.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-4-0">v1.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-3">v1.3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-2">v1.3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-1">v1.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-0">v1.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-2-0">v1.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-1-0">v1.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-0-1">v1.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-0-0">v1.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-16-0">v0.16.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-15-0">v0.15.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-14-0">v0.14.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-13-0">v0.13.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-12-0">v0.12.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-11-0">v0.11.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-10-2">v0.10.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-10-1">v0.10.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-10-0">v0.10.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-9-0">v0.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-8-2">v0.8.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-8-1">v0.8.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-8-0">v0.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-7-1">v0.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-7-0">v0.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-6-1">v0.6.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-6-0">v0.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-5-0">v0.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-4-0">v0.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-3-0">v0.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-2-0">v0.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-1-0">v0.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-4">v0.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-3">v0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-2">v0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-1">v0.0.1</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DKUtils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">dkutils</a> &raquo;</li>
+        
+          <li><a href="dkutils.html">dkutils package</a> &raquo;</li>
+        
+          <li><a href="dkutils.alteryx_api.html">dkutils.alteryx_api package</a> &raquo;</li>
+        
+      <li>dkutils.alteryx_api.gallery_client module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/apidoc/dkutils.alteryx_api.gallery_client.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="dkutils.datakitchen_api.html" class="btn btn-neutral float-right" title="dkutils.datakitchen_api package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="dkutils.alteryx_api.html" class="btn btn-neutral float-left" title="dkutils.alteryx_api package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-dkutils.alteryx_api.gallery_client">
+<span id="dkutils-alteryx-api-gallery-client-module"></span><h1>dkutils.alteryx_api.gallery_client module<a class="headerlink" href="#module-dkutils.alteryx_api.gallery_client" title="Permalink to this headline">¶</a></h1>
+<dl class="py exception">
+<dt id="dkutils.alteryx_api.gallery_client.GalleryException">
+<em class="property">exception </em><code class="sig-prename descclassname">dkutils.alteryx_api.gallery_client.</code><code class="sig-name descname">GalleryException</code><a class="reference internal" href="../_modules/dkutils/alteryx_api/gallery_client.html#GalleryException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.GalleryException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="dkutils.alteryx_api.gallery_client.GalleryClient">
+<em class="property">class </em><code class="sig-prename descclassname">dkutils.alteryx_api.gallery_client.</code><code class="sig-name descname">GalleryClient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">api_location</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">api_key</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">api_secret</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/alteryx_api/gallery_client.html#GalleryClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.GalleryClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Client object for invoking calls to the Alteryx Gallery API. See <a class="reference external" href="https://gallery.alteryx.com/api-docs/">https://gallery.alteryx.com/api-docs/</a> for more
+information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>api_location</strong> (<em>str</em>) – The base URL for the Gallery server</p></li>
+<li><p><strong>api_key</strong> (<em>str</em>) – The api key used to authenticate access to the Gallery API. Then can be found in the Keys section of
+account settings on the Alteryx Gallery.</p></li>
+<li><p><strong>api_secret</strong> (<em>str</em>) – The api secret used to authenticate access to the Gallery API. Then can be found in the Keys section of
+account settings on the Alteryx Gallery.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="dkutils.alteryx_api.gallery_client.GalleryClient.execute_workflow">
+<code class="sig-name descname">execute_workflow</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">app_id</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#dkutils.alteryx_api.gallery_client.JobInfo" title="dkutils.alteryx_api.gallery_client.JobInfo">dkutils.alteryx_api.gallery_client.JobInfo</a><a class="reference internal" href="../_modules/dkutils/alteryx_api/gallery_client.html#GalleryClient.execute_workflow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.GalleryClient.execute_workflow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queue an app execution job.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Information about the job</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#dkutils.alteryx_api.gallery_client.JobInfo" title="dkutils.alteryx_api.gallery_client.JobInfo">JobInfo</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.alteryx_api.gallery_client.GalleryClient.execute_workflow_and_wait">
+<code class="sig-name descname">execute_workflow_and_wait</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">app_id</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">sleep_seconds</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">300</span></em>, <em class="sig-param"><span class="n">max_wait_seconds</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">3</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#dkutils.alteryx_api.gallery_client.JobInfo" title="dkutils.alteryx_api.gallery_client.JobInfo">dkutils.alteryx_api.gallery_client.JobInfo</a><a class="reference internal" href="../_modules/dkutils/alteryx_api/gallery_client.html#GalleryClient.execute_workflow_and_wait"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.GalleryClient.execute_workflow_and_wait" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queue an app execution job and wait for the job to complete.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#dkutils.alteryx_api.gallery_client.GalleryException" title="dkutils.alteryx_api.gallery_client.GalleryException"><strong>GalleryException</strong></a> – if job times out</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Information about the job</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#dkutils.alteryx_api.gallery_client.JobInfo" title="dkutils.alteryx_api.gallery_client.JobInfo">JobInfo</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.alteryx_api.gallery_client.GalleryClient.get_all_workflows">
+<code class="sig-name descname">get_all_workflows</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span><a class="reference internal" href="#dkutils.alteryx_api.gallery_client.Workflow" title="dkutils.alteryx_api.gallery_client.Workflow">dkutils.alteryx_api.gallery_client.Workflow</a><span class="p">]</span><a class="reference internal" href="../_modules/dkutils/alteryx_api/gallery_client.html#GalleryClient.get_all_workflows"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.GalleryClient.get_all_workflows" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A list of all workflows</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list or None</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Only Gallery Curators(Admins) can use this API endpoint.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.alteryx_api.gallery_client.GalleryClient.get_job_status">
+<code class="sig-name descname">get_job_status</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">job_id</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#dkutils.alteryx_api.gallery_client.JobInfo" title="dkutils.alteryx_api.gallery_client.JobInfo">dkutils.alteryx_api.gallery_client.JobInfo</a><a class="reference internal" href="../_modules/dkutils/alteryx_api/gallery_client.html#GalleryClient.get_job_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.GalleryClient.get_job_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the job and its current state</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Information about the job and its current state</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#dkutils.alteryx_api.gallery_client.JobInfo" title="dkutils.alteryx_api.gallery_client.JobInfo">JobInfo</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.alteryx_api.gallery_client.GalleryClient.get_subscription_workflows">
+<code class="sig-name descname">get_subscription_workflows</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span><a class="reference internal" href="#dkutils.alteryx_api.gallery_client.Workflow" title="dkutils.alteryx_api.gallery_client.Workflow">dkutils.alteryx_api.gallery_client.Workflow</a><span class="p">]</span><a class="reference internal" href="../_modules/dkutils/alteryx_api/gallery_client.html#GalleryClient.get_subscription_workflows"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.GalleryClient.get_subscription_workflows" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A list of workflows</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list or None</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Subscription is tied to API key. You cannot request workflows for any other subscription without that
+subscription’s key.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.alteryx_api.gallery_client.GalleryClient.api_key">
+<em class="property">property </em><code class="sig-name descname">api_key</code><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.GalleryClient.api_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.alteryx_api.gallery_client.GalleryClient.api_location">
+<em class="property">property </em><code class="sig-name descname">api_location</code><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.GalleryClient.api_location" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.alteryx_api.gallery_client.GalleryClient.api_secret">
+<em class="property">property </em><code class="sig-name descname">api_secret</code><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.GalleryClient.api_secret" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfo">
+<em class="property">class </em><code class="sig-prename descclassname">dkutils.alteryx_api.gallery_client.</code><code class="sig-name descname">JobInfo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">id</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">appId</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">createDate</span><span class="p">:</span> <span class="n">datetime.datetime</span></em>, <em class="sig-param"><span class="n">status</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">disposition</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">outputs</span><span class="p">:</span> <span class="n">dict</span></em>, <em class="sig-param"><span class="n">messages</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="#dkutils.alteryx_api.gallery_client.JobInfoMessage" title="dkutils.alteryx_api.gallery_client.JobInfoMessage">dkutils.alteryx_api.gallery_client.JobInfoMessage</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">priority</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">workerTag</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">runWithE2</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/alteryx_api/gallery_client.html#JobInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfo.appId">
+<code class="sig-name descname">appId</code><em class="property">: str</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfo.appId" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfo.createDate">
+<code class="sig-name descname">createDate</code><em class="property">: datetime</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfo.createDate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfo.disposition">
+<code class="sig-name descname">disposition</code><em class="property">: str</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfo.disposition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfo.id">
+<code class="sig-name descname">id</code><em class="property">: str</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfo.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfo.messages">
+<code class="sig-name descname">messages</code><em class="property">: List[JobInfoMessage]</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfo.messages" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfo.outputs">
+<code class="sig-name descname">outputs</code><em class="property">: dict</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfo.outputs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfo.priority">
+<code class="sig-name descname">priority</code><em class="property">: int</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfo.priority" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfo.runWithE2">
+<code class="sig-name descname">runWithE2</code><em class="property">: bool</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfo.runWithE2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfo.status">
+<code class="sig-name descname">status</code><em class="property">: str</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfo.status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfo.workerTag">
+<code class="sig-name descname">workerTag</code><em class="property">: str</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfo.workerTag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoMessage">
+<em class="property">class </em><code class="sig-prename descclassname">dkutils.alteryx_api.gallery_client.</code><code class="sig-name descname">JobInfoMessage</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">status</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">text</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">toolId</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/alteryx_api/gallery_client.html#JobInfoMessage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoMessage.status">
+<code class="sig-name descname">status</code><em class="property">: int</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoMessage.status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoMessage.text">
+<code class="sig-name descname">text</code><em class="property">: str</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoMessage.text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoMessage.toolId">
+<code class="sig-name descname">toolId</code><em class="property">: int</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoMessage.toolId" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus">
+<em class="property">class </em><code class="sig-prename descclassname">dkutils.alteryx_api.gallery_client.</code><code class="sig-name descname">JobInfoStatus</code><a class="reference internal" href="../_modules/dkutils/alteryx_api/gallery_client.html#JobInfoStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.APPEND_OR_UPDATE_OUTPUT_CONFIG_XML">
+<code class="sig-name descname">APPEND_OR_UPDATE_OUTPUT_CONFIG_XML</code><em class="property"> = 18</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.APPEND_OR_UPDATE_OUTPUT_CONFIG_XML" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.BROWSE_EVERYWHERE_FILENAME_EX">
+<code class="sig-name descname">BROWSE_EVERYWHERE_FILENAME_EX</code><em class="property"> = 71</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.BROWSE_EVERYWHERE_FILENAME_EX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.BROWSE_EVERY_WHERE_FILENAME">
+<code class="sig-name descname">BROWSE_EVERY_WHERE_FILENAME</code><em class="property"> = 70</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.BROWSE_EVERY_WHERE_FILENAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.CACHE_TEMP_FILE">
+<code class="sig-name descname">CACHE_TEMP_FILE</code><em class="property"> = 16</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.CACHE_TEMP_FILE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.CHOOSE_FROM_MULTIPLE">
+<code class="sig-name descname">CHOOSE_FROM_MULTIPLE</code><em class="property"> = 30</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.CHOOSE_FROM_MULTIPLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.COMPLETE">
+<code class="sig-name descname">COMPLETE</code><em class="property"> = 4</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.COMPLETE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.CONNECT_INFO_XML">
+<code class="sig-name descname">CONNECT_INFO_XML</code><em class="property"> = 17</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.CONNECT_INFO_XML" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.DISABLED">
+<code class="sig-name descname">DISABLED</code><em class="property"> = 7</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.DISABLED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.DOCUMENT_TEMP_FILE">
+<code class="sig-name descname">DOCUMENT_TEMP_FILE</code><em class="property"> = 13</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.DOCUMENT_TEMP_FILE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.ERROR">
+<code class="sig-name descname">ERROR</code><em class="property"> = 3</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.FIELD_CONVERSION_ERROR">
+<code class="sig-name descname">FIELD_CONVERSION_ERROR</code><em class="property"> = 5</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.FIELD_CONVERSION_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.FIELD_CONVERSION_ERROR_LIMIT">
+<code class="sig-name descname">FIELD_CONVERSION_ERROR_LIMIT</code><em class="property"> = 6</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.FIELD_CONVERSION_ERROR_LIMIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.FILE_DEPENDENCY">
+<code class="sig-name descname">FILE_DEPENDENCY</code><em class="property"> = 15</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.FILE_DEPENDENCY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.FILE_INPUT">
+<code class="sig-name descname">FILE_INPUT</code><em class="property"> = 8</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.FILE_INPUT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.FILE_OUTPUT">
+<code class="sig-name descname">FILE_OUTPUT</code><em class="property"> = 9</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.FILE_OUTPUT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.INFO">
+<code class="sig-name descname">INFO</code><em class="property"> = 1</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.INFO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.INSIGHT_UPDATE">
+<code class="sig-name descname">INSIGHT_UPDATE</code><em class="property"> = 100</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.INSIGHT_UPDATE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.LOW_DISK_WARNING">
+<code class="sig-name descname">LOW_DISK_WARNING</code><em class="property"> = 20</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.LOW_DISK_WARNING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.OUTPUT_FIELDNAMES">
+<code class="sig-name descname">OUTPUT_FIELDNAMES</code><em class="property"> = 40</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.OUTPUT_FIELDNAMES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.OUTPUT_RECORD">
+<code class="sig-name descname">OUTPUT_RECORD</code><em class="property"> = 41</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.OUTPUT_RECORD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.PREVIEW_FAIL">
+<code class="sig-name descname">PREVIEW_FAIL</code><em class="property"> = 31</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.PREVIEW_FAIL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.RECORD_COUNT_AND_SIZE">
+<code class="sig-name descname">RECORD_COUNT_AND_SIZE</code><em class="property"> = 50</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.RECORD_COUNT_AND_SIZE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.RELEASE_ASSET_REQUESTED">
+<code class="sig-name descname">RELEASE_ASSET_REQUESTED</code><em class="property"> = 92</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.RELEASE_ASSET_REQUESTED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.REQUEST_AUTO_CONFIG_REFRESH">
+<code class="sig-name descname">REQUEST_AUTO_CONFIG_REFRESH</code><em class="property"> = 12</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.REQUEST_AUTO_CONFIG_REFRESH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.SAFE_MODE_ERROR">
+<code class="sig-name descname">SAFE_MODE_ERROR</code><em class="property"> = 21</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.SAFE_MODE_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.SHARED_ASSET_CREATED">
+<code class="sig-name descname">SHARED_ASSET_CREATED</code><em class="property"> = 90</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.SHARED_ASSET_CREATED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.TEMP_DIRECTORY">
+<code class="sig-name descname">TEMP_DIRECTORY</code><em class="property"> = 14</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.TEMP_DIRECTORY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.UPDATE_OUTPUT_CONFIG_XML">
+<code class="sig-name descname">UPDATE_OUTPUT_CONFIG_XML</code><em class="property"> = 11</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.UPDATE_OUTPUT_CONFIG_XML" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.UPDATE_OUTPUT_META_INFO_XML">
+<code class="sig-name descname">UPDATE_OUTPUT_META_INFO_XML</code><em class="property"> = 10</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.UPDATE_OUTPUT_META_INFO_XML" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.JobInfoStatus.WARNING">
+<code class="sig-name descname">WARNING</code><em class="property"> = 2</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.JobInfoStatus.WARNING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="dkutils.alteryx_api.gallery_client.MetaInfo">
+<em class="property">class </em><code class="sig-prename descclassname">dkutils.alteryx_api.gallery_client.</code><code class="sig-name descname">MetaInfo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">description</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">author</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">copyright</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">url</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">urlText</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">outputMessage</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">noOutputFilesMessage</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/alteryx_api/gallery_client.html#MetaInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.MetaInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.MetaInfo.author">
+<code class="sig-name descname">author</code><em class="property">: str</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.MetaInfo.author" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.MetaInfo.copyright">
+<code class="sig-name descname">copyright</code><em class="property">: str</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.MetaInfo.copyright" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.MetaInfo.description">
+<code class="sig-name descname">description</code><em class="property">: str</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.MetaInfo.description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.MetaInfo.name">
+<code class="sig-name descname">name</code><em class="property">: str</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.MetaInfo.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.MetaInfo.noOutputFilesMessage">
+<code class="sig-name descname">noOutputFilesMessage</code><em class="property">: str</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.MetaInfo.noOutputFilesMessage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.MetaInfo.outputMessage">
+<code class="sig-name descname">outputMessage</code><em class="property">: str</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.MetaInfo.outputMessage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.MetaInfo.url">
+<code class="sig-name descname">url</code><em class="property">: str</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.MetaInfo.url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.MetaInfo.urlText">
+<code class="sig-name descname">urlText</code><em class="property">: str</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.MetaInfo.urlText" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="dkutils.alteryx_api.gallery_client.Workflow">
+<em class="property">class </em><code class="sig-prename descclassname">dkutils.alteryx_api.gallery_client.</code><code class="sig-name descname">Workflow</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">id</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">subscriptionId</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">public</span><span class="p">:</span> <span class="n">bool</span></em>, <em class="sig-param"><span class="n">runDisabled</span><span class="p">:</span> <span class="n">bool</span></em>, <em class="sig-param"><span class="n">packageType</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">uploadDate</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">fileName</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">metaInfo</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#dkutils.alteryx_api.gallery_client.MetaInfo" title="dkutils.alteryx_api.gallery_client.MetaInfo">dkutils.alteryx_api.gallery_client.MetaInfo</a></span></em>, <em class="sig-param"><span class="n">isChained</span><span class="p">:</span> <span class="n">bool</span></em>, <em class="sig-param"><span class="n">version</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">runCount</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">workerTag</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">isE2</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/alteryx_api/gallery_client.html#Workflow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.Workflow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.Workflow.fileName">
+<code class="sig-name descname">fileName</code><em class="property">: str</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.Workflow.fileName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.Workflow.id">
+<code class="sig-name descname">id</code><em class="property">: str</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.Workflow.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.Workflow.isChained">
+<code class="sig-name descname">isChained</code><em class="property">: bool</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.Workflow.isChained" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.Workflow.isE2">
+<code class="sig-name descname">isE2</code><em class="property">: bool</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.Workflow.isE2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.Workflow.metaInfo">
+<code class="sig-name descname">metaInfo</code><em class="property">: MetaInfo</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.Workflow.metaInfo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.Workflow.packageType">
+<code class="sig-name descname">packageType</code><em class="property">: str</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.Workflow.packageType" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.Workflow.public">
+<code class="sig-name descname">public</code><em class="property">: bool</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.Workflow.public" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.Workflow.runCount">
+<code class="sig-name descname">runCount</code><em class="property">: int</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.Workflow.runCount" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.Workflow.runDisabled">
+<code class="sig-name descname">runDisabled</code><em class="property">: bool</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.Workflow.runDisabled" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.Workflow.subscriptionId">
+<code class="sig-name descname">subscriptionId</code><em class="property">: str</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.Workflow.subscriptionId" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.Workflow.uploadDate">
+<code class="sig-name descname">uploadDate</code><em class="property">: str</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.Workflow.uploadDate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.Workflow.version">
+<code class="sig-name descname">version</code><em class="property">: int</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.Workflow.version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.alteryx_api.gallery_client.Workflow.workerTag">
+<code class="sig-name descname">workerTag</code><em class="property">: str</em><em class="property"> = None</em><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.Workflow.workerTag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="dkutils.alteryx_api.gallery_client.nested_dataclass_decorator">
+<code class="sig-prename descclassname">dkutils.alteryx_api.gallery_client.</code><code class="sig-name descname">nested_dataclass_decorator</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/alteryx_api/gallery_client.html#nested_dataclass_decorator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.alteryx_api.gallery_client.nested_dataclass_decorator" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>A decorator that can be used on dataclasses that contain nested dataclasses. Use of this decorator on a dataclass</em></p></li>
+<li><p><em>which contains a field that is also a dataclass will allow the class to be instantiated via a dictionary which</em></p></li>
+<li><p><em>also contains a nested dictionary for the the field that is a dataclass. For example if you had the following</em></p></li>
+<li><p><em>declaration</em></p></li>
+<li><p><em>&#64;dataclass</em></p></li>
+<li><p><em>class A</em> – a: int
+b: str</p></li>
+<li><p><em>&#64;dataclass</em></p></li>
+<li><p><em>class B</em> – c: str
+d: A</p></li>
+<li><p><em>You would normally need to construct an instance of Class B as follows</em></p></li>
+<li><p><strong>a = A({“a”</strong> (<em>1, “b”: “one”})</em>)</p></li>
+<li><p><strong>b = B({“c”</strong> (<em>“see”, “d”: a})</em>)</p></li>
+<li><p><em>You need to construct an instance of A before creating B. Using this decorator on B will instead let you do the</em></p></li>
+<li><p><em>following</em></p></li>
+<li><p><strong>b = B({“c”</strong> (<em>“see”, “d”: {“a”: 1, “b”: “one”}}</em>)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="dkutils.datakitchen_api.html" class="btn btn-neutral float-right" title="dkutils.datakitchen_api package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="dkutils.alteryx_api.html" class="btn btn-neutral float-left" title="dkutils.alteryx_api package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, DataKitchen
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

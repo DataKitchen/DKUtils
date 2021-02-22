@@ -1,0 +1,536 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Release Notes &mdash; DKUtils 1.8.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Development Guide" href="guide.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> DKUtils
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="apidoc/modules.html">Code Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="apidoc/dkutils.html">dkutils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="apidoc/dkutils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="apidoc/dkutils.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide.html">Development Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide.html#development-process">Development Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="guide.html#deployment-checklist">Deployment Checklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="guide.html#code-formatting-and-standards">Code formatting and standards</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="guide.html#pre-commit-anchor">pre-commit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="guide.html#flake8-anchor">Flake8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="guide.html#yapf-anchor">YAPF</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="guide.html#documentation-best-practices">Documentation Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide.html#versioning">Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide.html#makefile">Makefile</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#v1-8-0">v1.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v1-7-1">v1.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v1-7-0">v1.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v1-6-0">v1.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v1-5-0">v1.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v1-4-0">v1.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v1-3-3">v1.3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v1-3-2">v1.3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v1-3-1">v1.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v1-3-0">v1.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v1-2-0">v1.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v1-1-0">v1.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v1-0-1">v1.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v1-0-0">v1.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-16-0">v0.16.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-15-0">v0.15.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-14-0">v0.14.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-13-0">v0.13.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-12-0">v0.12.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-11-0">v0.11.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-10-2">v0.10.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-10-1">v0.10.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-10-0">v0.10.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-9-0">v0.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-8-2">v0.8.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-8-1">v0.8.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-8-0">v0.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-7-1">v0.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-7-0">v0.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-6-1">v0.6.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-6-0">v0.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-5-0">v0.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-4-0">v0.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-3-0">v0.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-2-0">v0.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-1-0">v0.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-0-4">v0.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-0-3">v0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-0-2">v0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-0-1">v0.0.1</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DKUtils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Release Notes</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/release_notes.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+      
+        <a href="guide.html" class="btn btn-neutral float-left" title="Development Guide" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="release-notes">
+<h1>Release Notes<a class="headerlink" href="#release-notes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="v1-8-0">
+<h2>v1.8.0<a class="headerlink" href="#v1-8-0" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Add gmail_api</p></li>
+</ul>
+</div>
+<div class="section" id="v1-7-1">
+<h2>v1.7.1<a class="headerlink" href="#v1-7-1" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Standardize logging</p></li>
+<li><p>Remove redundant log message in DataKithenClient _api_request</p></li>
+<li><p>Do not log response content when validating or refreshing a token - these exceptions are already handled properly</p></li>
+</ul>
+</div>
+<div class="section" id="v1-7-0">
+<h2>v1.7.0<a class="headerlink" href="#v1-7-0" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Log response content when a request to the DataKitchen REST API fails</p></li>
+</ul>
+</div>
+<div class="section" id="v1-6-0">
+<h2>v1.6.0<a class="headerlink" href="#v1-6-0" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Add run_subscription_job function</p></li>
+</ul>
+</div>
+<div class="section" id="v1-5-0">
+<h2>v1.5.0<a class="headerlink" href="#v1-5-0" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Add create_veeva_network_subscription_client function</p></li>
+</ul>
+</div>
+<div class="section" id="v1-4-0">
+<h2>v1.4.0<a class="headerlink" href="#v1-4-0" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Add api for veeva network</p></li>
+</ul>
+</div>
+<div class="section" id="v1-3-3">
+<h2>v1.3.3<a class="headerlink" href="#v1-3-3" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Upgrade pandas requirement to &gt;=1.1.2 to fix test failure</p></li>
+</ul>
+</div>
+<div class="section" id="v1-3-2">
+<h2>v1.3.2<a class="headerlink" href="#v1-3-2" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Fix bug in add_kitchen_staff</p></li>
+</ul>
+</div>
+<div class="section" id="v1-3-1">
+<h2>v1.3.1<a class="headerlink" href="#v1-3-1" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Properly add dependencies to setup.py so they are installed when this package is pip installed</p></li>
+</ul>
+</div>
+<div class="section" id="v1-3-0">
+<h2>v1.3.0<a class="headerlink" href="#v1-3-0" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Added set_logging_level function</p></li>
+</ul>
+</div>
+<div class="section" id="v1-2-0">
+<h2>v1.2.0<a class="headerlink" href="#v1-2-0" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Added get_globals_config function</p></li>
+</ul>
+</div>
+<div class="section" id="v1-1-0">
+<h2>v1.1.0<a class="headerlink" href="#v1-1-0" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Added Alteryx Gallery API client</p></li>
+</ul>
+</div>
+<div class="section" id="v1-0-1">
+<h2>v1.0.1<a class="headerlink" href="#v1-0-1" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Bugfix RemoteClient bulk upload to resolve remote path issue</p></li>
+</ul>
+</div>
+<div class="section" id="v1-0-0">
+<h2>v1.0.0<a class="headerlink" href="#v1-0-0" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Add bulk download method to RemoteClient</p></li>
+<li><p>Move remote path from RemoteClient constructor to bulk upload &amp; download methods</p></li>
+</ul>
+</div>
+<div class="section" id="v0-16-0">
+<h2>v0.16.0<a class="headerlink" href="#v0-16-0" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Add option to stream logs to RemoteClient commands execution</p></li>
+</ul>
+</div>
+<div class="section" id="v0-15-0">
+<h2>v0.15.0<a class="headerlink" href="#v0-15-0" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Change URL used by get_recipes function</p></li>
+</ul>
+</div>
+<div class="section" id="v0-14-0">
+<h2>v0.14.0<a class="headerlink" href="#v0-14-0" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Added RemoteClient module which can be used execute commands and upload files to a server using ssh</p></li>
+</ul>
+</div>
+<div class="section" id="v0-13-0">
+<h2>v0.13.0<a class="headerlink" href="#v0-13-0" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Add DataKitchenClient function get_variations</p></li>
+</ul>
+</div>
+<div class="section" id="v0-12-0">
+<h2>v0.12.0<a class="headerlink" href="#v0-12-0" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Add DataKitchenClient function get_order_status</p></li>
+</ul>
+</div>
+<div class="section" id="v0-11-0">
+<h2>v0.11.0<a class="headerlink" href="#v0-11-0" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Add additional check to validate kitchen, recipe, orders combination</p></li>
+<li><p>Add function get_recipes</p></li>
+</ul>
+</div>
+<div class="section" id="v0-10-2">
+<h2>v0.10.2<a class="headerlink" href="#v0-10-2" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Added additional check to validate_globals to check that values that should be changed have been</p></li>
+</ul>
+</div>
+<div class="section" id="v0-10-1">
+<h2>v0.10.1<a class="headerlink" href="#v0-10-1" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Added JIRA API client</p></li>
+</ul>
+</div>
+<div class="section" id="v0-10-0">
+<h2>v0.10.0<a class="headerlink" href="#v0-10-0" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>PACKAGE REMOVED FROM PYPI - DUPLICATE OF v0.9.0</p></li>
+</ul>
+</div>
+<div class="section" id="v0-9-0">
+<h2>v0.9.0<a class="headerlink" href="#v0-9-0" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Add function get_override_names_that_do_not_exist</p></li>
+<li><p>Add function get_override_names_that_exist</p></li>
+<li><p>Added parameter to get_overrides to facilitate the retrieval of a subset of overrides</p></li>
+</ul>
+</div>
+<div class="section" id="v0-8-2">
+<h2>v0.8.2<a class="headerlink" href="#v0-8-2" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Explicitly invoke tilde expansion when deriving the path to a user’s dk context</p></li>
+</ul>
+</div>
+<div class="section" id="v0-8-1">
+<h2>v0.8.1<a class="headerlink" href="#v0-8-1" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Fixed incorrect formatting in release notes below for v0.8.0</p></li>
+</ul>
+</div>
+<div class="section" id="v0-8-0">
+<h2>v0.8.0<a class="headerlink" href="#v0-8-0" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Added function to support updating kitchen staff</p></li>
+<li><p>Added factory method to create DataKitchenClient using context created by DKCloudCommand</p></li>
+</ul>
+</div>
+<div class="section" id="v0-7-1">
+<h2>v0.7.1<a class="headerlink" href="#v0-7-1" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Made some minor documentation changes</p></li>
+<li><p>Added __str__ method to DictionaryComparator</p></li>
+</ul>
+</div>
+<div class="section" id="v0-7-0">
+<h2>v0.7.0<a class="headerlink" href="#v0-7-0" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Added functions to support retrieving, updating and comparing kitchen overrides</p></li>
+</ul>
+</div>
+<div class="section" id="v0-6-1">
+<h2>v0.6.1<a class="headerlink" href="#v0-6-1" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Documented development process for updating and deploying this DKUtils library</p></li>
+</ul>
+</div>
+<div class="section" id="v0-6-0">
+<h2>v0.6.0<a class="headerlink" href="#v0-6-0" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Added StreamSets DataCollector client</p></li>
+</ul>
+</div>
+<div class="section" id="v0-5-0">
+<h2>v0.5.0<a class="headerlink" href="#v0-5-0" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Added create/resume and monitor orders methods to DataKitchen API Client</p>
+<ul>
+<li><p>Waits for the orders to complete or for a specified timeout duration (whichever comes first)</p></li>
+<li><p>Number of maximum concurrently running orders can be specified</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="v0-4-0">
+<h2>v0.4.0<a class="headerlink" href="#v0-4-0" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Added generalized API request method to DataKitchen API Client</p></li>
+<li><p>Added skip_token_verification function to validations</p></li>
+<li><p>Updated existing API methods to use new generalized API Request method</p></li>
+</ul>
+</div>
+<div class="section" id="v0-3-0">
+<h2>v0.3.0<a class="headerlink" href="#v0-3-0" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Added update kitchen vault method to DataKitchen API Client</p></li>
+<li><p>Added get_utc_timestamp function to return current UTC time in milliseconds since
+epoch which is the same format used for order run timings field</p></li>
+</ul>
+</div>
+<div class="section" id="v0-2-0">
+<h2>v0.2.0<a class="headerlink" href="#v0-2-0" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Add resume order run method to DataKitchen API Client</p></li>
+</ul>
+</div>
+<div class="section" id="v0-1-0">
+<h2>v0.1.0<a class="headerlink" href="#v0-1-0" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Added DataKitchen API Client</p></li>
+<li><p>Added get order run status</p></li>
+<li><p>Added monitor order runs</p></li>
+<li><p>Added get order run details function</p></li>
+</ul>
+</div>
+<div class="section" id="v0-0-4">
+<h2>v0.0.4<a class="headerlink" href="#v0-0-4" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Add function for retrieving order runs details</p></li>
+<li><p>Update documentation with release notes and a guide</p></li>
+</ul>
+</div>
+<div class="section" id="v0-0-3">
+<h2>v0.0.3<a class="headerlink" href="#v0-0-3" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Bugfix global variable validation</p></li>
+</ul>
+</div>
+<div class="section" id="v0-0-2">
+<h2>v0.0.2<a class="headerlink" href="#v0-0-2" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Update WaitLoop to input a max duration as opposed to a datetime</p></li>
+</ul>
+</div>
+<div class="section" id="v0-0-1">
+<h2>v0.0.1<a class="headerlink" href="#v0-0-1" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Initial release</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="guide.html" class="btn btn-neutral float-left" title="Development Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, DataKitchen
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

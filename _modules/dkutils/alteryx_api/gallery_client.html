@@ -1,0 +1,649 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>dkutils.alteryx_api.gallery_client &mdash; DKUtils 1.8.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> DKUtils
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../apidoc/modules.html">Code Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../apidoc/dkutils.html">dkutils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../apidoc/dkutils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../apidoc/dkutils.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guide.html">Development Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#development-process">Development Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#deployment-checklist">Deployment Checklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#code-formatting-and-standards">Code formatting and standards</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#pre-commit-anchor">pre-commit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#flake8-anchor">Flake8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#yapf-anchor">YAPF</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#documentation-best-practices">Documentation Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#versioning">Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#makefile">Makefile</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-8-0">v1.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-7-1">v1.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-7-0">v1.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-6-0">v1.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-5-0">v1.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-4-0">v1.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-3">v1.3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-2">v1.3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-1">v1.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-0">v1.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-2-0">v1.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-1-0">v1.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-0-1">v1.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-0-0">v1.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-16-0">v0.16.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-15-0">v0.15.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-14-0">v0.14.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-13-0">v0.13.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-12-0">v0.12.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-11-0">v0.11.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-10-2">v0.10.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-10-1">v0.10.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-10-0">v0.10.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-9-0">v0.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-8-2">v0.8.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-8-1">v0.8.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-8-0">v0.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-7-1">v0.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-7-0">v0.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-6-1">v0.6.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-6-0">v0.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-5-0">v0.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-4-0">v0.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-3-0">v0.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-2-0">v0.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-1-0">v0.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-4">v0.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-3">v0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-2">v0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-1">v0.0.1</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DKUtils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>dkutils.alteryx_api.gallery_client</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for dkutils.alteryx_api.gallery_client</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">is_dataclass</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+<span class="kn">import</span> <span class="nn">dateutil.parser</span> <span class="k">as</span> <span class="nn">date_parser</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">requests_oauthlib</span> <span class="kn">import</span> <span class="n">OAuth1</span>
+
+<span class="kn">from</span> <span class="nn">dkutils.wait_loop</span> <span class="kn">import</span> <span class="n">WaitLoop</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="GalleryException"><a class="viewcode-back" href="../../../apidoc/dkutils.alteryx_api.gallery_client.html#dkutils.alteryx_api.gallery_client.GalleryException">[docs]</a><span class="k">class</span> <span class="nc">GalleryException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="nested_dataclass_decorator"><a class="viewcode-back" href="../../../apidoc/dkutils.alteryx_api.gallery_client.html#dkutils.alteryx_api.gallery_client.nested_dataclass_decorator">[docs]</a><span class="k">def</span> <span class="nf">nested_dataclass_decorator</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    A decorator that can be used on dataclasses that contain nested dataclasses. Use of this decorator on a dataclass</span>
+<span class="sd">    which contains a field that is also a dataclass will allow the class to be instantiated via a dictionary which</span>
+<span class="sd">    also contains a nested dictionary for the the field that is a dataclass. For example if you had the following</span>
+<span class="sd">    declaration:</span>
+<span class="sd">    @dataclass</span>
+<span class="sd">    class A:</span>
+<span class="sd">        a: int</span>
+<span class="sd">        b: str</span>
+
+<span class="sd">    @dataclass</span>
+<span class="sd">    class B:</span>
+<span class="sd">        c: str</span>
+<span class="sd">        d: A</span>
+
+<span class="sd">    You would normally need to construct an instance of Class B as follows:</span>
+<span class="sd">    a = A({&quot;a&quot;: 1, &quot;b&quot;: &quot;one&quot;})</span>
+<span class="sd">    b = B({&quot;c&quot;: &quot;see&quot;, &quot;d&quot;: a})</span>
+<span class="sd">    You need to construct an instance of A before creating B. Using this decorator on B will instead let you do the</span>
+<span class="sd">    following:</span>
+<span class="sd">    b = B({&quot;c&quot;: &quot;see&quot;, &quot;d&quot;: {&quot;a&quot;: 1, &quot;b&quot;: &quot;one&quot;}}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">check_class</span><span class="p">):</span>
+        <span class="n">check_class</span> <span class="o">=</span> <span class="n">dataclass</span><span class="p">(</span><span class="n">check_class</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">original_init</span> <span class="o">=</span> <span class="n">check_class</span><span class="o">.</span><span class="fm">__init__</span>
+
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">field_type</span> <span class="o">=</span> <span class="n">check_class</span><span class="o">.</span><span class="vm">__annotations__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">is_dataclass</span><span class="p">(</span><span class="n">field_type</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                    <span class="n">obj</span> <span class="o">=</span> <span class="n">field_type</span><span class="p">(</span><span class="o">**</span><span class="n">value</span><span class="p">)</span>
+                    <span class="n">kwargs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span>
+                <span class="n">original_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">check_class</span><span class="o">.</span><span class="fm">__init__</span> <span class="o">=</span> <span class="fm">__init__</span>
+        <span class="k">return</span> <span class="n">check_class</span>
+
+    <span class="k">return</span> <span class="n">wrapper</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="n">args</span> <span class="k">else</span> <span class="n">wrapper</span></div>
+
+
+<div class="viewcode-block" id="JobInfoStatus"><a class="viewcode-back" href="../../../apidoc/dkutils.alteryx_api.gallery_client.html#dkutils.alteryx_api.gallery_client.JobInfoStatus">[docs]</a><span class="k">class</span> <span class="nc">JobInfoStatus</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">description</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">_value_</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+    <span class="n">INFO</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Status Message: Information&#39;</span><span class="p">)</span>
+    <span class="n">WARNING</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Status Message: Warning&#39;</span><span class="p">)</span>
+    <span class="n">ERROR</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;Status Message: Error&#39;</span><span class="p">)</span>
+    <span class="n">COMPLETE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;The tool has completed its processing&#39;</span><span class="p">)</span>
+    <span class="n">FIELD_CONVERSION_ERROR</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;Status Message: Field Conversion Error&#39;</span><span class="p">)</span>
+    <span class="n">FIELD_CONVERSION_ERROR_LIMIT</span> <span class="o">=</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;The field conversion error limit has been reached&#39;</span><span class="p">)</span>
+    <span class="n">DISABLED</span> <span class="o">=</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;output tools have been disabled&#39;</span><span class="p">)</span>
+    <span class="n">FILE_INPUT</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="s1">&#39;Input file of this tool&#39;</span><span class="p">)</span>
+    <span class="n">FILE_OUTPUT</span> <span class="o">=</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="s1">&#39;Output file of this tool&#39;</span><span class="p">)</span>
+    <span class="n">UPDATE_OUTPUT_META_INFO_XML</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;XML that is the updated meta info for this tool.&#39;</span><span class="p">)</span>
+    <span class="n">UPDATE_OUTPUT_CONFIG_XML</span> <span class="o">=</span> <span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="s1">&#39;XML that is the configuration for this tool.&#39;</span><span class="p">)</span>
+    <span class="n">REQUEST_AUTO_CONFIG_REFRESH</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="mi">12</span><span class="p">,</span> <span class="s1">&#39;This will cause the config to refresh in the GUI with no user interaction &#39;</span>
+        <span class="s1">&#39;typically this is done when the tool is already in an error state, but maybe &#39;</span>
+        <span class="s1">&#39;the gui can fix it with no user interaction.&#39;</span>
+    <span class="p">)</span>
+    <span class="n">DOCUMENT_TEMP_FILE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="s1">&#39;Usually a browse.&#39;</span><span class="p">)</span>
+    <span class="n">TEMP_DIRECTORY</span> <span class="o">=</span> <span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="s1">&#39;the directory of %Temp%&#39;</span><span class="p">)</span>
+    <span class="n">FILE_DEPENDENCY</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="mi">15</span><span class="p">,</span>
+        <span class="s1">&#39;the dependent files associated with a compound file - Status_File_Output has the main file to &#39;</span>
+        <span class="s1">&#39;link to this has the main file (fully pathed) | fully pathed dependent file | fully pathed &#39;</span>
+        <span class="s1">&#39;dependent file | etc&#39;</span>
+    <span class="p">)</span>
+    <span class="n">CACHE_TEMP_FILE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="s1">&#39;A temporary file for caching data between runs.&#39;</span><span class="p">)</span>
+    <span class="n">APPEND_OR_UPDATE_OUTPUT_CONFIG_XML</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="mi">18</span><span class="p">,</span> <span class="s1">&#39;append something to the XML config data for this tool, or update an existing node.&#39;</span>
+    <span class="p">)</span>
+    <span class="n">CONNECT_INFO_XML</span> <span class="o">=</span> <span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="s1">&#39;XML that is the Connection information for this tool.&#39;</span><span class="p">)</span>
+    <span class="n">LOW_DISK_WARNING</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="mi">20</span><span class="p">,</span>
+        <span class="s1">&#39;This will tell the user that the free disk space is running low and pause the module untile the user responds&#39;</span>
+    <span class="p">)</span>
+    <span class="n">SAFE_MODE_ERROR</span> <span class="o">=</span> <span class="p">(</span><span class="mi">21</span><span class="p">,</span> <span class="s1">&#39;STATUS_RestrictedDataSetError 22&#39;</span><span class="p">)</span>
+    <span class="n">CHOOSE_FROM_MULTIPLE</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="mi">30</span><span class="p">,</span> <span class="s2">&quot;This will present the user with a choice of results. It is typically used for the &quot;</span>
+        <span class="s2">&quot;geocoder for a multiple match but there is no reason it couldn&#39;t be used by any tool.The &quot;</span>
+        <span class="s2">&quot;Message value is a </span><span class="se">\n</span><span class="s2"> delimited list of strings.The 1st string is the question that will &quot;</span>
+        <span class="s2">&quot;be at the top of the dialog.The following are the choices that the user can pick from -1 &quot;</span>
+        <span class="s2">&quot;for cancel</span><span class="se">\n</span><span class="s2">return is -2</span><span class="se">\n</span><span class="s2">for 1st to all, -3 for none to all 0 for none, 1...N for a &quot;</span>
+        <span class="s2">&quot;specific value&quot;</span>
+    <span class="p">)</span>
+    <span class="n">PREVIEW_FAIL</span> <span class="o">=</span> <span class="p">(</span><span class="mi">31</span><span class="p">,</span> <span class="s1">&#39;In preview mode send PREVIEW_FAIL if not supported&#39;</span><span class="p">)</span>
+    <span class="n">OUTPUT_FIELDNAMES</span> <span class="o">=</span> <span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="s1">&#39;The field names for this SRCT output tool.&#39;</span><span class="p">)</span>
+    <span class="n">OUTPUT_RECORD</span> <span class="o">=</span> <span class="p">(</span><span class="mi">41</span><span class="p">,</span> <span class="s1">&#39;The record (comma separated, quoted) for this SRCT output tool.&#39;</span><span class="p">)</span>
+    <span class="n">RECORD_COUNT_AND_SIZE</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="mi">50</span><span class="p">,</span> <span class="s1">&#39;Indicates the number and size of records output by the tool so far. The string will &#39;</span>
+        <span class="s1">&#39;be in the format: &quot;OutputName|RecordCount</span><span class="se">\n</span><span class="s1">TotalSize&quot;&#39;</span>
+    <span class="p">)</span>
+    <span class="n">BROWSE_EVERY_WHERE_FILENAME</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="mi">70</span><span class="p">,</span> <span class="s1">&#39;The FileName of the temporary yxbe file containing the Browse Everywhere data&#39;</span>
+        <span class="s1">&#39; for this run.&#39;</span>
+    <span class="p">)</span>
+    <span class="n">BROWSE_EVERYWHERE_FILENAME_EX</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="mi">71</span><span class="p">,</span> <span class="s1">&#39;The FileName of the temporary yxbe file containing the Browse Everywhere &#39;</span>
+        <span class="s1">&#39;data for e1 in e2 for this run.&#39;</span>
+    <span class="p">)</span>
+    <span class="n">SHARED_ASSET_CREATED</span> <span class="o">=</span> <span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="s1">&#39;STATUS_SharedAssetRequested 91&#39;</span><span class="p">)</span>
+    <span class="n">RELEASE_ASSET_REQUESTED</span> <span class="o">=</span> <span class="p">(</span><span class="mi">92</span><span class="p">,</span> <span class="s1">&#39;STATUS_DisplayCustomDialog 99&#39;</span><span class="p">)</span>
+    <span class="n">INSIGHT_UPDATE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;Indicates an insight needs to be updated on the gallery.&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="JobInfoMessage"><a class="viewcode-back" href="../../../apidoc/dkutils.alteryx_api.gallery_client.html#dkutils.alteryx_api.gallery_client.JobInfoMessage">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">JobInfoMessage</span><span class="p">:</span>
+    <span class="n">status</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">text</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">toolId</span><span class="p">:</span> <span class="nb">int</span></div>
+
+
+<div class="viewcode-block" id="JobInfo"><a class="viewcode-back" href="../../../apidoc/dkutils.alteryx_api.gallery_client.html#dkutils.alteryx_api.gallery_client.JobInfo">[docs]</a><span class="nd">@nested_dataclass_decorator</span>
+<span class="k">class</span> <span class="nc">JobInfo</span><span class="p">:</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">appId</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">createDate</span><span class="p">:</span> <span class="n">datetime</span>
+    <span class="n">status</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">disposition</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">outputs</span><span class="p">:</span> <span class="nb">dict</span>
+    <span class="n">messages</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">JobInfoMessage</span><span class="p">]</span>
+    <span class="n">priority</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">workerTag</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">runWithE2</span><span class="p">:</span> <span class="nb">bool</span>
+
+    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">createDate</span> <span class="o">=</span> <span class="n">date_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">createDate</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">message</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">messages</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="n">JobInfoMessage</span><span class="p">(</span><span class="o">**</span><span class="n">message</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">messages</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">message</span></div>
+
+
+<div class="viewcode-block" id="MetaInfo"><a class="viewcode-back" href="../../../apidoc/dkutils.alteryx_api.gallery_client.html#dkutils.alteryx_api.gallery_client.MetaInfo">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">MetaInfo</span><span class="p">:</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">author</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">copyright</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">urlText</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">outputMessage</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">noOutputFilesMessage</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+<div class="viewcode-block" id="Workflow"><a class="viewcode-back" href="../../../apidoc/dkutils.alteryx_api.gallery_client.html#dkutils.alteryx_api.gallery_client.Workflow">[docs]</a><span class="nd">@nested_dataclass_decorator</span>
+<span class="k">class</span> <span class="nc">Workflow</span><span class="p">:</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">subscriptionId</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">public</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">runDisabled</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">packageType</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">uploadDate</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">fileName</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">metaInfo</span><span class="p">:</span> <span class="n">MetaInfo</span>
+    <span class="n">isChained</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">version</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">runCount</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">workerTag</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">isE2</span><span class="p">:</span> <span class="nb">bool</span></div>
+
+
+<div class="viewcode-block" id="GalleryClient"><a class="viewcode-back" href="../../../apidoc/dkutils.alteryx_api.gallery_client.html#dkutils.alteryx_api.gallery_client.GalleryClient">[docs]</a><span class="k">class</span> <span class="nc">GalleryClient</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Client object for invoking calls to the Alteryx Gallery API. See https://gallery.alteryx.com/api-docs/ for more</span>
+<span class="sd">        information</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        api_location : str</span>
+<span class="sd">            The base URL for the Gallery server</span>
+<span class="sd">        api_key : str</span>
+<span class="sd">            The api key used to authenticate access to the Gallery API. Then can be found in the Keys section of</span>
+<span class="sd">            account settings on the Alteryx Gallery.</span>
+<span class="sd">        api_secret: str</span>
+<span class="sd">            The api secret used to authenticate access to the Gallery API. Then can be found in the Keys section of</span>
+<span class="sd">            account settings on the Alteryx Gallery.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_location</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">api_location</span> <span class="o">=</span> <span class="n">api_location</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">api_key</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">api_secret</span> <span class="o">=</span> <span class="n">api_secret</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">api_location</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_location</span>
+
+    <span class="nd">@api_location</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">api_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_location</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">api_location</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">GalleryException</span><span class="p">(</span><span class="s2">&quot;&#39;api_location&#39; cannot be empty&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_api_location</span> <span class="o">=</span> <span class="n">api_location</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">api_key</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_key</span>
+
+    <span class="nd">@api_key</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">api_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">key</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">GalleryException</span><span class="p">(</span><span class="s2">&quot;&#39;api_key&#39; cannot be empty&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_api_key</span> <span class="o">=</span> <span class="n">key</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">api_secret</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_secret</span>
+
+    <span class="nd">@api_secret</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">api_secret</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">secret_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">secret_key</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">GalleryException</span><span class="p">(</span><span class="s2">&quot;&#39;api_secret&#39; cannot be empty&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_api_secret</span> <span class="o">=</span> <span class="n">secret_key</span>
+
+    <span class="k">def</span> <span class="nf">_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">suffix</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sends a GET request</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        suffix:str</span>
+<span class="sd">            Path for the API call</span>
+<span class="sd">        params:dict, optional</span>
+<span class="sd">            List of tuples or bytes to send in the query string for the Request.</span>
+<span class="sd">        kwargs</span>
+<span class="sd">            Optional arguments that request takes.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            if one occurred.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        object</span>
+<span class="sd">            An object deserialized from the JSON returned in the response</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">api_location</span> <span class="o">+</span> <span class="n">suffix</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_authentication</span><span class="p">(),</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">suffix</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sends a POST request</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        suffix:str</span>
+<span class="sd">            Path for the API call</span>
+<span class="sd">        params:dict, optional</span>
+<span class="sd">            List of tuples or bytes to send in the query string for the Request.</span>
+<span class="sd">        kwargs</span>
+<span class="sd">            Optional arguments that request takes.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            if one occurred.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        object</span>
+<span class="sd">            An object deserialized from the JSON returned in the response</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">api_location</span> <span class="o">+</span> <span class="n">suffix</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_authentication</span><span class="p">(),</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_get_authentication</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        OAuth1</span>
+<span class="sd">            An object that can be used to sign a request using OAuth 1 (RFC5849)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">OAuth1</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_api_key</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_secret</span><span class="p">)</span>
+
+<div class="viewcode-block" id="GalleryClient.get_subscription_workflows"><a class="viewcode-back" href="../../../apidoc/dkutils.alteryx_api.gallery_client.html#dkutils.alteryx_api.gallery_client.GalleryClient.get_subscription_workflows">[docs]</a>    <span class="k">def</span> <span class="nf">get_subscription_workflows</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Workflow</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list or None</span>
+<span class="sd">            A list of workflows</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        Subscription is tied to API key. You cannot request workflows for any other subscription without that</span>
+<span class="sd">        subscription&#39;s key.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">workflows_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get</span><span class="p">(</span><span class="s2">&quot;/v1/workflows/subscription/&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">Workflow</span><span class="p">(</span><span class="o">**</span><span class="n">workflow</span><span class="p">)</span> <span class="k">for</span> <span class="n">workflow</span> <span class="ow">in</span> <span class="n">workflows_list</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="GalleryClient.get_all_workflows"><a class="viewcode-back" href="../../../apidoc/dkutils.alteryx_api.gallery_client.html#dkutils.alteryx_api.gallery_client.GalleryClient.get_all_workflows">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_workflows</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Workflow</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list or None</span>
+<span class="sd">            A list of all workflows</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        Only Gallery Curators(Admins) can use this API endpoint.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">workflows_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get</span><span class="p">(</span><span class="s2">&quot;/admin/v1/workflows/all/&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">Workflow</span><span class="p">(</span><span class="o">**</span><span class="n">workflow</span><span class="p">)</span> <span class="k">for</span> <span class="n">workflow</span> <span class="ow">in</span> <span class="n">workflows_list</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="GalleryClient.execute_workflow"><a class="viewcode-back" href="../../../apidoc/dkutils.alteryx_api.gallery_client.html#dkutils.alteryx_api.gallery_client.GalleryClient.execute_workflow">[docs]</a>    <span class="k">def</span> <span class="nf">execute_workflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">JobInfo</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Queue an app execution job.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JobInfo</span>
+<span class="sd">            Information about the job</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">job_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_post</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;/v1/workflows/</span><span class="si">{</span><span class="n">app_id</span><span class="si">}</span><span class="s2">/jobs/&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">JobInfo</span><span class="p">(</span><span class="o">**</span><span class="n">job_info</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GalleryClient.execute_workflow_and_wait"><a class="viewcode-back" href="../../../apidoc/dkutils.alteryx_api.gallery_client.html#dkutils.alteryx_api.gallery_client.GalleryClient.execute_workflow_and_wait">[docs]</a>    <span class="k">def</span> <span class="nf">execute_workflow_and_wait</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">app_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sleep_seconds</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">300</span><span class="p">,</span> <span class="n">max_wait_seconds</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">JobInfo</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Queue an app execution job and wait for the job to complete.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        GalleryException</span>
+<span class="sd">            if job times out</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JobInfo</span>
+<span class="sd">            Information about the job</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">job_info</span><span class="p">:</span> <span class="n">JobInfo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">execute_workflow</span><span class="p">(</span><span class="n">app_id</span><span class="o">=</span><span class="n">app_id</span><span class="p">)</span>
+        <span class="n">job_id</span> <span class="o">=</span> <span class="n">job_info</span><span class="o">.</span><span class="n">id</span>
+        <span class="n">wait</span> <span class="o">=</span> <span class="n">WaitLoop</span><span class="p">(</span><span class="n">sleep_seconds</span><span class="p">,</span> <span class="n">max_wait_seconds</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">wait</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">job_info</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="s1">&#39;Completed&#39;</span><span class="p">:</span>
+                <span class="n">job_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_job_status</span><span class="p">(</span><span class="n">job_id</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Current status: </span><span class="si">{</span><span class="n">job_info</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">job_info</span>
+        <span class="k">raise</span> <span class="n">GalleryException</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Timed out after: </span><span class="si">{</span><span class="n">max_wait_seconds</span><span class="si">}</span><span class="s1"> seconds&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GalleryClient.get_job_status"><a class="viewcode-back" href="../../../apidoc/dkutils.alteryx_api.gallery_client.html#dkutils.alteryx_api.gallery_client.GalleryClient.get_job_status">[docs]</a>    <span class="k">def</span> <span class="nf">get_job_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">JobInfo</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the job and its current state</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        JobInfo</span>
+<span class="sd">            Information about the job and its current state</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">job_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;/v1/jobs/</span><span class="si">{</span><span class="n">job_id</span><span class="si">}</span><span class="s2">/&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">JobInfo</span><span class="p">(</span><span class="o">**</span><span class="n">job_info</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, DataKitchen
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

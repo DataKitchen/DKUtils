@@ -1,0 +1,7 @@
+dkutils.gmail\_api.gmail\_client module
+=======================================
+
+.. automodule:: dkutils.gmail_api.gmail_client
+   :members:
+   :undoc-members:
+   :show-inheritance:

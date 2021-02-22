@@ -1,0 +1,16 @@
+dkutils.datakitchen\_api package
+================================
+
+.. automodule:: dkutils.datakitchen_api
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   dkutils.datakitchen_api.datakitchen_client
+   dkutils.datakitchen_api.datetime_utils

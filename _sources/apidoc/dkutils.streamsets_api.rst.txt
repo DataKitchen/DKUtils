@@ -1,0 +1,15 @@
+dkutils.streamsets\_api package
+===============================
+
+.. automodule:: dkutils.streamsets_api
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   dkutils.streamsets_api.datacollector_client

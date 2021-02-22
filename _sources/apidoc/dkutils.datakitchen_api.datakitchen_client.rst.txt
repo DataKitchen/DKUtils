@@ -1,0 +1,7 @@
+dkutils.datakitchen\_api.datakitchen\_client module
+===================================================
+
+.. automodule:: dkutils.datakitchen_api.datakitchen_client
+   :members:
+   :undoc-members:
+   :show-inheritance:

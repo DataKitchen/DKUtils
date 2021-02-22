@@ -1,0 +1,15 @@
+dkutils.jira\_api package
+=========================
+
+.. automodule:: dkutils.jira_api
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   dkutils.jira_api.jira_client

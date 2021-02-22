@@ -1,0 +1,15 @@
+dkutils.gmail\_api package
+==========================
+
+.. automodule:: dkutils.gmail_api
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   dkutils.gmail_api.gmail_client

@@ -1,0 +1,7 @@
+dkutils.dictionary\_comparator module
+=====================================
+
+.. automodule:: dkutils.dictionary_comparator
+   :members:
+   :undoc-members:
+   :show-inheritance:

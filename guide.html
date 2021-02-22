@@ -1,0 +1,483 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Development Guide &mdash; DKUtils 1.8.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Release Notes" href="release_notes.html" />
+    <link rel="prev" title="dkutils.wait_loop module" href="apidoc/dkutils.wait_loop.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> DKUtils
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="apidoc/modules.html">Code Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="apidoc/dkutils.html">dkutils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="apidoc/dkutils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="apidoc/dkutils.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Development Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#development-process">Development Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#deployment-checklist">Deployment Checklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#code-formatting-and-standards">Code formatting and standards</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pre-commit-anchor">pre-commit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#flake8-anchor">Flake8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#yapf-anchor">YAPF</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#documentation-best-practices">Documentation Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#versioning">Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#makefile">Makefile</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v1-8-0">v1.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v1-7-1">v1.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v1-7-0">v1.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v1-6-0">v1.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v1-5-0">v1.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v1-4-0">v1.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v1-3-3">v1.3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v1-3-2">v1.3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v1-3-1">v1.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v1-3-0">v1.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v1-2-0">v1.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v1-1-0">v1.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v1-0-1">v1.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v1-0-0">v1.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v0-16-0">v0.16.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v0-15-0">v0.15.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v0-14-0">v0.14.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v0-13-0">v0.13.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v0-12-0">v0.12.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v0-11-0">v0.11.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v0-10-2">v0.10.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v0-10-1">v0.10.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v0-10-0">v0.10.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v0-9-0">v0.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v0-8-2">v0.8.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v0-8-1">v0.8.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v0-8-0">v0.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v0-7-1">v0.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v0-7-0">v0.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v0-6-1">v0.6.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v0-6-0">v0.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v0-5-0">v0.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v0-4-0">v0.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v0-3-0">v0.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v0-2-0">v0.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v0-1-0">v0.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v0-0-4">v0.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v0-0-3">v0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v0-0-2">v0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v0-0-1">v0.0.1</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DKUtils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Development Guide</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/guide.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="release_notes.html" class="btn btn-neutral float-right" title="Release Notes" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="apidoc/dkutils.wait_loop.html" class="btn btn-neutral float-left" title="dkutils.wait_loop module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="development-guide">
+<h1>Development Guide<a class="headerlink" href="#development-guide" title="Permalink to this headline">¶</a></h1>
+<p>This guide explains how to contribute code to the DKUtils library. The development
+process and accompanying checklist detail the steps a developer must follow to deploy
+new code. Additionally, an overview is provided of the third-party tools added to
+aid in the development and maintenance of a clean, well tested, and well documented
+python library.</p>
+<div class="section" id="development-process">
+<h2>Development Process<a class="headerlink" href="#development-process" title="Permalink to this headline">¶</a></h2>
+<p>Multiple steps must be followed to update this package. First, create a branch with a
+name indicating the change you intend to make. When your changes are ready for review, run
+the 4 main <strong class="program">Makefile</strong> targets locally (i.e. test, lint, scan_secrets, and docs) to ensure they pass.
+Please note, fixing one target may break another, so ensure that all four targets pass after
+making any changes. Next, create a Pull Request (PR) in <a class="reference external" href="https://ghe.datakitchen.io/DataKitchen/DKUtils">GitHub</a>
+and assign it to one or more Implementation engineers. Once the PR is approved, run the
+<a class="reference external" href="https://cloud.datakitchen.io/dk/index.html#/variation/im/IM_Production/CICD_DKUtils/branch_ci?tab=graph">branch_ci</a>
+recipe variation of the <code class="docutils literal notranslate"><span class="pre">CICD_DKUtils</span></code> recipe in the <code class="docutils literal notranslate"><span class="pre">IM_Production</span></code> kitchen - be sure to override the
+<code class="docutils literal notranslate"><span class="pre">branch</span></code> variable with the name of your branch. Once this variation is passing and your PR is approved,
+merge your changes to master.</p>
+<p>To deploy your new package to PyPI, run the
+<a class="reference external" href="https://cloud.datakitchen.io/dk/index.html#/variation/im/IM_Production/CICD_DKUtils/complete_cicd?tab=graph">complete_cicd</a>
+variation in the same recipe - be sure to specify the appropriate <code class="docutils literal notranslate"><span class="pre">semantic_version_increment</span></code>.
+Afterward, check <a class="reference external" href="https://pypi.org/project/DKUtils/">PyPI</a> to ensure your version was uploaded.
+Finally, <strong class="command">pip install</strong> the new package and test to ensure your updates are as expected and verify the latest
+documentation is updated on the <a class="reference external" href="http://dkutils.dk.io/">DKUtils Website</a>.</p>
+<p>These details are listed in greater detail in the checklist below. This checklist should be referenced
+any time you intend to update this library.</p>
+<div class="section" id="deployment-checklist">
+<h3>Deployment Checklist<a class="headerlink" href="#deployment-checklist" title="Permalink to this headline">¶</a></h3>
+<p>Ensure all of these items are performed and passing prior to running the
+<a class="reference external" href="https://cloud.datakitchen.io/dk/index.html#/variation/im/IM_Production/CICD_DKUtils/complete_cicd?tab=graph">complete_cicd</a>
+to build and deploy a new library version:</p>
+<ul class="simple">
+<li><p>Run <strong class="command">make test</strong></p>
+<ul>
+<li><p>Ensure all tests pass</p></li>
+<li><p>Ensure code coverage is adequate and not significantly different than before your change and no less than 80%</p></li>
+</ul>
+</li>
+<li><p>Run <strong class="command">make lint</strong></p>
+<ul>
+<li><p>Fix any issues reported by Flake8</p></li>
+<li><p>Commit any changes made automatically by YAPF</p></li>
+</ul>
+</li>
+<li><p>Run <strong class="command">make scan_secrets</strong></p>
+<ul>
+<li><p>Remove any secrets that have been added</p></li>
+<li><p>Add output lines that don’t contain secrets to the ignored_secrets.txt file and commit</p></li>
+</ul>
+</li>
+<li><p>Run <strong class="command">make docs</strong></p>
+<ul>
+<li><p>Ensure you added an entry to the release notes (<code class="file docutils literal notranslate"><span class="pre">/docs/release_notes.rst</span></code>) with the
+appropriate semantic version increment</p></li>
+<li><p>Resolve any warnings or errors (i.e. red text in output)</p></li>
+<li><p>Review your documentation updates (i.e. open <code class="file docutils literal notranslate"><span class="pre">/docs/_build/html/index.html</span></code> in your browser)</p></li>
+</ul>
+</li>
+<li><p>Create a PR (Pull Request) of your branch</p>
+<ul>
+<li><p>Assign it to one or more Implementation team members</p></li>
+<li><p>Address any PR feedback - approval is required prior to a merge</p></li>
+</ul>
+</li>
+<li><p>Run <a class="reference external" href="https://cloud.datakitchen.io/dk/index.html#/variation/im/IM_Production/CICD_DKUtils/branch_ci?tab=graph">branch_ci</a>
+recipe variation</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>Make sure you override the <code class="docutils literal notranslate"><span class="pre">branch</span></code> variable with the name of your current branch</p></li>
+<li><p>Ensure this recipe passes before merging your PR to master</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Merge your branch into master</p></li>
+<li><p>Run <a class="reference external" href="https://cloud.datakitchen.io/dk/index.html#/variation/im/IM_Production/CICD_DKUtils/complete_cicd?tab=graph">complete_cicd</a>
+recipe variation</p>
+<ul>
+<li><p>Tags current master with the new semantic version (e.g. v0.5.0)</p></li>
+<li><p>Scans the code for secrets by running <strong class="command">make scan_secrets</strong></p></li>
+<li><p>Lints the code by running <strong class="command">make lint</strong></p></li>
+<li><p>Runs the tests by running <strong class="command">make test</strong></p></li>
+<li><p>Bumps the version by running <strong class="command">make bump/&lt;semantic_version_increment&gt;</strong></p></li>
+<li><p>Builds and uploads the distribution archives by running <strong class="command">make build</strong> and <strong class="command">make upload</strong></p></li>
+<li><p>Builds and uploads the documentation by running <strong class="command">make docs</strong></p>
+<ul>
+<li><p>Docs and test &amp; coverage results are published to <a class="reference external" href="http://dkutils.dk.io/">DKUtils Website</a></p></li>
+<li><p>You must be on the VPN to view the documentation and may need to add <code class="docutils literal notranslate"><span class="pre">3.225.225.176</span>&#160; <span class="pre">dkutils.dk.io</span></code> to
+your <code class="file docutils literal notranslate"><span class="pre">/etc/hosts</span></code> file</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Ensure a new package version was uploaded to <a class="reference external" href="https://pypi.org/project/DKUtils/">PyPI</a></p>
+<ul>
+<li><p>Pip install your new package and run some smoke tests to ensure your new changes are working as expected</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="code-formatting-and-standards">
+<h2>Code formatting and standards<a class="headerlink" href="#code-formatting-and-standards" title="Permalink to this headline">¶</a></h2>
+<p>To enforce uniform code and avoid unnecessary style checks, three tools
+are utilized:</p>
+<ul class="simple">
+<li><p><strong class="program">pre-commit</strong></p></li>
+<li><p><strong class="program">flake8</strong></p></li>
+<li><p><strong class="program">yapf</strong></p></li>
+</ul>
+<p>Code formatting guidelines are codified in the <strong class="program">flake8</strong> and <strong class="program">yapf</strong>
+sections of the <code class="file docutils literal notranslate"><span class="pre">setup.cfg</span></code>. The <strong class="program">pre-commit</strong> framework is used to run
+these tools and flag errors and warnings prior to each commit. Please install
+<strong class="program">pre-commit</strong> to this project’s local virtual environment and run
+<strong class="command">pre-commit install</strong> in the project root directory. This will install
+the requisite pre-commit hooks to run these backend formatting tools over all code on
+commits. Code that does not adhere to standards will be automatically rejected by
+the <a class="reference external" href="https://cloud.datakitchen.io/dk/index.html#/variation/im/IM_Production/CICD_DKUtils/complete_cicd?tab=graph">CICD_DKUtils Recipe</a>
+that is used to test, build, and publish this package.</p>
+<div class="section" id="pre-commit-anchor">
+<span id="id6"></span><h3><a class="reference external" href="https://pre-commit.com/">pre-commit</a><a class="headerlink" href="#pre-commit-anchor" title="Permalink to this headline">¶</a></h3>
+<p>A framework for managing and maintaining multi-language pre-commit hooks.</p>
+<p>Git hook scripts are useful for identifying simple issues before submission
+to code review. We run our hooks on every commit to automatically point out
+issues in code such as missing semicolons, trailing whitespace, and debug
+statements. By pointing these issues out before code review, this allows a
+code reviewer to focus on the architecture of a change while not wasting
+time with trivial style nitpicks.</p>
+</div>
+<div class="section" id="flake8-anchor">
+<span id="id7"></span><h3><a class="reference external" href="http://flake8.pycqa.org/en/latest/">Flake8</a><a class="headerlink" href="#flake8-anchor" title="Permalink to this headline">¶</a></h3>
+<p>A command-line utility for enforcing style consistency across Python projects. By
+default it includes lint checks provided by the PyFlakes project, PEP-0008
+inspired style checks provided by the PyCodeStyle project, and McCabe complexity
+checking provided by the McCabe project. It will also run third-party extensions
+if they are found and installed.</p>
+</div>
+<div class="section" id="yapf-anchor">
+<span id="id8"></span><h3><a class="reference external" href="https://github.com/google/yapf">YAPF</a><a class="headerlink" href="#yapf-anchor" title="Permalink to this headline">¶</a></h3>
+<p>YAPF is based off of ‘clang-format’, developed by Daniel Jasper. In essence, the
+algorithm takes the code and reformats it to the best formatting that conforms to
+the style guide, even if the original code didn’t violate the style guide. The
+idea is also similar to the ‘gofmt’ tool for the Go programming language: end all
+holy wars about formatting - if the whole codebase of a project is simply piped
+through YAPF whenever modifications are made, the style remains consistent
+throughout the project and there’s no point arguing about style in every code
+review.</p>
+</div>
+</div>
+<div class="section" id="documentation-best-practices">
+<span id="documentation-anchor"></span><h2>Documentation Best Practices<a class="headerlink" href="#documentation-best-practices" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://www.sphinx-doc.org/en/master/">Sphinx</a> is a tool that makes it easy
+to create intelligent and beautiful documentation, written by Georg Brandl and
+licensed under the BSD license. The documentation and its configuration are
+located in this project’s <code class="file docutils literal notranslate"><span class="pre">docs</span></code> directory.</p>
+</div>
+<div class="section" id="versioning">
+<span id="versioning-anchor"></span><h2>Versioning<a class="headerlink" href="#versioning" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://github.com/peritus/bumpversion">Bumpversion</a> is used to handle
+project versioning. This is configured in <code class="file docutils literal notranslate"><span class="pre">.setup.cfg</span></code>.</p>
+</div>
+<div class="section" id="makefile">
+<span id="makefile-anchor"></span><h2>Makefile<a class="headerlink" href="#makefile" title="Permalink to this headline">¶</a></h2>
+<p>A <code class="file docutils literal notranslate"><span class="pre">Makefile</span></code> is provided with a set of targets that are useful for managing this library. As shown below, it’s
+useful for cleaning your working directory, running tests, linting, generating <strong class="program">Sphinx</strong>
+documentation, versioning, and building and pushing package archives to PyPI.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Add &#39;-ext&#39; to any target to run it inside a docker container
+
+Versioning:
+    bump/major bump/minor bump/patch - bump the version
+
+Utilities:
+    bash         run bash - typically used in conjunction with -ext to enter a docker container
+    scan_secrets scan source code for sensitive information
+
+Linting:
+    lint         run flake8 and yapf
+    flake8       run flake8
+    yapf         run yapf and correct issues in-place
+    yapf-diff    run yapf and display diff between existing code and resolution if in-place is used
+
+Testing:
+    test         run all unit tests
+    test_unit    run all unit tests
+    clean_unit   remove files from last test run (e.g. report_dir, .coverage, etc.)
+    tox          run unit tests in python 2 and 3
+    clean_tox    clean tox files (e.g. .tox)
+
+Documentation:
+    docs         generate Sphinx documentation
+    docs/html    generate Sphinx documentation
+    docs/clean   remove generated Sphinx documentation
+
+Build and Upload:
+    build        generate distribution archives (i.e. *.tar.gz and *.whl)
+    upload       upload distribution archives to PyPI
+    clean_build  remove all the build files (i.e. build, dist, *.egg-info)
+
+Cleanup:
+    clean        run all the clean targets in one go
+    clean_pyc    remove all *.pyc files
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="release_notes.html" class="btn btn-neutral float-right" title="Release Notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="apidoc/dkutils.wait_loop.html" class="btn btn-neutral float-left" title="dkutils.wait_loop module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, DataKitchen
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

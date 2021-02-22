@@ -1,0 +1,484 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>dkutils.streamsets_api.datacollector_client &mdash; DKUtils 1.8.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> DKUtils
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../apidoc/modules.html">Code Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../apidoc/dkutils.html">dkutils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../apidoc/dkutils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../apidoc/dkutils.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guide.html">Development Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#development-process">Development Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#deployment-checklist">Deployment Checklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#code-formatting-and-standards">Code formatting and standards</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#pre-commit-anchor">pre-commit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#flake8-anchor">Flake8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#yapf-anchor">YAPF</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#documentation-best-practices">Documentation Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#versioning">Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#makefile">Makefile</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-8-0">v1.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-7-1">v1.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-7-0">v1.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-6-0">v1.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-5-0">v1.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-4-0">v1.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-3">v1.3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-2">v1.3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-1">v1.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-0">v1.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-2-0">v1.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-1-0">v1.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-0-1">v1.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-0-0">v1.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-16-0">v0.16.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-15-0">v0.15.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-14-0">v0.14.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-13-0">v0.13.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-12-0">v0.12.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-11-0">v0.11.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-10-2">v0.10.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-10-1">v0.10.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-10-0">v0.10.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-9-0">v0.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-8-2">v0.8.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-8-1">v0.8.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-8-0">v0.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-7-1">v0.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-7-0">v0.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-6-1">v0.6.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-6-0">v0.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-5-0">v0.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-4-0">v0.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-3-0">v0.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-2-0">v0.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-1-0">v0.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-4">v0.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-3">v0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-2">v0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-1">v0.0.1</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DKUtils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>dkutils.streamsets_api.datacollector_client</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for dkutils.streamsets_api.datacollector_client</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="kn">from</span> <span class="nn">dkutils.constants</span> <span class="kn">import</span> <span class="p">(</span><span class="n">API_GET</span><span class="p">,</span> <span class="n">API_POST</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="PipelineStatus"><a class="viewcode-back" href="../../../apidoc/dkutils.streamsets_api.datacollector_client.html#dkutils.streamsets_api.datacollector_client.PipelineStatus">[docs]</a><span class="k">class</span> <span class="nc">PipelineStatus</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">EDITED</span> <span class="o">=</span> <span class="s1">&#39;EDITED&#39;</span>  <span class="c1"># The pipeline has been created or modified, and has not run since the last modification.</span>
+    <span class="n">FINISHED</span> <span class="o">=</span> <span class="s1">&#39;FINISHED&#39;</span>  <span class="c1"># The pipeline has completed all expected processing and has stopped running.</span>
+    <span class="n">RUN_ERROR</span> <span class="o">=</span> <span class="s1">&#39;RUN_ERROR&#39;</span>  <span class="c1"># The pipeline encountered an error while running and stopped.</span>
+    <span class="n">RUNNING</span> <span class="o">=</span> <span class="s1">&#39;RUNNING&#39;</span>  <span class="c1"># The pipeline is running.</span>
+    <span class="n">STOPPED</span> <span class="o">=</span> <span class="s1">&#39;STOPPED&#39;</span>  <span class="c1"># The pipeline was manually stopped.</span>
+    <span class="n">START_ERROR</span> <span class="o">=</span> <span class="s1">&#39;START_ERROR&#39;</span>  <span class="c1"># The pipeline encountered an error while starting and failed to start.</span>
+    <span class="n">STOP_ERROR</span> <span class="o">=</span> <span class="s1">&#39;STOP_ERROR&#39;</span>  <span class="c1"># The pipeline encountered an error while stopping.</span>
+    <span class="n">CONNECT_ERROR</span> <span class="o">=</span> <span class="s1">&#39;CONNECT_ERROR&#39;</span>  <span class="c1"># noqa: When running a cluster-mode pipeline, Data Collector cannot connect to the underlying cluster manager, such as Mesos or YARN.</span>
+    <span class="n">CONNECTING</span> <span class="o">=</span> <span class="s1">&#39;CONNECTING&#39;</span>  <span class="c1"># The pipeline is preparing to restart after a Data Collector restart.</span>
+    <span class="n">DISCONNECTED</span> <span class="o">=</span> <span class="s1">&#39;DISCONNECTED&#39;</span>  <span class="c1"># noqa: The pipeline is disconnected from external systems, typically because Data Collector is restarting or shutting down.</span>
+    <span class="n">FINISHING</span> <span class="o">=</span> <span class="s1">&#39;FINISHING&#39;</span>  <span class="c1"># The pipeline is in the process of finishing all expected processing.</span>
+    <span class="n">RETRY</span> <span class="o">=</span> <span class="s1">&#39;RETRY&#39;</span>  <span class="c1"># noqa: The pipeline is trying to run after encountering an error while running. This occurs only when the pipeline is configured for a retry upon error.</span>
+    <span class="n">RUNNING_ERROR</span> <span class="o">=</span> <span class="s1">&#39;RUNNING_ERROR&#39;</span>  <span class="c1"># The pipeline encounters errors while running.</span>
+    <span class="n">STARTING</span> <span class="o">=</span> <span class="s1">&#39;STARTING&#39;</span>  <span class="c1"># The pipeline is initializing, but hasn&#39;t started yet.</span>
+    <span class="n">STARTING_ERROR</span> <span class="o">=</span> <span class="s1">&#39;STARTING_ERROR&#39;</span>  <span class="c1"># The pipeline encounters errors while starting.</span>
+    <span class="n">STOPPING</span> <span class="o">=</span> <span class="s1">&#39;STOPPING&#39;</span>  <span class="c1"># The pipeline is in the process of stopping after a manual request to stop.</span>
+    <span class="n">STOPPING_ERROR</span> <span class="o">=</span> <span class="s1">&#39;STOPPING_ERROR&#39;</span>  <span class="c1"># The pipeline encounters errors while stopping.</span></div>
+
+
+<div class="viewcode-block" id="DataCollectorClient"><a class="viewcode-back" href="../../../apidoc/dkutils.streamsets_api.datacollector_client.html#dkutils.streamsets_api.datacollector_client.DataCollectorClient">[docs]</a><span class="k">class</span> <span class="nc">DataCollectorClient</span><span class="p">:</span>
+
+<div class="viewcode-block" id="DataCollectorClient.__init__"><a class="viewcode-back" href="../../../apidoc/dkutils.streamsets_api.datacollector_client.html#dkutils.streamsets_api.datacollector_client.DataCollectorClient.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Client object for invoking `StreamSets Data Collector</span>
+<span class="sd">        REST API &lt;https://streamsets.com/blog/retrieving-metrics-via-streamsets-data-collector-rest-api/&gt;`_</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        host: str</span>
+<span class="sd">          The name of the host to use in making REST API calls.</span>
+<span class="sd">        port: int</span>
+<span class="sd">          The port to use in making REST API calls.</span>
+<span class="sd">        username : str</span>
+<span class="sd">          Username to authenticate when making REST API calls.</span>
+<span class="sd">        password : str</span>
+<span class="sd">          Password to authenticate when making REST API calls.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;http://</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s1">:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s1">/rest/v1/&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_validate_pipline_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pipeline_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Ensure that the pipeline_id is given&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">pipeline_id</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;pipeline_id is required&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_api_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_method</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make HTTP request to arbitrary API endpoint, with optional parameters as payload.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        http_method : str</span>
+<span class="sd">            HTTP method to use when making API request.</span>
+<span class="sd">        *args : list</span>
+<span class="sd">            Variable length list of strings to construct endpoint path.</span>
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            Arbitrary keyword arguments to construct request payload.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        requests.Response</span>
+<span class="sd">            :class:`Response &lt;Response&gt;` object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">api_request</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">requests</span><span class="p">,</span> <span class="n">http_method</span><span class="p">)</span>
+        <span class="n">api_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span><span class="si">}{</span><span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">api_request</span><span class="p">(</span>
+            <span class="n">api_path</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;X-Requested-By&#39;</span><span class="p">:</span> <span class="s1">&#39;DataKitchen&#39;</span><span class="p">},</span> <span class="n">json</span><span class="o">=</span><span class="n">kwargs</span>
+        <span class="p">)</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">response</span>
+
+    <span class="k">def</span> <span class="nf">_pipeline_operation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_method</span><span class="p">,</span> <span class="n">pipeline_id</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This is an internal function that is used to invoke a pipeline operation which returns the pipeline status</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        http_method : str</span>
+<span class="sd">            HTTP method to use when making API request.</span>
+<span class="sd">        pipeline_id: str</span>
+<span class="sd">            The pipeline id of the pipeline for which status information is being requested</span>
+<span class="sd">        operation: str</span>
+<span class="sd">            The pipeline operation to be performed</span>
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            Arbitrary keyword arguments to construct runtime parameters</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the pipeline_id is None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        requests.Response.json()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_pipline_id</span><span class="p">(</span><span class="n">pipeline_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span>
+            <span class="n">http_method</span><span class="p">,</span> <span class="s1">&#39;pipeline&#39;</span><span class="p">,</span> <span class="n">pipeline_id</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">operation</span><span class="si">}</span><span class="s1">?rev=0&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+<div class="viewcode-block" id="DataCollectorClient.get_pipeline_full_status"><a class="viewcode-back" href="../../../apidoc/dkutils.streamsets_api.datacollector_client.html#dkutils.streamsets_api.datacollector_client.DataCollectorClient.get_pipeline_full_status">[docs]</a>    <span class="k">def</span> <span class="nf">get_pipeline_full_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pipeline_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the JSON containing the status of the pipeline with the given pipeline_id</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pipeline_id: str</span>
+<span class="sd">            The pipeline id of the pipeline for which status information is being requested</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the pipeline_id is None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        requests.Response.json()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pipeline_operation</span><span class="p">(</span><span class="n">API_GET</span><span class="p">,</span> <span class="n">pipeline_id</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataCollectorClient.get_pipeline_status"><a class="viewcode-back" href="../../../apidoc/dkutils.streamsets_api.datacollector_client.html#dkutils.streamsets_api.datacollector_client.DataCollectorClient.get_pipeline_status">[docs]</a>    <span class="k">def</span> <span class="nf">get_pipeline_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pipeline_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get an instance of Pipeline.Status that represents the status of the pipeline with the given pipeline_id</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pipeline_id: str</span>
+<span class="sd">            The pipeline id of the pipeline for which status information is being requested</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the pipeline_id is None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        PipelineStatus</span>
+<span class="sd">            :class:`PipelineStatus &lt;PipelineStatus&gt;` object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_pipeline_full_status</span><span class="p">(</span><span class="n">pipeline_id</span><span class="p">)[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">PipelineStatus</span><span class="p">(</span><span class="n">status</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataCollectorClient.start_pipeline"><a class="viewcode-back" href="../../../apidoc/dkutils.streamsets_api.datacollector_client.html#dkutils.streamsets_api.datacollector_client.DataCollectorClient.start_pipeline">[docs]</a>    <span class="k">def</span> <span class="nf">start_pipeline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pipeline_id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Start the pipeline with the given pipeline_id</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pipeline_id: str</span>
+<span class="sd">            The pipeline id of the pipeline to start</span>
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            Arbitrary keyword arguments to construct runtime parameters</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the pipeline_id is None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        requests.Response.json()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pipeline_operation</span><span class="p">(</span><span class="n">API_POST</span><span class="p">,</span> <span class="n">pipeline_id</span><span class="p">,</span> <span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataCollectorClient.stop_pipeline"><a class="viewcode-back" href="../../../apidoc/dkutils.streamsets_api.datacollector_client.html#dkutils.streamsets_api.datacollector_client.DataCollectorClient.stop_pipeline">[docs]</a>    <span class="k">def</span> <span class="nf">stop_pipeline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pipeline_id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Stop the pipeline with the given pipeline_id</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pipeline_id: str</span>
+<span class="sd">            The pipeline id of the pipeline to stop</span>
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            Arbitrary keyword arguments to construct runtime parameters</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the pipeline_id is None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        requests.Response.json()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pipeline_operation</span><span class="p">(</span><span class="n">API_POST</span><span class="p">,</span> <span class="n">pipeline_id</span><span class="p">,</span> <span class="s1">&#39;stop&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataCollectorClient.reset_pipeline"><a class="viewcode-back" href="../../../apidoc/dkutils.streamsets_api.datacollector_client.html#dkutils.streamsets_api.datacollector_client.DataCollectorClient.reset_pipeline">[docs]</a>    <span class="k">def</span> <span class="nf">reset_pipeline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pipeline_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resets the origin offset of the pipeline with the given pipeline_id</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pipeline_id: str</span>
+<span class="sd">            The pipeline id of the pipeline for which status information is being requested</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the pipeline_id is None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_pipline_id</span><span class="p">(</span><span class="n">pipeline_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_POST</span><span class="p">,</span> <span class="s1">&#39;pipeline&#39;</span><span class="p">,</span> <span class="n">pipeline_id</span><span class="p">,</span> <span class="s1">&#39;resetOffset?rev=0&#39;</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, DataKitchen
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

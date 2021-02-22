@@ -1,0 +1,430 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>dkutils.jira_api.jira_client module &mdash; DKUtils 1.8.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="dkutils.ssh package" href="dkutils.ssh.html" />
+    <link rel="prev" title="dkutils.jira_api package" href="dkutils.jira_api.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> DKUtils
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="dkutils.html">dkutils package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="dkutils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dkutils.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guide.html">Development Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#development-process">Development Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#deployment-checklist">Deployment Checklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#code-formatting-and-standards">Code formatting and standards</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#pre-commit-anchor">pre-commit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#flake8-anchor">Flake8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#yapf-anchor">YAPF</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#documentation-best-practices">Documentation Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#versioning">Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#makefile">Makefile</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-8-0">v1.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-7-1">v1.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-7-0">v1.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-6-0">v1.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-5-0">v1.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-4-0">v1.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-3">v1.3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-2">v1.3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-1">v1.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-0">v1.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-2-0">v1.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-1-0">v1.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-0-1">v1.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-0-0">v1.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-16-0">v0.16.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-15-0">v0.15.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-14-0">v0.14.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-13-0">v0.13.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-12-0">v0.12.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-11-0">v0.11.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-10-2">v0.10.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-10-1">v0.10.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-10-0">v0.10.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-9-0">v0.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-8-2">v0.8.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-8-1">v0.8.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-8-0">v0.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-7-1">v0.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-7-0">v0.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-6-1">v0.6.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-6-0">v0.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-5-0">v0.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-4-0">v0.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-3-0">v0.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-2-0">v0.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-1-0">v0.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-4">v0.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-3">v0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-2">v0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-1">v0.0.1</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DKUtils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">dkutils</a> &raquo;</li>
+        
+          <li><a href="dkutils.html">dkutils package</a> &raquo;</li>
+        
+          <li><a href="dkutils.jira_api.html">dkutils.jira_api package</a> &raquo;</li>
+        
+      <li>dkutils.jira_api.jira_client module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/apidoc/dkutils.jira_api.jira_client.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="dkutils.ssh.html" class="btn btn-neutral float-right" title="dkutils.ssh package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="dkutils.jira_api.html" class="btn btn-neutral float-left" title="dkutils.jira_api package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-dkutils.jira_api.jira_client">
+<span id="dkutils-jira-api-jira-client-module"></span><h1>dkutils.jira_api.jira_client module<a class="headerlink" href="#module-dkutils.jira_api.jira_client" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="dkutils.jira_api.jira_client.JiraClient">
+<em class="property">class </em><code class="sig-prename descclassname">dkutils.jira_api.jira_client.</code><code class="sig-name descname">JiraClient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">server</span></em>, <em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">api_key</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/jira_api/jira_client.html#JiraClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.jira_api.jira_client.JiraClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Client object for invoking JIRA Python API “<a class="reference external" href="https://pypi.org/project/jira/">https://pypi.org/project/jira/</a>”</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>server</strong> (<em>str</em>) – The server address and context path to use. Defaults to <a class="reference external" href="http://localhost:2990/jira">http://localhost:2990/jira</a></p></li>
+<li><p><strong>username</strong> (<em>str</em>) – Username to establish a session via HTTP BASIC authentication.</p></li>
+<li><p><strong>api_key</strong> (<em>str</em>) – API Key to establish a session via HTTP BASIC authentication.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="dkutils.jira_api.jira_client.JiraClient.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">server</span></em>, <em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">api_key</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/jira_api/jira_client.html#JiraClient.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.jira_api.jira_client.JiraClient.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Client object for invoking JIRA Python API “<a class="reference external" href="https://pypi.org/project/jira/">https://pypi.org/project/jira/</a>”</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>server</strong> (<em>str</em>) – The server address and context path to use. Defaults to <a class="reference external" href="http://localhost:2990/jira">http://localhost:2990/jira</a></p></li>
+<li><p><strong>username</strong> (<em>str</em>) – Username to establish a session via HTTP BASIC authentication.</p></li>
+<li><p><strong>api_key</strong> (<em>str</em>) – API Key to establish a session via HTTP BASIC authentication.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.jira_api.jira_client.JiraClient.add_comment">
+<code class="sig-name descname">add_comment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">issue_key</span></em>, <em class="sig-param"><span class="n">comment</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/jira_api/jira_client.html#JiraClient.add_comment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.jira_api.jira_client.JiraClient.add_comment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a comment from the current authenticated user on the specified issue and return a Resource for it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>issue_key</strong> (<em>str</em>) – ID or key of the issue to add the comment to (e.g. IM-1)</p></li>
+<li><p><strong>comment</strong> (<em>str</em>) – Text of the comment to add</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>JiraError</strong> – If the issue does not exist or you do not have permission to see it.</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Resource object of &lt;class ‘jira.resources.Comment’&gt; with Comment ID.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.jira_api.jira_client.JiraClient.get_issue_field">
+<code class="sig-name descname">get_issue_field</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">issue</span></em>, <em class="sig-param"><span class="n">field</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/jira_api/jira_client.html#JiraClient.get_issue_field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.jira_api.jira_client.JiraClient.get_issue_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function that returns the value of the requested value for an issue. This function is used in the
+get_issues() funtion to extract the fields of an issue.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>issue</strong> (<em>&lt;class 'jira.resources.Issue'&gt;</em>) – Issue Object of class &lt;class ‘jira.resources.Issue’&gt;.</p></li>
+<li><p><strong>field</strong> (<em>str</em>) – Name of the expected field. (e.g status).
+Note: for a custom field, use the custom field id. (e.g. customfield_10028)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>AttributeError</strong> – If the Field does not exist for the issue.</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>For a text field : returns a string with the value of the requested field. (e.g. ‘Error’)
+For a field with multiple options : returns a string of comma separated values from all the options
+available in the field. (for e.g ‘User1,User2’)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.jira_api.jira_client.JiraClient.get_issues">
+<code class="sig-name descname">get_issues</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">project</span></em>, <em class="sig-param"><span class="n">fields</span><span class="o">=</span><span class="default_value">['created', 'creator', 'assignee', 'status', 'issuetype', 'priority', 'summary', 'description', 'resolution', 'resolutiondate']</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/jira_api/jira_client.html#JiraClient.get_issues"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.jira_api.jira_client.JiraClient.get_issues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a Pandas DataFrame of all JIRA Issues for the requested project with values for
+all requested fields.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project</strong> (<em>str</em>) – Project name or key to pull issues from.</p></li>
+<li><p><strong>fields</strong> (<em>list</em><em>, </em><em>optional</em>) – <p>A list of fields to be extracted for each issue in the project.
+(default is [‘created’, ‘creator’, ‘assignee’, ‘status’, ‘issuetype’, ‘priority’,
+‘summary’, ‘description’, ‘resolution’, ‘resolutiondate’])</p>
+<p>Note: for a custom field, use the custom field id. (e.g. customfield_10028)</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>AttributeError</strong> – If the Field does not exist for the issue.</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><p>A pandas DataFrame of all issues for the requested project with values for all the
+requested fields.</p>
+<p>The column header of the resulting DataFrame is of the form:</p>
+<blockquote>
+<div><p>If “fields” is defined: [‘project’, ‘key’, field1, field2 , field3….]
+(default) If “fields” is not defined: [‘project’, ‘key’ ,’created’, ‘creator’,
+‘assignee’,’status’, ‘issuetype’, ‘priority’, ‘summary’, ‘description’,
+‘resolution’, ‘resolutiondate’]</p>
+</div></blockquote>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>pandas DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.jira_api.jira_client.JiraClient.transition_issue">
+<code class="sig-name descname">transition_issue</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">issue_key</span></em>, <em class="sig-param"><span class="n">status</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/jira_api/jira_client.html#JiraClient.transition_issue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.jira_api.jira_client.JiraClient.transition_issue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform a transition on an issue.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>issue_key</strong> (<em>str</em>) – ID or key of the issue to add the comment to (e.g. IM-1)</p></li>
+<li><p><strong>status</strong> (<em>str</em>) – Name of the transition to perform</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>JiraError</strong> – If the issue does not exist or you do not have permission to see it.</p></li>
+<li><p><strong>KeyError</strong> – If transition does not exist for the issue.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="dkutils.ssh.html" class="btn btn-neutral float-right" title="dkutils.ssh package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="dkutils.jira_api.html" class="btn btn-neutral float-left" title="dkutils.jira_api package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, DataKitchen
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

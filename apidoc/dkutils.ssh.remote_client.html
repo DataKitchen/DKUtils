@@ -1,0 +1,433 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>dkutils.ssh.remote_client module &mdash; DKUtils 1.8.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="dkutils.streamsets_api package" href="dkutils.streamsets_api.html" />
+    <link rel="prev" title="dkutils.ssh package" href="dkutils.ssh.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> DKUtils
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="dkutils.html">dkutils package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="dkutils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dkutils.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guide.html">Development Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#development-process">Development Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#deployment-checklist">Deployment Checklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#code-formatting-and-standards">Code formatting and standards</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#pre-commit-anchor">pre-commit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#flake8-anchor">Flake8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#yapf-anchor">YAPF</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#documentation-best-practices">Documentation Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#versioning">Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#makefile">Makefile</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-8-0">v1.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-7-1">v1.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-7-0">v1.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-6-0">v1.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-5-0">v1.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-4-0">v1.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-3">v1.3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-2">v1.3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-1">v1.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-0">v1.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-2-0">v1.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-1-0">v1.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-0-1">v1.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-0-0">v1.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-16-0">v0.16.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-15-0">v0.15.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-14-0">v0.14.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-13-0">v0.13.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-12-0">v0.12.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-11-0">v0.11.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-10-2">v0.10.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-10-1">v0.10.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-10-0">v0.10.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-9-0">v0.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-8-2">v0.8.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-8-1">v0.8.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-8-0">v0.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-7-1">v0.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-7-0">v0.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-6-1">v0.6.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-6-0">v0.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-5-0">v0.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-4-0">v0.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-3-0">v0.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-2-0">v0.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-1-0">v0.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-4">v0.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-3">v0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-2">v0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-1">v0.0.1</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DKUtils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">dkutils</a> &raquo;</li>
+        
+          <li><a href="dkutils.html">dkutils package</a> &raquo;</li>
+        
+          <li><a href="dkutils.ssh.html">dkutils.ssh package</a> &raquo;</li>
+        
+      <li>dkutils.ssh.remote_client module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/apidoc/dkutils.ssh.remote_client.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="dkutils.streamsets_api.html" class="btn btn-neutral float-right" title="dkutils.streamsets_api package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="dkutils.ssh.html" class="btn btn-neutral float-left" title="dkutils.ssh package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-dkutils.ssh.remote_client">
+<span id="dkutils-ssh-remote-client-module"></span><h1>dkutils.ssh.remote_client module<a class="headerlink" href="#module-dkutils.ssh.remote_client" title="Permalink to this headline">¶</a></h1>
+<p>Client to handle connections and actions executed against a remote host.</p>
+<dl class="py class">
+<dt id="dkutils.ssh.remote_client.CommandResult">
+<em class="property">class </em><code class="sig-prename descclassname">dkutils.ssh.remote_client.</code><code class="sig-name descname">CommandResult</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">status</span></em>, <em class="sig-param"><span class="n">stdin</span></em>, <em class="sig-param"><span class="n">stdout</span></em>, <em class="sig-param"><span class="n">stderr</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dkutils.ssh.remote_client.CommandResult" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<p>A namedtuple containing the results of command execution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#dkutils.ssh.remote_client.CommandResult.status" title="dkutils.ssh.remote_client.CommandResult.status"><strong>status</strong></a> (<em>int</em>) – which contains an integer the exit code of the process on the server. Normally this should be 0</p></li>
+<li><p><a class="reference internal" href="#dkutils.ssh.remote_client.CommandResult.stdin" title="dkutils.ssh.remote_client.CommandResult.stdin"><strong>stdin</strong></a> (<em>file-like</em>) – a file-like object representing the stdin for the command</p></li>
+<li><p><a class="reference internal" href="#dkutils.ssh.remote_client.CommandResult.stdout" title="dkutils.ssh.remote_client.CommandResult.stdout"><strong>stdout</strong></a> (<em>file-like</em>) – a file-like object representing the stdout for the command</p></li>
+<li><p><a class="reference internal" href="#dkutils.ssh.remote_client.CommandResult.stderr" title="dkutils.ssh.remote_client.CommandResult.stderr"><strong>stderr</strong></a> (<em>file-like</em>) – a file-like object representing the stderr for the command</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="dkutils.ssh.remote_client.CommandResult.status">
+<code class="sig-name descname">status</code><a class="headerlink" href="#dkutils.ssh.remote_client.CommandResult.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.ssh.remote_client.CommandResult.stderr">
+<code class="sig-name descname">stderr</code><a class="headerlink" href="#dkutils.ssh.remote_client.CommandResult.stderr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 3</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.ssh.remote_client.CommandResult.stdin">
+<code class="sig-name descname">stdin</code><a class="headerlink" href="#dkutils.ssh.remote_client.CommandResult.stdin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.ssh.remote_client.CommandResult.stdout">
+<code class="sig-name descname">stdout</code><a class="headerlink" href="#dkutils.ssh.remote_client.CommandResult.stdout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="dkutils.ssh.remote_client.RemoteClient">
+<em class="property">class </em><code class="sig-prename descclassname">dkutils.ssh.remote_client.</code><code class="sig-name descname">RemoteClient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">host</span></em>, <em class="sig-param"><span class="n">user</span></em>, <em class="sig-param"><span class="n">password</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">key_filename</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">logger</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/ssh/remote_client.html#RemoteClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.ssh.remote_client.RemoteClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Client to interact with a remote host via SSH &amp; SCP.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>host</strong> (<em>str</em>) – the server to connect to</p></li>
+<li><p><strong>user</strong> (<em>str</em>) – the username to authenticate as</p></li>
+<li><p><strong>password</strong> (<em>str</em><em>, </em><em>optional</em>) – used for password authentication</p></li>
+<li><p><strong>key_filename</strong> (<em>str</em><em>, </em><em>optional</em>) – the file name of the pem file to be used for authentication</p></li>
+<li><p><strong>logger</strong> (<em>Python logger</em><em>, </em><em>optional</em>) – python logger</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="dkutils.ssh.remote_client.RemoteClient.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">host</span></em>, <em class="sig-param"><span class="n">user</span></em>, <em class="sig-param"><span class="n">password</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">key_filename</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">logger</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/ssh/remote_client.html#RemoteClient.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.ssh.remote_client.RemoteClient.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Client to interact with a remote host via SSH &amp; SCP.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>host</strong> (<em>str</em>) – the server to connect to</p></li>
+<li><p><strong>user</strong> (<em>str</em>) – the username to authenticate as</p></li>
+<li><p><strong>password</strong> (<em>str</em><em>, </em><em>optional</em>) – used for password authentication</p></li>
+<li><p><strong>key_filename</strong> (<em>str</em><em>, </em><em>optional</em>) – the file name of the pem file to be used for authentication</p></li>
+<li><p><strong>logger</strong> (<em>Python logger</em><em>, </em><em>optional</em>) – python logger</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.ssh.remote_client.RemoteClient.bulk_download">
+<code class="sig-name descname">bulk_download</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">remote_path</span></em>, <em class="sig-param"><span class="n">files</span></em>, <em class="sig-param"><span class="n">local_path</span><span class="o">=</span><span class="default_value">''</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/ssh/remote_client.html#RemoteClient.bulk_download"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.ssh.remote_client.RemoteClient.bulk_download" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download multiple files from remote directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>remote_path</strong> (<em>str</em><em> or </em><em>pathlib.PurePath</em>) – Target directory on the server from which to download files</p></li>
+<li><p><strong>files</strong> (<em>List</em><em>(</em><em>str</em><em>)</em>) – List of remote filenames to be downloaded</p></li>
+<li><p><strong>local_path</strong> (<em>str</em><em> or </em><em>pathlib.PurePath</em><em>, </em><em>optional</em>) – Local destination directory of downloaded files</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.ssh.remote_client.RemoteClient.bulk_upload">
+<code class="sig-name descname">bulk_upload</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">remote_path</span></em>, <em class="sig-param"><span class="n">files</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/ssh/remote_client.html#RemoteClient.bulk_upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.ssh.remote_client.RemoteClient.bulk_upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Upload multiple files to a remote directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>remote_path</strong> (<em>str</em><em> or </em><em>pathlib.PurePath</em>) – The directory to upload files to on the server</p></li>
+<li><p><strong>files</strong> (<em>List</em><em>(</em><em>str</em><em>)</em>) – List of local file paths to be uploaded</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.ssh.remote_client.RemoteClient.disconnect">
+<code class="sig-name descname">disconnect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/ssh/remote_client.html#RemoteClient.disconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.ssh.remote_client.RemoteClient.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close SSH &amp; SCP connection.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.ssh.remote_client.RemoteClient.execute_commands">
+<code class="sig-name descname">execute_commands</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">commands</span></em>, <em class="sig-param"><span class="n">stream_logs</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/ssh/remote_client.html#RemoteClient.execute_commands"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.ssh.remote_client.RemoteClient.execute_commands" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute multiple commands in succession.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>commands</strong> (<em>List</em><em>(</em><em>str</em><em>)</em>) – List of commands as strings</p></li>
+<li><p><strong>stream_logs</strong> (<em>Boolean</em><em>, </em><em>optional</em>) – Stream logs to python logger - this exhausts stdout</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of CommandResult</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">dkutils.ssh.remote_client</span> <span class="kn">import</span> <span class="n">RemoteClient</span>
+<span class="gp">... </span><span class="n">HOST</span> <span class="o">=</span> <span class="s2">&quot;ec2-107-23-93-203.compute-1.amazonaws.com&quot;</span>
+<span class="gp">... </span><span class="n">USER</span> <span class="o">=</span> <span class="s2">&quot;ec2-user&quot;</span>
+<span class="gp">... </span><span class="n">key_filename</span> <span class="o">=</span> <span class="s1">&#39;some.pem&#39;</span>
+<span class="gp">... </span><span class="n">client</span> <span class="o">=</span> <span class="n">RemoteClient</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">USER</span><span class="p">,</span> <span class="n">key_filename</span><span class="o">=</span><span class="n">key_filename</span><span class="p">)</span>
+<span class="gp">... </span><span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">execute_commands</span><span class="p">([</span><span class="s1">&#39;ls /&#39;</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">... </span><span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">stderr</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">())</span>
+<span class="gp">... </span><span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">stdout</span><span class="p">:</span>
+<span class="gp">... </span>       <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">())</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="dkutils.streamsets_api.html" class="btn btn-neutral float-right" title="dkutils.streamsets_api package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="dkutils.ssh.html" class="btn btn-neutral float-left" title="dkutils.ssh package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, DataKitchen
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

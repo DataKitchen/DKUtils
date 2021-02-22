@@ -1,0 +1,528 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>dkutils.streamsets_api.datacollector_client module &mdash; DKUtils 1.8.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="dkutils.veeva_network_api package" href="dkutils.veeva_network_api.html" />
+    <link rel="prev" title="dkutils.streamsets_api package" href="dkutils.streamsets_api.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> DKUtils
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="dkutils.html">dkutils package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="dkutils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dkutils.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guide.html">Development Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#development-process">Development Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#deployment-checklist">Deployment Checklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#code-formatting-and-standards">Code formatting and standards</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#pre-commit-anchor">pre-commit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#flake8-anchor">Flake8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#yapf-anchor">YAPF</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#documentation-best-practices">Documentation Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#versioning">Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#makefile">Makefile</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-8-0">v1.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-7-1">v1.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-7-0">v1.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-6-0">v1.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-5-0">v1.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-4-0">v1.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-3">v1.3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-2">v1.3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-1">v1.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-0">v1.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-2-0">v1.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-1-0">v1.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-0-1">v1.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-0-0">v1.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-16-0">v0.16.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-15-0">v0.15.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-14-0">v0.14.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-13-0">v0.13.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-12-0">v0.12.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-11-0">v0.11.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-10-2">v0.10.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-10-1">v0.10.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-10-0">v0.10.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-9-0">v0.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-8-2">v0.8.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-8-1">v0.8.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-8-0">v0.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-7-1">v0.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-7-0">v0.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-6-1">v0.6.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-6-0">v0.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-5-0">v0.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-4-0">v0.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-3-0">v0.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-2-0">v0.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-1-0">v0.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-4">v0.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-3">v0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-2">v0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-1">v0.0.1</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DKUtils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">dkutils</a> &raquo;</li>
+        
+          <li><a href="dkutils.html">dkutils package</a> &raquo;</li>
+        
+          <li><a href="dkutils.streamsets_api.html">dkutils.streamsets_api package</a> &raquo;</li>
+        
+      <li>dkutils.streamsets_api.datacollector_client module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/apidoc/dkutils.streamsets_api.datacollector_client.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="dkutils.veeva_network_api.html" class="btn btn-neutral float-right" title="dkutils.veeva_network_api package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="dkutils.streamsets_api.html" class="btn btn-neutral float-left" title="dkutils.streamsets_api package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-dkutils.streamsets_api.datacollector_client">
+<span id="dkutils-streamsets-api-datacollector-client-module"></span><h1>dkutils.streamsets_api.datacollector_client module<a class="headerlink" href="#module-dkutils.streamsets_api.datacollector_client" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="dkutils.streamsets_api.datacollector_client.DataCollectorClient">
+<em class="property">class </em><code class="sig-prename descclassname">dkutils.streamsets_api.datacollector_client.</code><code class="sig-name descname">DataCollectorClient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">host</span></em>, <em class="sig-param"><span class="n">port</span></em>, <em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/streamsets_api/datacollector_client.html#DataCollectorClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.DataCollectorClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Client object for invoking <a class="reference external" href="https://streamsets.com/blog/retrieving-metrics-via-streamsets-data-collector-rest-api/">StreamSets Data Collector
+REST API</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>host</strong> (<em>str</em>) – The name of the host to use in making REST API calls.</p></li>
+<li><p><strong>port</strong> (<em>int</em>) – The port to use in making REST API calls.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – Username to authenticate when making REST API calls.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – Password to authenticate when making REST API calls.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="dkutils.streamsets_api.datacollector_client.DataCollectorClient.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">host</span></em>, <em class="sig-param"><span class="n">port</span></em>, <em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/streamsets_api/datacollector_client.html#DataCollectorClient.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.DataCollectorClient.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Client object for invoking <a class="reference external" href="https://streamsets.com/blog/retrieving-metrics-via-streamsets-data-collector-rest-api/">StreamSets Data Collector
+REST API</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>host</strong> (<em>str</em>) – The name of the host to use in making REST API calls.</p></li>
+<li><p><strong>port</strong> (<em>int</em>) – The port to use in making REST API calls.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – Username to authenticate when making REST API calls.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – Password to authenticate when making REST API calls.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.streamsets_api.datacollector_client.DataCollectorClient.get_pipeline_full_status">
+<code class="sig-name descname">get_pipeline_full_status</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pipeline_id</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/streamsets_api/datacollector_client.html#DataCollectorClient.get_pipeline_full_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.DataCollectorClient.get_pipeline_full_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the JSON containing the status of the pipeline with the given pipeline_id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pipeline_id</strong> (<em>str</em>) – The pipeline id of the pipeline for which status information is being requested</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the request fails.</p></li>
+<li><p><strong>ValueError</strong> – If the pipeline_id is None</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>requests.Response.json()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.streamsets_api.datacollector_client.DataCollectorClient.get_pipeline_status">
+<code class="sig-name descname">get_pipeline_status</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pipeline_id</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/streamsets_api/datacollector_client.html#DataCollectorClient.get_pipeline_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.DataCollectorClient.get_pipeline_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get an instance of Pipeline.Status that represents the status of the pipeline with the given pipeline_id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pipeline_id</strong> (<em>str</em>) – The pipeline id of the pipeline for which status information is being requested</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the request fails.</p></li>
+<li><p><strong>ValueError</strong> – If the pipeline_id is None</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus" title="dkutils.streamsets_api.datacollector_client.PipelineStatus"><code class="xref py py-class docutils literal notranslate"><span class="pre">PipelineStatus</span></code></a> object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus" title="dkutils.streamsets_api.datacollector_client.PipelineStatus">PipelineStatus</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.streamsets_api.datacollector_client.DataCollectorClient.reset_pipeline">
+<code class="sig-name descname">reset_pipeline</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pipeline_id</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/streamsets_api/datacollector_client.html#DataCollectorClient.reset_pipeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.DataCollectorClient.reset_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the origin offset of the pipeline with the given pipeline_id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pipeline_id</strong> (<em>str</em>) – The pipeline id of the pipeline for which status information is being requested</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the request fails.</p></li>
+<li><p><strong>ValueError</strong> – If the pipeline_id is None</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.streamsets_api.datacollector_client.DataCollectorClient.start_pipeline">
+<code class="sig-name descname">start_pipeline</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pipeline_id</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/streamsets_api/datacollector_client.html#DataCollectorClient.start_pipeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.DataCollectorClient.start_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the pipeline with the given pipeline_id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pipeline_id</strong> (<em>str</em>) – The pipeline id of the pipeline to start</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Arbitrary keyword arguments to construct runtime parameters</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the request fails.</p></li>
+<li><p><strong>ValueError</strong> – If the pipeline_id is None</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>requests.Response.json()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dkutils.streamsets_api.datacollector_client.DataCollectorClient.stop_pipeline">
+<code class="sig-name descname">stop_pipeline</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pipeline_id</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/streamsets_api/datacollector_client.html#DataCollectorClient.stop_pipeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.DataCollectorClient.stop_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop the pipeline with the given pipeline_id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pipeline_id</strong> (<em>str</em>) – The pipeline id of the pipeline to stop</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Arbitrary keyword arguments to construct runtime parameters</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the request fails.</p></li>
+<li><p><strong>ValueError</strong> – If the pipeline_id is None</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>requests.Response.json()</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus">
+<em class="property">class </em><code class="sig-prename descclassname">dkutils.streamsets_api.datacollector_client.</code><code class="sig-name descname">PipelineStatus</code><a class="reference internal" href="../_modules/dkutils/streamsets_api/datacollector_client.html#PipelineStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.CONNECTING">
+<code class="sig-name descname">CONNECTING</code><em class="property"> = 'CONNECTING'</em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.CONNECTING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.CONNECT_ERROR">
+<code class="sig-name descname">CONNECT_ERROR</code><em class="property"> = 'CONNECT_ERROR'</em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.CONNECT_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.DISCONNECTED">
+<code class="sig-name descname">DISCONNECTED</code><em class="property"> = 'DISCONNECTED'</em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.DISCONNECTED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.EDITED">
+<code class="sig-name descname">EDITED</code><em class="property"> = 'EDITED'</em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.EDITED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.FINISHED">
+<code class="sig-name descname">FINISHED</code><em class="property"> = 'FINISHED'</em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.FINISHED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.FINISHING">
+<code class="sig-name descname">FINISHING</code><em class="property"> = 'FINISHING'</em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.FINISHING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.RETRY">
+<code class="sig-name descname">RETRY</code><em class="property"> = 'RETRY'</em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.RETRY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.RUNNING">
+<code class="sig-name descname">RUNNING</code><em class="property"> = 'RUNNING'</em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.RUNNING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.RUNNING_ERROR">
+<code class="sig-name descname">RUNNING_ERROR</code><em class="property"> = 'RUNNING_ERROR'</em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.RUNNING_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.RUN_ERROR">
+<code class="sig-name descname">RUN_ERROR</code><em class="property"> = 'RUN_ERROR'</em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.RUN_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.STARTING">
+<code class="sig-name descname">STARTING</code><em class="property"> = 'STARTING'</em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.STARTING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.STARTING_ERROR">
+<code class="sig-name descname">STARTING_ERROR</code><em class="property"> = 'STARTING_ERROR'</em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.STARTING_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.START_ERROR">
+<code class="sig-name descname">START_ERROR</code><em class="property"> = 'START_ERROR'</em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.START_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.STOPPED">
+<code class="sig-name descname">STOPPED</code><em class="property"> = 'STOPPED'</em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.STOPPED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.STOPPING">
+<code class="sig-name descname">STOPPING</code><em class="property"> = 'STOPPING'</em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.STOPPING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.STOPPING_ERROR">
+<code class="sig-name descname">STOPPING_ERROR</code><em class="property"> = 'STOPPING_ERROR'</em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.STOPPING_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.STOP_ERROR">
+<code class="sig-name descname">STOP_ERROR</code><em class="property"> = 'STOP_ERROR'</em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.STOP_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="dkutils.veeva_network_api.html" class="btn btn-neutral float-right" title="dkutils.veeva_network_api package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="dkutils.streamsets_api.html" class="btn btn-neutral float-left" title="dkutils.streamsets_api package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, DataKitchen
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
