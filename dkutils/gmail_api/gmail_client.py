@@ -100,13 +100,14 @@ def create_base64_encoded_token(
 
     Parameters
     ----------
-    credentials_path: Path
-        the path to the file containing the credentials. To create this file follow the instructions
-        found at https://developers.google.com/gmail/api/quickstart/python Under Step1: Turn on the GMAIL API
-    token_path: Path
-        the path to the file that will contain the base64 encoded token that can uploaded to vault.
-    scopes: list, optional
-        a list containing the requested scopes. See https://developers.google.com/gmail/api/auth/scopes
+    credentials_path : Path
+        The path to the file containing the credentials. To create this file follow the instructions
+        found at https://developers.google.com/gmail/api/quickstart/python Under Step1: Turn on the
+        GMAIL API
+    token_path : Path
+        The path to the file that will contain the base64 encoded token that can uploaded to vault.
+    scopes : list, optional
+        A list containing the requested scopes. See https://developers.google.com/gmail/api/auth/scopes
         for a list of the scopes. Will default to [Scope.READ_ONLY]
     """
     if not credentials_path.exists():
@@ -122,15 +123,15 @@ def create_base64_encoded_token(
 
 def get_object_from_environment(environment_variable_name):
     """
-    This function will get an object that has been pickled and base64 encoded from an environment variable with the
-    specified name. This was intended to be used for retrieving the credentials for using the GMail API from an
-    environment variable but it can be used to retrieve any python object that has been pickled and base64 encoded
-    as an environment variable.
+    This function will get an object that has been pickled and base64 encoded from an environment
+    variable with the specified name. This was intended to be used for retrieving the credentials
+    for using the GMail API from an environment variable but it can be used to retrieve any python
+    object that has been pickled and base64 encoded as an environment variable.
 
     Parameters
     ----------
-    environment_variable_name: str
-        a string specifying the name of the environment variable containing the object.
+    environment_variable_name : str
+        A string specifying the name of the environment variable containing the object.
 
     Returns
     -------
@@ -142,17 +143,23 @@ def get_object_from_environment(environment_variable_name):
 
 
 def create_message(sender, to, subject, message_text):
-    """Create a message for an email.
+    """
+    Create a message for an email.
 
-    Args:
-      sender: Email address of the sender.
-      to: Email address of the receiver.
-      subject: The subject of the email message.
-      message_text: The text of the email message.
+    Parameters
+    ----------
+    sender : str
+        Email address of the sender.
+    to : str
+        Email address of the receiver.
+    subject : str
+        The subject of the email message.
+    message_text : str
+        The text of the email message.
 
     Returns
-    ________
-        object
+    -------
+    object
         An object containing a base64url encoded email object.
     """
     message = MIMEText(message_text)
@@ -165,18 +172,25 @@ def create_message(sender, to, subject, message_text):
 
 
 def create_message_with_attachment(sender, to, subject, message_text, file):
-    """Create a message for an email.
+    """
+    Create a message for an email.
 
-    Args:
-      sender: Email address of the sender.
-      to: Email address of the receiver.
-      subject: The subject of the email message.
-      message_text: The text of the email message.
-      file: The path to the file to be attached.
+    Parameters
+    ----------
+    sender : str
+        Email address of the sender.
+    to : str
+        Email address of the receiver.
+    subject : str
+        The subject of the email message.
+    message_text : str
+        The text of the email message.
+    file : str
+        The path to the file to be attached.
 
     Returns
     -------
-        object
+    object
         An object containing a base64url encoded email object.
     """
     message = MIMEMultipart()
@@ -218,33 +232,35 @@ class GMailClient:
 
     def __init__(self, credentials: Credentials):
         """
-        Client object for access the GMail API.
-        the create_base64_encoded_token function can be used to initially create a set of credentials which are
-        base64 encoded in a file that can be looded into vault. This value from vault can then be used as an
-        environment variable in a variation. The get_object_from_environment can be used to reconstitute the
-        credentials from the environment variable.
+        Client object for access the GMail API. The create_base64_encoded_token function can be
+        used to initially create a set of credentials which are base64 encoded in a file that can
+        be looded into vault. This value from vault can then be used as an environment variable in
+        a variation. The get_object_from_environment can be used to reconstitute the credentials
+        from the environment variable.
+
         Parameters
         ----------
-        credentials: Credentials
+        credentials : Credentials
             the credentials needed to access the API
         """
         self.service = build('gmail', 'v1', credentials=credentials)
 
     def send_message(self, message, user_id='me'):
-        """Send an email message.
+        """
+        Send an email message.
 
         Parameters
         ----------
-        message: str
-            the message to be sent
-        user_id: str, optional
-            User's email address. The special value "me" will be used to indicate the authenticated user if no value is
-            provided
+        message : str
+            The message to be sent
+        user_id : str, optional
+            User's email address. The special value "me" will be used to indicate the authenticated
+            user if no value is provided
 
         Returns
-        _______
-          dict:
-            the sent message
+        -------
+        dict
+            The sent message
         """
 
         message = (self.service.users().messages().send(userId=user_id, body=message).execute())
@@ -259,25 +275,29 @@ class GMailClient:
         max_wait=GMAIL_MAX_WAIT_SECONDS
     ):
         """
-        This function can be used to determine if a response has been received containing the specified approval
-        string. The given subject is used to retrieve messages of interest. This function will poll for new email
-        every sleep seconds until the max wait seconds have been exceeded.
+        This function can be used to determine if a response has been received containing the
+        specified approval string. The given subject is used to retrieve messages of interest. This
+        function will poll for new email every sleep seconds until the max wait seconds have been
+        exceeded.
+
         Parameters
         ----------
-        subject: str
+        subject : str
             The subject to use to retrieve messages from the inbox
-        approval_string: str, opt
-            If the message body of a message retrieved starts with the given string True will be returned by the
-            function indicating that approval has been received. Will default to Approved if not specified
-        sleep_seconds: int, opt
-            the number of seconds to wait between retrieving email. If not specified will default to 10
-        max_wait: int, opt
-            the maximum number of seconds to wait for approval to be recieved. If not specified will default to 30
+        approval_string : str, opt
+            If the message body of a message retrieved starts with the given string True will be
+            returned by the function indicating that approval has been received. Will default to
+            Approved if not specified
+        sleep_seconds : int, opt
+            Number of seconds to wait between retrieving email. If not specified will default to 10
+        max_wait : int, opt
+            The maximum number of seconds to wait for approval to be recieved. If not specified
+            will default to 30
 
         Returns
         -------
-            bool
-                True or False with True indicating that approval has been received
+        bool
+            True or False with True indicating that approval has been received
         """
         wait_loop = WaitLoop(sleep_seconds, max_wait)
         while wait_loop:

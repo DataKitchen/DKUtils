@@ -142,13 +142,10 @@ def set_logging_level(logging_level=logging.INFO):
     not exist it will be set to a logger obtained from the logging library. This is to allow code to be run
     outside of DataKitchen without the need to add code to initialize the global variable LOGGER has is done
     by DataKitchen.make
+
     Parameters
     ----------
     logging_level: str, optional
-
-    Returns
-    -------
-
     """
     logger_name = "LOGGER"
     cur_globals = inspect.stack()[1][0].f_globals
