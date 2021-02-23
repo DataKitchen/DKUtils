@@ -23,9 +23,16 @@ setuptools.setup(
     ],
     python_requires='>=3.7',
     install_requires=[
-        "dataclasses>=0.6", "jira>=2.0.0", "pandas>=1.1.2", "paramiko>=2.7.2", "scp>=0.13.2",
-        "Sphinx>=3.0.1", "sphinx-rtd-theme>=0.4.3", "google-api-python-client>=1.10.1",
-        "google-auth-httplib2>=0.0.4", "google-auth-oauthlib>=0.4.2"
+        "dataclasses>=0.6",
+        "jira>=2.0.0",
+        "pandas>=1.1.2",
+        "paramiko>=2.7.2",
+        "scp>=0.13.2",
+        "Sphinx>=3.0.1",
+        "sphinx-rtd-theme>=0.4.3",
+        "google-api-python-client>=1.10.1",
+        "google-auth-httplib2>=0.0.4",
+        "google-auth-oauthlib>=0.4.2",
     ],
     tests_require=[
         'bumpversion>=0.5.3',
