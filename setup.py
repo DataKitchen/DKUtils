@@ -11,23 +11,21 @@ setuptools.setup(
     description="DataKitchen Utils Library",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://ghe.datakitchen.io/DataKitchen/DKUtils",
+    url="https://github.com/DataKitchen/DKUtils",
+    project_urls={
+        'Documentation': 'https://datakitchen.github.io/DKUtils',
+        'Source Code': 'https://github.com/DataKitchen/DKUtils',
+        'Download': 'https://pypi.org/project/DKUtils'
+    },
     packages=setuptools.find_packages(exclude=["tests", "tests.*"]),
     classifiers=[
         "Programming Language :: Python :: 3",
     ],
-    python_requires='>=3.6',
+    python_requires='>=3.7',
     install_requires=[
-        "dataclasses>=0.6",
-        "jira>=2.0.0",
-        "pandas>=1.1.2",
-        "paramiko>=2.7.2",
-        "scp>=0.13.2",
-        "Sphinx>=3.0.1",
-        "sphinx-rtd-theme>=0.4.3",
-        "google-api-python-client>=1.10.1",
-        "google-auth-httplib2>=0.0.4",
-        "google-auth-oauthlib>=0.4.2"
+        "dataclasses>=0.6", "jira>=2.0.0", "pandas>=1.1.2", "paramiko>=2.7.2", "scp>=0.13.2",
+        "Sphinx>=3.0.1", "sphinx-rtd-theme>=0.4.3", "google-api-python-client>=1.10.1",
+        "google-auth-httplib2>=0.0.4", "google-auth-oauthlib>=0.4.2"
     ],
     tests_require=[
         'bumpversion>=0.5.3',
