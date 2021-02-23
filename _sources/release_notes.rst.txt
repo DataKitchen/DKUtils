@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v1.8.1
+------
+* Update setup.py and docs in preparation for move to public repository
+
 v1.8.0
 ------
 * Add gmail_api

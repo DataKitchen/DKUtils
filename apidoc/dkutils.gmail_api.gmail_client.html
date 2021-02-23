@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.gmail_api.gmail_client module &mdash; DKUtils 1.8.0 documentation</title>
+  <title>dkutils.gmail_api.gmail_client module &mdash; DKUtils 1.8.1 documentation</title>
   
 
   
@@ -109,6 +109,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-8-1">v1.8.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-8-0">v1.8.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-7-1">v1.7.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-7-0">v1.7.0</a></li>
@@ -242,42 +243,48 @@
 <dt id="dkutils.gmail_api.gmail_client.GMailClient">
 <em class="property">class </em><code class="sig-prename descclassname">dkutils.gmail_api.gmail_client.</code><code class="sig-name descname">GMailClient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">credentials</span><span class="p">:</span> <span class="n">google.oauth2.credentials.Credentials</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/gmail_api/gmail_client.html#GMailClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.gmail_api.gmail_client.GMailClient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Client object for access the GMail API.
-the create_base64_encoded_token function can be used to initially create a set of credentials which are
-base64 encoded in a file that can be looded into vault. This value from vault can then be used as an
-environment variable in a variation. The get_object_from_environment can be used to reconstitute the
-credentials from the environment variable.
-:param credentials: the credentials needed to access the API
-:type credentials: Credentials</p>
+<p>Client object for access the GMail API. The create_base64_encoded_token function can be
+used to initially create a set of credentials which are base64 encoded in a file that can
+be looded into vault. This value from vault can then be used as an environment variable in
+a variation. The get_object_from_environment can be used to reconstitute the credentials
+from the environment variable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>credentials</strong> (<em>Credentials</em>) – the credentials needed to access the API</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt id="dkutils.gmail_api.gmail_client.GMailClient.__init__">
 <code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">credentials</span><span class="p">:</span> <span class="n">google.oauth2.credentials.Credentials</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/gmail_api/gmail_client.html#GMailClient.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.gmail_api.gmail_client.GMailClient.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Client object for access the GMail API.
-the create_base64_encoded_token function can be used to initially create a set of credentials which are
-base64 encoded in a file that can be looded into vault. This value from vault can then be used as an
-environment variable in a variation. The get_object_from_environment can be used to reconstitute the
-credentials from the environment variable.
-:param credentials: the credentials needed to access the API
-:type credentials: Credentials</p>
+<dd><p>Client object for access the GMail API. The create_base64_encoded_token function can be
+used to initially create a set of credentials which are base64 encoded in a file that can
+be looded into vault. This value from vault can then be used as an environment variable in
+a variation. The get_object_from_environment can be used to reconstitute the credentials
+from the environment variable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>credentials</strong> (<em>Credentials</em>) – the credentials needed to access the API</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="dkutils.gmail_api.gmail_client.GMailClient.has_approval">
 <code class="sig-name descname">has_approval</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subject</span></em>, <em class="sig-param"><span class="n">approval_string</span><span class="o">=</span><span class="default_value">'Approved'</span></em>, <em class="sig-param"><span class="n">sleep_seconds</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">max_wait</span><span class="o">=</span><span class="default_value">30</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/gmail_api/gmail_client.html#GMailClient.has_approval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.gmail_api.gmail_client.GMailClient.has_approval" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function can be used to determine if a response has been received containing the specified approval
-string. The given subject is used to retrieve messages of interest. This function will poll for new email
-every sleep seconds until the max wait seconds have been exceeded.
-:param subject: The subject to use to retrieve messages from the inbox
-:type subject: str
-:param approval_string: If the message body of a message retrieved starts with the given string True will be returned by the</p>
-<blockquote>
-<div><p>function indicating that approval has been received. Will default to Approved if not specified</p>
-</div></blockquote>
+<dd><p>This function can be used to determine if a response has been received containing the
+specified approval string. The given subject is used to retrieve messages of interest. This
+function will poll for new email every sleep seconds until the max wait seconds have been
+exceeded.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>sleep_seconds</strong> (<em>int</em><em>, </em><em>opt</em>) – the number of seconds to wait between retrieving email. If not specified will default to 10</p></li>
-<li><p><strong>max_wait</strong> (<em>int</em><em>, </em><em>opt</em>) – the maximum number of seconds to wait for approval to be recieved. If not specified will default to 30</p></li>
+<li><p><strong>subject</strong> (<em>str</em>) – The subject to use to retrieve messages from the inbox</p></li>
+<li><p><strong>approval_string</strong> (<em>str</em><em>, </em><em>opt</em>) – If the message body of a message retrieved starts with the given string True will be
+returned by the function indicating that approval has been received. Will default to
+Approved if not specified</p></li>
+<li><p><strong>sleep_seconds</strong> (<em>int</em><em>, </em><em>opt</em>) – Number of seconds to wait between retrieving email. If not specified will default to 10</p></li>
+<li><p><strong>max_wait</strong> (<em>int</em><em>, </em><em>opt</em>) – The maximum number of seconds to wait for approval to be recieved. If not specified
+will default to 30</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -296,13 +303,13 @@ every sleep seconds until the max wait seconds have been exceeded.
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>message</strong> (<em>str</em>) – the message to be sent</p></li>
-<li><p><strong>user_id</strong> (<em>str</em><em>, </em><em>optional</em>) – User’s email address. The special value “me” will be used to indicate the authenticated user if no value is
-provided</p></li>
+<li><p><strong>message</strong> (<em>str</em>) – The message to be sent</p></li>
+<li><p><strong>user_id</strong> (<em>str</em><em>, </em><em>optional</em>) – User’s email address. The special value “me” will be used to indicate the authenticated
+user if no value is provided</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the sent message</p>
+<dd class="field-even"><p>The sent message</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>dict</p>
@@ -379,10 +386,11 @@ for you to authorize access.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>credentials_path</strong> (<em>Path</em>) – the path to the file containing the credentials. To create this file follow the instructions
-found at <a class="reference external" href="https://developers.google.com/gmail/api/quickstart/python">https://developers.google.com/gmail/api/quickstart/python</a> Under Step1: Turn on the GMAIL API</p></li>
-<li><p><strong>token_path</strong> (<em>Path</em>) – the path to the file that will contain the base64 encoded token that can uploaded to vault.</p></li>
-<li><p><strong>scopes</strong> (<em>list</em><em>, </em><em>optional</em>) – a list containing the requested scopes. See <a class="reference external" href="https://developers.google.com/gmail/api/auth/scopes">https://developers.google.com/gmail/api/auth/scopes</a>
+<li><p><strong>credentials_path</strong> (<em>Path</em>) – The path to the file containing the credentials. To create this file follow the instructions
+found at <a class="reference external" href="https://developers.google.com/gmail/api/quickstart/python">https://developers.google.com/gmail/api/quickstart/python</a> Under Step1: Turn on the
+GMAIL API</p></li>
+<li><p><strong>token_path</strong> (<em>Path</em>) – The path to the file that will contain the base64 encoded token that can uploaded to vault.</p></li>
+<li><p><strong>scopes</strong> (<em>list</em><em>, </em><em>optional</em>) – A list containing the requested scopes. See <a class="reference external" href="https://developers.google.com/gmail/api/auth/scopes">https://developers.google.com/gmail/api/auth/scopes</a>
 for a list of the scopes. Will default to [Scope.READ_ONLY]</p></li>
 </ul>
 </dd>
@@ -393,20 +401,20 @@ for a list of the scopes. Will default to [Scope.READ_ONLY]</p></li>
 <dt id="dkutils.gmail_api.gmail_client.create_message">
 <code class="sig-prename descclassname">dkutils.gmail_api.gmail_client.</code><code class="sig-name descname">create_message</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sender</span></em>, <em class="sig-param"><span class="n">to</span></em>, <em class="sig-param"><span class="n">subject</span></em>, <em class="sig-param"><span class="n">message_text</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/gmail_api/gmail_client.html#create_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.gmail_api.gmail_client.create_message" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a message for an email.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>sender: Email address of the sender.
-to: Email address of the receiver.
-subject: The subject of the email message.
-message_text: The text of the email message.</p>
-</dd>
-</dl>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><ul class="simple">
-<li><p><em>object</em></p></li>
-<li><p><em>An object containing a base64url encoded email object.</em></p></li>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sender</strong> (<em>str</em>) – Email address of the sender.</p></li>
+<li><p><strong>to</strong> (<em>str</em>) – Email address of the receiver.</p></li>
+<li><p><strong>subject</strong> (<em>str</em>) – The subject of the email message.</p></li>
+<li><p><strong>message_text</strong> (<em>str</em>) – The text of the email message.</p></li>
 </ul>
-</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An object containing a base64url encoded email object.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>object</p>
 </dd>
 </dl>
 </dd></dl>
@@ -415,21 +423,21 @@ message_text: The text of the email message.</p>
 <dt id="dkutils.gmail_api.gmail_client.create_message_with_attachment">
 <code class="sig-prename descclassname">dkutils.gmail_api.gmail_client.</code><code class="sig-name descname">create_message_with_attachment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sender</span></em>, <em class="sig-param"><span class="n">to</span></em>, <em class="sig-param"><span class="n">subject</span></em>, <em class="sig-param"><span class="n">message_text</span></em>, <em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/gmail_api/gmail_client.html#create_message_with_attachment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.gmail_api.gmail_client.create_message_with_attachment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a message for an email.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>sender: Email address of the sender.
-to: Email address of the receiver.
-subject: The subject of the email message.
-message_text: The text of the email message.
-file: The path to the file to be attached.</p>
-</dd>
-</dl>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><ul class="simple">
-<li><p><em>object</em></p></li>
-<li><p><em>An object containing a base64url encoded email object.</em></p></li>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sender</strong> (<em>str</em>) – Email address of the sender.</p></li>
+<li><p><strong>to</strong> (<em>str</em>) – Email address of the receiver.</p></li>
+<li><p><strong>subject</strong> (<em>str</em>) – The subject of the email message.</p></li>
+<li><p><strong>message_text</strong> (<em>str</em>) – The text of the email message.</p></li>
+<li><p><strong>file</strong> (<em>str</em>) – The path to the file to be attached.</p></li>
 </ul>
-</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An object containing a base64url encoded email object.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>object</p>
 </dd>
 </dl>
 </dd></dl>
@@ -437,13 +445,13 @@ file: The path to the file to be attached.</p>
 <dl class="py function">
 <dt id="dkutils.gmail_api.gmail_client.get_object_from_environment">
 <code class="sig-prename descclassname">dkutils.gmail_api.gmail_client.</code><code class="sig-name descname">get_object_from_environment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment_variable_name</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/gmail_api/gmail_client.html#get_object_from_environment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.gmail_api.gmail_client.get_object_from_environment" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function will get an object that has been pickled and base64 encoded from an environment variable with the
-specified name. This was intended to be used for retrieving the credentials for using the GMail API from an
-environment variable but it can be used to retrieve any python object that has been pickled and base64 encoded
-as an environment variable.</p>
+<dd><p>This function will get an object that has been pickled and base64 encoded from an environment
+variable with the specified name. This was intended to be used for retrieving the credentials
+for using the GMail API from an environment variable but it can be used to retrieve any python
+object that has been pickled and base64 encoded as an environment variable.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>environment_variable_name</strong> (<em>str</em>) – a string specifying the name of the environment variable containing the object.</p>
+<dd class="field-odd"><p><strong>environment_variable_name</strong> (<em>str</em>) – A string specifying the name of the environment variable containing the object.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p></p>

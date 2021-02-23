@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.validation &mdash; DKUtils 1.8.0 documentation</title>
+  <title>dkutils.validation &mdash; DKUtils 1.8.1 documentation</title>
   
 
   
@@ -107,6 +107,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../release_notes.html#v1-8-1">v1.8.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../release_notes.html#v1-8-0">v1.8.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../release_notes.html#v1-7-1">v1.7.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../release_notes.html#v1-7-0">v1.7.0</a></li>
@@ -356,13 +357,10 @@
 <span class="sd">    not exist it will be set to a logger obtained from the logging library. This is to allow code to be run</span>
 <span class="sd">    outside of DataKitchen without the need to add code to initialize the global variable LOGGER has is done</span>
 <span class="sd">    by DataKitchen.make</span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    logging_level: str, optional</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">logger_name</span> <span class="o">=</span> <span class="s2">&quot;LOGGER&quot;</span>
     <span class="n">cur_globals</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">f_globals</span>
