@@ -248,7 +248,7 @@ either VeevaSourceSubscriptionClient or VeevaTargetSubscriptionClient</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>dns</strong> (<em>str</em>) – is the URL for your API service</p></li>
-<li><p><strong>username</strong> (<em>str</em>) – the user ID for Network; for example, <a class="reference external" href="mailto:john&#46;smith&#37;&#52;&#48;veevanetwork&#46;com">john<span>&#46;</span>smith<span>&#64;</span>veevanetwork<span>&#46;</span>com</a>.</p></li>
+<li><p><strong>username</strong> – the user ID for Network; for example, <a class="reference external" href="mailto:john&#46;smith&#37;&#52;&#48;veevanetwork&#46;com">john<span>&#46;</span>smith<span>&#64;</span>veevanetwork<span>&#46;</span>com</a>.</p></li>
 <li><p><strong>password</strong> (<em>str</em>) – the password for the user ID.</p></li>
 <li><p><strong>version</strong> (<em>str</em>) – is the API version</p></li>
 </ul>
@@ -269,7 +269,7 @@ either VeevaSourceSubscriptionClient or VeevaTargetSubscriptionClient</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>dns</strong> (<em>str</em>) – is the URL for your API service</p></li>
-<li><p><strong>username</strong> (<em>str</em>) – the user ID for Network; for example, <a class="reference external" href="mailto:john&#46;smith&#37;&#52;&#48;veevanetwork&#46;com">john<span>&#46;</span>smith<span>&#64;</span>veevanetwork<span>&#46;</span>com</a>.</p></li>
+<li><p><strong>username</strong> – the user ID for Network; for example, <a class="reference external" href="mailto:john&#46;smith&#37;&#52;&#48;veevanetwork&#46;com">john<span>&#46;</span>smith<span>&#64;</span>veevanetwork<span>&#46;</span>com</a>.</p></li>
 <li><p><strong>password</strong> (<em>str</em>) – the password for the user ID.</p></li>
 <li><p><strong>version</strong> (<em>str</em>) – is the API version</p></li>
 </ul>
@@ -312,7 +312,7 @@ and from the Veeva Network.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>dns</strong> (<em>str</em>) – is the URL for your API service</p></li>
-<li><p><strong>username</strong> (<em>str</em>) – the user ID for Network; for example, <a class="reference external" href="mailto:john&#46;smith&#37;&#52;&#48;veevanetwork&#46;com">john<span>&#46;</span>smith<span>&#64;</span>veevanetwork<span>&#46;</span>com</a>.</p></li>
+<li><p><strong>username</strong> – the user ID for Network; for example, <a class="reference external" href="mailto:john&#46;smith&#37;&#52;&#48;veevanetwork&#46;com">john<span>&#46;</span>smith<span>&#64;</span>veevanetwork<span>&#46;</span>com</a>.</p></li>
 <li><p><strong>password</strong> (<em>str</em>) – the password for the user ID.</p></li>
 <li><p><strong>system_name</strong> (<em>str</em>) – is the unique name of the system</p></li>
 <li><p><strong>subscription_name</strong> (<em>str</em>) – is the unique name of the subscription</p></li>
@@ -335,7 +335,7 @@ and from the Veeva Network.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>dns</strong> (<em>str</em>) – is the URL for your API service</p></li>
-<li><p><strong>username</strong> (<em>str</em>) – the user ID for Network; for example, <a class="reference external" href="mailto:john&#46;smith&#37;&#52;&#48;veevanetwork&#46;com">john<span>&#46;</span>smith<span>&#64;</span>veevanetwork<span>&#46;</span>com</a>.</p></li>
+<li><p><strong>username</strong> – the user ID for Network; for example, <a class="reference external" href="mailto:john&#46;smith&#37;&#52;&#48;veevanetwork&#46;com">john<span>&#46;</span>smith<span>&#64;</span>veevanetwork<span>&#46;</span>com</a>.</p></li>
 <li><p><strong>password</strong> (<em>str</em>) – the password for the user ID.</p></li>
 <li><p><strong>system_name</strong> (<em>str</em>) – is the unique name of the system</p></li>
 <li><p><strong>subscription_name</strong> (<em>str</em>) – is the unique name of the subscription</p></li>
@@ -355,92 +355,113 @@ and from the Veeva Network.</p>
 <dt id="dkutils.veeva_network_api.veeva_network_client.VeevaSourceSubscriptionClient.retrieve_network_process_job">
 <code class="sig-name descname">retrieve_network_process_job</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">job_resp_id</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/veeva_network_api/veeva_network_client.html#VeevaSourceSubscriptionClient.retrieve_network_process_job"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.veeva_network_api.veeva_network_client.VeevaSourceSubscriptionClient.retrieve_network_process_job" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve the status of a source or target subscription job. This function will poll
-until the job has reached a terminal state.</p>
+until the job has reached a terminal state.
+:param job_resp_id: is the unique ID of the job you want to retrieve status on
+:type job_resp_id: str</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>job_resp_id</strong> (<em>str</em>) – is the unique ID of the job you want to retrieve status on</p>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>HTTPError</strong> – If the request fails</p></li>
-<li><p><strong>ValueError</strong> – If the job reaches a terminal status other than COMPLETE</p></li>
-</ul>
-</dd>
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><p>A dictionary containing the information about the job:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-   <span class="s2">&quot;filesProcessed&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-   <span class="s2">&quot;errorCount&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-   <span class="s2">&quot;subscriptionName&quot;</span> <span class="p">:</span> <span class="s2">&quot;CRM_Import&quot;</span><span class="p">,</span>
-   <span class="s2">&quot;completed_date&quot;</span> <span class="p">:</span> <span class="s2">&quot;2019-12-18T22:42:32.000Z&quot;</span><span class="p">,</span>
-   <span class="s2">&quot;job_status&quot;</span> <span class="p">:</span> <span class="s2">&quot;COMPLETE&quot;</span><span class="p">,</span>
-   <span class="s2">&quot;job_id&quot;</span> <span class="p">:</span> <span class="mi">10537</span><span class="p">,</span>
-   <span class="s2">&quot;jobResultSummary&quot;</span> <span class="p">:</span> <span class="p">{</span>
-      <span class="s2">&quot;CUSTOMKEY&quot;</span> <span class="p">:</span> <span class="p">{</span>
-         <span class="s2">&quot;total&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-         <span class="s2">&quot;recordsUpdated&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-         <span class="s2">&quot;recordsSkipped&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-         <span class="s2">&quot;newRecordsAdded&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-         <span class="s2">&quot;recordsInvalidated&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-         <span class="s2">&quot;recordsMerged&quot;</span> <span class="p">:</span> <span class="mi">0</span>
-      <span class="p">},</span>
-      <span class="s2">&quot;HCP&quot;</span> <span class="p">:</span> <span class="p">{</span>
-         <span class="s2">&quot;total&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-         <span class="s2">&quot;recordsUpdated&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-         <span class="s2">&quot;recordsSkipped&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-         <span class="s2">&quot;recordsMerged&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-         <span class="s2">&quot;recordsInvalidated&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-         <span class="s2">&quot;newRecordsAdded&quot;</span> <span class="p">:</span> <span class="mi">0</span>
-      <span class="p">},</span>
-      <span class="s2">&quot;ADDRESS&quot;</span> <span class="p">:</span> <span class="p">{</span>
-         <span class="s2">&quot;total&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-         <span class="s2">&quot;recordsUpdated&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-         <span class="s2">&quot;recordsSkipped&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-         <span class="s2">&quot;recordsInvalidated&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-         <span class="s2">&quot;newRecordsAdded&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-         <span class="s2">&quot;recordsMerged&quot;</span> <span class="p">:</span> <span class="mi">0</span>
-      <span class="p">}</span>
-   <span class="p">},</span>
-   <span class="s2">&quot;durationInMilliseconds&quot;</span> <span class="p">:</span> <span class="mi">3000</span><span class="p">,</span>
-   <span class="s2">&quot;created_date&quot;</span> <span class="p">:</span> <span class="s2">&quot;2019-12-18T22:42:29.000Z&quot;</span><span class="p">,</span>
-   <span class="s2">&quot;subscriptionId&quot;</span> <span class="p">:</span> <span class="mi">117</span><span class="p">,</span>
-   <span class="s2">&quot;processedDataSummary&quot;</span> <span class="p">:</span> <span class="p">{</span>
-      <span class="s2">&quot;HCP&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-      <span class="s2">&quot;ADDRESS&quot;</span> <span class="p">:</span> <span class="mi">1</span>
-   <span class="p">},</span>
-   <span class="s2">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;MANUAL&quot;</span><span class="p">,</span>
-   <span class="s2">&quot;dataLoadSummary&quot;</span> <span class="p">:</span> <span class="p">{</span>
-      <span class="s2">&quot;ADDRESS&quot;</span> <span class="p">:</span> <span class="p">{</span>
-         <span class="s2">&quot;rowsRead&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-         <span class="s2">&quot;rowsParsed&quot;</span> <span class="p">:</span> <span class="mi">1</span>
-      <span class="p">},</span>
-      <span class="s2">&quot;HCP&quot;</span> <span class="p">:</span> <span class="p">{</span>
-         <span class="s2">&quot;rowsParsed&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-         <span class="s2">&quot;rowsRead&quot;</span> <span class="p">:</span> <span class="mi">1</span>
-      <span class="p">}</span>
-   <span class="p">},</span>
-   <span class="s2">&quot;badRecordCount&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-   <span class="s2">&quot;recordCount&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-   <span class="s2">&quot;matchSummary&quot;</span> <span class="p">:</span> <span class="p">{</span>
-      <span class="s2">&quot;HCP&quot;</span> <span class="p">:</span> <span class="p">{</span>
-         <span class="s2">&quot;ACT&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-         <span class="s2">&quot;notMatched&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-         <span class="s2">&quot;ASK&quot;</span> <span class="p">:</span> <span class="mi">0</span>
-      <span class="p">},</span>
-      <span class="s2">&quot;HCO&quot;</span> <span class="p">:</span> <span class="p">{</span>
-         <span class="s2">&quot;ACT&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-         <span class="s2">&quot;notMatched&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-         <span class="s2">&quot;ASK&quot;</span> <span class="p">:</span> <span class="mi">0</span>
-      <span class="p">}</span>
-   <span class="p">},</span>
-   <span class="s2">&quot;responseStatus&quot;</span> <span class="p">:</span> <span class="s2">&quot;SUCCESS&quot;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
+<dd class="field-odd"><p><p>A dictionary containing the information about the job.
+{</p>
+<blockquote>
+<div><p>”filesProcessed” : 1,
+“errorCount” : 0,
+“subscriptionName” : “CRM_Import”,
+“completed_date” : “2019-12-18T22:42:32.000Z”,
+“job_status” : “COMPLETE”,
+“job_id” : 10537,
+“jobResultSummary” : {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>”CUSTOMKEY”<span class="classifier">{</span></dt><dd><p>“total” : 2,
+“recordsUpdated” : 0,
+“recordsSkipped” : 2,
+“newRecordsAdded” : 0,
+“recordsInvalidated” : 0,
+“recordsMerged” : 0</p>
+</dd>
+</dl>
+<p>},
+“HCP” : {</p>
+<blockquote>
+<div><p>”total” : 1,
+“recordsUpdated” : 0,
+“recordsSkipped” : 1,
+“recordsMerged” : 0,
+“recordsInvalidated” : 0,
+“newRecordsAdded” : 0</p>
+</div></blockquote>
+<p>},
+“ADDRESS” : {</p>
+<blockquote>
+<div><p>”total” : 1,
+“recordsUpdated” : 0,
+“recordsSkipped” : 1,
+“recordsInvalidated” : 0,
+“newRecordsAdded” : 0,
+“recordsMerged” : 0</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“durationInMilliseconds” : 3000,
+“created_date” : “2019-12-18T22:42:29.000Z”,
+“subscriptionId” : 117,
+“processedDataSummary” : {</p>
+<blockquote>
+<div><p>”HCP” : 1,
+“ADDRESS” : 1</p>
+</div></blockquote>
+<p>},
+“type” : “MANUAL”,
+“dataLoadSummary” : {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>”ADDRESS”<span class="classifier">{</span></dt><dd><p>“rowsRead” : 1,
+“rowsParsed” : 1</p>
+</dd>
+</dl>
+<p>},
+“HCP” : {</p>
+<blockquote>
+<div><p>”rowsParsed” : 1,
+“rowsRead” : 1</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“badRecordCount” : 0,
+“recordCount” : 2,
+“matchSummary” : {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>”HCP”<span class="classifier">{</span></dt><dd><p>“ACT” : 1,
+“notMatched” : 0,
+“ASK” : 0</p>
+</dd>
+</dl>
+<p>},
+“HCO” : {</p>
+<blockquote>
+<div><p>”ACT” : 0,
+“notMatched” : 0,
+“ASK” : 0</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“responseStatus” : “SUCCESS”</p>
+</div></blockquote>
+<p>}</p>
 </p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>dict</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the request fails</p></li>
+<li><p><strong>ValueError</strong> – If the job reaches a terminal status other than COMPLETE</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -451,14 +472,15 @@ until the job has reached a terminal state.</p>
 <dd><p>This API enables you to create a source or target subscription job.
 Note: This API requires system administrator or API-only permissions.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><strong>HTTPError</strong> – If the request fails</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the unique ID of the job generated for the source subscription you specified.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>str</p>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><ul>
+<li><p><em>str</em> –    the unique ID of the job generated for the source subscription you specified.</p>
+<p>Raises</p>
+</li>
+<li><p><em>——</em></p></li>
+<li><p><em>HTTPError</em> – If the request fails</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -469,13 +491,13 @@ Note: This API requires system administrator or API-only permissions.</p>
 <dt id="dkutils.veeva_network_api.veeva_network_client.VeevaTargetSubscriptionClient">
 <em class="property">class </em><code class="sig-prename descclassname">dkutils.veeva_network_api.veeva_network_client.</code><code class="sig-name descname">VeevaTargetSubscriptionClient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dns</span></em>, <em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em>, <em class="sig-param"><span class="n">subscription_name</span></em>, <em class="sig-param"><span class="n">system_name</span></em>, <em class="sig-param"><span class="n">version</span><span class="o">=</span><span class="default_value">'v16.0'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/veeva_network_api/veeva_network_client.html#VeevaTargetSubscriptionClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.veeva_network_api.veeva_network_client.VeevaTargetSubscriptionClient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#dkutils.veeva_network_api.veeva_network_client.VeevaSourceSubscriptionClient" title="dkutils.veeva_network_api.veeva_network_client.VeevaSourceSubscriptionClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">dkutils.veeva_network_api.veeva_network_client.VeevaSourceSubscriptionClient</span></code></a></p>
-<p>Create a client that enables you to manage target subscriptions that import and export data
-to and from the Veeva Network.</p>
+<p>Create a client that enables you to manage target subscriptions that import and export data to
+and from the Veeva Network.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>dns</strong> (<em>str</em>) – is the URL for your API service</p></li>
-<li><p><strong>username</strong> (<em>str</em>) – the user ID for Network; for example, <a class="reference external" href="mailto:john&#46;smith&#37;&#52;&#48;veevanetwork&#46;com">john<span>&#46;</span>smith<span>&#64;</span>veevanetwork<span>&#46;</span>com</a>.</p></li>
+<li><p><strong>username</strong> – the user ID for Network; for example, <a class="reference external" href="mailto:john&#46;smith&#37;&#52;&#48;veevanetwork&#46;com">john<span>&#46;</span>smith<span>&#64;</span>veevanetwork<span>&#46;</span>com</a>.</p></li>
 <li><p><strong>password</strong> (<em>str</em>) – the password for the user ID.</p></li>
 <li><p><strong>system_name</strong> (<em>str</em>) – is the unique name of the system</p></li>
 <li><p><strong>subscription_name</strong> (<em>str</em>) – is the unique name of the subscription</p></li>
@@ -492,13 +514,13 @@ to and from the Veeva Network.</p>
 <dl class="py method">
 <dt id="dkutils.veeva_network_api.veeva_network_client.VeevaTargetSubscriptionClient.__init__">
 <code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dns</span></em>, <em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em>, <em class="sig-param"><span class="n">subscription_name</span></em>, <em class="sig-param"><span class="n">system_name</span></em>, <em class="sig-param"><span class="n">version</span><span class="o">=</span><span class="default_value">'v16.0'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/veeva_network_api/veeva_network_client.html#VeevaTargetSubscriptionClient.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.veeva_network_api.veeva_network_client.VeevaTargetSubscriptionClient.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a client that enables you to manage target subscriptions that import and export data
-to and from the Veeva Network.</p>
+<dd><p>Create a client that enables you to manage target subscriptions that import and export data to
+and from the Veeva Network.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>dns</strong> (<em>str</em>) – is the URL for your API service</p></li>
-<li><p><strong>username</strong> (<em>str</em>) – the user ID for Network; for example, <a class="reference external" href="mailto:john&#46;smith&#37;&#52;&#48;veevanetwork&#46;com">john<span>&#46;</span>smith<span>&#64;</span>veevanetwork<span>&#46;</span>com</a>.</p></li>
+<li><p><strong>username</strong> – the user ID for Network; for example, <a class="reference external" href="mailto:john&#46;smith&#37;&#52;&#48;veevanetwork&#46;com">john<span>&#46;</span>smith<span>&#64;</span>veevanetwork<span>&#46;</span>com</a>.</p></li>
 <li><p><strong>password</strong> (<em>str</em>) – the password for the user ID.</p></li>
 <li><p><strong>system_name</strong> (<em>str</em>) – is the unique name of the system</p></li>
 <li><p><strong>subscription_name</strong> (<em>str</em>) – is the unique name of the subscription</p></li>
@@ -518,59 +540,59 @@ to and from the Veeva Network.</p>
 <dt id="dkutils.veeva_network_api.veeva_network_client.VeevaTargetSubscriptionClient.retrieve_network_process_job">
 <code class="sig-name descname">retrieve_network_process_job</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">job_resp_id</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/veeva_network_api/veeva_network_client.html#VeevaTargetSubscriptionClient.retrieve_network_process_job"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.veeva_network_api.veeva_network_client.VeevaTargetSubscriptionClient.retrieve_network_process_job" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve the status of a source or target subscription job. This function will poll
-until the job has reached a terminal state.</p>
+until the job has reached a terminal state.
+:param job_resp_id: is the unique ID of the job you want to retrieve status on
+:type job_resp_id: str</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>job_resp_id</strong> (<em>str</em>) – is the unique ID of the job you want to retrieve status on</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><p>A dictionary containing the information about the job. A dictionary similar to the
-following is returned:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-  <span class="s2">&quot;responseStatus&quot;</span><span class="p">:</span> <span class="s2">&quot;SUCCESS&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;subscriptionId&quot;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
-  <span class="s2">&quot;subscriptionName&quot;</span><span class="p">:</span> <span class="s2">&quot;targetSubscriptionCustomer&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;durationInMilliseconds&quot;</span><span class="p">:</span> <span class="mi">2000</span><span class="p">,</span>
-  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;MANUAL&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;errorCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-  <span class="s2">&quot;badRecordCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-  <span class="s2">&quot;exportReferenceCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-  <span class="s2">&quot;exportFull&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-  <span class="s2">&quot;exportIncludeReference&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-  <span class="s2">&quot;exportUpdatedChildOnly&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-  <span class="s2">&quot;exportSetSubscriptionStateOnFull&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-  <span class="s2">&quot;exportFormat&quot;</span><span class="p">:</span> <span class="s2">&quot;CSV&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;exportReferenceVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;4&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;exportActiveOnly&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-  <span class="s2">&quot;jobExportCount&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s2">&quot;LICENSE&quot;</span><span class="p">:</span> <span class="mi">3961</span><span class="p">,</span>
-    <span class="s2">&quot;RELATION&quot;</span><span class="p">:</span> <span class="mi">333</span><span class="p">,</span>
-    <span class="s2">&quot;HCO&quot;</span><span class="p">:</span> <span class="mi">819</span><span class="p">,</span>
-    <span class="s2">&quot;HCP&quot;</span><span class="p">:</span> <span class="mi">1060</span><span class="p">,</span>
-    <span class="s2">&quot;ADDRESS&quot;</span><span class="p">:</span> <span class="mi">1801</span><span class="p">,</span>
-    <span class="s2">&quot;EXTERNALKEYS&quot;</span><span class="p">:</span> <span class="mi">8038</span>
-  <span class="p">},</span>
-  <span class="s2">&quot;job_id&quot;</span><span class="p">:</span> <span class="mi">10563</span><span class="p">,</span>
-  <span class="s2">&quot;job_status&quot;</span><span class="p">:</span> <span class="s2">&quot;COMPLETE&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;created_date&quot;</span><span class="p">:</span> <span class="s2">&quot;2016-11-17T10:58:49.000-08:00&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;data_revision_first&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;data_revision_last&quot;</span><span class="p">:</span> <span class="s2">&quot;929335226137870335&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;export_package_path&quot;</span><span class="p">:</span> <span class="s2">&quot;export/change_request/targetSubscriptionCustomer/exp_000001C5.zip&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;total_records_exported&quot;</span><span class="p">:</span> <span class="s2">&quot;1879&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;completed_date&quot;</span><span class="p">:</span> <span class="s2">&quot;2016-11-17T10:58:51.000-08:00&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;export_archive&quot;</span><span class="p">:</span> <span class="s2">&quot;individual&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;exportFormatDelimiter&quot;</span><span class="p">:</span><span class="s2">&quot;|&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;exportFormatTextQualifier&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">}</span>
-</pre></div>
-</div>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><p>A dictionary containing the information about the job. A dictionary similar to the following is returned:
+{</p>
+<blockquote>
+<div><p>”responseStatus”: “SUCCESS”,
+“subscriptionId”: 15,
+“subscriptionName”: “targetSubscriptionCustomer”,
+“durationInMilliseconds”: 2000,
+“type”: “MANUAL”,
+“errorCount”: 0,
+“badRecordCount”: 0,
+“exportReferenceCount”: 0,
+“exportFull”: True,
+“exportIncludeReference”: False,
+“exportUpdatedChildOnly”: False,
+“exportSetSubscriptionStateOnFull”: False,
+“exportFormat”: “CSV”,
+“exportReferenceVersion”: “4”,
+“exportActiveOnly”: False,
+“jobExportCount”: {</p>
+<blockquote>
+<div><p>”LICENSE”: 3961,
+“RELATION”: 333,
+“HCO”: 819,
+“HCP”: 1060,
+“ADDRESS”: 1801,
+“EXTERNALKEYS”: 8038</p>
+</div></blockquote>
+<p>},
+“job_id”: 10563,
+“job_status”: “COMPLETE”,
+“created_date”: “2016-11-17T10:58:49.000-08:00”,
+“data_revision_first”: “0”,
+“data_revision_last”: “929335226137870335”,
+“export_package_path”: “export/change_request/targetSubscriptionCustomer/exp_000001C5.zip”,
+“total_records_exported”: “1879”,
+“completed_date”: “2016-11-17T10:58:51.000-08:00”,
+“export_archive”: “individual”,
+“exportFormatDelimiter”:”|”,
+“exportFormatTextQualifier”:”””</p>
+</div></blockquote>
+<p>}</p>
 </p>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>dict</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
 </dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><ul class="simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
 <li><p><strong>HTTPError</strong> – If the request fails</p></li>
 <li><p><strong>ValueError</strong> – If the job reaches a terminal status other than COMPLETE</p></li>
 </ul>
@@ -588,42 +610,9 @@ and from the Veeva Network.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dns</strong> (<em>str</em><em>, </em><em>opt</em>) – The URL for your API service, if this variable is absent the the value will be obtained
-from the environment variable VEEVA_DNS</p></li>
-<li><p><strong>username</strong> (<em>str</em>) – The user ID for Network; for example, <a class="reference external" href="mailto:john&#46;smith&#37;&#52;&#48;veevanetwork&#46;com">john<span>&#46;</span>smith<span>&#64;</span>veevanetwork<span>&#46;</span>com</a>. if this variable is
-absent the the value will be obtained from the environment variable VEEVA_USERNAME</p></li>
-<li><p><strong>password</strong> (<em>str</em><em>, </em><em>opt</em>) – The password for the user ID. if this variable is absent the the value will be obtained
-from the environment variable VEEVA_PASSWORD</p></li>
-<li><p><strong>system_name</strong> (<em>str</em><em>, </em><em>opt</em>) – The unique name of the system if this variable is absent the the value will be obtained
-from the environment variable VEEVA_SYSTEM_NAME</p></li>
-<li><p><strong>subscription_name</strong> (<em>str</em><em>, </em><em>opt</em>) – The unique name of the subscription if this variable is absent the the value will be
-obtained from the environment variable VEEVA_SUBSCRIPTION_NAME</p></li>
-<li><p><strong>subscription_type</strong> (<a class="reference internal" href="#dkutils.veeva_network_api.veeva_network_client.VeevaNetworkSubscriptionType" title="dkutils.veeva_network_api.veeva_network_client.VeevaNetworkSubscriptionType"><em>VeevaNetworkSubscriptionType</em></a>) – Ff this variable is absent then the value will be obtained from the environment variable
-VEEVA_SUBSCRIPTION_TYPE the type of subscription</p></li>
-<li><p><strong>version</strong> (<em>str</em><em>, </em><em>opt</em>) – The API version if this variable is absent the the value will be obtained from the
-environment variable</p></li>
-</ul>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>HTTPError</strong> – If the request fails</p></li>
-<li><p><a class="reference internal" href="#dkutils.veeva_network_api.veeva_network_client.VeevaNetworkException" title="dkutils.veeva_network_api.veeva_network_client.VeevaNetworkException"><strong>VeevaNetworkException</strong></a> – If subscription_type is not VeevaNetworkSubscriptionType.SOURCE or
-    VeevaNetworkSubscriptionType.TARGET. If the authorization header is not available</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="dkutils.veeva_network_api.veeva_network_client.run_subscription_job">
-<code class="sig-prename descclassname">dkutils.veeva_network_api.veeva_network_client.</code><code class="sig-name descname">run_subscription_job</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">username</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">password</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">subscription_name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">subscription_type</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">system_name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">version</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/veeva_network_api/veeva_network_client.html#run_subscription_job"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.veeva_network_api.veeva_network_client.run_subscription_job" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function will run a subscription job and poll until the job has reached a terminal state.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
 <li><p><strong>dns</strong> (<em>str</em><em>, </em><em>opt</em>) – is the URL for your API service, if this variable is absent the the value will be obtained from the
 environment variable VEEVA_DNS</p></li>
-<li><p><strong>username</strong> (<em>str</em>) – <dl class="simple">
+<li><p><strong>username</strong> – <dl class="simple">
 <dt>the user ID for Network; for example, <a class="reference external" href="mailto:john&#46;smith&#37;&#52;&#48;veevanetwork&#46;com">john<span>&#46;</span>smith<span>&#64;</span>veevanetwork<span>&#46;</span>com</a>. if this variable is absent the the value will</dt><dd><p>be obtained from the environment variable VEEVA_USERNAME</p>
 </dd>
 </dl>
@@ -643,124 +632,184 @@ environment variable</p></li>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>HTTPError</strong> – If the request fails</p></li>
-<li><p><strong>ValueError</strong> – If the job reaches a terminal status other than COMPLETE</p></li>
+<li><p><a class="reference internal" href="#dkutils.veeva_network_api.veeva_network_client.VeevaNetworkException" title="dkutils.veeva_network_api.veeva_network_client.VeevaNetworkException"><strong>VeevaNetworkException</strong></a> – if subscription_type is not VeevaNetworkSubscriptionType.SOURCE or VeevaNetworkSubscriptionType.TARGET
+    If the authorization header is not available</p></li>
 </ul>
 </dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><p>A dictionary containing the information about the job.
-For a source subscription the will be similar to the following:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-   <span class="s2">&quot;filesProcessed&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-   <span class="s2">&quot;errorCount&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-   <span class="s2">&quot;subscriptionName&quot;</span> <span class="p">:</span> <span class="s2">&quot;CRM_Import&quot;</span><span class="p">,</span>
-   <span class="s2">&quot;completed_date&quot;</span> <span class="p">:</span> <span class="s2">&quot;2019-12-18T22:42:32.000Z&quot;</span><span class="p">,</span>
-   <span class="s2">&quot;job_status&quot;</span> <span class="p">:</span> <span class="s2">&quot;COMPLETE&quot;</span><span class="p">,</span>
-   <span class="s2">&quot;job_id&quot;</span> <span class="p">:</span> <span class="mi">10537</span><span class="p">,</span>
-   <span class="s2">&quot;jobResultSummary&quot;</span> <span class="p">:</span> <span class="p">{</span>
-      <span class="s2">&quot;CUSTOMKEY&quot;</span> <span class="p">:</span> <span class="p">{</span>
-         <span class="s2">&quot;total&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-         <span class="s2">&quot;recordsUpdated&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-         <span class="s2">&quot;recordsSkipped&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-         <span class="s2">&quot;newRecordsAdded&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-         <span class="s2">&quot;recordsInvalidated&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-         <span class="s2">&quot;recordsMerged&quot;</span> <span class="p">:</span> <span class="mi">0</span>
-      <span class="p">},</span>
-      <span class="s2">&quot;HCP&quot;</span> <span class="p">:</span> <span class="p">{</span>
-         <span class="s2">&quot;total&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-         <span class="s2">&quot;recordsUpdated&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-         <span class="s2">&quot;recordsSkipped&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-         <span class="s2">&quot;recordsMerged&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-         <span class="s2">&quot;recordsInvalidated&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-         <span class="s2">&quot;newRecordsAdded&quot;</span> <span class="p">:</span> <span class="mi">0</span>
-      <span class="p">},</span>
-      <span class="s2">&quot;ADDRESS&quot;</span> <span class="p">:</span> <span class="p">{</span>
-         <span class="s2">&quot;total&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-         <span class="s2">&quot;recordsUpdated&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-         <span class="s2">&quot;recordsSkipped&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-         <span class="s2">&quot;recordsInvalidated&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-         <span class="s2">&quot;newRecordsAdded&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-         <span class="s2">&quot;recordsMerged&quot;</span> <span class="p">:</span> <span class="mi">0</span>
-      <span class="p">}</span>
-   <span class="p">},</span>
-   <span class="s2">&quot;durationInMilliseconds&quot;</span> <span class="p">:</span> <span class="mi">3000</span><span class="p">,</span>
-   <span class="s2">&quot;created_date&quot;</span> <span class="p">:</span> <span class="s2">&quot;2019-12-18T22:42:29.000Z&quot;</span><span class="p">,</span>
-   <span class="s2">&quot;subscriptionId&quot;</span> <span class="p">:</span> <span class="mi">117</span><span class="p">,</span>
-   <span class="s2">&quot;processedDataSummary&quot;</span> <span class="p">:</span> <span class="p">{</span>
-      <span class="s2">&quot;HCP&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-      <span class="s2">&quot;ADDRESS&quot;</span> <span class="p">:</span> <span class="mi">1</span>
-   <span class="p">},</span>
-   <span class="s2">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;MANUAL&quot;</span><span class="p">,</span>
-   <span class="s2">&quot;dataLoadSummary&quot;</span> <span class="p">:</span> <span class="p">{</span>
-      <span class="s2">&quot;ADDRESS&quot;</span> <span class="p">:</span> <span class="p">{</span>
-         <span class="s2">&quot;rowsRead&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-         <span class="s2">&quot;rowsParsed&quot;</span> <span class="p">:</span> <span class="mi">1</span>
-      <span class="p">},</span>
-      <span class="s2">&quot;HCP&quot;</span> <span class="p">:</span> <span class="p">{</span>
-         <span class="s2">&quot;rowsParsed&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-         <span class="s2">&quot;rowsRead&quot;</span> <span class="p">:</span> <span class="mi">1</span>
-      <span class="p">}</span>
-   <span class="p">},</span>
-   <span class="s2">&quot;badRecordCount&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-   <span class="s2">&quot;recordCount&quot;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-   <span class="s2">&quot;matchSummary&quot;</span> <span class="p">:</span> <span class="p">{</span>
-      <span class="s2">&quot;HCP&quot;</span> <span class="p">:</span> <span class="p">{</span>
-         <span class="s2">&quot;ACT&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-         <span class="s2">&quot;notMatched&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-         <span class="s2">&quot;ASK&quot;</span> <span class="p">:</span> <span class="mi">0</span>
-      <span class="p">},</span>
-      <span class="s2">&quot;HCO&quot;</span> <span class="p">:</span> <span class="p">{</span>
-         <span class="s2">&quot;ACT&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-         <span class="s2">&quot;notMatched&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-         <span class="s2">&quot;ASK&quot;</span> <span class="p">:</span> <span class="mi">0</span>
-      <span class="p">}</span>
-   <span class="p">},</span>
-   <span class="s2">&quot;responseStatus&quot;</span> <span class="p">:</span> <span class="s2">&quot;SUCCESS&quot;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>For a target source a dictionary similar to the following is returned:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-  <span class="s2">&quot;responseStatus&quot;</span><span class="p">:</span> <span class="s2">&quot;SUCCESS&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;subscriptionId&quot;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
-  <span class="s2">&quot;subscriptionName&quot;</span><span class="p">:</span> <span class="s2">&quot;targetSubscriptionCustomer&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;durationInMilliseconds&quot;</span><span class="p">:</span> <span class="mi">2000</span><span class="p">,</span>
-  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;MANUAL&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;errorCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-  <span class="s2">&quot;badRecordCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-  <span class="s2">&quot;exportReferenceCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-  <span class="s2">&quot;exportFull&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-  <span class="s2">&quot;exportIncludeReference&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-  <span class="s2">&quot;exportUpdatedChildOnly&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-  <span class="s2">&quot;exportSetSubscriptionStateOnFull&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-  <span class="s2">&quot;exportFormat&quot;</span><span class="p">:</span> <span class="s2">&quot;CSV&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;exportReferenceVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;4&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;exportActiveOnly&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-  <span class="s2">&quot;jobExportCount&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s2">&quot;LICENSE&quot;</span><span class="p">:</span> <span class="mi">3961</span><span class="p">,</span>
-    <span class="s2">&quot;RELATION&quot;</span><span class="p">:</span> <span class="mi">333</span><span class="p">,</span>
-    <span class="s2">&quot;HCO&quot;</span><span class="p">:</span> <span class="mi">819</span><span class="p">,</span>
-    <span class="s2">&quot;HCP&quot;</span><span class="p">:</span> <span class="mi">1060</span><span class="p">,</span>
-    <span class="s2">&quot;ADDRESS&quot;</span><span class="p">:</span> <span class="mi">1801</span><span class="p">,</span>
-    <span class="s2">&quot;EXTERNALKEYS&quot;</span><span class="p">:</span> <span class="mi">8038</span>
-  <span class="p">},</span>
-  <span class="s2">&quot;job_id&quot;</span><span class="p">:</span> <span class="mi">10563</span><span class="p">,</span>
-  <span class="s2">&quot;job_status&quot;</span><span class="p">:</span> <span class="s2">&quot;COMPLETE&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;created_date&quot;</span><span class="p">:</span> <span class="s2">&quot;2016-11-17T10:58:49.000-08:00&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;data_revision_first&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;data_revision_last&quot;</span><span class="p">:</span> <span class="s2">&quot;929335226137870335&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;export_package_path&quot;</span><span class="p">:</span> <span class="s2">&quot;export/change_request/targetSubscriptionCustomer/exp_000001C5.zip&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;total_records_exported&quot;</span><span class="p">:</span> <span class="s2">&quot;1879&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;completed_date&quot;</span><span class="p">:</span> <span class="s2">&quot;2016-11-17T10:58:51.000-08:00&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;export_archive&quot;</span><span class="p">:</span> <span class="s2">&quot;individual&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;exportFormatDelimiter&quot;</span><span class="p">:</span><span class="s2">&quot;|&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;exportFormatTextQualifier&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">}</span>
-</pre></div>
-</div>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="dkutils.veeva_network_api.veeva_network_client.run_subscription_job">
+<code class="sig-prename descclassname">dkutils.veeva_network_api.veeva_network_client.</code><code class="sig-name descname">run_subscription_job</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">username</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">password</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">subscription_name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">subscription_type</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">system_name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">version</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/veeva_network_api/veeva_network_client.html#run_subscription_job"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.veeva_network_api.veeva_network_client.run_subscription_job" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function will run a subscription job and poll until the job has reached a terminal state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dns</strong> (<em>str</em><em>, </em><em>opt</em>) – is the URL for your API service, if this variable is absent the the value will be obtained from the
+environment variable VEEVA_DNS</p></li>
+<li><p><strong>username</strong> – <dl class="simple">
+<dt>the user ID for Network; for example, <a class="reference external" href="mailto:john&#46;smith&#37;&#52;&#48;veevanetwork&#46;com">john<span>&#46;</span>smith<span>&#64;</span>veevanetwork<span>&#46;</span>com</a>. if this variable is absent the the value will</dt><dd><p>be obtained from the environment variable VEEVA_USERNAME</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>password</strong> (<em>str</em><em>, </em><em>opt</em>) – the password for the user ID. if this variable is absent the the value will be obtained from the
+environment variable VEEVA_PASSWORD</p></li>
+<li><p><strong>system_name</strong> (<em>str</em><em>, </em><em>opt</em>) – is the unique name of the system if this variable is absent the the value will be obtained from the
+environment variable VEEVA_SYSTEM_NAME</p></li>
+<li><p><strong>subscription_name</strong> (<em>str</em><em>, </em><em>opt</em>) – is the unique name of the subscription if this variable is absent the the value will be obtained from the
+environment variable VEEVA_SUBSCRIPTION_NAME</p></li>
+<li><p><strong>subscription_type</strong> (<em>VeevaNetworkSubscriptionType if this variable is absent the the value will be obtained from the</em>) – environment variable VEEVA_SUBSCRIPTION_TYPE
+the type of subscription</p></li>
+<li><p><strong>version</strong> (<em>str</em><em>, </em><em>opt</em>) – is the API version if this variable is absent the the value will be obtained from the
+environment variable</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>A dictionary containing the information about the job.
+For a source subscription the will be similar to the following:
+{</p>
+<blockquote>
+<div><p>”filesProcessed” : 1,
+“errorCount” : 0,
+“subscriptionName” : “CRM_Import”,
+“completed_date” : “2019-12-18T22:42:32.000Z”,
+“job_status” : “COMPLETE”,
+“job_id” : 10537,
+“jobResultSummary” : {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>”CUSTOMKEY”<span class="classifier">{</span></dt><dd><p>“total” : 2,
+“recordsUpdated” : 0,
+“recordsSkipped” : 2,
+“newRecordsAdded” : 0,
+“recordsInvalidated” : 0,
+“recordsMerged” : 0</p>
+</dd>
+</dl>
+<p>},
+“HCP” : {</p>
+<blockquote>
+<div><p>”total” : 1,
+“recordsUpdated” : 0,
+“recordsSkipped” : 1,
+“recordsMerged” : 0,
+“recordsInvalidated” : 0,
+“newRecordsAdded” : 0</p>
+</div></blockquote>
+<p>},
+“ADDRESS” : {</p>
+<blockquote>
+<div><p>”total” : 1,
+“recordsUpdated” : 0,
+“recordsSkipped” : 1,
+“recordsInvalidated” : 0,
+“newRecordsAdded” : 0,
+“recordsMerged” : 0</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“durationInMilliseconds” : 3000,
+“created_date” : “2019-12-18T22:42:29.000Z”,
+“subscriptionId” : 117,
+“processedDataSummary” : {</p>
+<blockquote>
+<div><p>”HCP” : 1,
+“ADDRESS” : 1</p>
+</div></blockquote>
+<p>},
+“type” : “MANUAL”,
+“dataLoadSummary” : {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>”ADDRESS”<span class="classifier">{</span></dt><dd><p>“rowsRead” : 1,
+“rowsParsed” : 1</p>
+</dd>
+</dl>
+<p>},
+“HCP” : {</p>
+<blockquote>
+<div><p>”rowsParsed” : 1,
+“rowsRead” : 1</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“badRecordCount” : 0,
+“recordCount” : 2,
+“matchSummary” : {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>”HCP”<span class="classifier">{</span></dt><dd><p>“ACT” : 1,
+“notMatched” : 0,
+“ASK” : 0</p>
+</dd>
+</dl>
+<p>},
+“HCO” : {</p>
+<blockquote>
+<div><p>”ACT” : 0,
+“notMatched” : 0,
+“ASK” : 0</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“responseStatus” : “SUCCESS”</p>
+</div></blockquote>
+<p>}
+For a target source a dictionary similar to the following is returned:
+{</p>
+<blockquote>
+<div><p>”responseStatus”: “SUCCESS”,
+“subscriptionId”: 15,
+“subscriptionName”: “targetSubscriptionCustomer”,
+“durationInMilliseconds”: 2000,
+“type”: “MANUAL”,
+“errorCount”: 0,
+“badRecordCount”: 0,
+“exportReferenceCount”: 0,
+“exportFull”: True,
+“exportIncludeReference”: False,
+“exportUpdatedChildOnly”: False,
+“exportSetSubscriptionStateOnFull”: False,
+“exportFormat”: “CSV”,
+“exportReferenceVersion”: “4”,
+“exportActiveOnly”: False,
+“jobExportCount”: {</p>
+<blockquote>
+<div><p>”LICENSE”: 3961,
+“RELATION”: 333,
+“HCO”: 819,
+“HCP”: 1060,
+“ADDRESS”: 1801,
+“EXTERNALKEYS”: 8038</p>
+</div></blockquote>
+<p>},
+“job_id”: 10563,
+“job_status”: “COMPLETE”,
+“created_date”: “2016-11-17T10:58:49.000-08:00”,
+“data_revision_first”: “0”,
+“data_revision_last”: “929335226137870335”,
+“export_package_path”: “export/change_request/targetSubscriptionCustomer/exp_000001C5.zip”,
+“total_records_exported”: “1879”,
+“completed_date”: “2016-11-17T10:58:51.000-08:00”,
+“export_archive”: “individual”,
+“exportFormatDelimiter”:”|”,
+“exportFormatTextQualifier”:”””</p>
+</div></blockquote>
+<p>}</p>
 </p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>dict</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the request fails</p></li>
+<li><p><strong>ValueError</strong> – If the job reaches a terminal status other than COMPLETE</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>

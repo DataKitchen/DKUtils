@@ -314,14 +314,13 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    credentials_path : Path</span>
-<span class="sd">        The path to the file containing the credentials. To create this file follow the instructions</span>
-<span class="sd">        found at https://developers.google.com/gmail/api/quickstart/python Under Step1: Turn on the</span>
-<span class="sd">        GMAIL API</span>
-<span class="sd">    token_path : Path</span>
-<span class="sd">        The path to the file that will contain the base64 encoded token that can uploaded to vault.</span>
-<span class="sd">    scopes : list, optional</span>
-<span class="sd">        A list containing the requested scopes. See https://developers.google.com/gmail/api/auth/scopes</span>
+<span class="sd">    credentials_path: Path</span>
+<span class="sd">        the path to the file containing the credentials. To create this file follow the instructions</span>
+<span class="sd">        found at https://developers.google.com/gmail/api/quickstart/python Under Step1: Turn on the GMAIL API</span>
+<span class="sd">    token_path: Path</span>
+<span class="sd">        the path to the file that will contain the base64 encoded token that can uploaded to vault.</span>
+<span class="sd">    scopes: list, optional</span>
+<span class="sd">        a list containing the requested scopes. See https://developers.google.com/gmail/api/auth/scopes</span>
 <span class="sd">        for a list of the scopes. Will default to [Scope.READ_ONLY]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">credentials_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
@@ -337,15 +336,15 @@
 
 <div class="viewcode-block" id="get_object_from_environment"><a class="viewcode-back" href="../../../apidoc/dkutils.gmail_api.gmail_client.html#dkutils.gmail_api.gmail_client.get_object_from_environment">[docs]</a><span class="k">def</span> <span class="nf">get_object_from_environment</span><span class="p">(</span><span class="n">environment_variable_name</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This function will get an object that has been pickled and base64 encoded from an environment</span>
-<span class="sd">    variable with the specified name. This was intended to be used for retrieving the credentials</span>
-<span class="sd">    for using the GMail API from an environment variable but it can be used to retrieve any python</span>
-<span class="sd">    object that has been pickled and base64 encoded as an environment variable.</span>
+<span class="sd">    This function will get an object that has been pickled and base64 encoded from an environment variable with the</span>
+<span class="sd">    specified name. This was intended to be used for retrieving the credentials for using the GMail API from an</span>
+<span class="sd">    environment variable but it can be used to retrieve any python object that has been pickled and base64 encoded</span>
+<span class="sd">    as an environment variable.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    environment_variable_name : str</span>
-<span class="sd">        A string specifying the name of the environment variable containing the object.</span>
+<span class="sd">    environment_variable_name: str</span>
+<span class="sd">        a string specifying the name of the environment variable containing the object.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -357,23 +356,17 @@
 
 
 <div class="viewcode-block" id="create_message"><a class="viewcode-back" href="../../../apidoc/dkutils.gmail_api.gmail_client.html#dkutils.gmail_api.gmail_client.create_message">[docs]</a><span class="k">def</span> <span class="nf">create_message</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">message_text</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create a message for an email.</span>
+    <span class="sd">&quot;&quot;&quot;Create a message for an email.</span>
 
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    sender : str</span>
-<span class="sd">        Email address of the sender.</span>
-<span class="sd">    to : str</span>
-<span class="sd">        Email address of the receiver.</span>
-<span class="sd">    subject : str</span>
-<span class="sd">        The subject of the email message.</span>
-<span class="sd">    message_text : str</span>
-<span class="sd">        The text of the email message.</span>
+<span class="sd">    Args:</span>
+<span class="sd">      sender: Email address of the sender.</span>
+<span class="sd">      to: Email address of the receiver.</span>
+<span class="sd">      subject: The subject of the email message.</span>
+<span class="sd">      message_text: The text of the email message.</span>
 
 <span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    object</span>
+<span class="sd">    ________</span>
+<span class="sd">        object</span>
 <span class="sd">        An object containing a base64url encoded email object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">message</span> <span class="o">=</span> <span class="n">MIMEText</span><span class="p">(</span><span class="n">message_text</span><span class="p">)</span>
@@ -386,25 +379,18 @@
 
 
 <div class="viewcode-block" id="create_message_with_attachment"><a class="viewcode-back" href="../../../apidoc/dkutils.gmail_api.gmail_client.html#dkutils.gmail_api.gmail_client.create_message_with_attachment">[docs]</a><span class="k">def</span> <span class="nf">create_message_with_attachment</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">message_text</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create a message for an email.</span>
+    <span class="sd">&quot;&quot;&quot;Create a message for an email.</span>
 
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    sender : str</span>
-<span class="sd">        Email address of the sender.</span>
-<span class="sd">    to : str</span>
-<span class="sd">        Email address of the receiver.</span>
-<span class="sd">    subject : str</span>
-<span class="sd">        The subject of the email message.</span>
-<span class="sd">    message_text : str</span>
-<span class="sd">        The text of the email message.</span>
-<span class="sd">    file : str</span>
-<span class="sd">        The path to the file to be attached.</span>
+<span class="sd">    Args:</span>
+<span class="sd">      sender: Email address of the sender.</span>
+<span class="sd">      to: Email address of the receiver.</span>
+<span class="sd">      subject: The subject of the email message.</span>
+<span class="sd">      message_text: The text of the email message.</span>
+<span class="sd">      file: The path to the file to be attached.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    object</span>
+<span class="sd">        object</span>
 <span class="sd">        An object containing a base64url encoded email object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">message</span> <span class="o">=</span> <span class="n">MIMEMultipart</span><span class="p">()</span>
@@ -446,35 +432,33 @@
 
 <div class="viewcode-block" id="GMailClient.__init__"><a class="viewcode-back" href="../../../apidoc/dkutils.gmail_api.gmail_client.html#dkutils.gmail_api.gmail_client.GMailClient.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">credentials</span><span class="p">:</span> <span class="n">Credentials</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Client object for access the GMail API. The create_base64_encoded_token function can be</span>
-<span class="sd">        used to initially create a set of credentials which are base64 encoded in a file that can</span>
-<span class="sd">        be looded into vault. This value from vault can then be used as an environment variable in</span>
-<span class="sd">        a variation. The get_object_from_environment can be used to reconstitute the credentials</span>
-<span class="sd">        from the environment variable.</span>
-
+<span class="sd">        Client object for access the GMail API.</span>
+<span class="sd">        the create_base64_encoded_token function can be used to initially create a set of credentials which are</span>
+<span class="sd">        base64 encoded in a file that can be looded into vault. This value from vault can then be used as an</span>
+<span class="sd">        environment variable in a variation. The get_object_from_environment can be used to reconstitute the</span>
+<span class="sd">        credentials from the environment variable.</span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        credentials : Credentials</span>
+<span class="sd">        credentials: Credentials</span>
 <span class="sd">            the credentials needed to access the API</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">service</span> <span class="o">=</span> <span class="n">build</span><span class="p">(</span><span class="s1">&#39;gmail&#39;</span><span class="p">,</span> <span class="s1">&#39;v1&#39;</span><span class="p">,</span> <span class="n">credentials</span><span class="o">=</span><span class="n">credentials</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="GMailClient.send_message"><a class="viewcode-back" href="../../../apidoc/dkutils.gmail_api.gmail_client.html#dkutils.gmail_api.gmail_client.GMailClient.send_message">[docs]</a>    <span class="k">def</span> <span class="nf">send_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="s1">&#39;me&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Send an email message.</span>
+        <span class="sd">&quot;&quot;&quot;Send an email message.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        message : str</span>
-<span class="sd">            The message to be sent</span>
-<span class="sd">        user_id : str, optional</span>
-<span class="sd">            User&#39;s email address. The special value &quot;me&quot; will be used to indicate the authenticated</span>
-<span class="sd">            user if no value is provided</span>
+<span class="sd">        message: str</span>
+<span class="sd">            the message to be sent</span>
+<span class="sd">        user_id: str, optional</span>
+<span class="sd">            User&#39;s email address. The special value &quot;me&quot; will be used to indicate the authenticated user if no value is</span>
+<span class="sd">            provided</span>
 
 <span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        dict</span>
-<span class="sd">            The sent message</span>
+<span class="sd">        _______</span>
+<span class="sd">          dict:</span>
+<span class="sd">            the sent message</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">message</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">users</span><span class="p">()</span><span class="o">.</span><span class="n">messages</span><span class="p">()</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">userId</span><span class="o">=</span><span class="n">user_id</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">message</span><span class="p">)</span><span class="o">.</span><span class="n">execute</span><span class="p">())</span>
@@ -489,29 +473,25 @@
         <span class="n">max_wait</span><span class="o">=</span><span class="n">GMAIL_MAX_WAIT_SECONDS</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This function can be used to determine if a response has been received containing the</span>
-<span class="sd">        specified approval string. The given subject is used to retrieve messages of interest. This</span>
-<span class="sd">        function will poll for new email every sleep seconds until the max wait seconds have been</span>
-<span class="sd">        exceeded.</span>
-
+<span class="sd">        This function can be used to determine if a response has been received containing the specified approval</span>
+<span class="sd">        string. The given subject is used to retrieve messages of interest. This function will poll for new email</span>
+<span class="sd">        every sleep seconds until the max wait seconds have been exceeded.</span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        subject : str</span>
+<span class="sd">        subject: str</span>
 <span class="sd">            The subject to use to retrieve messages from the inbox</span>
-<span class="sd">        approval_string : str, opt</span>
-<span class="sd">            If the message body of a message retrieved starts with the given string True will be</span>
-<span class="sd">            returned by the function indicating that approval has been received. Will default to</span>
-<span class="sd">            Approved if not specified</span>
-<span class="sd">        sleep_seconds : int, opt</span>
-<span class="sd">            Number of seconds to wait between retrieving email. If not specified will default to 10</span>
-<span class="sd">        max_wait : int, opt</span>
-<span class="sd">            The maximum number of seconds to wait for approval to be recieved. If not specified</span>
-<span class="sd">            will default to 30</span>
+<span class="sd">        approval_string: str, opt</span>
+<span class="sd">            If the message body of a message retrieved starts with the given string True will be returned by the</span>
+<span class="sd">            function indicating that approval has been received. Will default to Approved if not specified</span>
+<span class="sd">        sleep_seconds: int, opt</span>
+<span class="sd">            the number of seconds to wait between retrieving email. If not specified will default to 10</span>
+<span class="sd">        max_wait: int, opt</span>
+<span class="sd">            the maximum number of seconds to wait for approval to be recieved. If not specified will default to 30</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        bool</span>
-<span class="sd">            True or False with True indicating that approval has been received</span>
+<span class="sd">            bool</span>
+<span class="sd">                True or False with True indicating that approval has been received</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">wait_loop</span> <span class="o">=</span> <span class="n">WaitLoop</span><span class="p">(</span><span class="n">sleep_seconds</span><span class="p">,</span> <span class="n">max_wait</span><span class="p">)</span>
         <span class="k">while</span> <span class="n">wait_loop</span><span class="p">:</span>
