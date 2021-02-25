@@ -3,6 +3,7 @@ import logging
 import mimetypes
 import os
 import pickle
+from email.mime.application import MIMEApplication
 from email.mime.audio import MIMEAudio
 from email.mime.base import MIMEBase
 from email.mime.image import MIMEImage
@@ -216,6 +217,9 @@ def create_message_with_attachment(sender, to, subject, message_text, file):
     elif maintype == 'audio':
         with open(file, 'rb') as fp:
             msg = MIMEAudio(fp.read(), _subtype=subtype)
+    elif maintype == 'application':
+        with open(file, 'rb') as fp:
+            msg = MIMEApplication(fp.read(), _subtype=subtype)
     else:
         with open(file, 'rb') as fp:
             msg = MIMEBase(maintype, subtype)
