@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.gmail_api.gmail_client &mdash; DKUtils 1.8.1 documentation</title>
+  <title>dkutils.gmail_api.gmail_client &mdash; DKUtils 1.8.2 documentation</title>
   
 
   
@@ -107,6 +107,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-8-2">v1.8.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-8-1">v1.8.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-8-0">v1.8.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-7-1">v1.7.1</a></li>
@@ -218,6 +219,7 @@
 <span class="kn">import</span> <span class="nn">mimetypes</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">from</span> <span class="nn">email.mime.application</span> <span class="kn">import</span> <span class="n">MIMEApplication</span>
 <span class="kn">from</span> <span class="nn">email.mime.audio</span> <span class="kn">import</span> <span class="n">MIMEAudio</span>
 <span class="kn">from</span> <span class="nn">email.mime.base</span> <span class="kn">import</span> <span class="n">MIMEBase</span>
 <span class="kn">from</span> <span class="nn">email.mime.image</span> <span class="kn">import</span> <span class="n">MIMEImage</span>
@@ -431,6 +433,9 @@
     <span class="k">elif</span> <span class="n">maintype</span> <span class="o">==</span> <span class="s1">&#39;audio&#39;</span><span class="p">:</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="n">MIMEAudio</span><span class="p">(</span><span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="n">_subtype</span><span class="o">=</span><span class="n">subtype</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">maintype</span> <span class="o">==</span> <span class="s1">&#39;application&#39;</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">MIMEApplication</span><span class="p">(</span><span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="n">_subtype</span><span class="o">=</span><span class="n">subtype</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="n">MIMEBase</span><span class="p">(</span><span class="n">maintype</span><span class="p">,</span> <span class="n">subtype</span><span class="p">)</span>
