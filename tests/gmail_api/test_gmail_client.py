@@ -13,8 +13,9 @@ PARENT = Path(__file__).parent
 RESOURCES = PARENT / "resources"
 SAMPLE_TEXT = RESOURCES / "sample.txt"
 SAMPLE_IMAGE = RESOURCES / 'sample.gif'
+SAMPLE_APPLICATION = RESOURCES / 'sample.xlsx'
 SAMPLE_AUDIO = RESOURCES / 'sample.mp3'
-SAMPLE_OTHER = RESOURCES / 'sample.ocdf'
+SAMPLE_OTHER = RESOURCES / 'sample.x3db'
 TO = "someone@somewhere.com"
 FROM = "person@elsewher.com"
 SUBJECT = "Good News"
@@ -104,6 +105,22 @@ class Test(TestCase):
             subtype='mpeg'
         )
 
+    @patch('dkutils.gmail_api.gmail_client.MIMEApplication')
+    @patch('dkutils.gmail_api.gmail_client.MIMEText')
+    @patch('dkutils.gmail_api.gmail_client.base64')
+    @patch('dkutils.gmail_api.gmail_client.MIMEMultipart')
+    def test_create_message_with_attachment_when_application_file(
+        self, mock_mime_multipart, mock_base64, mock_mime_text, mock_mime_application
+    ):
+        self.verify_create_message_with_attachement(
+            mock_base64,
+            mock_mime_application,
+            mock_mime_multipart,
+            mock_mime_text,
+            attachment=SAMPLE_APPLICATION,
+            subtype='vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+
     @patch('dkutils.gmail_api.gmail_client.MIMEBase')
     @patch('dkutils.gmail_api.gmail_client.MIMEText')
     @patch('dkutils.gmail_api.gmail_client.base64')
@@ -128,7 +145,7 @@ class Test(TestCase):
         calls = [call('to', TO), call('from', FROM), call('subject', SUBJECT)]
         mock_message.__setitem__.assert_has_calls(calls)
         mock_mime_text.assert_called_with(MSG_TEXT)
-        mock_mime_base.assert_called_with('application', 'octet-stream')
+        mock_mime_base.assert_called_with('model', 'x3d+binary')
         mock_mime_base.return_value.set_payload.assert_called_with(file_text)
         mock_mime_base.return_value.add_header.assert_called_with(
             'Content-Disposition', 'attachment', filename=SAMPLE_OTHER.name

@@ -1,6 +1,9 @@
 Release Notes
 =============
 
+v1.8.2
+------
+* Fix a problem in the GMailClient that was causing excel spreadsheets sent as attachments to be corrupted.
 v1.8.1
 ------
 * Update setup.py and docs in preparation for move to public repository
