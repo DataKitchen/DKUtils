@@ -9,6 +9,7 @@ import requests
 from requests.exceptions import HTTPError
 
 from dkutils.constants import (
+    API_DELETE,
     API_GET,
     API_POST,
     API_PUT,
@@ -333,6 +334,28 @@ class DataKitchenClient:
             parameters=parameters
         )
 
+    def delete_order(self, order_id):
+        """
+        Delete an Order. Kitchen attribute must be set prior to invoking this method.
+
+        Parameters
+        ----------
+        order_id : str
+            ID of the order being deleted.
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+
+        Returns
+        ------
+        requests.Response
+            :class:`Response <Response>` object
+        """
+        self._ensure_attributes(KITCHEN)
+        return self._api_request(API_DELETE, 'order', 'delete', order_id, kitchen_name=self.kitchen)
+
     def resume_order_run(self, order_run_id):
         """
         Resume a failed order run. Kitchen attribute must be set prior to invoking this method.
@@ -356,6 +379,205 @@ class DataKitchenClient:
         return self._api_request(
             API_PUT, 'order', 'resume', order_run_id, kitchen_name=self.kitchen
         )
+
+    def get_orders(
+        self,
+        time_period_hours=None,
+        order_id_regex=None,
+        order_status=None,
+        order_run_status=None,
+        order_run_count=3
+    ):
+        """
+        Retrieve a dictionary of orders and their associated order runs based on the applied
+        filters. To filter based on recipe and variation, ensure these properties are set on this
+        client. Alternatively, set recipe and/or variation to None to remove filtering based on
+        these properties.
+
+        Parameters
+        ----------
+        time_period_hours : int, optional
+            Limit retrieved orders to those that started less than the provided number of hours ago.
+        order_id_regex : string, optional
+            Filter retrieved orders based on this provided order id regular expression
+        order_status : string, optional
+            Filter retrieved orders with this provided order status
+        order_run_status : string, optional
+            Filter retrieved order run with this provided order run status
+        order_run_count : int, optional
+            Limit the number of retrieved order runs (default is 3)
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+        ValueError
+            If the kitchen attribute is not set
+
+        Returns
+        -------
+        orders : dict
+            Dictionary of orders and their associated order runs in the form::
+
+                {
+                    "customer": "DKImplementation",
+                    "kitchenname": "New_Customer_Training",
+                    "orders": [
+                        {
+                            "hid": "d1cea220-8c0a-11eb-8d5d-5acebe1b7ce3",
+                            "input_settings": {
+                                "customer_git_name": "im",
+                                "customer_git_org": "DKImplementation",
+                                "customer_name": "Implementation",
+                                "email": "ddicara+im@datakitchen.io",
+                                "email_verified": true,
+                                "graph-setting": [
+                                    [
+                                        "Train_Model"
+                                    ]
+                                ],
+                                "login": "ddicara+im@datakitchen.io",
+                                "parameters": {
+                                    "edges": [],
+                                    "nodes": [
+                                        "Train_Model"
+                                    ]
+                                },
+                                "role": "ADMIN",
+                                "schedule": "now",
+                                "user_id": "auth0|5d3b2624888ba60cf584c9d3"
+                            },
+                            "order-status": "ORDER_ERROR",
+                            "recipe": "Training_Sales_Forecast",
+                            "schedule": "now",
+                            "variation": "train_walmart_sales_forecasting_model"
+                        }
+                    ],
+                    "repo": "im",
+                    "servings": {
+                        "d1cea220-8c0a-11eb-8d5d-5acebe1b7ce3": {
+                            "servings": [
+                                {
+                                    "hid": "d5ccbef2-8c0a-11eb-bfad-1a3acc706153",
+                                    "order_id": "d1cea220-8c0a-11eb-8d5d-5acebe1b7ce3",
+                                    "orderrun_status": "Error in OrderRun",
+                                    "status": "SERVING_ERROR",
+                                    "timings": {
+                                        "duration": 120439,
+                                        "end-time": 1616526493384,
+                                        "start-time": 1616526372945
+                                    },
+                                    "variation_name": "train_walmart_sales_forecasting_model"
+                                }
+                            ],
+                            "total": 1
+                        }
+                    },
+                    "total-orders": 1
+                }
+        """
+        self._ensure_attributes(KITCHEN)
+        kwargs = {}
+        if self.recipe:
+            kwargs[RECIPE] = self.recipe
+        if self.variation:
+            kwargs[VARIATION] = self.variation
+        if time_period_hours:
+            kwargs['timePeriod'] = time_period_hours
+        if order_id_regex:
+            kwargs['search'] = order_id_regex
+        if order_status:
+            kwargs['orderStatus'] = order_status
+        if order_run_status:
+            kwargs['orderRunStatus'] = order_run_status
+        if order_run_count:
+            kwargs['servingsCount'] = order_run_count
+
+        return self._api_request(API_GET, 'order', 'status', self.kitchen, **kwargs).json()
+
+    def get_order_status(
+        self,
+        time_period_hours=None,
+        order_id_regex=None,
+        order_status=None,
+        order_run_status=None,
+        order_run_count=3
+    ):
+        """
+        Retrieve the order (and associated order runs) status details based on the applied
+        filters. To filter based on recipe and variation, ensure these properties are set on this
+        client. Alternatively, set recipe and/or variation to None to remove filtering based on
+        these properties.
+
+        Parameters
+        ----------
+        time_period_hours : int, optional
+            Limit retrieved orders to those that started less than the provided number of hours ago.
+        order_id_regex : string, optional
+            Filter retrieved orders based on this provided order id regular expression
+        order_status : string, optional
+            Filter retrieved orders with this provided order status
+        order_run_status : string, optional
+            Filter retrieved order run with this provided order run status
+        order_run_count : int, optional
+            Limit the number of retrieved order runs (default is 3)
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+        ValueError
+            If the kitchen attribute is not set
+
+        Returns
+        -------
+        order_runs : list
+            A list of order runs sorted from most recent start-time to oldest in the form::
+
+                [
+                    {
+                        'hid': '66152846-e0ee-11ea-8280-12128c919b99',
+                        'order_id': 'a8f9ac78-e0ed-11ea-b3f4-56a20effdf97',
+                        'orderrun_status': 'OrderRun Completed',
+                        'status': 'COMPLETED_SERVING',
+                        'timings': {
+                            'duration': 22261,
+                            'end-time': 1597712533033,
+                            'start-time': 1597712510772
+                        }
+                    },
+                    {
+                        'hid': '3f57a7d0-e0ec-11ea-a65f-5edd64ee22f9',
+                        'order_id': '3942feda-e0ec-11ea-a00e-56a20effdf97',
+                        'orderrun_status': 'OrderRun Completed',
+                        'status': 'COMPLETED_SERVING',
+                        'timings': {
+                            'duration': 22676,
+                            'end-time': 1597711609459,
+                            'start-time': 1597711586783
+                        },
+                        'variation_name': 'variation1'
+                    }
+                ]
+
+        """
+        response_json = self.get_orders(
+            time_period_hours=time_period_hours,
+            order_id_regex=order_id_regex,
+            order_status=order_status,
+            order_run_status=order_run_status,
+            order_run_count=order_run_count
+        )
+
+        order_runs = []
+        if 'servings' in response_json and response_json['servings']:
+            for order in response_json['servings'].values():
+                order_runs.extend(order['servings'])
+
+        def sort_start_time(value):
+            return value['timings']['start-time']
+
+        return sorted(order_runs, key=sort_start_time, reverse=True)
 
     def get_order_runs(self, order_id):
         """
@@ -1184,7 +1406,7 @@ class DataKitchenClient:
 
     def get_recipes(self):
         """
-        Returns a dictionary whose keys are the recipe names and values contain a list of the variation names
+        Returns a list of recipe names.
 
         Raises
         ------
@@ -1213,101 +1435,6 @@ class DataKitchenClient:
                 self.kitchen]['kitchen-staff']:
             raise ValueError(f'{self.kitchen} is not available to {self._username}')
         return self._api_request(API_GET, 'kitchen', 'recipenames', self.kitchen).json()['recipes']
-
-    def get_order_status(
-        self,
-        time_period_hours=None,
-        order_id_regex=None,
-        order_status=None,
-        order_run_status=None,
-        order_run_count=3
-    ):
-        """
-        Retrieve the order (and associated order runs) status details based on the applied
-        filters. To filter based on recipe and variation, ensure these properties are set on this
-        client. Alternatively, set recipe and/or variation to None to remove filtering based on
-        these properties.
-
-        Parameters
-        ----------
-        time_period_hours : int, optional
-            Limit retrieved orders to those that started less than the provided number of hours ago.
-        order_id_regex : string, optional
-            Filter retrieved orders based on this provided order id regular expression
-        order_status : string, optional
-            Filter retrieved orders with this provided order status
-        order_run_status : string, optional
-            Filter retrieved order run with this provided order run status
-        order_run_count : int, optional
-            Limit the number of retrieved order runs (default is 3)
-
-        Raises
-        ------
-        HTTPError
-            If the request fails.
-        ValueError
-            If the kitchen attribute is not set
-
-        Returns
-        -------
-        order_runs : list
-            A list of order runs sorted from most recent start-time to oldest in the form::
-
-                [
-                    {
-                        'hid': '66152846-e0ee-11ea-8280-12128c919b99',
-                        'order_id': 'a8f9ac78-e0ed-11ea-b3f4-56a20effdf97',
-                        'orderrun_status': 'OrderRun Completed',
-                        'status': 'COMPLETED_SERVING',
-                        'timings': {
-                            'duration': 22261,
-                            'end-time': 1597712533033,
-                            'start-time': 1597712510772
-                        }
-                    },
-                    {
-                        'hid': '3f57a7d0-e0ec-11ea-a65f-5edd64ee22f9',
-                        'order_id': '3942feda-e0ec-11ea-a00e-56a20effdf97',
-                        'orderrun_status': 'OrderRun Completed',
-                        'status': 'COMPLETED_SERVING',
-                        'timings': {
-                            'duration': 22676,
-                            'end-time': 1597711609459,
-                            'start-time': 1597711586783
-                        },
-                        'variation_name': 'variation1'
-                    }
-                ]
-
-        """
-        self._ensure_attributes(KITCHEN)
-        kwargs = {}
-        if self.recipe:
-            kwargs[RECIPE] = self.recipe
-        if self.variation:
-            kwargs[VARIATION] = self.variation
-        if time_period_hours:
-            kwargs['timePeriod'] = time_period_hours
-        if order_id_regex:
-            kwargs['search'] = order_id_regex
-        if order_status:
-            kwargs['orderStatus'] = order_status
-        if order_run_status:
-            kwargs['orderRunStatus'] = order_run_status
-        if order_run_count:
-            kwargs['servingsCount'] = order_run_count
-
-        response_json = self._api_request(API_GET, 'order', 'status', self.kitchen, **kwargs).json()
-
-        order_runs = []
-        if 'servings' in response_json and response_json['servings']:
-            for order in response_json['servings'].values():
-                order_runs.extend(order['servings'])
-
-        def sort_start_time(value):
-            return value['timings']['start-time']
-
-        return sorted(order_runs, key=sort_start_time, reverse=True)
 
     def get_variations(self):
         """

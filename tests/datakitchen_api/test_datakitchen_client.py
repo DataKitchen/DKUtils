@@ -179,6 +179,29 @@ class TestDataKitchenClient(TestCase):
         mock_ensure_attributes.assert_called_once_with(KITCHEN, RECIPE, VARIATION)
         mock_put.assert_not_called()
 
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._ensure_attributes')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.delete')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_delete_order(self, _, mock_delete, mock_ensure_attributes):
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        dk_client.kitchen = DUMMY_KITCHEN
+        mock_delete.return_value = MockResponse(text={}, json={})
+        response = dk_client.delete_order(DUMMY_ORDER_ID)
+        self.assertEqual(response.json(), {})
+        self.assertEqual(response.text, {})
+        mock_ensure_attributes.assert_called_once_with(KITCHEN)
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._ensure_attributes')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.delete')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_delete_order_raise_error(self, _, mock_delete, mock_ensure_attributes):
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        dk_client.kitchen = DUMMY_KITCHEN
+        mock_delete.return_value = MockResponse(raise_error=True)
+        with self.assertRaises(HTTPError):
+            dk_client.delete_order(DUMMY_ORDER_ID)
+        mock_ensure_attributes.assert_called_once_with(KITCHEN)
+
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.put')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
     def test_resume_order_run(self, _, mock_put):
