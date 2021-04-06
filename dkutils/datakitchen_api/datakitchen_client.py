@@ -1404,6 +1404,100 @@ class DataKitchenClient:
                 kitchen_staff.append(staff_member)
         self.update_kitchen_staff(kitchen_staff)
 
+    def get_recipe(self, recipe_files=None, include_recipe_tree=False):
+        """
+        Retrieve the file structure and contents of a recipe. Using the default arguments, all
+        files and their contents will be returned. To return specific file contents, provide those
+        file paths in the recipe_files list. To return a subset of file contents, but the entire
+        recipe files hierarchy, set the include_recipe_tree to True.
+
+        Parameters
+        ----------
+        recipe_files : list or None
+            None, to return the contents of all files, or a list of file paths (relative to the
+            root of the recipe) to return contents of specific files.
+        include_recipe_tree : boolean
+            When set to True and used in conjunction with a non-empty list of recipe_files, a
+            recipe-tree key is added to the returned dictionary. This added field includes a
+            hierarchy of all files in a recipe and allows a user to return a subset of file
+            contents.
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+        ValueError
+            If the kitchen or recipe attribute is not set, or if recipe_files is an empty list.
+
+        Returns
+        -------
+        dict
+            Dictionary of recipe files (for this example, recipe_files=['description.json'] and
+            include_recipe_tree==True) of the form::
+
+                {
+                    "ORIG_HEAD": "ef1d7cd1ed6e6371e9ea964b74e90f61de38fe68",
+                    "recipe-tree": {
+                        "Test": {
+                            "Test": [
+                                {
+                                    "filename": "description.json",
+                                    "json": "{\n    \"description\": \"\", \n    \"recipe-emails...
+                                    "sha": "20ceab58e77be39ccbfcd1cfae52fc6710eb47e5",
+                                    "type": "blob",
+                                    "url": "https://github.com/api/v3/repos/DataKitchen...
+                                },
+                                {
+                                    "filename": "variables.json",
+                                    "sha": "73b22809acd0c96f981f33bf9e7936780a5df397",
+                                    "type": "blob",
+                                    "url": "https://github.com/api/v3/repos/DataKitchen...
+                                },
+                                {
+                                    "filename": "variations.json",
+                                    "sha": "ba744dc4669fb44f1200cc86770772433c73ddf8",
+                                    "type": "blob",
+                                    "url": "https://github.com/api/v3/repos/DataKitchen...
+                                }
+                            ],
+                            "Test/resources": [
+                                {
+                                    "filename": "README.txt",
+                                    "sha": "6966c84b6474c42b28a51b3546ec27a5733abffa",
+                                    "type": "blob",
+                                    "url": "https://github.com/api/v3/repos/DataKitchen...
+                                }
+                            ]
+                        }
+                    },
+                    "recipes": {
+                        "Test": {
+                            "Test": [
+                                {
+                                    "filename": "description.json",
+                                    "json": "{\n    \"description\": \"\", \n    \"recipe-emails...
+                                    "sha": "20ceab58e77be39ccbfcd1cfae52fc6710eb47e5",
+                                    "type": "blob",
+                                    "url": "https://github.com/api/v3/repos/DataKitchen...
+                                }
+                            ]
+                        }
+                    }
+                }
+        """
+        self._ensure_attributes(KITCHEN, RECIPE)
+        if recipe_files or include_recipe_tree:
+            if isinstance(recipe_files, list) and len(recipe_files) == 0:
+                # API does not handle an empty recipe_files list graciously
+                raise ValueError('Argument recipe_files cannot be an empty array.')
+
+            kwargs = {'include-recipe-tree': include_recipe_tree, 'recipe-files': recipe_files}
+            return self._api_request(
+                API_POST, 'recipe', 'get', self.kitchen, self.recipe, **kwargs
+            ).json()
+        else:
+            return self._api_request(API_POST, 'recipe', 'get', self.kitchen, self.recipe).json()
+
     def get_recipes(self):
         """
         Returns a list of recipe names.
