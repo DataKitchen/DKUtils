@@ -1,0 +1,599 @@
+{
+    "ORIG_HEAD": "6114fa1d80e7e9fa612b211a3451b7cc92ef6695",
+    "recipe-tree": {
+        "Training_Sales_Forecast": {
+            "Training_Sales_Forecast": [
+                {
+                    "filename": "description.json",
+                    "json": "{\"description\": \"Weather and sales data are used to train a Machine Learning model to forecast future sales.\", \"recipe-emails\": {\"email-delivery-service\": \"aws-email\"}}",
+                    "sha": "ca068657180228b5fdb36bbf494517477f653728",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "variables.json",
+                    "json": "{\n    \"variable-list\": {\n        \"walmart_sales_data_filename\": \"walmartData.csv\", \n        \"walmart_sales_data_sftp_path\": \"implementation/walmart_data/{{walmart_sales_data_filename}}\", \n        \"walmart_sales_data_s3_base_path\": \"output/{{CurrentKitchen}}/{{RecipeName}}/\", \n        \"walmart_sales_data_s3_path\": \"{{walmart_sales_data_s3_base_path}}{{walmart_sales_data_filename}}\", \n        \"features\": [\n            \"store\", \n            \"dept\", \n            \"temperature\", \n            \"fuel_price\", \n            \"cpi\", \n            \"size\"        ], \n        \"model_filename\": \"random_forest_regressor_model.joblib\", \n        \"schema_name\": \"{{CurrentKitchen}}\", \n        \"raw_sales_table_name\": \"raw_walmart_sales_data\", \n        \"forecasted_sales_table_name\": \"forecasted_sales_data\", \n        \"forecasted_sales_filename\": \"forecasted_sales.csv\", \n        \"store\": 1\n    }\n\n}\n",
+                    "sha": "1c2adc0785d7065adb1b651ef81ac65601b72820",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "variations.json",
+                    "json": "{\n    \"variation-list\": {\n        \"train_walmart_sales_forecasting_model\": {\n            \"description\": \"Train a machine learning model for use in forecasting Walmart sales.\", \n            \"graph-setting\": \"train_walmart_sales_forecasting_model_graph\", \n            \"schedule-setting\": \"2048_RAM\"\n        }\n, \n        \"forecast_walmart_sales\": {\n            \"description\": \"Forecast Walmart sales using a training ML model.\", \n            \"graph-setting\": \"forecast_walmart_sales_graph\"\n        }\n, \n        \"setup_schema\": {\n            \"description\": \"Create a new schema, add tables, and populate with data.\", \n            \"graph-setting\": \"setup_schema_graph\", \n            \"ingredient-definition\": \"setup_db\"\n        }\n, \n        \"teardown_schema\": {\n            \"description\": \"Delete data, tables, and schema.\", \n            \"graph-setting\": \"teardown_schema_graph\", \n            \"ingredient-definition\": \"teardown_db\"\n        }\n\n    }\n, \n    \"graph-setting-list\": {\n        \"train_walmart_sales_forecasting_model_graph\": [\n            [\n                \"Retrieve_Walmart_Sales_Data\", \n                \"Load_Walmart_Sales_Data\"            ], \n            [\n                \"Add_Schema_and_Tables\", \n                \"Load_Walmart_Sales_Data\"            ], \n            [\n                \"Load_Walmart_Sales_Data\", \n                \"Train_Model\"            ]        ], \n        \"forecast_walmart_sales_graph\": [\n            [\n                \"Forecast_Walmart_Sales\", \n                \"Load_Forecasted_Walmart_Sales_Data\"            ]        ], \n        \"setup_schema_graph\": [\n            [\n                \"Add_Schema_and_Tables\", \n                \"Load_Walmart_Sales_Data\"            ], \n            [\n                \"Retrieve_Walmart_Sales_Data\", \n                \"Load_Walmart_Sales_Data\"            ]        ], \n        \"teardown_schema_graph\": [\n            [\n                \"Delete_Schema\"            ]        ]\n    }\n, \n    \"override-setting-list\": {\n        \"production-overrides\": {\n            \"override1\": \"override-value1\"\n        }\n\n    }\n, \n    \"schedule-setting-list\": {\n        \"2048_RAM\": {\n            \"schedule\": \"now\", \n            \"max-ram\": 2048\n        }\n\n    }\n, \n    \"ingredient-definition-list\": [\n        {\n            \"ingredient-name\": \"setup_db\", \n            \"description\": \"Create a new schema, add tables, and load the Walmart sales data.\", \n            \"short-description\": \"Setup Walmart Sales Database\", \n            \"rollback-ingredient\": \"teardown_db\", \n            \"required-recipe-variables\": [\n                {\n                    \"name\": \"schema_name\", \n                    \"display-name\": \"Schema Name\", \n                    \"type\": \"Text\"\n                }\n, \n                {\n                    \"name\": \"raw_sales_table_name\", \n                    \"display-name\": \"Raw Sales Table Name\", \n                    \"type\": \"Text\"\n                }\n, \n                {\n                    \"name\": \"forecasted_sales_table_name\", \n                    \"display-name\": \"Forecasted Sales Table Name\", \n                    \"type\": \"Text\"\n                }\n            ], \n            \"apply-runtime-recipe-variables\": [\n            ]\n        }\n, \n        {\n            \"ingredient-name\": \"teardown_db\", \n            \"description\": \"Delete the Walmart sales data, tables, and schema.\", \n            \"short-description\": \"Delete Walmart Sales Schema\", \n            \"required-recipe-variables\": [\n                {\n                    \"name\": \"schema_name\", \n                    \"display-name\": \"Schema Name\", \n                    \"type\": \"Text\"\n                }\n            ], \n            \"apply-runtime-recipe-variables\": [\n            ]\n        }\n    ]\n}\n",
+                    "sha": "8f28505d32e6f7d80a8a4ee5dabcfe05972082e1",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Add_Schema_and_Tables": [
+                {
+                    "filename": "description.json",
+                    "json": "{\n    \"type\": \"DKNode_Action\"\n}\n",
+                    "sha": "a6b32e94f4f332848cbdb11488518e58ac830e79",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "notebook.json",
+                    "json": "{\n\n}\n",
+                    "sha": "0db3279e44b0dc4fb7e694b6cb10210a96ba6ba5",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Add_Schema_and_Tables/actions": [
+                {
+                    "filename": "source.json",
+                    "json": "{\n    \"name\": \"source\", \n    \"type\": \"DKDataSource_PostgreSQL\", \n    \"config-ref\": \"redshiftConfig\", \n    \"keys\": {\n        \"Create_Schema_if_Nonexistent\": {\n            \"sql\": \"CREATE SCHEMA IF NOT EXISTS {{schema_name}};\\n\\nSET search_path TO {{schema_name}};\\n\", \n            \"query-type\": \"execute_non_query\"\n        }\n, \n        \"Create_Raw_Walmart_Sales_Data_Table\": {\n            \"sql\": \"SET search_path TO {{schema_name}};\\n\\nDROP TABLE IF EXISTS {{raw_sales_table_name}};\\n\\nCREATE TABLE {{raw_sales_table_name}}\\n(\\n\\tIndex        INT NOT NULL,\\n\\tStore        INT NOT NULL,\\n\\tDept         INT NOT NULL,\\n\\tDate         DATE NOT NULL,\\n\\tWeekly_Sales FLOAT NOT NULL,\\n\\tIsHoliday    BOOLEAN NOT NULL,\\n\\tTemperature  NUMERIC(5,2) NOT NULL,\\n\\tFuel_Price   NUMERIC(5,3) NOT NULL,\\n\\tMarkDown1    FLOAT,\\n\\tMarkDown2    FLOAT,\\n\\tMarkDown3    FLOAT,\\n\\tMarkDown4    FLOAT,\\n\\tMarkDown5    FLOAT,\\n\\tCPI          FLOAT NOT NULL,\\n\\tType         CHAR NOT NULL,\\n\\tSize         INT NOT NULL\\n);\\n\", \n            \"query-type\": \"execute_non_query\"\n        }\n, \n        \"Create_Forecasted_Sales_Table\": {\n            \"sql\": \"SET search_path TO {{schema_name}};\\n\\nDROP TABLE IF EXISTS {{forecasted_sales_table_name}};\\n\\nCREATE TABLE {{forecasted_sales_table_name}}\\n(\\n\\tIndex                   INT NOT NULL,\\n\\tStore                   INT NOT NULL,\\n\\tDept                    INT NOT NULL,\\n\\tDate                    DATE NOT NULL,\\n\\tWeekly_Sales            FLOAT NOT NULL,\\n\\tForecasted_Weekly_Sales FLOAT NOT NULL,\\n\\tIsHoliday               BOOLEAN NOT NULL,\\n\\tTemperature             NUMERIC(5,2) NOT NULL,\\n\\tFuel_Price              NUMERIC(5,3) NOT NULL,\\n\\tMarkDown1               FLOAT,\\n\\tMarkDown2               FLOAT,\\n\\tMarkDown3               FLOAT,\\n\\tMarkDown4               FLOAT,\\n\\tMarkDown5               FLOAT,\\n\\tCPI                     FLOAT NOT NULL,\\n\\tType                    CHAR NOT NULL,\\n\\tSize                    INT NOT NULL\\n);\\n\", \n            \"query-type\": \"execute_non_query\"\n        }\n\n    }\n\n}\n",
+                    "sha": "c31bc40459ebae56e23a12cbd316115f85821f15",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Delete_Schema": [
+                {
+                    "filename": "description.json",
+                    "json": "{\n    \"type\": \"DKNode_Action\"\n}\n",
+                    "sha": "a6b32e94f4f332848cbdb11488518e58ac830e79",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "notebook.json",
+                    "json": "{\n\n}\n",
+                    "sha": "0db3279e44b0dc4fb7e694b6cb10210a96ba6ba5",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Delete_Schema/actions": [
+                {
+                    "filename": "source.json",
+                    "json": "{\n    \"name\": \"source\", \n    \"type\": \"DKDataSource_PostgreSQL\", \n    \"config-ref\": \"redshiftConfig\", \n    \"keys\": {\n        \"Delete_Schema\": {\n            \"sql\": \"DROP SCHEMA IF EXISTS {{schema_name}} CASCADE;\", \n            \"query-type\": \"execute_non_query\"\n        }\n\n    }\n\n}\n",
+                    "sha": "cf50d489f8f21e6e015ff08b4eb2370ad3767663",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Forecast_Walmart_Sales": [
+                {
+                    "filename": "description.json",
+                    "json": "{\n    \"type\": \"DKNode_Container\", \n    \"icon\": \"Python\"\n}\n",
+                    "sha": "037a92fccc7b3b788e08c2cfbc510e0c3a432e17",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "notebook.json",
+                    "json": "{\n    \"image-repo\": \"{{gpcConfig.image_repo}}\", \n    \"image-tag\": \"{{gpcConfig.image_tag}}\", \n    \"dockerhub-namespace\": \"{{gpcConfig.namespace}}\", \n    \"container-input-file-keys\": [\n        {\n            \"filename\": \"feature_data.csv\", \n            \"key\": \"redshift_datasource.Retrieve_Feature_Data\"\n        }\n, \n        {\n            \"filename\": \"all_data.csv\", \n            \"key\": \"redshift_datasource.Retrieve_All_Data\"\n        }\n, \n        {\n            \"description\": \"Retrieve the machine learning model stored in S3\", \n            \"filename\": \"{{model_filename}}\", \n            \"key\": \"source.Retrieve_ML_Model\"\n        }\n    ], \n    \"container-output-file-keys\": [\n        {\n            \"filename\": \"{{forecasted_sales_filename}}\", \n            \"key\": \"s3_datasink.Upload_Forecasted_Sales_Data_to_S3\"\n        }\n    ], \n    \"tests\": {\n        \"Test_Success\": {\n            \"action\": \"stop-on-error\", \n            \"test-variable\": \"success\", \n            \"type\": \"test-contents-as-boolean\", \n            \"test-logic\": {\n                \"test-compare\": \"equal-to\", \n                \"test-metric\": \"True\"\n            }\n\n        }\n, \n        \"Validate_Forecast_Sales_Count\": {\n            \"action\": \"stop-on-error\", \n            \"test-variable\": \"forecasted_sales_len\", \n            \"type\": \"test-contents-as-integer\", \n            \"test-logic\": {\n                \"test-compare\": \"equal-to\", \n                \"test-metric\": \"data_row_count\"\n            }\n\n        }\n\n    }\n\n}\n",
+                    "sha": "d32fbdfe311b09796cf94267535f3ee289db610c",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Forecast_Walmart_Sales/data_sinks": [
+                {
+                    "filename": "s3_datasink.json",
+                    "json": "{\n    \"name\": \"s3_datasink\", \n    \"type\": \"DKDataSink_S3\", \n    \"config\": {\n        \"region\": \"us-east-1\", \n        \"access-key\": \"{{s3Config.access_key}}\", \n        \"secret-key\": \"{{s3Config.secret_key}}\", \n        \"bucket\": \"{{s3Config.bucket}}\"\n    }\n, \n    \"keys\": {\n        \"Upload_Forecasted_Sales_Data_to_S3\": {\n            \"file-key\": \"{{walmart_sales_data_s3_base_path}}{{forecasted_sales_filename}}\", \n            \"use-only-file-key\": true\n        }\n\n    }\n\n}\n",
+                    "sha": "c8492ecbcf03d2a8362a624d23320e698c3b37dc",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Forecast_Walmart_Sales/data_sources": [
+                {
+                    "filename": "redshift_datasource.json",
+                    "json": "{\n    \"name\": \"redshift_datasource\", \n    \"type\": \"DKDataSource_PostgreSQL\", \n    \"config-ref\": \"redshiftConfig\", \n    \"keys\": {\n        \"Retrieve_Feature_Data\": {\n            \"sql\": \"SET search_path to {{schema_name}};\\n\\nSELECT\\n   {{features|join(', ')}} \\nFROM\\n    raw_walmart_sales_data\\nWHERE\\n    DATE_PART_YEAR({{raw_sales_table_name}}.date) = 2012 AND {{raw_sales_table_name}}.store = {{store}};\\n\", \n            \"query-type\": \"execute_query\", \n            \"insert-column-names\": true, \n            \"format\": \"csv\", \n            \"set-runtime-vars\": {\n                \"row_count\": \"data_row_count\", \n                \"column_count\": \"data_col_count\"\n            }\n\n        }\n, \n        \"Retrieve_All_Data\": {\n            \"sql\": \"SET search_path to {{schema_name}};\\n\\nSELECT\\n    * \\nFROM\\n    {{raw_sales_table_name}}\\nWHERE\\n    DATE_PART_YEAR({{raw_sales_table_name}}.date) = 2012 AND {{raw_sales_table_name}}.store = {{store}};\\n\", \n            \"query-type\": \"execute_query\", \n            \"insert-column-names\": true, \n            \"format\": \"csv\"\n        }\n\n    }\n, \n    \"tests\": {\n        \"Validate_Data_Row_Count\": {\n            \"action\": \"stop-on-error\", \n            \"test-variable\": \"data_row_count\", \n            \"type\": \"test-contents-as-integer\", \n            \"test-logic\": {\n                \"test-compare\": \"greater-than\", \n                \"test-metric\": 1000\n            }\n\n        }\n\n    }\n\n}\n",
+                    "sha": "eface9726cee5688008aca43214e8e00f07fd797",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "source.json",
+                    "json": "{\n    \"name\": \"source\", \n    \"type\": \"DKDataSource_S3\", \n    \"config\": {\n        \"region\": \"us-east-1\", \n        \"access-key\": \"{{s3Config.access_key}}\", \n        \"secret-key\": \"{{s3Config.secret_key}}\", \n        \"bucket\": \"{{s3Config.bucket}}\"\n    }\n, \n    \"keys\": {\n        \"Retrieve_ML_Model\": {\n            \"file-key\": \"{{walmart_sales_data_s3_base_path}}{{model_filename}}\", \n            \"use-only-file-key\": true, \n            \"set-runtime-vars\": {\n                \"size\": \"ml_model_file_size\"\n            }\n\n        }\n\n    }\n, \n    \"tests\": {\n        \"Validate_File_Size\": {\n            \"action\": \"stop-on-error\", \n            \"test-variable\": \"ml_model_file_size\", \n            \"type\": \"test-contents-as-integer\", \n            \"test-logic\": {\n                \"test-compare\": \"greater-than\", \n                \"test-metric\": 1000000\n            }\n\n        }\n\n    }\n\n}\n",
+                    "sha": "49f88dbf80b6b1992c822ca3706918b732b7fca2",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Forecast_Walmart_Sales/docker-share": [
+                {
+                    "filename": "config.json",
+                    "json": "{\n    \"apt-dependencies\": [\n    ], \n    \"dependencies\": [\n    ], \n    \"keys\": {\n        \"run_script\": {\n            \"script\": \"forecast_walmart_sales.py\", \n            \"environment\": {\n\n            }\n, \n            \"parameters\": {\n                \"MODEL_FILENAME\": \"{{model_filename}}\", \n                \"FORECASTED_SALES_FILENAME\": \"{{forecasted_sales_filename}}\"\n            }\n, \n            \"export\": [\n                \"forecasted_sales_len\", \n                \"success\"            ]\n        }\n\n    }\n\n}\n",
+                    "sha": "33298ee2ed2f58c97b60c0229c5444b13da62521",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "forecast_walmart_sales.py",
+                    "sha": "e01191a5b51b4fc60be30410e59e8ec22dcf7bb2",
+                    "text": "import joblib\nimport pandas as pd\nimport traceback\n\nfrom dkutils.validation import validate_globals\n\n\ntry:\n    success = False\n    forecasted_sales_len = -1\n    validate_globals([\n        'MODEL_FILENAME',\n        'FORECASTED_SALES_FILENAME'\n    ])\n\n    # Load the model\n    model = joblib.load(f'docker-share/{MODEL_FILENAME}')\n    \n    # Load the data and predict sales\n    feature_data_df = pd.read_csv('docker-share/feature_data.csv')\n    forecasted_sales = model.predict(feature_data_df)\n    forecasted_sales_len = len(forecasted_sales)\n    \n    all_data_df = pd.read_csv('docker-share/all_data.csv')\n    all_data_df.insert(5, 'forecasted_weekly_sales', forecasted_sales.tolist())\n    all_data_df.to_csv(f'docker-share/{FORECASTED_SALES_FILENAME}', index=False)\n\n    success = True\nexcept Exception as e:\n    LOGGER.error(f'Model training failed:\\n{traceback.format_exc()}')",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Load_Forecasted_Walmart_Sales_Data": [
+                {
+                    "filename": "description.json",
+                    "json": "{\n    \"type\": \"DKNode_Action\"\n}\n",
+                    "sha": "a6b32e94f4f332848cbdb11488518e58ac830e79",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "notebook.json",
+                    "json": "{\n\n}\n",
+                    "sha": "0db3279e44b0dc4fb7e694b6cb10210a96ba6ba5",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Load_Forecasted_Walmart_Sales_Data/actions": [
+                {
+                    "filename": "source.json",
+                    "json": "{\n    \"name\": \"source\", \n    \"type\": \"DKDataSource_PostgreSQL\", \n    \"config-ref\": \"redshiftConfig\", \n    \"keys\": {\n        \"Load_Forecasted_Walmart_Sales_Data\": {\n            \"sql\": \"SET search_path TO {{schema_name}};\\n\\nTRUNCATE {{forecasted_sales_table_name}};\\n\\ncopy {{forecasted_sales_table_name}}\\nfrom 's3://{{s3Config.bucket}}/{{walmart_sales_data_s3_base_path}}{{forecasted_sales_filename}}'\\ncredentials 'aws_iam_role=arn:aws:iam::{{s3Config.copy_role}}'\\nIGNOREHEADER 1 TRIMBLANKS DELIMITER ',' DATEFORMAT AS 'YYYY-MM-DD';\\n\\nSELECT COUNT(*) FROM {{forecasted_sales_table_name}};\\n\", \n            \"query-type\": \"execute_scalar\", \n            \"set-runtime-vars\": {\n                \"result\": \"forecasted_sales_row_count\"\n            }\n\n        }\n\n    }\n, \n    \"tests\": {\n        \"Ensure_Forecasted_Sales_Row_Count\": {\n            \"action\": \"stop-on-error\", \n            \"test-variable\": \"forecasted_sales_row_count\", \n            \"type\": \"test-contents-as-integer\", \n            \"test-logic\": {\n                \"test-compare\": \"equal-to\", \n                \"test-metric\": \"data_row_count\"\n            }\n\n        }\n\n    }\n\n}\n",
+                    "sha": "f24b0b36206abee1286d3ac9b4f897c108daf600",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Load_Walmart_Sales_Data": [
+                {
+                    "filename": "description.json",
+                    "json": "{\n    \"type\": \"DKNode_Action\"\n}\n",
+                    "sha": "a6b32e94f4f332848cbdb11488518e58ac830e79",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "notebook.json",
+                    "json": "{\n\n}\n",
+                    "sha": "0db3279e44b0dc4fb7e694b6cb10210a96ba6ba5",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Load_Walmart_Sales_Data/actions": [
+                {
+                    "filename": "source.json",
+                    "json": "{\n    \"name\": \"source\", \n    \"type\": \"DKDataSource_PostgreSQL\", \n    \"config-ref\": \"redshiftConfig\", \n    \"keys\": {\n        \"Load_Walmart_Sales_Data\": {\n            \"sql\": \"SET search_path TO {{schema_name}};\\n\\ncopy {{raw_sales_table_name}}\\nfrom 's3://{{s3Config.bucket}}/{{walmart_sales_data_s3_path}}'\\ncredentials 'aws_iam_role=arn:aws:iam::{{s3Config.copy_role}}'\\nIGNOREHEADER 1 TRIMBLANKS DELIMITER ',' DATEFORMAT AS 'YYYY-MM-DD';\\n\\nSELECT COUNT(*) FROM {{raw_sales_table_name}};\\n\", \n            \"query-type\": \"execute_scalar\", \n            \"set-runtime-vars\": {\n                \"result\": \"raw_walmart_sales_data_row_count\"\n            }\n\n        }\n\n    }\n, \n    \"tests\": {\n        \"Ensure_Row_Count\": {\n            \"description\": \"Stop the order run if the Redshift row count doesn't match the S3 row count (minus one for the header).\", \n            \"action\": \"stop-on-error\", \n            \"test-variable\": \"raw_walmart_sales_data_row_count\", \n            \"type\": \"test-contents-as-integer\", \n            \"test-logic\": \"raw_walmart_sales_data_row_count == s3_walmart_sales_data_line_count - 1\"\n        }\n\n    }\n\n}\n",
+                    "sha": "3938f5f9373f86fce3246541682769718536fc5e",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Retrieve_Walmart_Sales_Data": [
+                {
+                    "filename": "description.json",
+                    "json": "{\n    \"type\": \"DKNode_DataMapper\"\n}\n",
+                    "sha": "581802c232e7599620eac68ebc3a0679d7522ca1",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "notebook.json",
+                    "json": "{\n    \"mappings\": {\n        \"Retrieve_Walmart_Sales_Data\": {\n            \"description\": \"Retrieve the sales data from SFTP and add it to S3.\", \n            \"source-name\": \"source\", \n            \"source-key\": \"Retrieve_Walmart_Sales_Data_source\", \n            \"sink-name\": \"sink\", \n            \"sink-key\": \"Retrieve_Walmart_Sales_Data_sink\"\n        }\n\n    }\n\n}\n",
+                    "sha": "977db84ba3cf1a025aad38115d81759a3753b427",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Retrieve_Walmart_Sales_Data/data_sinks": [
+                {
+                    "filename": "sink.json",
+                    "json": "{\n    \"name\": \"sink\", \n    \"type\": \"DKDataSink_S3\", \n    \"config\": {\n        \"region\": \"us-east-1\", \n        \"access-key\": \"{{s3Config.access_key}}\", \n        \"secret-key\": \"{{s3Config.secret_key}}\", \n        \"bucket\": \"{{s3Config.bucket}}\"\n    }\n, \n    \"keys\": {\n        \"Retrieve_Walmart_Sales_Data_sink\": {\n            \"file-key\": \"{{walmart_sales_data_s3_path}}\", \n            \"use-only-file-key\": true, \n            \"set-runtime-vars\": {\n                \"size\": \"s3_walmart_sales_data_file_size\", \n                \"row_count\": \"s3_walmart_sales_data_line_count\", \n                \"md5\": \"s3_walmart_sales_data_md5_hash\", \n                \"sha\": \"s3_walmart_sales_data_sha1_hash\"\n            }\n\n        }\n\n    }\n, \n    \"tests\": {\n        \"Ensure_Line_Counts_Match\": {\n            \"description\": \"Stop the order run if the source and sink line counts don't match.\", \n            \"action\": \"stop-on-error\", \n            \"test-variable\": \"sftp_walmart_sales_data_line_count\", \n            \"type\": \"test-contents-as-integer\", \n            \"test-logic\": {\n                \"test-compare\": \"equal-to\", \n                \"test-metric\": \"s3_walmart_sales_data_line_count\"\n            }\n\n        }\n, \n        \"Ensure_MD5_Hashes_Match\": {\n            \"description\": \"Stop the order run if the source and sink MD5 file hashes don't match.\", \n            \"action\": \"stop-on-error\", \n            \"test-variable\": \"sftp_walmart_sales_data_md5_hash\", \n            \"type\": \"test-contents-as-string\", \n            \"test-logic\": {\n                \"test-compare\": \"equal-to\", \n                \"test-metric\": \"s3_walmart_sales_data_md5_hash\"\n            }\n\n        }\n, \n        \"Ensure_SHA1_Hashes_Match\": {\n            \"description\": \"Stop the order run if the source and sink SHA1 hashes don't match.\", \n            \"action\": \"stop-on-error\", \n            \"test-variable\": \"sftp_walmart_sales_data_sha1_hash\", \n            \"type\": \"test-contents-as-string\", \n            \"test-logic\": {\n                \"test-compare\": \"equal-to\", \n                \"test-metric\": \"s3_walmart_sales_data_sha1_hash\"\n            }\n\n        }\n\n    }\n\n}\n",
+                    "sha": "6e6ccae59401fa956582559a87fc7a9df42d7f36",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Retrieve_Walmart_Sales_Data/data_sources": [
+                {
+                    "filename": "source.json",
+                    "json": "{\n    \"name\": \"source\", \n    \"type\": \"DKDataSource_SFTP\", \n    \"config\": {\n        \"username\": \"{{sftpConfig.username}}\", \n        \"hostname\": \"{{sftpConfig.hostname}}\", \n        \"port\": \"{{sftpConfig.port}}\", \n        \"pem_file\": \"{{sftpConfig.key_file}}\"\n    }\n, \n    \"keys\": {\n        \"Retrieve_Walmart_Sales_Data_source\": {\n            \"file-key\": \"{{walmart_sales_data_sftp_path}}\", \n            \"use-only-file-key\": true, \n            \"set-runtime-vars\": {\n                \"size\": \"sftp_walmart_sales_data_file_size\", \n                \"row_count\": \"sftp_walmart_sales_data_line_count\", \n                \"md5\": \"sftp_walmart_sales_data_md5_hash\", \n                \"sha\": \"sftp_walmart_sales_data_sha1_hash\"\n            }\n\n        }\n\n    }\n, \n    \"tests\": {\n        \"Ensure_SFTP_Min_Line_Count\": {\n            \"description\": \"Send a warning alert if the source line count is < threshold.\", \n            \"action\": \"warning\", \n            \"test-variable\": \"sftp_walmart_sales_data_line_count\", \n            \"type\": \"test-contents-as-integer\", \n            \"test-logic\": {\n                \"test-compare\": \"greater-than\", \n                \"test-metric\": 100000\n            }\n\n        }\n, \n        \"Log_File_Size\": {\n            \"description\": \"Log the size of the file in bytes.\", \n            \"action\": \"log\", \n            \"test-variable\": \"sftp_walmart_sales_data_file_size\", \n            \"type\": \"test-contents-as-integer\", \n            \"test-logic\": \"sftp_walmart_sales_data_file_size\"\n        }\n\n    }\n\n}\n",
+                    "sha": "dfb150f0a2fe3bf469e4cd37edfd30fe294442be",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Train_Model": [
+                {
+                    "filename": "description.json",
+                    "json": "{\n    \"type\": \"DKNode_Container\", \n    \"icon\": \"Python\"\n}\n",
+                    "sha": "037a92fccc7b3b788e08c2cfbc510e0c3a432e17",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "notebook.json",
+                    "json": "{\n    \"image-repo\": \"{{gpcConfig.image_repo}}\", \n    \"image-tag\": \"{{gpcConfig.image_tag}}\", \n    \"dockerhub-namespace\": \"{{gpcConfig.namespace}}\", \n    \"container-input-file-keys\": [\n        {\n            \"filename\": \"training_data.csv\", \n            \"key\": \"source.Retrieve_Training_Data\"\n        }\n, \n        {\n            \"filename\": \"testing_data.csv\", \n            \"key\": \"source.Retrieve_Testing_Data\"\n        }\n    ], \n    \"container-output-file-keys\": [\n        {\n            \"filename\": \"{{model_filename}}\", \n            \"key\": \"s3_datasink.Save_Model\"\n        }\n    ], \n    \"tests\": {\n        \"Test_Success\": {\n            \"action\": \"stop-on-error\", \n            \"test-variable\": \"success\", \n            \"type\": \"test-contents-as-boolean\", \n            \"test-logic\": {\n                \"test-compare\": \"equal-to\", \n                \"test-metric\": \"True\"\n            }\n\n        }\n, \n        \"Log_RMSE\": {\n            \"action\": \"log\", \n            \"test-variable\": \"rmse\", \n            \"type\": \"test-contents-as-float\", \n            \"test-logic\": \"rmse\"\n        }\n\n    }\n\n}\n",
+                    "sha": "02fe68ab5d963edac5efaa409ca44aaa5ab3b6d3",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Train_Model/data_sinks": [
+                {
+                    "filename": "s3_datasink.json",
+                    "json": "{\n    \"name\": \"s3_datasink\", \n    \"type\": \"DKDataSink_S3\", \n    \"config\": {\n        \"access-key\": \"{{s3Config.access_key}}\", \n        \"secret-key\": \"{{s3Config.secret_key}}\", \n        \"bucket\": \"{{s3Config.bucket}}\"\n    }\n, \n    \"keys\": {\n        \"Save_Model\": {\n            \"file-key\": \"{{walmart_sales_data_s3_base_path}}{{model_filename}}\", \n            \"use-only-file-key\": true\n        }\n\n    }\n\n}\n",
+                    "sha": "111a77b8a095eff081ac98ff5bbb9bf1add8b0c9",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Train_Model/data_sources": [
+                {
+                    "filename": "source.json",
+                    "json": "{\n    \"name\": \"source\", \n    \"type\": \"DKDataSource_PostgreSQL\", \n    \"config-ref\": \"redshiftConfig\", \n    \"keys\": {\n        \"Retrieve_Training_Data\": {\n            \"sql\": \"SET search_path to {{schema_name}};\\n\\nSELECT\\n    weekly_sales, {{features|join(', ')}} \\nFROM\\n    raw_walmart_sales_data\\nWHERE\\n    DATE_PART_YEAR({{raw_sales_table_name}}.date) = 2010 AND {{raw_sales_table_name}}.store = {{store}};\\n\", \n            \"query-type\": \"execute_query\", \n            \"insert-column-names\": true, \n            \"format\": \"csv\", \n            \"set-runtime-vars\": {\n                \"row_count\": \"training_row_count\", \n                \"column_count\": \"training_col_count\"\n            }\n\n        }\n, \n        \"Retrieve_Testing_Data\": {\n            \"sql\": \"SET search_path to {{schema_name}};\\n\\nSELECT\\n    weekly_sales, {{features|join(', ')}} \\nFROM\\n    raw_walmart_sales_data\\nWHERE\\n    DATE_PART_YEAR({{raw_sales_table_name}}.date) = 2011 AND {{raw_sales_table_name}}.store = {{store}};\\n\", \n            \"query-type\": \"execute_query\", \n            \"insert-column-names\": true, \n            \"format\": \"csv\", \n            \"set-runtime-vars\": {\n                \"row_count\": \"testing_row_count\", \n                \"column_count\": \"testing_col_count\"\n            }\n\n        }\n\n    }\n, \n    \"tests\": {\n        \"Validate_Training_Row_Count\": {\n            \"action\": \"stop-on-error\", \n            \"test-variable\": \"training_row_count\", \n            \"type\": \"test-contents-as-integer\", \n            \"test-logic\": {\n                \"test-compare\": \"greater-than\", \n                \"test-metric\": 1000\n            }\n\n        }\n, \n        \"Validate_Testing_Row_Count\": {\n            \"action\": \"stop-on-error\", \n            \"test-variable\": \"testing_row_count\", \n            \"type\": \"test-contents-as-integer\", \n            \"test-logic\": {\n                \"test-compare\": \"greater-than\", \n                \"test-metric\": 1000\n            }\n\n        }\n, \n        \"Ensure_Column_Counts_Match\": {\n            \"action\": \"stop-on-error\", \n            \"test-variable\": \"training_col_count\", \n            \"type\": \"test-contents-as-integer\", \n            \"test-logic\": {\n                \"test-compare\": \"equal-to\", \n                \"test-metric\": \"testing_col_count\"\n            }\n\n        }\n\n    }\n\n}\n",
+                    "sha": "ab8ace5b13c93bacc41f17c5b0c7574902393488",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Train_Model/docker-share": [
+                {
+                    "filename": "config.json",
+                    "json": "{\n    \"apt-dependencies\": [\n    ], \n    \"dependencies\": [\n    ], \n    \"keys\": {\n        \"train_model\": {\n            \"script\": \"train_model.py\", \n            \"environment\": {\n\n            }\n, \n            \"parameters\": {\n                \"MODEL_FILENAME\": \"{{model_filename}}\"\n            }\n, \n            \"export\": [\n                \"success\", \n                \"rmse\"            ]\n        }\n\n    }\n\n}\n",
+                    "sha": "0378a917fe90b1aec084bfab2b945d451d6037e3",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "train_model.py",
+                    "sha": "f4b8b46f346948b4b63d805a05bc16029fbcf880",
+                    "text": "import joblib\nimport pandas as pd\nimport traceback\n\nfrom sklearn.ensemble import RandomForestRegressor\nfrom sklearn.metrics import mean_squared_error\n\nfrom dkutils.validation import validate_globals\n\nWEEKLY_SALES = 'weekly_sales'\n\n\nclass RandomForestRegressorModel:\n    \n    def __init__(self, model_path=None):\n        if model_path:\n            self.load_model(model_path)\n        else:\n            self.model = RandomForestRegressor(n_estimators=50, criterion='mse')\n            \n    def train(self, training_df, testing_df):\n\n        x_train = training_df.loc[:, training_df.columns != WEEKLY_SALES].values\n        y_train = training_df.loc[:,[WEEKLY_SALES]].values\n        LOGGER.info(f'Training Set Size: {len(x_train)}')\n\n        x_test = testing_df.loc[:, testing_df.columns != WEEKLY_SALES].values\n        y_test = testing_df.loc[:,[WEEKLY_SALES]].values\n        LOGGER.info(f'Testing Set Size: {len(x_test)}')\n\n        # Train\n        self.model.fit(x_train, y_train.ravel())\n        \n        # Test\n        y_predicted = self.model.predict(x_test)\n        \n        # Compute error\n        rmse = (mean_squared_error(y_true=y_test, y_pred=y_predicted))**(0.5)\n        LOGGER.info(f'RMSE: {rmse}')\n        \n        return rmse\n        \n    def predict(self, data):\n        self.model.predict(data)\n        \n    def save_model(self, model_path):\n        joblib.dump(self.model, model_path)\n        \n    def load_model(self, model_path):\n        self.model = joblib.load(model_path)\n\n\ntry:\n    success = False\n    rmse = -1\n    validate_globals([\n        'MODEL_FILENAME'\n    ])\n    \n    training_df = pd.read_csv('docker-share/training_data.csv')\n    testing_df = pd.read_csv('docker-share/testing_data.csv')\n\n    # Create, train, and save the machine learning model\n    model = RandomForestRegressorModel()\n    rmse = model.train(training_df, testing_df)\n    model.save_model(f'docker-share/{MODEL_FILENAME}')\n    \n    success = True\nexcept Exception as e:\n    LOGGER.error(f'Model training failed:\\n{traceback.format_exc()}')",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/resources": [
+                {
+                    "filename": "README.txt",
+                    "sha": "6966c84b6474c42b28a51b3546ec27a5733abffa",
+                    "text": "* DataKitchen Web App:    https://cloud.datakitchen.io\n* DKCloudCommand:         DataKitchen\u2019s command line interface\n* DataKitchen Help:       https://datakitchen.readme.io/docs\n* DataKitchen Website:    https://datakitchen.io/\n* DataKitchen Blog:       https://blog.datakitchen.io/blog\n* DataOps Manifesto:      https://www.dataopsmanifesto.org\n* DKCC on PyPI:           https://pypi.org/project/DKCloudCommand/\n\n",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "create_raw_weather_table.sql",
+                    "sha": "1cebc83b76bc9cc8b5775805fb954426039182ef",
+                    "text": "SET search_path TO {{CurrentKitchen}};\n\nDROP TABLE IF EXISTS raw_weather;\n\nCREATE TABLE raw_weather\n(\n\tregion      VARCHAR(100) NOT NULL,\n\tcountry     VARCHAR(100) NOT NULL,\n\tstate       VARCHAR(100) NOT NULL,\n\tcity        VARCHAR(100) NOT NULL,\n\tmonth       INT NOT NULL,\n\tday         INT NOT NULL,\n\tyear        INT NOT NULL,\n\ttemperature FLOAT NOT NULL\n);\n",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "create_sales_table.sql",
+                    "sha": "3a137e7d5fa7816edc55c7f5a2ab6b94a6d082ac",
+                    "text": "SET search_path TO {{CurrentKitchen}};\n\nDROP TABLE IF EXISTS sales;\n\nCREATE TABLE sales\n(\n  Row_ID           INTEGER NOT NULL,\n  Order_ID         VARCHAR(100),\n  Order_Date       DATE,\n  Ship_Date        DATE,\n  Ship_Mode        VARCHAR(100),\n  Customer_ID      VARCHAR(100),\n  Customer_Name    VARCHAR(100),\n  Segment          VARCHAR(100),\n  City             VARCHAR(100),\n  State            VARCHAR(100),\n  Country          VARCHAR(100),\n  Postal_Code      CHAR(5),\n  Market           VARCHAR(100),\n  Region           VARCHAR(100),\n  Product_ID       VARCHAR(100),\n  Category         VARCHAR(100),\n  Sub_Category     VARCHAR(100),\n  Product_Name     VARCHAR(1000),\n  Sales            NUMERIC(14,3),\n  Quantity         INTEGER,\n  Discount         NUMERIC(14,3),\n  Profit           NUMERIC(14,3),\n  Shipping_Cost    NUMERIC(14,3),\n  Order_Priority   VARCHAR(100)\n);\n",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "create_weather_table.sql",
+                    "sha": "e82138612aa5010d074fc8a6ccb454ac1b8383eb",
+                    "text": "SET search_path TO {{CurrentKitchen}};\n\nDROP TABLE IF EXISTS weather;\n\nCREATE TABLE weather\n(\n\tid          BIGINT IDENTITY(1, 1), \n\tcity        VARCHAR(100) NOT NULL, \n\ttemperature FLOAT NOT NULL, \n\tdate        TIMESTAMP\n);\n",
+                    "type": "blob",
+                    "url": ""
+                }
+            ]
+        }
+    },
+    "recipes": {
+        "Training_Sales_Forecast": {
+            "Training_Sales_Forecast": [
+                {
+                    "filename": "description.json",
+                    "json": "{\"description\": \"Weather and sales data are used to train a Machine Learning model to forecast future sales.\", \"recipe-emails\": {\"email-delivery-service\": \"aws-email\"}}",
+                    "sha": "ca068657180228b5fdb36bbf494517477f653728",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "variables.json",
+                    "json": "{\n    \"variable-list\": {\n        \"walmart_sales_data_filename\": \"walmartData.csv\", \n        \"walmart_sales_data_sftp_path\": \"implementation/walmart_data/{{walmart_sales_data_filename}}\", \n        \"walmart_sales_data_s3_base_path\": \"output/{{CurrentKitchen}}/{{RecipeName}}/\", \n        \"walmart_sales_data_s3_path\": \"{{walmart_sales_data_s3_base_path}}{{walmart_sales_data_filename}}\", \n        \"features\": [\n            \"store\", \n            \"dept\", \n            \"temperature\", \n            \"fuel_price\", \n            \"cpi\", \n            \"size\"        ], \n        \"model_filename\": \"random_forest_regressor_model.joblib\", \n        \"schema_name\": \"{{CurrentKitchen}}\", \n        \"raw_sales_table_name\": \"raw_walmart_sales_data\", \n        \"forecasted_sales_table_name\": \"forecasted_sales_data\", \n        \"forecasted_sales_filename\": \"forecasted_sales.csv\", \n        \"store\": 1\n    }\n\n}\n",
+                    "sha": "1c2adc0785d7065adb1b651ef81ac65601b72820",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "variations.json",
+                    "json": "{\n    \"variation-list\": {\n        \"train_walmart_sales_forecasting_model\": {\n            \"description\": \"Train a machine learning model for use in forecasting Walmart sales.\", \n            \"graph-setting\": \"train_walmart_sales_forecasting_model_graph\", \n            \"schedule-setting\": \"2048_RAM\"\n        }\n, \n        \"forecast_walmart_sales\": {\n            \"description\": \"Forecast Walmart sales using a training ML model.\", \n            \"graph-setting\": \"forecast_walmart_sales_graph\"\n        }\n, \n        \"setup_schema\": {\n            \"description\": \"Create a new schema, add tables, and populate with data.\", \n            \"graph-setting\": \"setup_schema_graph\", \n            \"ingredient-definition\": \"setup_db\"\n        }\n, \n        \"teardown_schema\": {\n            \"description\": \"Delete data, tables, and schema.\", \n            \"graph-setting\": \"teardown_schema_graph\", \n            \"ingredient-definition\": \"teardown_db\"\n        }\n\n    }\n, \n    \"graph-setting-list\": {\n        \"train_walmart_sales_forecasting_model_graph\": [\n            [\n                \"Retrieve_Walmart_Sales_Data\", \n                \"Load_Walmart_Sales_Data\"            ], \n            [\n                \"Add_Schema_and_Tables\", \n                \"Load_Walmart_Sales_Data\"            ], \n            [\n                \"Load_Walmart_Sales_Data\", \n                \"Train_Model\"            ]        ], \n        \"forecast_walmart_sales_graph\": [\n            [\n                \"Forecast_Walmart_Sales\", \n                \"Load_Forecasted_Walmart_Sales_Data\"            ]        ], \n        \"setup_schema_graph\": [\n            [\n                \"Add_Schema_and_Tables\", \n                \"Load_Walmart_Sales_Data\"            ], \n            [\n                \"Retrieve_Walmart_Sales_Data\", \n                \"Load_Walmart_Sales_Data\"            ]        ], \n        \"teardown_schema_graph\": [\n            [\n                \"Delete_Schema\"            ]        ]\n    }\n, \n    \"override-setting-list\": {\n        \"production-overrides\": {\n            \"override1\": \"override-value1\"\n        }\n\n    }\n, \n    \"schedule-setting-list\": {\n        \"2048_RAM\": {\n            \"schedule\": \"now\", \n            \"max-ram\": 2048\n        }\n\n    }\n, \n    \"ingredient-definition-list\": [\n        {\n            \"ingredient-name\": \"setup_db\", \n            \"description\": \"Create a new schema, add tables, and load the Walmart sales data.\", \n            \"short-description\": \"Setup Walmart Sales Database\", \n            \"rollback-ingredient\": \"teardown_db\", \n            \"required-recipe-variables\": [\n                {\n                    \"name\": \"schema_name\", \n                    \"display-name\": \"Schema Name\", \n                    \"type\": \"Text\"\n                }\n, \n                {\n                    \"name\": \"raw_sales_table_name\", \n                    \"display-name\": \"Raw Sales Table Name\", \n                    \"type\": \"Text\"\n                }\n, \n                {\n                    \"name\": \"forecasted_sales_table_name\", \n                    \"display-name\": \"Forecasted Sales Table Name\", \n                    \"type\": \"Text\"\n                }\n            ], \n            \"apply-runtime-recipe-variables\": [\n            ]\n        }\n, \n        {\n            \"ingredient-name\": \"teardown_db\", \n            \"description\": \"Delete the Walmart sales data, tables, and schema.\", \n            \"short-description\": \"Delete Walmart Sales Schema\", \n            \"required-recipe-variables\": [\n                {\n                    \"name\": \"schema_name\", \n                    \"display-name\": \"Schema Name\", \n                    \"type\": \"Text\"\n                }\n            ], \n            \"apply-runtime-recipe-variables\": [\n            ]\n        }\n    ]\n}\n",
+                    "sha": "8f28505d32e6f7d80a8a4ee5dabcfe05972082e1",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Add_Schema_and_Tables": [
+                {
+                    "filename": "description.json",
+                    "json": "{\n    \"type\": \"DKNode_Action\"\n}\n",
+                    "sha": "a6b32e94f4f332848cbdb11488518e58ac830e79",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "notebook.json",
+                    "json": "{\n\n}\n",
+                    "sha": "0db3279e44b0dc4fb7e694b6cb10210a96ba6ba5",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Add_Schema_and_Tables/actions": [
+                {
+                    "filename": "source.json",
+                    "json": "{\n    \"name\": \"source\", \n    \"type\": \"DKDataSource_PostgreSQL\", \n    \"config-ref\": \"redshiftConfig\", \n    \"keys\": {\n        \"Create_Schema_if_Nonexistent\": {\n            \"sql\": \"CREATE SCHEMA IF NOT EXISTS {{schema_name}};\\n\\nSET search_path TO {{schema_name}};\\n\", \n            \"query-type\": \"execute_non_query\"\n        }\n, \n        \"Create_Raw_Walmart_Sales_Data_Table\": {\n            \"sql\": \"SET search_path TO {{schema_name}};\\n\\nDROP TABLE IF EXISTS {{raw_sales_table_name}};\\n\\nCREATE TABLE {{raw_sales_table_name}}\\n(\\n\\tIndex        INT NOT NULL,\\n\\tStore        INT NOT NULL,\\n\\tDept         INT NOT NULL,\\n\\tDate         DATE NOT NULL,\\n\\tWeekly_Sales FLOAT NOT NULL,\\n\\tIsHoliday    BOOLEAN NOT NULL,\\n\\tTemperature  NUMERIC(5,2) NOT NULL,\\n\\tFuel_Price   NUMERIC(5,3) NOT NULL,\\n\\tMarkDown1    FLOAT,\\n\\tMarkDown2    FLOAT,\\n\\tMarkDown3    FLOAT,\\n\\tMarkDown4    FLOAT,\\n\\tMarkDown5    FLOAT,\\n\\tCPI          FLOAT NOT NULL,\\n\\tType         CHAR NOT NULL,\\n\\tSize         INT NOT NULL\\n);\\n\", \n            \"query-type\": \"execute_non_query\"\n        }\n, \n        \"Create_Forecasted_Sales_Table\": {\n            \"sql\": \"SET search_path TO {{schema_name}};\\n\\nDROP TABLE IF EXISTS {{forecasted_sales_table_name}};\\n\\nCREATE TABLE {{forecasted_sales_table_name}}\\n(\\n\\tIndex                   INT NOT NULL,\\n\\tStore                   INT NOT NULL,\\n\\tDept                    INT NOT NULL,\\n\\tDate                    DATE NOT NULL,\\n\\tWeekly_Sales            FLOAT NOT NULL,\\n\\tForecasted_Weekly_Sales FLOAT NOT NULL,\\n\\tIsHoliday               BOOLEAN NOT NULL,\\n\\tTemperature             NUMERIC(5,2) NOT NULL,\\n\\tFuel_Price              NUMERIC(5,3) NOT NULL,\\n\\tMarkDown1               FLOAT,\\n\\tMarkDown2               FLOAT,\\n\\tMarkDown3               FLOAT,\\n\\tMarkDown4               FLOAT,\\n\\tMarkDown5               FLOAT,\\n\\tCPI                     FLOAT NOT NULL,\\n\\tType                    CHAR NOT NULL,\\n\\tSize                    INT NOT NULL\\n);\\n\", \n            \"query-type\": \"execute_non_query\"\n        }\n\n    }\n\n}\n",
+                    "sha": "c31bc40459ebae56e23a12cbd316115f85821f15",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Delete_Schema": [
+                {
+                    "filename": "description.json",
+                    "json": "{\n    \"type\": \"DKNode_Action\"\n}\n",
+                    "sha": "a6b32e94f4f332848cbdb11488518e58ac830e79",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "notebook.json",
+                    "json": "{\n\n}\n",
+                    "sha": "0db3279e44b0dc4fb7e694b6cb10210a96ba6ba5",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Delete_Schema/actions": [
+                {
+                    "filename": "source.json",
+                    "json": "{\n    \"name\": \"source\", \n    \"type\": \"DKDataSource_PostgreSQL\", \n    \"config-ref\": \"redshiftConfig\", \n    \"keys\": {\n        \"Delete_Schema\": {\n            \"sql\": \"DROP SCHEMA IF EXISTS {{schema_name}} CASCADE;\", \n            \"query-type\": \"execute_non_query\"\n        }\n\n    }\n\n}\n",
+                    "sha": "cf50d489f8f21e6e015ff08b4eb2370ad3767663",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Forecast_Walmart_Sales": [
+                {
+                    "filename": "description.json",
+                    "json": "{\n    \"type\": \"DKNode_Container\", \n    \"icon\": \"Python\"\n}\n",
+                    "sha": "037a92fccc7b3b788e08c2cfbc510e0c3a432e17",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "notebook.json",
+                    "json": "{\n    \"image-repo\": \"{{gpcConfig.image_repo}}\", \n    \"image-tag\": \"{{gpcConfig.image_tag}}\", \n    \"dockerhub-namespace\": \"{{gpcConfig.namespace}}\", \n    \"container-input-file-keys\": [\n        {\n            \"filename\": \"feature_data.csv\", \n            \"key\": \"redshift_datasource.Retrieve_Feature_Data\"\n        }\n, \n        {\n            \"filename\": \"all_data.csv\", \n            \"key\": \"redshift_datasource.Retrieve_All_Data\"\n        }\n, \n        {\n            \"description\": \"Retrieve the machine learning model stored in S3\", \n            \"filename\": \"{{model_filename}}\", \n            \"key\": \"source.Retrieve_ML_Model\"\n        }\n    ], \n    \"container-output-file-keys\": [\n        {\n            \"filename\": \"{{forecasted_sales_filename}}\", \n            \"key\": \"s3_datasink.Upload_Forecasted_Sales_Data_to_S3\"\n        }\n    ], \n    \"tests\": {\n        \"Test_Success\": {\n            \"action\": \"stop-on-error\", \n            \"test-variable\": \"success\", \n            \"type\": \"test-contents-as-boolean\", \n            \"test-logic\": {\n                \"test-compare\": \"equal-to\", \n                \"test-metric\": \"True\"\n            }\n\n        }\n, \n        \"Validate_Forecast_Sales_Count\": {\n            \"action\": \"stop-on-error\", \n            \"test-variable\": \"forecasted_sales_len\", \n            \"type\": \"test-contents-as-integer\", \n            \"test-logic\": {\n                \"test-compare\": \"equal-to\", \n                \"test-metric\": \"data_row_count\"\n            }\n\n        }\n\n    }\n\n}\n",
+                    "sha": "d32fbdfe311b09796cf94267535f3ee289db610c",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Forecast_Walmart_Sales/data_sinks": [
+                {
+                    "filename": "s3_datasink.json",
+                    "json": "{\n    \"name\": \"s3_datasink\", \n    \"type\": \"DKDataSink_S3\", \n    \"config\": {\n        \"region\": \"us-east-1\", \n        \"access-key\": \"{{s3Config.access_key}}\", \n        \"secret-key\": \"{{s3Config.secret_key}}\", \n        \"bucket\": \"{{s3Config.bucket}}\"\n    }\n, \n    \"keys\": {\n        \"Upload_Forecasted_Sales_Data_to_S3\": {\n            \"file-key\": \"{{walmart_sales_data_s3_base_path}}{{forecasted_sales_filename}}\", \n            \"use-only-file-key\": true\n        }\n\n    }\n\n}\n",
+                    "sha": "c8492ecbcf03d2a8362a624d23320e698c3b37dc",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Forecast_Walmart_Sales/data_sources": [
+                {
+                    "filename": "redshift_datasource.json",
+                    "json": "{\n    \"name\": \"redshift_datasource\", \n    \"type\": \"DKDataSource_PostgreSQL\", \n    \"config-ref\": \"redshiftConfig\", \n    \"keys\": {\n        \"Retrieve_Feature_Data\": {\n            \"sql\": \"SET search_path to {{schema_name}};\\n\\nSELECT\\n   {{features|join(', ')}} \\nFROM\\n    raw_walmart_sales_data\\nWHERE\\n    DATE_PART_YEAR({{raw_sales_table_name}}.date) = 2012 AND {{raw_sales_table_name}}.store = {{store}};\\n\", \n            \"query-type\": \"execute_query\", \n            \"insert-column-names\": true, \n            \"format\": \"csv\", \n            \"set-runtime-vars\": {\n                \"row_count\": \"data_row_count\", \n                \"column_count\": \"data_col_count\"\n            }\n\n        }\n, \n        \"Retrieve_All_Data\": {\n            \"sql\": \"SET search_path to {{schema_name}};\\n\\nSELECT\\n    * \\nFROM\\n    {{raw_sales_table_name}}\\nWHERE\\n    DATE_PART_YEAR({{raw_sales_table_name}}.date) = 2012 AND {{raw_sales_table_name}}.store = {{store}};\\n\", \n            \"query-type\": \"execute_query\", \n            \"insert-column-names\": true, \n            \"format\": \"csv\"\n        }\n\n    }\n, \n    \"tests\": {\n        \"Validate_Data_Row_Count\": {\n            \"action\": \"stop-on-error\", \n            \"test-variable\": \"data_row_count\", \n            \"type\": \"test-contents-as-integer\", \n            \"test-logic\": {\n                \"test-compare\": \"greater-than\", \n                \"test-metric\": 1000\n            }\n\n        }\n\n    }\n\n}\n",
+                    "sha": "eface9726cee5688008aca43214e8e00f07fd797",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "source.json",
+                    "json": "{\n    \"name\": \"source\", \n    \"type\": \"DKDataSource_S3\", \n    \"config\": {\n        \"region\": \"us-east-1\", \n        \"access-key\": \"{{s3Config.access_key}}\", \n        \"secret-key\": \"{{s3Config.secret_key}}\", \n        \"bucket\": \"{{s3Config.bucket}}\"\n    }\n, \n    \"keys\": {\n        \"Retrieve_ML_Model\": {\n            \"file-key\": \"{{walmart_sales_data_s3_base_path}}{{model_filename}}\", \n            \"use-only-file-key\": true, \n            \"set-runtime-vars\": {\n                \"size\": \"ml_model_file_size\"\n            }\n\n        }\n\n    }\n, \n    \"tests\": {\n        \"Validate_File_Size\": {\n            \"action\": \"stop-on-error\", \n            \"test-variable\": \"ml_model_file_size\", \n            \"type\": \"test-contents-as-integer\", \n            \"test-logic\": {\n                \"test-compare\": \"greater-than\", \n                \"test-metric\": 1000000\n            }\n\n        }\n\n    }\n\n}\n",
+                    "sha": "49f88dbf80b6b1992c822ca3706918b732b7fca2",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Forecast_Walmart_Sales/docker-share": [
+                {
+                    "filename": "config.json",
+                    "json": "{\n    \"apt-dependencies\": [\n    ], \n    \"dependencies\": [\n    ], \n    \"keys\": {\n        \"run_script\": {\n            \"script\": \"forecast_walmart_sales.py\", \n            \"environment\": {\n\n            }\n, \n            \"parameters\": {\n                \"MODEL_FILENAME\": \"{{model_filename}}\", \n                \"FORECASTED_SALES_FILENAME\": \"{{forecasted_sales_filename}}\"\n            }\n, \n            \"export\": [\n                \"forecasted_sales_len\", \n                \"success\"            ]\n        }\n\n    }\n\n}\n",
+                    "sha": "33298ee2ed2f58c97b60c0229c5444b13da62521",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "forecast_walmart_sales.py",
+                    "sha": "e01191a5b51b4fc60be30410e59e8ec22dcf7bb2",
+                    "text": "import joblib\nimport pandas as pd\nimport traceback\n\nfrom dkutils.validation import validate_globals\n\n\ntry:\n    success = False\n    forecasted_sales_len = -1\n    validate_globals([\n        'MODEL_FILENAME',\n        'FORECASTED_SALES_FILENAME'\n    ])\n\n    # Load the model\n    model = joblib.load(f'docker-share/{MODEL_FILENAME}')\n    \n    # Load the data and predict sales\n    feature_data_df = pd.read_csv('docker-share/feature_data.csv')\n    forecasted_sales = model.predict(feature_data_df)\n    forecasted_sales_len = len(forecasted_sales)\n    \n    all_data_df = pd.read_csv('docker-share/all_data.csv')\n    all_data_df.insert(5, 'forecasted_weekly_sales', forecasted_sales.tolist())\n    all_data_df.to_csv(f'docker-share/{FORECASTED_SALES_FILENAME}', index=False)\n\n    success = True\nexcept Exception as e:\n    LOGGER.error(f'Model training failed:\\n{traceback.format_exc()}')",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Load_Forecasted_Walmart_Sales_Data": [
+                {
+                    "filename": "description.json",
+                    "json": "{\n    \"type\": \"DKNode_Action\"\n}\n",
+                    "sha": "a6b32e94f4f332848cbdb11488518e58ac830e79",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "notebook.json",
+                    "json": "{\n\n}\n",
+                    "sha": "0db3279e44b0dc4fb7e694b6cb10210a96ba6ba5",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Load_Forecasted_Walmart_Sales_Data/actions": [
+                {
+                    "filename": "source.json",
+                    "json": "{\n    \"name\": \"source\", \n    \"type\": \"DKDataSource_PostgreSQL\", \n    \"config-ref\": \"redshiftConfig\", \n    \"keys\": {\n        \"Load_Forecasted_Walmart_Sales_Data\": {\n            \"sql\": \"SET search_path TO {{schema_name}};\\n\\nTRUNCATE {{forecasted_sales_table_name}};\\n\\ncopy {{forecasted_sales_table_name}}\\nfrom 's3://{{s3Config.bucket}}/{{walmart_sales_data_s3_base_path}}{{forecasted_sales_filename}}'\\ncredentials 'aws_iam_role=arn:aws:iam::{{s3Config.copy_role}}'\\nIGNOREHEADER 1 TRIMBLANKS DELIMITER ',' DATEFORMAT AS 'YYYY-MM-DD';\\n\\nSELECT COUNT(*) FROM {{forecasted_sales_table_name}};\\n\", \n            \"query-type\": \"execute_scalar\", \n            \"set-runtime-vars\": {\n                \"result\": \"forecasted_sales_row_count\"\n            }\n\n        }\n\n    }\n, \n    \"tests\": {\n        \"Ensure_Forecasted_Sales_Row_Count\": {\n            \"action\": \"stop-on-error\", \n            \"test-variable\": \"forecasted_sales_row_count\", \n            \"type\": \"test-contents-as-integer\", \n            \"test-logic\": {\n                \"test-compare\": \"equal-to\", \n                \"test-metric\": \"data_row_count\"\n            }\n\n        }\n\n    }\n\n}\n",
+                    "sha": "f24b0b36206abee1286d3ac9b4f897c108daf600",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Load_Walmart_Sales_Data": [
+                {
+                    "filename": "description.json",
+                    "json": "{\n    \"type\": \"DKNode_Action\"\n}\n",
+                    "sha": "a6b32e94f4f332848cbdb11488518e58ac830e79",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "notebook.json",
+                    "json": "{\n\n}\n",
+                    "sha": "0db3279e44b0dc4fb7e694b6cb10210a96ba6ba5",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Load_Walmart_Sales_Data/actions": [
+                {
+                    "filename": "source.json",
+                    "json": "{\n    \"name\": \"source\", \n    \"type\": \"DKDataSource_PostgreSQL\", \n    \"config-ref\": \"redshiftConfig\", \n    \"keys\": {\n        \"Load_Walmart_Sales_Data\": {\n            \"sql\": \"SET search_path TO {{schema_name}};\\n\\ncopy {{raw_sales_table_name}}\\nfrom 's3://{{s3Config.bucket}}/{{walmart_sales_data_s3_path}}'\\ncredentials 'aws_iam_role=arn:aws:iam::{{s3Config.copy_role}}'\\nIGNOREHEADER 1 TRIMBLANKS DELIMITER ',' DATEFORMAT AS 'YYYY-MM-DD';\\n\\nSELECT COUNT(*) FROM {{raw_sales_table_name}};\\n\", \n            \"query-type\": \"execute_scalar\", \n            \"set-runtime-vars\": {\n                \"result\": \"raw_walmart_sales_data_row_count\"\n            }\n\n        }\n\n    }\n, \n    \"tests\": {\n        \"Ensure_Row_Count\": {\n            \"description\": \"Stop the order run if the Redshift row count doesn't match the S3 row count (minus one for the header).\", \n            \"action\": \"stop-on-error\", \n            \"test-variable\": \"raw_walmart_sales_data_row_count\", \n            \"type\": \"test-contents-as-integer\", \n            \"test-logic\": \"raw_walmart_sales_data_row_count == s3_walmart_sales_data_line_count - 1\"\n        }\n\n    }\n\n}\n",
+                    "sha": "3938f5f9373f86fce3246541682769718536fc5e",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Retrieve_Walmart_Sales_Data": [
+                {
+                    "filename": "description.json",
+                    "json": "{\n    \"type\": \"DKNode_DataMapper\"\n}\n",
+                    "sha": "581802c232e7599620eac68ebc3a0679d7522ca1",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "notebook.json",
+                    "json": "{\n    \"mappings\": {\n        \"Retrieve_Walmart_Sales_Data\": {\n            \"description\": \"Retrieve the sales data from SFTP and add it to S3.\", \n            \"source-name\": \"source\", \n            \"source-key\": \"Retrieve_Walmart_Sales_Data_source\", \n            \"sink-name\": \"sink\", \n            \"sink-key\": \"Retrieve_Walmart_Sales_Data_sink\"\n        }\n\n    }\n\n}\n",
+                    "sha": "977db84ba3cf1a025aad38115d81759a3753b427",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Retrieve_Walmart_Sales_Data/data_sinks": [
+                {
+                    "filename": "sink.json",
+                    "json": "{\n    \"name\": \"sink\", \n    \"type\": \"DKDataSink_S3\", \n    \"config\": {\n        \"region\": \"us-east-1\", \n        \"access-key\": \"{{s3Config.access_key}}\", \n        \"secret-key\": \"{{s3Config.secret_key}}\", \n        \"bucket\": \"{{s3Config.bucket}}\"\n    }\n, \n    \"keys\": {\n        \"Retrieve_Walmart_Sales_Data_sink\": {\n            \"file-key\": \"{{walmart_sales_data_s3_path}}\", \n            \"use-only-file-key\": true, \n            \"set-runtime-vars\": {\n                \"size\": \"s3_walmart_sales_data_file_size\", \n                \"row_count\": \"s3_walmart_sales_data_line_count\", \n                \"md5\": \"s3_walmart_sales_data_md5_hash\", \n                \"sha\": \"s3_walmart_sales_data_sha1_hash\"\n            }\n\n        }\n\n    }\n, \n    \"tests\": {\n        \"Ensure_Line_Counts_Match\": {\n            \"description\": \"Stop the order run if the source and sink line counts don't match.\", \n            \"action\": \"stop-on-error\", \n            \"test-variable\": \"sftp_walmart_sales_data_line_count\", \n            \"type\": \"test-contents-as-integer\", \n            \"test-logic\": {\n                \"test-compare\": \"equal-to\", \n                \"test-metric\": \"s3_walmart_sales_data_line_count\"\n            }\n\n        }\n, \n        \"Ensure_MD5_Hashes_Match\": {\n            \"description\": \"Stop the order run if the source and sink MD5 file hashes don't match.\", \n            \"action\": \"stop-on-error\", \n            \"test-variable\": \"sftp_walmart_sales_data_md5_hash\", \n            \"type\": \"test-contents-as-string\", \n            \"test-logic\": {\n                \"test-compare\": \"equal-to\", \n                \"test-metric\": \"s3_walmart_sales_data_md5_hash\"\n            }\n\n        }\n, \n        \"Ensure_SHA1_Hashes_Match\": {\n            \"description\": \"Stop the order run if the source and sink SHA1 hashes don't match.\", \n            \"action\": \"stop-on-error\", \n            \"test-variable\": \"sftp_walmart_sales_data_sha1_hash\", \n            \"type\": \"test-contents-as-string\", \n            \"test-logic\": {\n                \"test-compare\": \"equal-to\", \n                \"test-metric\": \"s3_walmart_sales_data_sha1_hash\"\n            }\n\n        }\n\n    }\n\n}\n",
+                    "sha": "6e6ccae59401fa956582559a87fc7a9df42d7f36",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Retrieve_Walmart_Sales_Data/data_sources": [
+                {
+                    "filename": "source.json",
+                    "json": "{\n    \"name\": \"source\", \n    \"type\": \"DKDataSource_SFTP\", \n    \"config\": {\n        \"username\": \"{{sftpConfig.username}}\", \n        \"hostname\": \"{{sftpConfig.hostname}}\", \n        \"port\": \"{{sftpConfig.port}}\", \n        \"pem_file\": \"{{sftpConfig.key_file}}\"\n    }\n, \n    \"keys\": {\n        \"Retrieve_Walmart_Sales_Data_source\": {\n            \"file-key\": \"{{walmart_sales_data_sftp_path}}\", \n            \"use-only-file-key\": true, \n            \"set-runtime-vars\": {\n                \"size\": \"sftp_walmart_sales_data_file_size\", \n                \"row_count\": \"sftp_walmart_sales_data_line_count\", \n                \"md5\": \"sftp_walmart_sales_data_md5_hash\", \n                \"sha\": \"sftp_walmart_sales_data_sha1_hash\"\n            }\n\n        }\n\n    }\n, \n    \"tests\": {\n        \"Ensure_SFTP_Min_Line_Count\": {\n            \"description\": \"Send a warning alert if the source line count is < threshold.\", \n            \"action\": \"warning\", \n            \"test-variable\": \"sftp_walmart_sales_data_line_count\", \n            \"type\": \"test-contents-as-integer\", \n            \"test-logic\": {\n                \"test-compare\": \"greater-than\", \n                \"test-metric\": 100000\n            }\n\n        }\n, \n        \"Log_File_Size\": {\n            \"description\": \"Log the size of the file in bytes.\", \n            \"action\": \"log\", \n            \"test-variable\": \"sftp_walmart_sales_data_file_size\", \n            \"type\": \"test-contents-as-integer\", \n            \"test-logic\": \"sftp_walmart_sales_data_file_size\"\n        }\n\n    }\n\n}\n",
+                    "sha": "dfb150f0a2fe3bf469e4cd37edfd30fe294442be",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Train_Model": [
+                {
+                    "filename": "description.json",
+                    "json": "{\n    \"type\": \"DKNode_Container\", \n    \"icon\": \"Python\"\n}\n",
+                    "sha": "037a92fccc7b3b788e08c2cfbc510e0c3a432e17",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "notebook.json",
+                    "json": "{\n    \"image-repo\": \"{{gpcConfig.image_repo}}\", \n    \"image-tag\": \"{{gpcConfig.image_tag}}\", \n    \"dockerhub-namespace\": \"{{gpcConfig.namespace}}\", \n    \"container-input-file-keys\": [\n        {\n            \"filename\": \"training_data.csv\", \n            \"key\": \"source.Retrieve_Training_Data\"\n        }\n, \n        {\n            \"filename\": \"testing_data.csv\", \n            \"key\": \"source.Retrieve_Testing_Data\"\n        }\n    ], \n    \"container-output-file-keys\": [\n        {\n            \"filename\": \"{{model_filename}}\", \n            \"key\": \"s3_datasink.Save_Model\"\n        }\n    ], \n    \"tests\": {\n        \"Test_Success\": {\n            \"action\": \"stop-on-error\", \n            \"test-variable\": \"success\", \n            \"type\": \"test-contents-as-boolean\", \n            \"test-logic\": {\n                \"test-compare\": \"equal-to\", \n                \"test-metric\": \"True\"\n            }\n\n        }\n, \n        \"Log_RMSE\": {\n            \"action\": \"log\", \n            \"test-variable\": \"rmse\", \n            \"type\": \"test-contents-as-float\", \n            \"test-logic\": \"rmse\"\n        }\n\n    }\n\n}\n",
+                    "sha": "02fe68ab5d963edac5efaa409ca44aaa5ab3b6d3",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Train_Model/data_sinks": [
+                {
+                    "filename": "s3_datasink.json",
+                    "json": "{\n    \"name\": \"s3_datasink\", \n    \"type\": \"DKDataSink_S3\", \n    \"config\": {\n        \"access-key\": \"{{s3Config.access_key}}\", \n        \"secret-key\": \"{{s3Config.secret_key}}\", \n        \"bucket\": \"{{s3Config.bucket}}\"\n    }\n, \n    \"keys\": {\n        \"Save_Model\": {\n            \"file-key\": \"{{walmart_sales_data_s3_base_path}}{{model_filename}}\", \n            \"use-only-file-key\": true\n        }\n\n    }\n\n}\n",
+                    "sha": "111a77b8a095eff081ac98ff5bbb9bf1add8b0c9",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Train_Model/data_sources": [
+                {
+                    "filename": "source.json",
+                    "json": "{\n    \"name\": \"source\", \n    \"type\": \"DKDataSource_PostgreSQL\", \n    \"config-ref\": \"redshiftConfig\", \n    \"keys\": {\n        \"Retrieve_Training_Data\": {\n            \"sql\": \"SET search_path to {{schema_name}};\\n\\nSELECT\\n    weekly_sales, {{features|join(', ')}} \\nFROM\\n    raw_walmart_sales_data\\nWHERE\\n    DATE_PART_YEAR({{raw_sales_table_name}}.date) = 2010 AND {{raw_sales_table_name}}.store = {{store}};\\n\", \n            \"query-type\": \"execute_query\", \n            \"insert-column-names\": true, \n            \"format\": \"csv\", \n            \"set-runtime-vars\": {\n                \"row_count\": \"training_row_count\", \n                \"column_count\": \"training_col_count\"\n            }\n\n        }\n, \n        \"Retrieve_Testing_Data\": {\n            \"sql\": \"SET search_path to {{schema_name}};\\n\\nSELECT\\n    weekly_sales, {{features|join(', ')}} \\nFROM\\n    raw_walmart_sales_data\\nWHERE\\n    DATE_PART_YEAR({{raw_sales_table_name}}.date) = 2011 AND {{raw_sales_table_name}}.store = {{store}};\\n\", \n            \"query-type\": \"execute_query\", \n            \"insert-column-names\": true, \n            \"format\": \"csv\", \n            \"set-runtime-vars\": {\n                \"row_count\": \"testing_row_count\", \n                \"column_count\": \"testing_col_count\"\n            }\n\n        }\n\n    }\n, \n    \"tests\": {\n        \"Validate_Training_Row_Count\": {\n            \"action\": \"stop-on-error\", \n            \"test-variable\": \"training_row_count\", \n            \"type\": \"test-contents-as-integer\", \n            \"test-logic\": {\n                \"test-compare\": \"greater-than\", \n                \"test-metric\": 1000\n            }\n\n        }\n, \n        \"Validate_Testing_Row_Count\": {\n            \"action\": \"stop-on-error\", \n            \"test-variable\": \"testing_row_count\", \n            \"type\": \"test-contents-as-integer\", \n            \"test-logic\": {\n                \"test-compare\": \"greater-than\", \n                \"test-metric\": 1000\n            }\n\n        }\n, \n        \"Ensure_Column_Counts_Match\": {\n            \"action\": \"stop-on-error\", \n            \"test-variable\": \"training_col_count\", \n            \"type\": \"test-contents-as-integer\", \n            \"test-logic\": {\n                \"test-compare\": \"equal-to\", \n                \"test-metric\": \"testing_col_count\"\n            }\n\n        }\n\n    }\n\n}\n",
+                    "sha": "ab8ace5b13c93bacc41f17c5b0c7574902393488",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/Train_Model/docker-share": [
+                {
+                    "filename": "config.json",
+                    "json": "{\n    \"apt-dependencies\": [\n    ], \n    \"dependencies\": [\n    ], \n    \"keys\": {\n        \"train_model\": {\n            \"script\": \"train_model.py\", \n            \"environment\": {\n\n            }\n, \n            \"parameters\": {\n                \"MODEL_FILENAME\": \"{{model_filename}}\"\n            }\n, \n            \"export\": [\n                \"success\", \n                \"rmse\"            ]\n        }\n\n    }\n\n}\n",
+                    "sha": "0378a917fe90b1aec084bfab2b945d451d6037e3",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "train_model.py",
+                    "sha": "f4b8b46f346948b4b63d805a05bc16029fbcf880",
+                    "text": "import joblib\nimport pandas as pd\nimport traceback\n\nfrom sklearn.ensemble import RandomForestRegressor\nfrom sklearn.metrics import mean_squared_error\n\nfrom dkutils.validation import validate_globals\n\nWEEKLY_SALES = 'weekly_sales'\n\n\nclass RandomForestRegressorModel:\n    \n    def __init__(self, model_path=None):\n        if model_path:\n            self.load_model(model_path)\n        else:\n            self.model = RandomForestRegressor(n_estimators=50, criterion='mse')\n            \n    def train(self, training_df, testing_df):\n\n        x_train = training_df.loc[:, training_df.columns != WEEKLY_SALES].values\n        y_train = training_df.loc[:,[WEEKLY_SALES]].values\n        LOGGER.info(f'Training Set Size: {len(x_train)}')\n\n        x_test = testing_df.loc[:, testing_df.columns != WEEKLY_SALES].values\n        y_test = testing_df.loc[:,[WEEKLY_SALES]].values\n        LOGGER.info(f'Testing Set Size: {len(x_test)}')\n\n        # Train\n        self.model.fit(x_train, y_train.ravel())\n        \n        # Test\n        y_predicted = self.model.predict(x_test)\n        \n        # Compute error\n        rmse = (mean_squared_error(y_true=y_test, y_pred=y_predicted))**(0.5)\n        LOGGER.info(f'RMSE: {rmse}')\n        \n        return rmse\n        \n    def predict(self, data):\n        self.model.predict(data)\n        \n    def save_model(self, model_path):\n        joblib.dump(self.model, model_path)\n        \n    def load_model(self, model_path):\n        self.model = joblib.load(model_path)\n\n\ntry:\n    success = False\n    rmse = -1\n    validate_globals([\n        'MODEL_FILENAME'\n    ])\n    \n    training_df = pd.read_csv('docker-share/training_data.csv')\n    testing_df = pd.read_csv('docker-share/testing_data.csv')\n\n    # Create, train, and save the machine learning model\n    model = RandomForestRegressorModel()\n    rmse = model.train(training_df, testing_df)\n    model.save_model(f'docker-share/{MODEL_FILENAME}')\n    \n    success = True\nexcept Exception as e:\n    LOGGER.error(f'Model training failed:\\n{traceback.format_exc()}')",
+                    "type": "blob",
+                    "url": ""
+                }
+            ],
+            "Training_Sales_Forecast/resources": [
+                {
+                    "filename": "README.txt",
+                    "sha": "6966c84b6474c42b28a51b3546ec27a5733abffa",
+                    "text": "* DataKitchen Web App:    https://cloud.datakitchen.io\n* DKCloudCommand:         DataKitchen\u2019s command line interface\n* DataKitchen Help:       https://datakitchen.readme.io/docs\n* DataKitchen Website:    https://datakitchen.io/\n* DataKitchen Blog:       https://blog.datakitchen.io/blog\n* DataOps Manifesto:      https://www.dataopsmanifesto.org\n* DKCC on PyPI:           https://pypi.org/project/DKCloudCommand/\n\n",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "create_raw_weather_table.sql",
+                    "sha": "1cebc83b76bc9cc8b5775805fb954426039182ef",
+                    "text": "SET search_path TO {{CurrentKitchen}};\n\nDROP TABLE IF EXISTS raw_weather;\n\nCREATE TABLE raw_weather\n(\n\tregion      VARCHAR(100) NOT NULL,\n\tcountry     VARCHAR(100) NOT NULL,\n\tstate       VARCHAR(100) NOT NULL,\n\tcity        VARCHAR(100) NOT NULL,\n\tmonth       INT NOT NULL,\n\tday         INT NOT NULL,\n\tyear        INT NOT NULL,\n\ttemperature FLOAT NOT NULL\n);\n",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "create_sales_table.sql",
+                    "sha": "3a137e7d5fa7816edc55c7f5a2ab6b94a6d082ac",
+                    "text": "SET search_path TO {{CurrentKitchen}};\n\nDROP TABLE IF EXISTS sales;\n\nCREATE TABLE sales\n(\n  Row_ID           INTEGER NOT NULL,\n  Order_ID         VARCHAR(100),\n  Order_Date       DATE,\n  Ship_Date        DATE,\n  Ship_Mode        VARCHAR(100),\n  Customer_ID      VARCHAR(100),\n  Customer_Name    VARCHAR(100),\n  Segment          VARCHAR(100),\n  City             VARCHAR(100),\n  State            VARCHAR(100),\n  Country          VARCHAR(100),\n  Postal_Code      CHAR(5),\n  Market           VARCHAR(100),\n  Region           VARCHAR(100),\n  Product_ID       VARCHAR(100),\n  Category         VARCHAR(100),\n  Sub_Category     VARCHAR(100),\n  Product_Name     VARCHAR(1000),\n  Sales            NUMERIC(14,3),\n  Quantity         INTEGER,\n  Discount         NUMERIC(14,3),\n  Profit           NUMERIC(14,3),\n  Shipping_Cost    NUMERIC(14,3),\n  Order_Priority   VARCHAR(100)\n);\n",
+                    "type": "blob",
+                    "url": ""
+                },
+                {
+                    "filename": "create_weather_table.sql",
+                    "sha": "e82138612aa5010d074fc8a6ccb454ac1b8383eb",
+                    "text": "SET search_path TO {{CurrentKitchen}};\n\nDROP TABLE IF EXISTS weather;\n\nCREATE TABLE weather\n(\n\tid          BIGINT IDENTITY(1, 1), \n\tcity        VARCHAR(100) NOT NULL, \n\ttemperature FLOAT NOT NULL, \n\tdate        TIMESTAMP\n);\n",
+                    "type": "blob",
+                    "url": ""
+                }
+            ]
+        }
+    }
+}

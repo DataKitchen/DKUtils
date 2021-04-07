@@ -429,14 +429,14 @@ class DataKitchenClient:
                                 "customer_git_name": "im",
                                 "customer_git_org": "DKImplementation",
                                 "customer_name": "Implementation",
-                                "email": "ddicara+im@datakitchen.io",
+                                "email": "user@gmail.com",
                                 "email_verified": true,
                                 "graph-setting": [
                                     [
                                         "Train_Model"
                                     ]
                                 ],
-                                "login": "ddicara+im@datakitchen.io",
+                                "login": "user@gmail.com",
                                 "parameters": {
                                     "edges": [],
                                     "nodes": [
