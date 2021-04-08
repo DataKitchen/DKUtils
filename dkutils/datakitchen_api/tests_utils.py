@@ -65,9 +65,7 @@ def is_valid_test_directory(base_path, file_depth) -> bool:
         return False
 
     # Only certain node subdirectories may contain tests
-    if file_depth == 3 and base_path.parts[2] not in VALID_TEST_DIRECTORIES:
-        return False
-    return True
+    return file_depth != 3 or base_path.parts[2] in VALID_TEST_DIRECTORIES
 
 
 def is_valid_test_file(file_path, file_depth) -> bool:
@@ -89,9 +87,7 @@ def is_valid_test_file(file_path, file_depth) -> bool:
     """
     if file_path.name == 'notebook.json':
         return True
-    if file_depth == 3 and file_path.suffix == '.json':
-        return True
-    return False
+    return file_depth == 3 and file_path.suffix == '.json'
 
 
 def get_recipe_test_paths(client, kitchen=None, recipe=None) -> List[str]:
