@@ -1,5 +1,6 @@
 import json
 import os
+from pathlib import Path
 from unittest import TestCase
 from unittest.mock import patch, call, mock_open
 
@@ -13,6 +14,7 @@ from dkutils.datakitchen_api.datakitchen_client import DataKitchenClient, create
 from dkutils.datakitchen_api.datetime_utils import get_utc_timestamp
 from dkutils.dictionary_comparator import DictionaryComparator
 
+PARENT_DIR = Path(__file__).parent
 DUMMY_PORT = "443"
 DUMMY_URL = 'https://dummy/url'
 DUMMY_AUTH_TOKEN = 'DATAKITCHEN_TOKEN'
@@ -178,6 +180,29 @@ class TestDataKitchenClient(TestCase):
         self.assertEqual(mock_ensure_attributes.side_effect, cm.exception)
         mock_ensure_attributes.assert_called_once_with(KITCHEN, RECIPE, VARIATION)
         mock_put.assert_not_called()
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._ensure_attributes')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.delete')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_delete_order(self, _, mock_delete, mock_ensure_attributes):
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        dk_client.kitchen = DUMMY_KITCHEN
+        mock_delete.return_value = MockResponse(text={}, json={})
+        response = dk_client.delete_order(DUMMY_ORDER_ID)
+        self.assertEqual(response.json(), {})
+        self.assertEqual(response.text, {})
+        mock_ensure_attributes.assert_called_once_with(KITCHEN)
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._ensure_attributes')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.delete')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_delete_order_raise_error(self, _, mock_delete, mock_ensure_attributes):
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        dk_client.kitchen = DUMMY_KITCHEN
+        mock_delete.return_value = MockResponse(raise_error=True)
+        with self.assertRaises(HTTPError):
+            dk_client.delete_order(DUMMY_ORDER_ID)
+        mock_ensure_attributes.assert_called_once_with(KITCHEN)
 
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.put')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
@@ -1022,6 +1047,50 @@ class TestDataKitchenClient(TestCase):
             overrides.keys(), self.dk_client.get_override_names_that_exist(overrides.keys())
         )
         mock_get_overrides.assert_called_once()
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._ensure_attributes')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_get_recipe(self, _, mock_post, mock_ensure_attributes):
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        dk_client.kitchen = DUMMY_KITCHEN
+        dk_client.recipe = DUMMY_RECIPE
+        with open(PARENT_DIR.joinpath('get_recipe_default_args.json')) as json_file:
+            json_content = json.load(json_file)
+        mock_post.return_value = MockResponse(json=json_content)
+        recipe_dict = dk_client.get_recipe()
+        self.assertEqual(recipe_dict, json_content)
+        mock_ensure_attributes.assert_called_once_with(KITCHEN, RECIPE)
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._ensure_attributes')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_get_recipe_readme_file_only(self, _, mock_post, mock_ensure_attributes):
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        dk_client.kitchen = DUMMY_KITCHEN
+        dk_client.recipe = DUMMY_RECIPE
+        with open(PARENT_DIR.joinpath('get_recipe_only_readme_file.json')) as json_file:
+            json_content = json.load(json_file)
+        mock_post.return_value = MockResponse(json=json_content)
+        recipe_dict = dk_client.get_recipe(recipe_files=['resources/README.txt'])
+        self.assertEqual(recipe_dict, json_content)
+        mock_ensure_attributes.assert_called_once_with(KITCHEN, RECIPE)
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._ensure_attributes')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    def test_get_recipe_readme_with_tree(self, _, mock_post, mock_ensure_attributes):
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, base_url=DUMMY_URL)
+        dk_client.kitchen = DUMMY_KITCHEN
+        dk_client.recipe = DUMMY_RECIPE
+        with open(PARENT_DIR.joinpath('get_recipe_readme_with_tree.json')) as json_file:
+            json_content = json.load(json_file)
+        mock_post.return_value = MockResponse(json=json_content)
+        recipe_dict = dk_client.get_recipe(
+            recipe_files=['resources/README.txt'], include_recipe_tree=True
+        )
+        self.assertEqual(recipe_dict, json_content)
+        mock_ensure_attributes.assert_called_once_with(KITCHEN, RECIPE)
 
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
     def test_get_recipes_when_kitchen_is_not_set_then_value_error_is_raised(self, _):

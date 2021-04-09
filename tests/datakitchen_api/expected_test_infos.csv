@@ -1,0 +1,17 @@
+test,datestamp,description,kitchen,recipe,node,failure_action,variable,metric,comparison,expression
+Test_Success,2021-04-07 12:36:01.047096,,dummy_kitchen,Training_Sales_Forecast,Forecast_Walmart_Sales,stop-on-error,success,True,equal-to,
+Validate_Forecast_Sales_Count,2021-04-07 12:36:01.047096,,dummy_kitchen,Training_Sales_Forecast,Forecast_Walmart_Sales,stop-on-error,forecasted_sales_len,data_row_count,equal-to,
+Validate_Data_Row_Count,2021-04-07 12:36:01.047096,,dummy_kitchen,Training_Sales_Forecast,Forecast_Walmart_Sales,stop-on-error,data_row_count,1000,greater-than,
+Validate_File_Size,2021-04-07 12:36:01.047096,,dummy_kitchen,Training_Sales_Forecast,Forecast_Walmart_Sales,stop-on-error,ml_model_file_size,1000000,greater-than,
+Ensure_Forecasted_Sales_Row_Count,2021-04-07 12:36:01.047096,,dummy_kitchen,Training_Sales_Forecast,Load_Forecasted_Walmart_Sales_Data,stop-on-error,forecasted_sales_row_count,data_row_count,equal-to,
+Ensure_Row_Count,2021-04-07 12:36:01.047096,Stop the order run if the Redshift row count doesn't match the S3 row count (minus one for the header).,dummy_kitchen,Training_Sales_Forecast,Load_Walmart_Sales_Data,stop-on-error,raw_walmart_sales_data_row_count,,,raw_walmart_sales_data_row_count == s3_walmart_sales_data_line_count - 1
+Ensure_Line_Counts_Match,2021-04-07 12:36:01.047096,Stop the order run if the source and sink line counts don't match.,dummy_kitchen,Training_Sales_Forecast,Retrieve_Walmart_Sales_Data,stop-on-error,sftp_walmart_sales_data_line_count,s3_walmart_sales_data_line_count,equal-to,
+Ensure_MD5_Hashes_Match,2021-04-07 12:36:01.047096,Stop the order run if the source and sink MD5 file hashes don't match.,dummy_kitchen,Training_Sales_Forecast,Retrieve_Walmart_Sales_Data,stop-on-error,sftp_walmart_sales_data_md5_hash,s3_walmart_sales_data_md5_hash,equal-to,
+Ensure_SHA1_Hashes_Match,2021-04-07 12:36:01.047096,Stop the order run if the source and sink SHA1 hashes don't match.,dummy_kitchen,Training_Sales_Forecast,Retrieve_Walmart_Sales_Data,stop-on-error,sftp_walmart_sales_data_sha1_hash,s3_walmart_sales_data_sha1_hash,equal-to,
+Ensure_SFTP_Min_Line_Count,2021-04-07 12:36:01.047096,Send a warning alert if the source line count is < threshold.,dummy_kitchen,Training_Sales_Forecast,Retrieve_Walmart_Sales_Data,warning,sftp_walmart_sales_data_line_count,100000,greater-than,
+Log_File_Size,2021-04-07 12:36:01.047096,Log the size of the file in bytes.,dummy_kitchen,Training_Sales_Forecast,Retrieve_Walmart_Sales_Data,log,sftp_walmart_sales_data_file_size,,,sftp_walmart_sales_data_file_size
+Test_Success,2021-04-07 12:36:01.047096,,dummy_kitchen,Training_Sales_Forecast,Train_Model,stop-on-error,success,True,equal-to,
+Log_RMSE,2021-04-07 12:36:01.047096,,dummy_kitchen,Training_Sales_Forecast,Train_Model,log,rmse,,,rmse
+Validate_Training_Row_Count,2021-04-07 12:36:01.047096,,dummy_kitchen,Training_Sales_Forecast,Train_Model,stop-on-error,training_row_count,1000,greater-than,
+Validate_Testing_Row_Count,2021-04-07 12:36:01.047096,,dummy_kitchen,Training_Sales_Forecast,Train_Model,stop-on-error,testing_row_count,1000,greater-than,
+Ensure_Column_Counts_Match,2021-04-07 12:36:01.047096,,dummy_kitchen,Training_Sales_Forecast,Train_Model,stop-on-error,training_col_count,testing_col_count,equal-to,

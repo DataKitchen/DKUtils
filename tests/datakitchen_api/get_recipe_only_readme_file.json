@@ -1,0 +1,16 @@
+{
+    "ORIG_HEAD": "ff3063a8f950d7b69a8aef3c716449cd1559a7db",
+    "recipes": {
+        "Recipe_Test": {
+            "Recipe_Test/resources": [
+                {
+                    "filename": "README.txt",
+                    "sha": "6966c84b6474c42b28a51b3546ec27a5733abffa",
+                    "text": "* DataKitchen Web App:    https://cloud.datakitchen.io\n* DKCloudCommand:         DataKitchen\u2019s command line interface\n* DataKitchen Help:       https://datakitchen.readme.io/docs\n* DataKitchen Website:    https://datakitchen.io/\n* DataKitchen Blog:       https://blog.datakitchen.io/blog\n* DataOps Manifesto:      https://www.dataopsmanifesto.org\n* DKCC on PyPI:           https://pypi.org/project/DKCloudCommand/\n\n",
+                    "type": "blob",
+                    "url": "https://github.com/api/v3/repos/DataKitchen/DKImplementation/git/blobs/6966c84b6474c42b28a51b3546ec27a5733abffa"
+                }
+            ]
+        }
+    }
+}

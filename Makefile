@@ -114,7 +114,7 @@ clean_pyc:
 
 clean_unit:
 	@rm -fr .coverage $(PACKAGE_NAME).egg-info
-	@cd $(UNITTESTS_DIR) && rm -fr report_folder nosetests.xml *.pyc
+	@cd $(UNITTESTS_DIR) && rm -fr report_folder nosetests.xml *.pyc datakitchen_api/observed_test_infos.csv
 
 test_unit: clean_unit
 test_unit:
