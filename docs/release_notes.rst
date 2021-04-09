@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v1.10.0
+-------
+* Added stop_on_error argument to DataKitchenClient's create_and_monitor_orders and resume_and_monitor_orders methods.
+
 v1.9.0
 ------
 * Add DataKitchenClient methods to get and delete orders in a kitchen.
