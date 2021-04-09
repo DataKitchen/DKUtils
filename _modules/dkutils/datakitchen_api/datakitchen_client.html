@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api.datakitchen_client &mdash; DKUtils 1.9.0 documentation</title>
+  <title>dkutils.datakitchen_api.datakitchen_client &mdash; DKUtils 1.10.0 documentation</title>
   
 
   
@@ -107,6 +107,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-10-0">v1.10.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-9-0">v1.9.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-8-2">v1.8.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-8-1">v1.8.1</a></li>
@@ -241,6 +242,7 @@
     <span class="n">PARAMETERS</span><span class="p">,</span>
     <span class="n">PARENT_KITCHEN</span><span class="p">,</span>
     <span class="n">RECIPE</span><span class="p">,</span>
+    <span class="n">SERVING_ERROR</span><span class="p">,</span>
     <span class="n">STOPPED_STATUS_TYPES</span><span class="p">,</span>
     <span class="n">VARIATION</span><span class="p">,</span>
 <span class="p">)</span>
@@ -992,7 +994,7 @@
         <span class="k">return</span> <span class="n">completed_order_runs</span></div>
 
 <div class="viewcode-block" id="DataKitchenClient.create_and_monitor_orders"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.create_and_monitor_orders">[docs]</a>    <span class="k">def</span> <span class="nf">create_and_monitor_orders</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">orders_details</span><span class="p">,</span> <span class="n">sleep_secs</span><span class="p">,</span> <span class="n">duration_secs</span><span class="p">,</span> <span class="n">max_concurrent</span><span class="o">=</span><span class="kc">None</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">orders_details</span><span class="p">,</span> <span class="n">sleep_secs</span><span class="p">,</span> <span class="n">duration_secs</span><span class="p">,</span> <span class="n">max_concurrent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stop_on_error</span><span class="o">=</span><span class="kc">False</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create the specified orders and wait for them to complete (or timeout after the specified</span>
@@ -1021,6 +1023,9 @@
 <span class="sd">        max_concurrent : integer or None</span>
 <span class="sd">            Max number of orders to kick off concurrently. If None, all orders will be kicked off</span>
 <span class="sd">            concurrently.</span>
+<span class="sd">        stop_on_error : boolean</span>
+<span class="sd">            If True, any order run failure will prevent new order runs from being created.</span>
+<span class="sd">            Otherwise, if False, all orders are submitted regardless of any failures.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -1071,15 +1076,16 @@
         <span class="n">completed_orders</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="n">wait_loop</span> <span class="o">=</span> <span class="n">WaitLoop</span><span class="p">(</span><span class="n">sleep_secs</span><span class="p">,</span> <span class="n">duration_secs</span><span class="p">)</span>
+        <span class="n">submit_new_orders</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">while</span> <span class="n">wait_loop</span><span class="p">:</span>
             <span class="n">cur_completed_orders</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">active_order</span> <span class="ow">in</span> <span class="n">active_orders</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span> <span class="o">=</span> <span class="n">active_order</span><span class="p">[</span><span class="n">KITCHEN</span><span class="p">]</span>
                 <span class="k">if</span> <span class="n">active_order</span><span class="p">[</span><span class="n">ORDER_RUN_ID</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">active_order</span><span class="p">[</span><span class="n">ORDER_RUN_STATUS</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_order_run_status</span><span class="p">(</span>
-                        <span class="n">active_order</span><span class="p">[</span><span class="n">ORDER_RUN_ID</span><span class="p">]</span>
-                    <span class="p">)</span>
-                    <span class="k">if</span> <span class="n">active_order</span><span class="p">[</span><span class="n">ORDER_RUN_STATUS</span><span class="p">]</span> <span class="ow">in</span> <span class="n">STOPPED_STATUS_TYPES</span><span class="p">:</span>
+                    <span class="n">order_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_order_run_status</span><span class="p">(</span><span class="n">active_order</span><span class="p">[</span><span class="n">ORDER_RUN_ID</span><span class="p">])</span>
+                    <span class="n">active_order</span><span class="p">[</span><span class="n">ORDER_RUN_STATUS</span><span class="p">]</span> <span class="o">=</span> <span class="n">order_status</span>
+                    <span class="n">submit_new_orders</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">stop_on_error</span> <span class="ow">or</span> <span class="n">order_status</span> <span class="o">!=</span> <span class="n">SERVING_ERROR</span>
+                    <span class="k">if</span> <span class="n">order_status</span> <span class="ow">in</span> <span class="n">STOPPED_STATUS_TYPES</span><span class="p">:</span>
                         <span class="n">completed_orders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">active_order</span><span class="p">)</span>
                         <span class="n">cur_completed_orders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">active_order</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -1089,7 +1095,7 @@
 
             <span class="k">for</span> <span class="n">completed_order</span> <span class="ow">in</span> <span class="n">cur_completed_orders</span><span class="p">:</span>
                 <span class="n">active_orders</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">completed_order</span><span class="p">)</span>
-                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">queued_orders</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">queued_orders</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">submit_new_orders</span><span class="p">:</span>
                     <span class="n">active_orders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">create_order</span><span class="p">(</span><span class="n">queued_orders</span><span class="o">.</span><span class="n">pop</span><span class="p">()))</span>
 
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">active_orders</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -1098,7 +1104,12 @@
         <span class="k">return</span> <span class="n">completed_orders</span><span class="p">,</span> <span class="n">active_orders</span><span class="p">,</span> <span class="n">queued_orders</span></div>
 
 <div class="viewcode-block" id="DataKitchenClient.resume_and_monitor_orders"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.resume_and_monitor_orders">[docs]</a>    <span class="k">def</span> <span class="nf">resume_and_monitor_orders</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">order_runs_details</span><span class="p">,</span> <span class="n">sleep_secs</span><span class="p">,</span> <span class="n">duration_secs</span><span class="p">,</span> <span class="n">max_concurrent</span><span class="o">=</span><span class="kc">None</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">order_runs_details</span><span class="p">,</span>
+        <span class="n">sleep_secs</span><span class="p">,</span>
+        <span class="n">duration_secs</span><span class="p">,</span>
+        <span class="n">max_concurrent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">stop_on_error</span><span class="o">=</span><span class="kc">False</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Resume the specified order runs and wait for them to complete (or timeout after the</span>
@@ -1121,6 +1132,9 @@
 <span class="sd">        max_concurrent : integer or None</span>
 <span class="sd">            Max number of orders to kick off concurrently. If None, all orders will be kicked off</span>
 <span class="sd">            concurrently.</span>
+<span class="sd">        stop_on_error : boolean</span>
+<span class="sd">            If True, any order run failure will prevent new order runs from being created.</span>
+<span class="sd">            Otherwise, if False, all orders are submitted regardless of any failures.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -1168,15 +1182,16 @@
         <span class="n">completed_orders</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="n">wait_loop</span> <span class="o">=</span> <span class="n">WaitLoop</span><span class="p">(</span><span class="n">sleep_secs</span><span class="p">,</span> <span class="n">duration_secs</span><span class="p">)</span>
+        <span class="n">submit_new_orders</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">while</span> <span class="n">wait_loop</span><span class="p">:</span>
             <span class="n">cur_completed_orders</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">active_order</span> <span class="ow">in</span> <span class="n">active_orders</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span> <span class="o">=</span> <span class="n">active_order</span><span class="p">[</span><span class="n">KITCHEN</span><span class="p">]</span>
                 <span class="k">if</span> <span class="n">active_order</span><span class="p">[</span><span class="n">ORDER_RUN_ID</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">active_order</span><span class="p">[</span><span class="n">ORDER_RUN_STATUS</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_order_run_status</span><span class="p">(</span>
-                        <span class="n">active_order</span><span class="p">[</span><span class="n">ORDER_RUN_ID</span><span class="p">]</span>
-                    <span class="p">)</span>
-                    <span class="k">if</span> <span class="n">active_order</span><span class="p">[</span><span class="n">ORDER_RUN_STATUS</span><span class="p">]</span> <span class="ow">in</span> <span class="n">STOPPED_STATUS_TYPES</span><span class="p">:</span>
+                    <span class="n">order_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_order_run_status</span><span class="p">(</span><span class="n">active_order</span><span class="p">[</span><span class="n">ORDER_RUN_ID</span><span class="p">])</span>
+                    <span class="n">active_order</span><span class="p">[</span><span class="n">ORDER_RUN_STATUS</span><span class="p">]</span> <span class="o">=</span> <span class="n">order_status</span>
+                    <span class="n">submit_new_orders</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">stop_on_error</span> <span class="ow">or</span> <span class="n">order_status</span> <span class="o">!=</span> <span class="n">SERVING_ERROR</span>
+                    <span class="k">if</span> <span class="n">order_status</span> <span class="ow">in</span> <span class="n">STOPPED_STATUS_TYPES</span><span class="p">:</span>
                         <span class="n">completed_orders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">active_order</span><span class="p">)</span>
                         <span class="n">cur_completed_orders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">active_order</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -1189,7 +1204,7 @@
 
             <span class="k">for</span> <span class="n">completed_order</span> <span class="ow">in</span> <span class="n">cur_completed_orders</span><span class="p">:</span>
                 <span class="n">active_orders</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">completed_order</span><span class="p">)</span>
-                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">queued_orders</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">queued_orders</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">submit_new_orders</span><span class="p">:</span>
                     <span class="n">active_orders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resume_order</span><span class="p">(</span><span class="n">queued_orders</span><span class="o">.</span><span class="n">pop</span><span class="p">()))</span>
 
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">active_orders</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -1659,7 +1674,7 @@
 <span class="sd">                            &quot;Test&quot;: [</span>
 <span class="sd">                                {</span>
 <span class="sd">                                    &quot;filename&quot;: &quot;description.json&quot;,</span>
-<span class="sd">                                    &quot;json&quot;: &quot;{\n    \&quot;description\&quot;: \&quot;\&quot;, \n    \&quot;recipe-emails...</span>
+<span class="sd">                                    &quot;json&quot;: &quot;{    \&quot;description\&quot;: \&quot;\&quot;,     \&quot;recipe-emails...</span>
 <span class="sd">                                    &quot;sha&quot;: &quot;20ceab58e77be39ccbfcd1cfae52fc6710eb47e5&quot;,</span>
 <span class="sd">                                    &quot;type&quot;: &quot;blob&quot;,</span>
 <span class="sd">                                    &quot;url&quot;: &quot;https://github.com/api/v3/repos/DataKitchen...</span>
@@ -1692,7 +1707,7 @@
 <span class="sd">                            &quot;Test&quot;: [</span>
 <span class="sd">                                {</span>
 <span class="sd">                                    &quot;filename&quot;: &quot;description.json&quot;,</span>
-<span class="sd">                                    &quot;json&quot;: &quot;{\n    \&quot;description\&quot;: \&quot;\&quot;, \n    \&quot;recipe-emails...</span>
+<span class="sd">                                    &quot;json&quot;: &quot;{    \&quot;description\&quot;: \&quot;\&quot;,     \&quot;recipe-emails...</span>
 <span class="sd">                                    &quot;sha&quot;: &quot;20ceab58e77be39ccbfcd1cfae52fc6710eb47e5&quot;,</span>
 <span class="sd">                                    &quot;type&quot;: &quot;blob&quot;,</span>
 <span class="sd">                                    &quot;url&quot;: &quot;https://github.com/api/v3/repos/DataKitchen...</span>
