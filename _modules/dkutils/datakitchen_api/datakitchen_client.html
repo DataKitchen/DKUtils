@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api.datakitchen_client &mdash; DKUtils 1.8.2 documentation</title>
+  <title>dkutils.datakitchen_api.datakitchen_client &mdash; DKUtils 1.9.0 documentation</title>
   
 
   
@@ -107,6 +107,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-9-0">v1.9.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-8-2">v1.8.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-8-1">v1.8.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-8-0">v1.8.0</a></li>
@@ -225,6 +226,7 @@
 <span class="kn">from</span> <span class="nn">requests.exceptions</span> <span class="kn">import</span> <span class="n">HTTPError</span>
 
 <span class="kn">from</span> <span class="nn">dkutils.constants</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">API_DELETE</span><span class="p">,</span>
     <span class="n">API_GET</span><span class="p">,</span>
     <span class="n">API_POST</span><span class="p">,</span>
     <span class="n">API_PUT</span><span class="p">,</span>
@@ -549,6 +551,28 @@
             <span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span>
         <span class="p">)</span></div>
 
+<div class="viewcode-block" id="DataKitchenClient.delete_order"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.delete_order">[docs]</a>    <span class="k">def</span> <span class="nf">delete_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete an Order. Kitchen attribute must be set prior to invoking this method.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        order_id : str</span>
+<span class="sd">            ID of the order being deleted.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        ------</span>
+<span class="sd">        requests.Response</span>
+<span class="sd">            :class:`Response &lt;Response&gt;` object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_attributes</span><span class="p">(</span><span class="n">KITCHEN</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_DELETE</span><span class="p">,</span> <span class="s1">&#39;order&#39;</span><span class="p">,</span> <span class="s1">&#39;delete&#39;</span><span class="p">,</span> <span class="n">order_id</span><span class="p">,</span> <span class="n">kitchen_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="DataKitchenClient.resume_order_run"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.resume_order_run">[docs]</a>    <span class="k">def</span> <span class="nf">resume_order_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Resume a failed order run. Kitchen attribute must be set prior to invoking this method.</span>
@@ -572,6 +596,205 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span>
             <span class="n">API_PUT</span><span class="p">,</span> <span class="s1">&#39;order&#39;</span><span class="p">,</span> <span class="s1">&#39;resume&#39;</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">,</span> <span class="n">kitchen_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span>
         <span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataKitchenClient.get_orders"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_orders">[docs]</a>    <span class="k">def</span> <span class="nf">get_orders</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">time_period_hours</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">order_id_regex</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">order_status</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">order_run_status</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">order_run_count</span><span class="o">=</span><span class="mi">3</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve a dictionary of orders and their associated order runs based on the applied</span>
+<span class="sd">        filters. To filter based on recipe and variation, ensure these properties are set on this</span>
+<span class="sd">        client. Alternatively, set recipe and/or variation to None to remove filtering based on</span>
+<span class="sd">        these properties.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        time_period_hours : int, optional</span>
+<span class="sd">            Limit retrieved orders to those that started less than the provided number of hours ago.</span>
+<span class="sd">        order_id_regex : string, optional</span>
+<span class="sd">            Filter retrieved orders based on this provided order id regular expression</span>
+<span class="sd">        order_status : string, optional</span>
+<span class="sd">            Filter retrieved orders with this provided order status</span>
+<span class="sd">        order_run_status : string, optional</span>
+<span class="sd">            Filter retrieved order run with this provided order run status</span>
+<span class="sd">        order_run_count : int, optional</span>
+<span class="sd">            Limit the number of retrieved order runs (default is 3)</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the kitchen attribute is not set</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        orders : dict</span>
+<span class="sd">            Dictionary of orders and their associated order runs in the form::</span>
+
+<span class="sd">                {</span>
+<span class="sd">                    &quot;customer&quot;: &quot;DKImplementation&quot;,</span>
+<span class="sd">                    &quot;kitchenname&quot;: &quot;New_Customer_Training&quot;,</span>
+<span class="sd">                    &quot;orders&quot;: [</span>
+<span class="sd">                        {</span>
+<span class="sd">                            &quot;hid&quot;: &quot;d1cea220-8c0a-11eb-8d5d-5acebe1b7ce3&quot;,</span>
+<span class="sd">                            &quot;input_settings&quot;: {</span>
+<span class="sd">                                &quot;customer_git_name&quot;: &quot;im&quot;,</span>
+<span class="sd">                                &quot;customer_git_org&quot;: &quot;DKImplementation&quot;,</span>
+<span class="sd">                                &quot;customer_name&quot;: &quot;Implementation&quot;,</span>
+<span class="sd">                                &quot;email&quot;: &quot;user@gmail.com&quot;,</span>
+<span class="sd">                                &quot;email_verified&quot;: true,</span>
+<span class="sd">                                &quot;graph-setting&quot;: [</span>
+<span class="sd">                                    [</span>
+<span class="sd">                                        &quot;Train_Model&quot;</span>
+<span class="sd">                                    ]</span>
+<span class="sd">                                ],</span>
+<span class="sd">                                &quot;login&quot;: &quot;user@gmail.com&quot;,</span>
+<span class="sd">                                &quot;parameters&quot;: {</span>
+<span class="sd">                                    &quot;edges&quot;: [],</span>
+<span class="sd">                                    &quot;nodes&quot;: [</span>
+<span class="sd">                                        &quot;Train_Model&quot;</span>
+<span class="sd">                                    ]</span>
+<span class="sd">                                },</span>
+<span class="sd">                                &quot;role&quot;: &quot;ADMIN&quot;,</span>
+<span class="sd">                                &quot;schedule&quot;: &quot;now&quot;,</span>
+<span class="sd">                                &quot;user_id&quot;: &quot;auth0|5d3b2624888ba60cf584c9d3&quot;</span>
+<span class="sd">                            },</span>
+<span class="sd">                            &quot;order-status&quot;: &quot;ORDER_ERROR&quot;,</span>
+<span class="sd">                            &quot;recipe&quot;: &quot;Training_Sales_Forecast&quot;,</span>
+<span class="sd">                            &quot;schedule&quot;: &quot;now&quot;,</span>
+<span class="sd">                            &quot;variation&quot;: &quot;train_walmart_sales_forecasting_model&quot;</span>
+<span class="sd">                        }</span>
+<span class="sd">                    ],</span>
+<span class="sd">                    &quot;repo&quot;: &quot;im&quot;,</span>
+<span class="sd">                    &quot;servings&quot;: {</span>
+<span class="sd">                        &quot;d1cea220-8c0a-11eb-8d5d-5acebe1b7ce3&quot;: {</span>
+<span class="sd">                            &quot;servings&quot;: [</span>
+<span class="sd">                                {</span>
+<span class="sd">                                    &quot;hid&quot;: &quot;d5ccbef2-8c0a-11eb-bfad-1a3acc706153&quot;,</span>
+<span class="sd">                                    &quot;order_id&quot;: &quot;d1cea220-8c0a-11eb-8d5d-5acebe1b7ce3&quot;,</span>
+<span class="sd">                                    &quot;orderrun_status&quot;: &quot;Error in OrderRun&quot;,</span>
+<span class="sd">                                    &quot;status&quot;: &quot;SERVING_ERROR&quot;,</span>
+<span class="sd">                                    &quot;timings&quot;: {</span>
+<span class="sd">                                        &quot;duration&quot;: 120439,</span>
+<span class="sd">                                        &quot;end-time&quot;: 1616526493384,</span>
+<span class="sd">                                        &quot;start-time&quot;: 1616526372945</span>
+<span class="sd">                                    },</span>
+<span class="sd">                                    &quot;variation_name&quot;: &quot;train_walmart_sales_forecasting_model&quot;</span>
+<span class="sd">                                }</span>
+<span class="sd">                            ],</span>
+<span class="sd">                            &quot;total&quot;: 1</span>
+<span class="sd">                        }</span>
+<span class="sd">                    },</span>
+<span class="sd">                    &quot;total-orders&quot;: 1</span>
+<span class="sd">                }</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_attributes</span><span class="p">(</span><span class="n">KITCHEN</span><span class="p">)</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="n">RECIPE</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">variation</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="n">VARIATION</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">variation</span>
+        <span class="k">if</span> <span class="n">time_period_hours</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;timePeriod&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time_period_hours</span>
+        <span class="k">if</span> <span class="n">order_id_regex</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;search&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">order_id_regex</span>
+        <span class="k">if</span> <span class="n">order_status</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;orderStatus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">order_status</span>
+        <span class="k">if</span> <span class="n">order_run_status</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;orderRunStatus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">order_run_status</span>
+        <span class="k">if</span> <span class="n">order_run_count</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;servingsCount&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">order_run_count</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_GET</span><span class="p">,</span> <span class="s1">&#39;order&#39;</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="DataKitchenClient.get_order_status"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_status">[docs]</a>    <span class="k">def</span> <span class="nf">get_order_status</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">time_period_hours</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">order_id_regex</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">order_status</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">order_run_status</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">order_run_count</span><span class="o">=</span><span class="mi">3</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve the order (and associated order runs) status details based on the applied</span>
+<span class="sd">        filters. To filter based on recipe and variation, ensure these properties are set on this</span>
+<span class="sd">        client. Alternatively, set recipe and/or variation to None to remove filtering based on</span>
+<span class="sd">        these properties.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        time_period_hours : int, optional</span>
+<span class="sd">            Limit retrieved orders to those that started less than the provided number of hours ago.</span>
+<span class="sd">        order_id_regex : string, optional</span>
+<span class="sd">            Filter retrieved orders based on this provided order id regular expression</span>
+<span class="sd">        order_status : string, optional</span>
+<span class="sd">            Filter retrieved orders with this provided order status</span>
+<span class="sd">        order_run_status : string, optional</span>
+<span class="sd">            Filter retrieved order run with this provided order run status</span>
+<span class="sd">        order_run_count : int, optional</span>
+<span class="sd">            Limit the number of retrieved order runs (default is 3)</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the kitchen attribute is not set</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        order_runs : list</span>
+<span class="sd">            A list of order runs sorted from most recent start-time to oldest in the form::</span>
+
+<span class="sd">                [</span>
+<span class="sd">                    {</span>
+<span class="sd">                        &#39;hid&#39;: &#39;66152846-e0ee-11ea-8280-12128c919b99&#39;,</span>
+<span class="sd">                        &#39;order_id&#39;: &#39;a8f9ac78-e0ed-11ea-b3f4-56a20effdf97&#39;,</span>
+<span class="sd">                        &#39;orderrun_status&#39;: &#39;OrderRun Completed&#39;,</span>
+<span class="sd">                        &#39;status&#39;: &#39;COMPLETED_SERVING&#39;,</span>
+<span class="sd">                        &#39;timings&#39;: {</span>
+<span class="sd">                            &#39;duration&#39;: 22261,</span>
+<span class="sd">                            &#39;end-time&#39;: 1597712533033,</span>
+<span class="sd">                            &#39;start-time&#39;: 1597712510772</span>
+<span class="sd">                        }</span>
+<span class="sd">                    },</span>
+<span class="sd">                    {</span>
+<span class="sd">                        &#39;hid&#39;: &#39;3f57a7d0-e0ec-11ea-a65f-5edd64ee22f9&#39;,</span>
+<span class="sd">                        &#39;order_id&#39;: &#39;3942feda-e0ec-11ea-a00e-56a20effdf97&#39;,</span>
+<span class="sd">                        &#39;orderrun_status&#39;: &#39;OrderRun Completed&#39;,</span>
+<span class="sd">                        &#39;status&#39;: &#39;COMPLETED_SERVING&#39;,</span>
+<span class="sd">                        &#39;timings&#39;: {</span>
+<span class="sd">                            &#39;duration&#39;: 22676,</span>
+<span class="sd">                            &#39;end-time&#39;: 1597711609459,</span>
+<span class="sd">                            &#39;start-time&#39;: 1597711586783</span>
+<span class="sd">                        },</span>
+<span class="sd">                        &#39;variation_name&#39;: &#39;variation1&#39;</span>
+<span class="sd">                    }</span>
+<span class="sd">                ]</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">response_json</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_orders</span><span class="p">(</span>
+            <span class="n">time_period_hours</span><span class="o">=</span><span class="n">time_period_hours</span><span class="p">,</span>
+            <span class="n">order_id_regex</span><span class="o">=</span><span class="n">order_id_regex</span><span class="p">,</span>
+            <span class="n">order_status</span><span class="o">=</span><span class="n">order_status</span><span class="p">,</span>
+            <span class="n">order_run_status</span><span class="o">=</span><span class="n">order_run_status</span><span class="p">,</span>
+            <span class="n">order_run_count</span><span class="o">=</span><span class="n">order_run_count</span>
+        <span class="p">)</span>
+
+        <span class="n">order_runs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="s1">&#39;servings&#39;</span> <span class="ow">in</span> <span class="n">response_json</span> <span class="ow">and</span> <span class="n">response_json</span><span class="p">[</span><span class="s1">&#39;servings&#39;</span><span class="p">]:</span>
+            <span class="k">for</span> <span class="n">order</span> <span class="ow">in</span> <span class="n">response_json</span><span class="p">[</span><span class="s1">&#39;servings&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="n">order_runs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">order</span><span class="p">[</span><span class="s1">&#39;servings&#39;</span><span class="p">])</span>
+
+        <span class="k">def</span> <span class="nf">sort_start_time</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">value</span><span class="p">[</span><span class="s1">&#39;timings&#39;</span><span class="p">][</span><span class="s1">&#39;start-time&#39;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">order_runs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">sort_start_time</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DataKitchenClient.get_order_runs"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_runs">[docs]</a>    <span class="k">def</span> <span class="nf">get_order_runs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1398,9 +1621,103 @@
                 <span class="n">kitchen_staff</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">staff_member</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_kitchen_staff</span><span class="p">(</span><span class="n">kitchen_staff</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="DataKitchenClient.get_recipe"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_recipe">[docs]</a>    <span class="k">def</span> <span class="nf">get_recipe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recipe_files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include_recipe_tree</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve the file structure and contents of a recipe. Using the default arguments, all</span>
+<span class="sd">        files and their contents will be returned. To return specific file contents, provide those</span>
+<span class="sd">        file paths in the recipe_files list. To return a subset of file contents, but the entire</span>
+<span class="sd">        recipe files hierarchy, set the include_recipe_tree to True.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        recipe_files : list or None</span>
+<span class="sd">            None, to return the contents of all files, or a list of file paths (relative to the</span>
+<span class="sd">            root of the recipe) to return contents of specific files.</span>
+<span class="sd">        include_recipe_tree : boolean</span>
+<span class="sd">            When set to True and used in conjunction with a non-empty list of recipe_files, a</span>
+<span class="sd">            recipe-tree key is added to the returned dictionary. This added field includes a</span>
+<span class="sd">            hierarchy of all files in a recipe and allows a user to return a subset of file</span>
+<span class="sd">            contents.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the kitchen or recipe attribute is not set, or if recipe_files is an empty list.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Dictionary of recipe files (for this example, recipe_files=[&#39;description.json&#39;] and</span>
+<span class="sd">            include_recipe_tree==True) of the form::</span>
+
+<span class="sd">                {</span>
+<span class="sd">                    &quot;ORIG_HEAD&quot;: &quot;ef1d7cd1ed6e6371e9ea964b74e90f61de38fe68&quot;,</span>
+<span class="sd">                    &quot;recipe-tree&quot;: {</span>
+<span class="sd">                        &quot;Test&quot;: {</span>
+<span class="sd">                            &quot;Test&quot;: [</span>
+<span class="sd">                                {</span>
+<span class="sd">                                    &quot;filename&quot;: &quot;description.json&quot;,</span>
+<span class="sd">                                    &quot;json&quot;: &quot;{\n    \&quot;description\&quot;: \&quot;\&quot;, \n    \&quot;recipe-emails...</span>
+<span class="sd">                                    &quot;sha&quot;: &quot;20ceab58e77be39ccbfcd1cfae52fc6710eb47e5&quot;,</span>
+<span class="sd">                                    &quot;type&quot;: &quot;blob&quot;,</span>
+<span class="sd">                                    &quot;url&quot;: &quot;https://github.com/api/v3/repos/DataKitchen...</span>
+<span class="sd">                                },</span>
+<span class="sd">                                {</span>
+<span class="sd">                                    &quot;filename&quot;: &quot;variables.json&quot;,</span>
+<span class="sd">                                    &quot;sha&quot;: &quot;73b22809acd0c96f981f33bf9e7936780a5df397&quot;,</span>
+<span class="sd">                                    &quot;type&quot;: &quot;blob&quot;,</span>
+<span class="sd">                                    &quot;url&quot;: &quot;https://github.com/api/v3/repos/DataKitchen...</span>
+<span class="sd">                                },</span>
+<span class="sd">                                {</span>
+<span class="sd">                                    &quot;filename&quot;: &quot;variations.json&quot;,</span>
+<span class="sd">                                    &quot;sha&quot;: &quot;ba744dc4669fb44f1200cc86770772433c73ddf8&quot;,</span>
+<span class="sd">                                    &quot;type&quot;: &quot;blob&quot;,</span>
+<span class="sd">                                    &quot;url&quot;: &quot;https://github.com/api/v3/repos/DataKitchen...</span>
+<span class="sd">                                }</span>
+<span class="sd">                            ],</span>
+<span class="sd">                            &quot;Test/resources&quot;: [</span>
+<span class="sd">                                {</span>
+<span class="sd">                                    &quot;filename&quot;: &quot;README.txt&quot;,</span>
+<span class="sd">                                    &quot;sha&quot;: &quot;6966c84b6474c42b28a51b3546ec27a5733abffa&quot;,</span>
+<span class="sd">                                    &quot;type&quot;: &quot;blob&quot;,</span>
+<span class="sd">                                    &quot;url&quot;: &quot;https://github.com/api/v3/repos/DataKitchen...</span>
+<span class="sd">                                }</span>
+<span class="sd">                            ]</span>
+<span class="sd">                        }</span>
+<span class="sd">                    },</span>
+<span class="sd">                    &quot;recipes&quot;: {</span>
+<span class="sd">                        &quot;Test&quot;: {</span>
+<span class="sd">                            &quot;Test&quot;: [</span>
+<span class="sd">                                {</span>
+<span class="sd">                                    &quot;filename&quot;: &quot;description.json&quot;,</span>
+<span class="sd">                                    &quot;json&quot;: &quot;{\n    \&quot;description\&quot;: \&quot;\&quot;, \n    \&quot;recipe-emails...</span>
+<span class="sd">                                    &quot;sha&quot;: &quot;20ceab58e77be39ccbfcd1cfae52fc6710eb47e5&quot;,</span>
+<span class="sd">                                    &quot;type&quot;: &quot;blob&quot;,</span>
+<span class="sd">                                    &quot;url&quot;: &quot;https://github.com/api/v3/repos/DataKitchen...</span>
+<span class="sd">                                }</span>
+<span class="sd">                            ]</span>
+<span class="sd">                        }</span>
+<span class="sd">                    }</span>
+<span class="sd">                }</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_attributes</span><span class="p">(</span><span class="n">KITCHEN</span><span class="p">,</span> <span class="n">RECIPE</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">recipe_files</span> <span class="ow">or</span> <span class="n">include_recipe_tree</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">recipe_files</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">recipe_files</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1"># API does not handle an empty recipe_files list graciously</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Argument recipe_files cannot be an empty array.&#39;</span><span class="p">)</span>
+
+            <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;include-recipe-tree&#39;</span><span class="p">:</span> <span class="n">include_recipe_tree</span><span class="p">,</span> <span class="s1">&#39;recipe-files&#39;</span><span class="p">:</span> <span class="n">recipe_files</span><span class="p">}</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span>
+                <span class="n">API_POST</span><span class="p">,</span> <span class="s1">&#39;recipe&#39;</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_POST</span><span class="p">,</span> <span class="s1">&#39;recipe&#39;</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span></div>
+
 <div class="viewcode-block" id="DataKitchenClient.get_recipes"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_recipes">[docs]</a>    <span class="k">def</span> <span class="nf">get_recipes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns a dictionary whose keys are the recipe names and values contain a list of the variation names</span>
+<span class="sd">        Returns a list of recipe names.</span>
 
 <span class="sd">        Raises</span>
 <span class="sd">        ------</span>
@@ -1429,101 +1746,6 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">][</span><span class="s1">&#39;kitchen-staff&#39;</span><span class="p">]:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="si">}</span><span class="s1"> is not available to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_username</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_GET</span><span class="p">,</span> <span class="s1">&#39;kitchen&#39;</span><span class="p">,</span> <span class="s1">&#39;recipenames&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;recipes&#39;</span><span class="p">]</span></div>
-
-<div class="viewcode-block" id="DataKitchenClient.get_order_status"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_status">[docs]</a>    <span class="k">def</span> <span class="nf">get_order_status</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">time_period_hours</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">order_id_regex</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">order_status</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">order_run_status</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">order_run_count</span><span class="o">=</span><span class="mi">3</span>
-    <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Retrieve the order (and associated order runs) status details based on the applied</span>
-<span class="sd">        filters. To filter based on recipe and variation, ensure these properties are set on this</span>
-<span class="sd">        client. Alternatively, set recipe and/or variation to None to remove filtering based on</span>
-<span class="sd">        these properties.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        time_period_hours : int, optional</span>
-<span class="sd">            Limit retrieved orders to those that started less than the provided number of hours ago.</span>
-<span class="sd">        order_id_regex : string, optional</span>
-<span class="sd">            Filter retrieved orders based on this provided order id regular expression</span>
-<span class="sd">        order_status : string, optional</span>
-<span class="sd">            Filter retrieved orders with this provided order status</span>
-<span class="sd">        order_run_status : string, optional</span>
-<span class="sd">            Filter retrieved order run with this provided order run status</span>
-<span class="sd">        order_run_count : int, optional</span>
-<span class="sd">            Limit the number of retrieved order runs (default is 3)</span>
-
-<span class="sd">        Raises</span>
-<span class="sd">        ------</span>
-<span class="sd">        HTTPError</span>
-<span class="sd">            If the request fails.</span>
-<span class="sd">        ValueError</span>
-<span class="sd">            If the kitchen attribute is not set</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        order_runs : list</span>
-<span class="sd">            A list of order runs sorted from most recent start-time to oldest in the form::</span>
-
-<span class="sd">                [</span>
-<span class="sd">                    {</span>
-<span class="sd">                        &#39;hid&#39;: &#39;66152846-e0ee-11ea-8280-12128c919b99&#39;,</span>
-<span class="sd">                        &#39;order_id&#39;: &#39;a8f9ac78-e0ed-11ea-b3f4-56a20effdf97&#39;,</span>
-<span class="sd">                        &#39;orderrun_status&#39;: &#39;OrderRun Completed&#39;,</span>
-<span class="sd">                        &#39;status&#39;: &#39;COMPLETED_SERVING&#39;,</span>
-<span class="sd">                        &#39;timings&#39;: {</span>
-<span class="sd">                            &#39;duration&#39;: 22261,</span>
-<span class="sd">                            &#39;end-time&#39;: 1597712533033,</span>
-<span class="sd">                            &#39;start-time&#39;: 1597712510772</span>
-<span class="sd">                        }</span>
-<span class="sd">                    },</span>
-<span class="sd">                    {</span>
-<span class="sd">                        &#39;hid&#39;: &#39;3f57a7d0-e0ec-11ea-a65f-5edd64ee22f9&#39;,</span>
-<span class="sd">                        &#39;order_id&#39;: &#39;3942feda-e0ec-11ea-a00e-56a20effdf97&#39;,</span>
-<span class="sd">                        &#39;orderrun_status&#39;: &#39;OrderRun Completed&#39;,</span>
-<span class="sd">                        &#39;status&#39;: &#39;COMPLETED_SERVING&#39;,</span>
-<span class="sd">                        &#39;timings&#39;: {</span>
-<span class="sd">                            &#39;duration&#39;: 22676,</span>
-<span class="sd">                            &#39;end-time&#39;: 1597711609459,</span>
-<span class="sd">                            &#39;start-time&#39;: 1597711586783</span>
-<span class="sd">                        },</span>
-<span class="sd">                        &#39;variation_name&#39;: &#39;variation1&#39;</span>
-<span class="sd">                    }</span>
-<span class="sd">                ]</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_attributes</span><span class="p">(</span><span class="n">KITCHEN</span><span class="p">)</span>
-        <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="p">:</span>
-            <span class="n">kwargs</span><span class="p">[</span><span class="n">RECIPE</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">variation</span><span class="p">:</span>
-            <span class="n">kwargs</span><span class="p">[</span><span class="n">VARIATION</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">variation</span>
-        <span class="k">if</span> <span class="n">time_period_hours</span><span class="p">:</span>
-            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;timePeriod&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time_period_hours</span>
-        <span class="k">if</span> <span class="n">order_id_regex</span><span class="p">:</span>
-            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;search&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">order_id_regex</span>
-        <span class="k">if</span> <span class="n">order_status</span><span class="p">:</span>
-            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;orderStatus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">order_status</span>
-        <span class="k">if</span> <span class="n">order_run_status</span><span class="p">:</span>
-            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;orderRunStatus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">order_run_status</span>
-        <span class="k">if</span> <span class="n">order_run_count</span><span class="p">:</span>
-            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;servingsCount&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">order_run_count</span>
-
-        <span class="n">response_json</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_GET</span><span class="p">,</span> <span class="s1">&#39;order&#39;</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-
-        <span class="n">order_runs</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">if</span> <span class="s1">&#39;servings&#39;</span> <span class="ow">in</span> <span class="n">response_json</span> <span class="ow">and</span> <span class="n">response_json</span><span class="p">[</span><span class="s1">&#39;servings&#39;</span><span class="p">]:</span>
-            <span class="k">for</span> <span class="n">order</span> <span class="ow">in</span> <span class="n">response_json</span><span class="p">[</span><span class="s1">&#39;servings&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-                <span class="n">order_runs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">order</span><span class="p">[</span><span class="s1">&#39;servings&#39;</span><span class="p">])</span>
-
-        <span class="k">def</span> <span class="nf">sort_start_time</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">value</span><span class="p">[</span><span class="s1">&#39;timings&#39;</span><span class="p">][</span><span class="s1">&#39;start-time&#39;</span><span class="p">]</span>
-
-        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">order_runs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">sort_start_time</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DataKitchenClient.get_variations"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_variations">[docs]</a>    <span class="k">def</span> <span class="nf">get_variations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

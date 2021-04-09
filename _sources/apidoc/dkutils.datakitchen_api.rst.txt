@@ -14,3 +14,4 @@ Submodules
 
    dkutils.datakitchen_api.datakitchen_client
    dkutils.datakitchen_api.datetime_utils
+   dkutils.datakitchen_api.tests_utils

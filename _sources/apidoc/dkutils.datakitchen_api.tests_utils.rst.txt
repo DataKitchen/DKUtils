@@ -1,0 +1,7 @@
+dkutils.datakitchen\_api.tests\_utils module
+============================================
+
+.. automodule:: dkutils.datakitchen_api.tests_utils
+   :members:
+   :undoc-members:
+   :show-inheritance:

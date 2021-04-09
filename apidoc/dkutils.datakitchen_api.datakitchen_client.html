@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api.datakitchen_client module &mdash; DKUtils 1.8.2 documentation</title>
+  <title>dkutils.datakitchen_api.datakitchen_client module &mdash; DKUtils 1.9.0 documentation</title>
   
 
   
@@ -109,6 +109,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-9-0">v1.9.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-8-2">v1.8.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-8-1">v1.8.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-8-0">v1.8.0</a></li>
@@ -397,6 +398,26 @@ this method.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.delete_order">
+<code class="sig-name descname">delete_order</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">order_id</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.delete_order"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.delete_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete an Order. Kitchen attribute must be set prior to invoking this method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>order_id</strong> (<em>str</em>) – ID of the order being deleted.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>HTTPError</strong> – If the request fails.</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code> object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>requests.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_kitchen_staff">
 <code class="sig-name descname">get_kitchen_staff</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.get_kitchen_staff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_kitchen_staff" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list containing the email addresses of the kitchen staff for the current kitchen</p>
@@ -587,6 +608,98 @@ these properties.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_orders">
+<code class="sig-name descname">get_orders</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">time_period_hours</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">order_id_regex</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">order_status</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">order_run_status</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">order_run_count</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.get_orders"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_orders" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve a dictionary of orders and their associated order runs based on the applied
+filters. To filter based on recipe and variation, ensure these properties are set on this
+client. Alternatively, set recipe and/or variation to None to remove filtering based on
+these properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time_period_hours</strong> (<em>int</em><em>, </em><em>optional</em>) – Limit retrieved orders to those that started less than the provided number of hours ago.</p></li>
+<li><p><strong>order_id_regex</strong> (<em>string</em><em>, </em><em>optional</em>) – Filter retrieved orders based on this provided order id regular expression</p></li>
+<li><p><strong>order_status</strong> (<em>string</em><em>, </em><em>optional</em>) – Filter retrieved orders with this provided order status</p></li>
+<li><p><strong>order_run_status</strong> (<em>string</em><em>, </em><em>optional</em>) – Filter retrieved order run with this provided order run status</p></li>
+<li><p><strong>order_run_count</strong> (<em>int</em><em>, </em><em>optional</em>) – Limit the number of retrieved order runs (default is 3)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the request fails.</p></li>
+<li><p><strong>ValueError</strong> – If the kitchen attribute is not set</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><p><strong>orders</strong> –</p>
+<p>Dictionary of orders and their associated order runs in the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;customer&quot;</span><span class="p">:</span> <span class="s2">&quot;DKImplementation&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kitchenname&quot;</span><span class="p">:</span> <span class="s2">&quot;New_Customer_Training&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;orders&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;hid&quot;</span><span class="p">:</span> <span class="s2">&quot;d1cea220-8c0a-11eb-8d5d-5acebe1b7ce3&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;input_settings&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;customer_git_name&quot;</span><span class="p">:</span> <span class="s2">&quot;im&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;customer_git_org&quot;</span><span class="p">:</span> <span class="s2">&quot;DKImplementation&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;customer_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Implementation&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;user@gmail.com&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;email_verified&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+                <span class="s2">&quot;graph-setting&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">[</span>
+                        <span class="s2">&quot;Train_Model&quot;</span>
+                    <span class="p">]</span>
+                <span class="p">],</span>
+                <span class="s2">&quot;login&quot;</span><span class="p">:</span> <span class="s2">&quot;user@gmail.com&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;edges&quot;</span><span class="p">:</span> <span class="p">[],</span>
+                    <span class="s2">&quot;nodes&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&quot;Train_Model&quot;</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;ADMIN&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;schedule&quot;</span><span class="p">:</span> <span class="s2">&quot;now&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="s2">&quot;auth0|5d3b2624888ba60cf584c9d3&quot;</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;order-status&quot;</span><span class="p">:</span> <span class="s2">&quot;ORDER_ERROR&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;recipe&quot;</span><span class="p">:</span> <span class="s2">&quot;Training_Sales_Forecast&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;schedule&quot;</span><span class="p">:</span> <span class="s2">&quot;now&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;variation&quot;</span><span class="p">:</span> <span class="s2">&quot;train_walmart_sales_forecasting_model&quot;</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;repo&quot;</span><span class="p">:</span> <span class="s2">&quot;im&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;servings&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;d1cea220-8c0a-11eb-8d5d-5acebe1b7ce3&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;servings&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;hid&quot;</span><span class="p">:</span> <span class="s2">&quot;d5ccbef2-8c0a-11eb-bfad-1a3acc706153&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;order_id&quot;</span><span class="p">:</span> <span class="s2">&quot;d1cea220-8c0a-11eb-8d5d-5acebe1b7ce3&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;orderrun_status&quot;</span><span class="p">:</span> <span class="s2">&quot;Error in OrderRun&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;SERVING_ERROR&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;timings&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;duration&quot;</span><span class="p">:</span> <span class="mi">120439</span><span class="p">,</span>
+                        <span class="s2">&quot;end-time&quot;</span><span class="p">:</span> <span class="mi">1616526493384</span><span class="p">,</span>
+                        <span class="s2">&quot;start-time&quot;</span><span class="p">:</span> <span class="mi">1616526372945</span>
+                    <span class="p">},</span>
+                    <span class="s2">&quot;variation_name&quot;</span><span class="p">:</span> <span class="s2">&quot;train_walmart_sales_forecasting_model&quot;</span>
+                <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;total&quot;</span><span class="p">:</span> <span class="mi">1</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;total-orders&quot;</span><span class="p">:</span> <span class="mi">1</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_override_names_that_do_not_exist">
 <code class="sig-name descname">get_override_names_that_do_not_exist</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">override_names</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.get_override_names_that_do_not_exist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_override_names_that_do_not_exist" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a set of override names that could exist in the kitchen, return a set of the names of any that do not
@@ -662,9 +775,134 @@ subset of overrides</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_recipe">
+<code class="sig-name descname">get_recipe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">recipe_files</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">include_recipe_tree</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.get_recipe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_recipe" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Retrieve the file structure and contents of a recipe. Using the default arguments, all
+files and their contents will be returned. To return specific file contents, provide those
+file paths in the recipe_files list. To return a subset of file contents, but the entire
+recipe files hierarchy, set the include_recipe_tree to True.</p>
+<dl class="simple">
+<dt>recipe_files<span class="classifier">list or None</span></dt><dd><p>None, to return the contents of all files, or a list of file paths (relative to the
+root of the recipe) to return contents of specific files.</p>
+</dd>
+<dt>include_recipe_tree<span class="classifier">boolean</span></dt><dd><p>When set to True and used in conjunction with a non-empty list of recipe_files, a
+recipe-tree key is added to the returned dictionary. This added field includes a
+hierarchy of all files in a recipe and allows a user to return a subset of file
+contents.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>HTTPError</dt><dd><p>If the request fails.</p>
+</dd>
+<dt>ValueError</dt><dd><p>If the kitchen or recipe attribute is not set, or if recipe_files is an empty list.</p>
+</dd>
+</dl>
+<dl>
+<dt>dict</dt><dd><p>Dictionary of recipe files (for this example, recipe_files=[‘description.json’] and
+include_recipe_tree==True) of the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;ORIG_HEAD&quot;</span><span class="p">:</span> <span class="s2">&quot;ef1d7cd1ed6e6371e9ea964b74e90f61de38fe68&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;recipe-tree&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;Test&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;Test&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="s2">&quot;description.json&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;json&quot;</span><span class="p">:</span> <span class="s2">&quot;{</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</div></blockquote>
+<p>“description”: “”,
+“recipe-emails…</p>
+<blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><p>“sha”: “20ceab58e77be39ccbfcd1cfae52fc6710eb47e5”,
+“type”: “blob”,
+“url”: “<a class="reference external" href="https://github.com/api/v3/repos/DataKitchen">https://github.com/api/v3/repos/DataKitchen</a>…</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“filename”: “variables.json”,
+“sha”: “73b22809acd0c96f981f33bf9e7936780a5df397”,
+“type”: “blob”,
+“url”: “<a class="reference external" href="https://github.com/api/v3/repos/DataKitchen">https://github.com/api/v3/repos/DataKitchen</a>…</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“filename”: “variations.json”,
+“sha”: “ba744dc4669fb44f1200cc86770772433c73ddf8”,
+“type”: “blob”,
+“url”: “<a class="reference external" href="https://github.com/api/v3/repos/DataKitchen">https://github.com/api/v3/repos/DataKitchen</a>…</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>],
+“Test/resources”: [</p>
+<blockquote>
+<div><dl class="simple">
+<dt>{</dt><dd><p>“filename”: “README.txt”,
+“sha”: “6966c84b6474c42b28a51b3546ec27a5733abffa”,
+“type”: “blob”,
+“url”: “<a class="reference external" href="https://github.com/api/v3/repos/DataKitchen">https://github.com/api/v3/repos/DataKitchen</a>…</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“recipes”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“Test”: {</dt><dd><dl class="simple">
+<dt>“Test”: [</dt><dd><dl class="simple">
+<dt>{</dt><dd><p>“filename”: “description.json”,
+“json”: “{</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+</div></blockquote>
+<p>“description”: “”,
+“recipe-emails…</p>
+<blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><p>“sha”: “20ceab58e77be39ccbfcd1cfae52fc6710eb47e5”,
+“type”: “blob”,
+“url”: “<a class="reference external" href="https://github.com/api/v3/repos/DataKitchen">https://github.com/api/v3/repos/DataKitchen</a>…</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
 <dt id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_recipes">
 <code class="sig-name descname">get_recipes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.get_recipes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_recipes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a dictionary whose keys are the recipe names and values contain a list of the variation names</p>
+<dd><p>Returns a list of recipe names.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><ul class="simple">

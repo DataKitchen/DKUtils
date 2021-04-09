@@ -1,0 +1,544 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>dkutils.datakitchen_api.tests_utils &mdash; DKUtils 1.9.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> DKUtils
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../apidoc/modules.html">Code Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../apidoc/dkutils.html">dkutils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../apidoc/dkutils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../apidoc/dkutils.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guide.html">Development Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#development-process">Development Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#deployment-checklist">Deployment Checklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#code-formatting-and-standards">Code formatting and standards</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#pre-commit-anchor">pre-commit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#flake8-anchor">Flake8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#yapf-anchor">YAPF</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#documentation-best-practices">Documentation Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#versioning">Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#makefile">Makefile</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-9-0">v1.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-8-2">v1.8.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-8-1">v1.8.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-8-0">v1.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-7-1">v1.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-7-0">v1.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-6-0">v1.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-5-0">v1.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-4-0">v1.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-3">v1.3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-2">v1.3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-1">v1.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-0">v1.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-2-0">v1.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-1-0">v1.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-0-1">v1.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-0-0">v1.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-16-0">v0.16.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-15-0">v0.15.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-14-0">v0.14.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-13-0">v0.13.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-12-0">v0.12.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-11-0">v0.11.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-10-2">v0.10.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-10-1">v0.10.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-10-0">v0.10.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-9-0">v0.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-8-2">v0.8.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-8-1">v0.8.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-8-0">v0.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-7-1">v0.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-7-0">v0.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-6-1">v0.6.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-6-0">v0.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-5-0">v0.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-4-0">v0.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-3-0">v0.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-2-0">v0.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-1-0">v0.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-4">v0.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-3">v0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-2">v0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-1">v0.0.1</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DKUtils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>dkutils.datakitchen_api.tests_utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for dkutils.datakitchen_api.tests_utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+<span class="kn">from</span> <span class="nn">dkutils.constants</span> <span class="kn">import</span> <span class="n">VALID_TEST_DIRECTORIES</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="TestInfo"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.tests_utils.html#dkutils.datakitchen_api.tests_utils.TestInfo">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">TestInfo</span><span class="p">:</span>
+    <span class="n">test</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">datestamp</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">kitchen</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">recipe</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">node</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">failure_action</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">variable</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">comparison</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">expression</span><span class="p">:</span> <span class="nb">str</span>
+
+<div class="viewcode-block" id="TestInfo.keys"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.tests_utils.html#dkutils.datakitchen_api.tests_utils.TestInfo.keys">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">keys</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__dataclass_fields__</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TestInfo.get"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.tests_utils.html#dkutils.datakitchen_api.tests_utils.TestInfo.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="is_valid_test_directory"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.tests_utils.html#dkutils.datakitchen_api.tests_utils.is_valid_test_directory">[docs]</a><span class="k">def</span> <span class="nf">is_valid_test_directory</span><span class="p">(</span><span class="n">base_path</span><span class="p">,</span> <span class="n">file_depth</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Only node directories and their immediate subdirectories may contain tests. This function takes</span>
+<span class="sd">    a recipe subdirectory and returns True if it may contain tests or False otherwise.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    base_path : Path</span>
+<span class="sd">        Recipe subdirectory path that may or may not contain tests. This path is relative to a</span>
+<span class="sd">        recipe&#39;s root directory (e.g. Recipe/Node/data_sinks).</span>
+<span class="sd">    file_depth : int</span>
+<span class="sd">        Depth of directory containing recipe files (e.g. Recipe/Node/notebook.json has</span>
+<span class="sd">        file_depth==2). Tests may only be defined in files in the root of a node directory or</span>
+<span class="sd">        direct subdirectories (i.e. file_depth == 2 or 3)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    boolean</span>
+<span class="sd">        True if the recipe base_path may contain tests, False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">file_depth</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">file_depth</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="c1"># base_path starts with the recipe name, followed by node name (e.g. Recipe/Node or</span>
+    <span class="c1"># Recipe/resources)</span>
+    <span class="n">node_name</span> <span class="o">=</span> <span class="n">base_path</span><span class="o">.</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># Ignore the resources directory</span>
+    <span class="k">if</span> <span class="n">node_name</span> <span class="o">==</span> <span class="s1">&#39;resources&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="c1"># Only certain node subdirectories may contain tests</span>
+    <span class="k">return</span> <span class="n">file_depth</span> <span class="o">!=</span> <span class="mi">3</span> <span class="ow">or</span> <span class="n">base_path</span><span class="o">.</span><span class="n">parts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="ow">in</span> <span class="n">VALID_TEST_DIRECTORIES</span></div>
+
+
+<div class="viewcode-block" id="is_valid_test_file"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.tests_utils.html#dkutils.datakitchen_api.tests_utils.is_valid_test_file">[docs]</a><span class="k">def</span> <span class="nf">is_valid_test_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">file_depth</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Only certain files may contain tests. This function returns True if the provided file may</span>
+<span class="sd">    contain tests or False otherwise.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    file_path : Path</span>
+<span class="sd">        Path to a recipe file relative to the root of the recipe (e.g. Recipe/Node/notebook.json)</span>
+<span class="sd">    file_depth : int</span>
+<span class="sd">        Subdirectory depth of recipe file (e.g. Recipe/Node/notebook.json file depth is 2)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    boolean</span>
+<span class="sd">        True if the file may contain tests, otherwise False.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">file_path</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;notebook.json&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="n">file_depth</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">file_path</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s1">&#39;.json&#39;</span></div>
+
+
+<div class="viewcode-block" id="get_recipe_test_paths"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.tests_utils.html#dkutils.datakitchen_api.tests_utils.get_recipe_test_paths">[docs]</a><span class="k">def</span> <span class="nf">get_recipe_test_paths</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">kitchen</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">recipe</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a list of paths to all recipe files that potentially contain tests. The kitchen and</span>
+<span class="sd">    and recipe that are interrogated for tests are derived from the client, unless otherwise</span>
+<span class="sd">    specified as optional input arguments. If kitchen and/or recipe arguments are provided, they</span>
+<span class="sd">    are set accordingly on the provided client.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    client : DataKitchenClient</span>
+<span class="sd">        DataKitchenClient instance with kitchen and/or recipe set accordingly, unless optional</span>
+<span class="sd">        kitchen and/or recipe arguments are provided</span>
+<span class="sd">    kitchen : str, optional</span>
+<span class="sd">        If None, use the kitchen currently set on the client, otherwise set the kitchen accordingly.</span>
+<span class="sd">    recipe : str, optional</span>
+<span class="sd">        If None, use the recipe currently set on the client, otherwise, set the recipe accordingly.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list</span>
+<span class="sd">        List of paths to all recipe files that potentially contain tests.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">kitchen</span><span class="p">:</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">kitchen</span> <span class="o">=</span> <span class="n">kitchen</span>
+
+    <span class="k">if</span> <span class="n">recipe</span><span class="p">:</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">recipe</span> <span class="o">=</span> <span class="n">recipe</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Finding test files in recipe: </span><span class="si">{</span><span class="n">client</span><span class="o">.</span><span class="n">recipe</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">json_response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_recipe</span><span class="p">(</span><span class="n">recipe_files</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;description.json&#39;</span><span class="p">],</span> <span class="n">include_recipe_tree</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">test_paths</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">recipe_contents</span> <span class="ow">in</span> <span class="n">json_response</span><span class="p">[</span><span class="s1">&#39;recipe-tree&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">file_dir</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">recipe_contents</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">base_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">file_dir</span><span class="p">)</span>
+            <span class="n">file_depth</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">base_path</span><span class="o">.</span><span class="n">parts</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">is_valid_test_directory</span><span class="p">(</span><span class="n">base_path</span><span class="p">,</span> <span class="n">file_depth</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">file_info</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+                    <span class="n">file_path</span> <span class="o">=</span> <span class="n">base_path</span> <span class="o">/</span> <span class="n">file_info</span><span class="p">[</span><span class="s2">&quot;filename&quot;</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">is_valid_test_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">file_depth</span><span class="p">):</span>
+                        <span class="c1"># Remove recipe name from start of file path and path separator</span>
+                        <span class="n">test_paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">file_path</span><span class="p">)[</span><span class="nb">len</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">recipe</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:])</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Finished finding test files in recipe: </span><span class="si">{</span><span class="n">client</span><span class="o">.</span><span class="n">recipe</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">test_paths</span></div>
+
+
+<div class="viewcode-block" id="extract_tests_from_files"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.tests_utils.html#dkutils.datakitchen_api.tests_utils.extract_tests_from_files">[docs]</a><span class="k">def</span> <span class="nf">extract_tests_from_files</span><span class="p">(</span><span class="n">client</span><span class="p">,</span>
+                             <span class="n">datestamp</span><span class="p">,</span>
+                             <span class="n">test_paths</span><span class="p">,</span>
+                             <span class="n">kitchen</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                             <span class="n">recipe</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">TestInfo</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extract tests from the provided test_paths. The kitchen and recipe are derived from the client,</span>
+<span class="sd">    unless otherwise specified as optional input arguments. If kitchen and/or recipe arguments are</span>
+<span class="sd">    provided, they are set accordingly on the provided client.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    client : DataKitchenClient</span>
+<span class="sd">        DataKitchenClient instance with kitchen and/or recipe set accordingly, unless optional</span>
+<span class="sd">        kitchen and/or recipe arguments are provided</span>
+<span class="sd">    datestamp : datetime</span>
+<span class="sd">        Datestamp indicating approximate time when tests were extracted.</span>
+<span class="sd">    test_paths : list</span>
+<span class="sd">        List of paths to all recipe files that potentially contain tests.</span>
+<span class="sd">    kitchen : str, optional</span>
+<span class="sd">        If None, use the kitchen currently set on the client, otherwise set the kitchen accordingly.</span>
+<span class="sd">    recipe : str, optional</span>
+<span class="sd">        If None, use the recipe currently set on the client, otherwise, set the recipe accordingly.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list</span>
+<span class="sd">        List of TestInfo objects, one per test found in the provided test_paths.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">kitchen</span><span class="p">:</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">kitchen</span> <span class="o">=</span> <span class="n">kitchen</span>
+
+    <span class="k">if</span> <span class="n">recipe</span><span class="p">:</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">recipe</span> <span class="o">=</span> <span class="n">recipe</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Extracting tests from files in recipe: </span><span class="si">{</span><span class="n">client</span><span class="o">.</span><span class="n">recipe</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">json_response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_recipe</span><span class="p">(</span><span class="n">recipe_files</span><span class="o">=</span><span class="n">test_paths</span><span class="p">,</span> <span class="n">include_recipe_tree</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Failed to retrieve recipe files containing tests: </span><span class="si">{</span><span class="n">test_paths</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">raise</span>
+
+    <span class="n">test_infos</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">recipe_contents</span> <span class="ow">in</span> <span class="n">json_response</span><span class="p">[</span><span class="s1">&#39;recipes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">file_dir</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">recipe_contents</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">base_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">file_dir</span><span class="p">)</span>
+            <span class="n">node_name</span> <span class="o">=</span> <span class="n">base_path</span><span class="o">.</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Processing node: </span><span class="si">{</span><span class="n">node_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">file_info</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s1">&#39;json&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">file_info</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;JSON field not present in node </span><span class="si">{</span><span class="n">node_name</span><span class="si">}</span><span class="s2">&#39;s file </span><span class="si">{</span><span class="n">file_info</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                    <span class="k">continue</span>
+
+                <span class="n">json_contents</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">file_info</span><span class="p">[</span><span class="s1">&#39;json&#39;</span><span class="p">])</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="s1">&#39;tests&#39;</span> <span class="ow">in</span> <span class="n">json_contents</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">test</span><span class="p">,</span> <span class="n">fields</span> <span class="ow">in</span> <span class="n">json_contents</span><span class="p">[</span><span class="s1">&#39;tests&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                            <span class="n">description</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;description&#39;</span> <span class="ow">in</span> <span class="n">fields</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
+
+                            <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                            <span class="n">comparison</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                            <span class="n">expression</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;test-logic&#39;</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+                                <span class="n">metric</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="s1">&#39;test-logic&#39;</span><span class="p">][</span><span class="s1">&#39;test-metric&#39;</span><span class="p">]</span>
+                                <span class="n">comparison</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="s1">&#39;test-logic&#39;</span><span class="p">][</span><span class="s1">&#39;test-compare&#39;</span><span class="p">]</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">expression</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="s1">&#39;test-logic&#39;</span><span class="p">]</span>
+
+                            <span class="n">test_infos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                                <span class="n">TestInfo</span><span class="p">(</span>
+                                    <span class="o">**</span><span class="p">{</span>
+                                        <span class="s1">&#39;test&#39;</span><span class="p">:</span> <span class="n">test</span><span class="p">,</span>
+                                        <span class="s1">&#39;datestamp&#39;</span><span class="p">:</span> <span class="n">datestamp</span><span class="p">,</span>
+                                        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="n">description</span><span class="p">,</span>
+                                        <span class="s1">&#39;kitchen&#39;</span><span class="p">:</span> <span class="n">client</span><span class="o">.</span><span class="n">kitchen</span><span class="p">,</span>
+                                        <span class="s1">&#39;recipe&#39;</span><span class="p">:</span> <span class="n">client</span><span class="o">.</span><span class="n">recipe</span><span class="p">,</span>
+                                        <span class="s1">&#39;node&#39;</span><span class="p">:</span> <span class="n">node_name</span><span class="p">,</span>
+                                        <span class="s1">&#39;failure_action&#39;</span><span class="p">:</span> <span class="n">fields</span><span class="p">[</span><span class="s1">&#39;action&#39;</span><span class="p">],</span>
+                                        <span class="s1">&#39;variable&#39;</span><span class="p">:</span> <span class="n">fields</span><span class="p">[</span><span class="s1">&#39;test-variable&#39;</span><span class="p">],</span>
+                                        <span class="s1">&#39;metric&#39;</span><span class="p">:</span> <span class="n">metric</span><span class="p">,</span>
+                                        <span class="s1">&#39;comparison&#39;</span><span class="p">:</span> <span class="n">comparison</span><span class="p">,</span>
+                                        <span class="s1">&#39;expression&#39;</span><span class="p">:</span> <span class="n">expression</span><span class="p">,</span>
+                                    <span class="p">}</span>
+                                <span class="p">)</span>
+                            <span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s1">&#39;Failed to parse tests from </span><span class="si">{</span><span class="n">base_path</span> <span class="o">/</span> <span class="n">file_info</span><span class="p">[</span><span class="s2">&quot;filename&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+                    <span class="p">)</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Finished processing node: </span><span class="si">{</span><span class="n">node_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Finished extracting tests from files in recipe: </span><span class="si">{</span><span class="n">client</span><span class="o">.</span><span class="n">recipe</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">test_infos</span></div>
+
+
+<div class="viewcode-block" id="get_test_infos"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.tests_utils.html#dkutils.datakitchen_api.tests_utils.get_test_infos">[docs]</a><span class="k">def</span> <span class="nf">get_test_infos</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">datestamp</span><span class="p">,</span> <span class="n">recipes</span><span class="p">,</span> <span class="n">kitchen</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">TestInfo</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    For a set of recipes in a kitchen, retrieve all the defined tests and their associated metadata.</span>
+<span class="sd">    Return a list of test_info dictionaries, one per test.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    client : DataKitchenClient</span>
+<span class="sd">        DataKitchenClient instance with kitchen set accordingly, unless optional</span>
+<span class="sd">        kitchen argument is provided</span>
+<span class="sd">    datestamp : datetime</span>
+<span class="sd">        Datestamp indicating approximate time when tests were extracted.</span>
+<span class="sd">    recipes : list</span>
+<span class="sd">        List of paths to all recipe files that potentially contain tests.</span>
+<span class="sd">    kitchen : str, optional</span>
+<span class="sd">        If None, use the kitchen currently set on the client, otherwise set the kitchen accordingly.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list</span>
+<span class="sd">        List of TestInfo objects, one per test found in the provided kitchen recipes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">kitchen</span><span class="p">:</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">kitchen</span> <span class="o">=</span> <span class="n">kitchen</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Finding tests in kitchen: </span><span class="si">{</span><span class="n">kitchen</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">test_infos</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">recipe</span> <span class="ow">in</span> <span class="n">recipes</span><span class="p">:</span>
+        <span class="n">test_paths</span> <span class="o">=</span> <span class="n">get_recipe_test_paths</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">recipe</span><span class="o">=</span><span class="n">recipe</span><span class="p">)</span>
+        <span class="n">test_infos</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">extract_tests_from_files</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">datestamp</span><span class="p">,</span> <span class="n">test_paths</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">test_infos</span></div>
+
+
+<div class="viewcode-block" id="write_test_infos_csv"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.tests_utils.html#dkutils.datakitchen_api.tests_utils.write_test_infos_csv">[docs]</a><span class="k">def</span> <span class="nf">write_test_infos_csv</span><span class="p">(</span><span class="n">test_infos</span><span class="p">,</span> <span class="n">output_csv_path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Write a list of TestInfo objects to a CSV file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    test_infos : list</span>
+<span class="sd">        List of TestInfo object</span>
+<span class="sd">    output_csv_path : str</span>
+<span class="sd">        Output CSV file path</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_csv_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">csvfile</span><span class="p">:</span>
+        <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictWriter</span><span class="p">(</span><span class="n">csvfile</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="n">TestInfo</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">writeheader</span><span class="p">()</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">writerows</span><span class="p">(</span><span class="n">test_infos</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, DataKitchen
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
