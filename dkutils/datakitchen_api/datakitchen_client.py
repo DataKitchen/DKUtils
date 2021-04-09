@@ -24,6 +24,7 @@ from dkutils.constants import (
     PARAMETERS,
     PARENT_KITCHEN,
     RECIPE,
+    SERVING_ERROR,
     STOPPED_STATUS_TYPES,
     VARIATION,
 )
@@ -775,7 +776,7 @@ class DataKitchenClient:
         return completed_order_runs
 
     def create_and_monitor_orders(
-        self, orders_details, sleep_secs, duration_secs, max_concurrent=None
+        self, orders_details, sleep_secs, duration_secs, max_concurrent=None, stop_on_error=False
     ):
         """
         Create the specified orders and wait for them to complete (or timeout after the specified
@@ -804,6 +805,9 @@ class DataKitchenClient:
         max_concurrent : integer or None
             Max number of orders to kick off concurrently. If None, all orders will be kicked off
             concurrently.
+        stop_on_error : boolean
+            If True, any order run failure will prevent new order runs from being created.
+            Otherwise, if False, all orders are submitted regardless of any failures.
 
         Returns
         -------
@@ -854,15 +858,16 @@ class DataKitchenClient:
         completed_orders = []
 
         wait_loop = WaitLoop(sleep_secs, duration_secs)
+        submit_new_orders = True
         while wait_loop:
             cur_completed_orders = []
             for active_order in active_orders:
                 self.kitchen = active_order[KITCHEN]
                 if active_order[ORDER_RUN_ID] is not None:
-                    active_order[ORDER_RUN_STATUS] = self.get_order_run_status(
-                        active_order[ORDER_RUN_ID]
-                    )
-                    if active_order[ORDER_RUN_STATUS] in STOPPED_STATUS_TYPES:
+                    order_status = self.get_order_run_status(active_order[ORDER_RUN_ID])
+                    active_order[ORDER_RUN_STATUS] = order_status
+                    submit_new_orders = not stop_on_error or order_status != SERVING_ERROR
+                    if order_status in STOPPED_STATUS_TYPES:
                         completed_orders.append(active_order)
                         cur_completed_orders.append(active_order)
                 else:
@@ -872,7 +877,7 @@ class DataKitchenClient:
 
             for completed_order in cur_completed_orders:
                 active_orders.remove(completed_order)
-                if len(queued_orders) > 0:
+                if len(queued_orders) > 0 and submit_new_orders:
                     active_orders.append(create_order(queued_orders.pop()))
 
             if len(active_orders) == 0:
@@ -881,7 +886,12 @@ class DataKitchenClient:
         return completed_orders, active_orders, queued_orders
 
     def resume_and_monitor_orders(
-        self, order_runs_details, sleep_secs, duration_secs, max_concurrent=None
+        self,
+        order_runs_details,
+        sleep_secs,
+        duration_secs,
+        max_concurrent=None,
+        stop_on_error=False
     ):
         """
         Resume the specified order runs and wait for them to complete (or timeout after the
@@ -904,6 +914,9 @@ class DataKitchenClient:
         max_concurrent : integer or None
             Max number of orders to kick off concurrently. If None, all orders will be kicked off
             concurrently.
+        stop_on_error : boolean
+            If True, any order run failure will prevent new order runs from being created.
+            Otherwise, if False, all orders are submitted regardless of any failures.
 
         Returns
         -------
@@ -951,15 +964,16 @@ class DataKitchenClient:
         completed_orders = []
 
         wait_loop = WaitLoop(sleep_secs, duration_secs)
+        submit_new_orders = True
         while wait_loop:
             cur_completed_orders = []
             for active_order in active_orders:
                 self.kitchen = active_order[KITCHEN]
                 if active_order[ORDER_RUN_ID] is not None:
-                    active_order[ORDER_RUN_STATUS] = self.get_order_run_status(
-                        active_order[ORDER_RUN_ID]
-                    )
-                    if active_order[ORDER_RUN_STATUS] in STOPPED_STATUS_TYPES:
+                    order_status = self.get_order_run_status(active_order[ORDER_RUN_ID])
+                    active_order[ORDER_RUN_STATUS] = order_status
+                    submit_new_orders = not stop_on_error or order_status != SERVING_ERROR
+                    if order_status in STOPPED_STATUS_TYPES:
                         completed_orders.append(active_order)
                         cur_completed_orders.append(active_order)
                 else:
@@ -972,7 +986,7 @@ class DataKitchenClient:
 
             for completed_order in cur_completed_orders:
                 active_orders.remove(completed_order)
-                if len(queued_orders) > 0:
+                if len(queued_orders) > 0 and submit_new_orders:
                     active_orders.append(resume_order(queued_orders.pop()))
 
             if len(active_orders) == 0:
@@ -1442,7 +1456,7 @@ class DataKitchenClient:
                             "Test": [
                                 {
                                     "filename": "description.json",
-                                    "json": "{\n    \"description\": \"\", \n    \"recipe-emails...
+                                    "json": "{    \"description\": \"\",     \"recipe-emails...
                                     "sha": "20ceab58e77be39ccbfcd1cfae52fc6710eb47e5",
                                     "type": "blob",
                                     "url": "https://github.com/api/v3/repos/DataKitchen...
@@ -1475,7 +1489,7 @@ class DataKitchenClient:
                             "Test": [
                                 {
                                     "filename": "description.json",
-                                    "json": "{\n    \"description\": \"\", \n    \"recipe-emails...
+                                    "json": "{    \"description\": \"\",     \"recipe-emails...
                                     "sha": "20ceab58e77be39ccbfcd1cfae52fc6710eb47e5",
                                     "type": "blob",
                                     "url": "https://github.com/api/v3/repos/DataKitchen...
