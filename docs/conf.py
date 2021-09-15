@@ -30,6 +30,7 @@ release = u'1.10.0'
 # ones.
 extensions = [
     'sphinx.ext.napoleon',
+    'sphinx.ext.autosectionlabel',
     'sphinx.ext.autosummary',
     'sphinx.ext.autodoc',
     'sphinx.ext.coverage',
