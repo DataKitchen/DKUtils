@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>DKUtils documentation &mdash; DKUtils 1.10.0 documentation</title>
+  <title>DKUtils documentation &mdash; DKUtils 1.11.0 documentation</title>
   
 
   
@@ -24,7 +24,6 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -108,6 +107,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v1-11-0">v1.11.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="release_notes.html#v1-10-0">v1.10.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="release_notes.html#v1-9-0">v1.9.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="release_notes.html#v1-8-2">v1.8.2</a></li>
@@ -227,8 +227,48 @@
             
   <div class="section" id="dkutils-documentation">
 <h1>DKUtils documentation<a class="headerlink" href="#dkutils-documentation" title="Permalink to this headline">¶</a></h1>
-<p>This documentation describes the DKUtils python package. It is
-current as of release 1.10.0.</p>
+<p>This documentation describes the DKUtils python package. It is current as of release 1.11.0.</p>
+<p>DKUtils serves 2 main purposes: (1) provide a client for interacting with the DataKitchen platform’s REST API
+(i.e. DataKitchenClient) and (2) provide utility classes and methods for interacting with tools commonly orchestrated in
+recipes in the DataKitchen Platform (e.g. Alteryx, JIRA, GMail, etc.). Here is the list of clients presently offered by
+this package including a brief description of each.</p>
+<div class="section" id="alteryx-gallery-client">
+<h2><a class="reference internal" href="apidoc/dkutils.alteryx_api.gallery_client.html#module-dkutils.alteryx_api.gallery_client"><span class="std std-ref">Alteryx Gallery Client</span></a><a class="headerlink" href="#alteryx-gallery-client" title="Permalink to this headline">¶</a></h2>
+<p>Client object for invoking calls to the Alteryx Gallery API. See the
+<a class="reference external" href="https://gallery.alteryx.com/api-docs/">Alteryx API Documentation</a> for more information.</p>
+</div>
+<div class="section" id="streamsets-datacollectorclient">
+<h2><a class="reference internal" href="apidoc/dkutils.streamsets_api.datacollector_client.html#module-dkutils.streamsets_api.datacollector_client"><span class="std std-ref">Streamsets DataCollectorClient</span></a><a class="headerlink" href="#streamsets-datacollectorclient" title="Permalink to this headline">¶</a></h2>
+<p>Client object for invoking StreamSets Data Collector REST API.</p>
+</div>
+<div class="section" id="datakitchen-client">
+<h2><a class="reference internal" href="apidoc/dkutils.datakitchen_api.datakitchen_client.html#module-dkutils.datakitchen_api.datakitchen_client"><span class="std std-ref">DataKitchen Client</span></a><a class="headerlink" href="#datakitchen-client" title="Permalink to this headline">¶</a></h2>
+<p>Client object for invoking DataKitchen API calls. If the API call requires a kitchen, recipe, and/or variation, you must
+set those fields on the client instance prior to invoking those methods (or set them via the constructor when a class
+instance is created).</p>
+<p>Python scripts in recipe variations often require interactions with the DataKitchen Platform REST API. For instance, a
+recipe variation may want to submit order runs, monitor them, and report their status. This client facilitates
+those interactions in a user friendly manner.</p>
+</div>
+<div class="section" id="gmailclient">
+<h2><a class="reference internal" href="apidoc/dkutils.gmail_api.gmail_client.html#module-dkutils.gmail_api.gmail_client"><span class="std std-ref">GMailClient</span></a><a class="headerlink" href="#gmailclient" title="Permalink to this headline">¶</a></h2>
+<p>Client object for access the GMail API. The create_base64_encoded_token function can be used to initially create a set
+of credentials which are base64 encoded in a file that can be looded into vault. This value from vault can then be used
+as an environment variable in a variation. The get_object_from_environment can be used to reconstitute the credentials
+from the environment variable.</p>
+</div>
+<div class="section" id="jiraclient">
+<h2><a class="reference internal" href="apidoc/dkutils.jira_api.jira_client.html#module-dkutils.jira_api.jira_client"><span class="std std-ref">JiraClient</span></a><a class="headerlink" href="#jiraclient" title="Permalink to this headline">¶</a></h2>
+<p>Client object for invoking JIRA Python API.</p>
+</div>
+<div class="section" id="remoteclient">
+<h2><a class="reference internal" href="apidoc/dkutils.ssh.remote_client.html#module-dkutils.ssh.remote_client"><span class="std std-ref">RemoteClient</span></a><a class="headerlink" href="#remoteclient" title="Permalink to this headline">¶</a></h2>
+<p>Client to interact with a remote host via SSH &amp; SCP.</p>
+</div>
+<div class="section" id="veevanetworkclient">
+<h2><a class="reference internal" href="apidoc/dkutils.veeva_network_api.veeva_network_client.html#module-dkutils.veeva_network_api.veeva_network_client"><span class="std std-ref">VeevaNetworkClient</span></a><a class="headerlink" href="#veevanetworkclient" title="Permalink to this headline">¶</a></h2>
+<p>Create a client for accessing Veeva Network. This class should not be instantiated directly. You should use either
+VeevaSourceSubscriptionClient or VeevaTargetSubscriptionClient.</p>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
@@ -245,6 +285,7 @@ current as of release 1.10.0.</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#v1-11-0">v1.11.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="release_notes.html#v1-10-0">v1.10.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="release_notes.html#v1-9-0">v1.9.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="release_notes.html#v1-8-2">v1.8.2</a></li>
@@ -292,6 +333,7 @@ current as of release 1.10.0.</p>
 </ul>
 </li>
 </ul>
+</div>
 </div>
 </div>
 <div class="section" id="indices-and-tables">

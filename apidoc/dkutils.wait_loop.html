@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.wait_loop module &mdash; DKUtils 1.10.0 documentation</title>
+  <title>dkutils.wait_loop module &mdash; DKUtils 1.11.0 documentation</title>
   
 
   
@@ -24,7 +24,6 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -109,6 +108,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-11-0">v1.11.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-10-0">v1.10.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-9-0">v1.9.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-8-2">v1.8.2</a></li>
@@ -236,7 +236,7 @@
 <span id="dkutils-wait-loop-module"></span><h1>dkutils.wait_loop module<a class="headerlink" href="#module-dkutils.wait_loop" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="dkutils.wait_loop.WaitLoop">
-<em class="property">class </em><code class="sig-prename descclassname">dkutils.wait_loop.</code><code class="sig-name descname">WaitLoop</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sleep_secs</span></em>, <em class="sig-param"><span class="n">duration_secs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/wait_loop.html#WaitLoop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.wait_loop.WaitLoop" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">dkutils.wait_loop.</span></code><code class="sig-name descname"><span class="pre">WaitLoop</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sleep_secs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration_secs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/wait_loop.html#WaitLoop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.wait_loop.WaitLoop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>WaitLoop is for use in a while loop. Create an instance of this class and add
 it as the condition/expression to the while loop.</p>
@@ -250,7 +250,7 @@ it as the condition/expression to the while loop.</p>
 </dl>
 <dl class="py method">
 <dt id="dkutils.wait_loop.WaitLoop.__bool__">
-<code class="sig-name descname">__bool__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/wait_loop.html#WaitLoop.__bool__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.wait_loop.WaitLoop.__bool__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">__bool__</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/wait_loop.html#WaitLoop.__bool__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.wait_loop.WaitLoop.__bool__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines if the loop should exit.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -264,7 +264,7 @@ it as the condition/expression to the while loop.</p>
 
 <dl class="py method">
 <dt id="dkutils.wait_loop.WaitLoop.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sleep_secs</span></em>, <em class="sig-param"><span class="n">duration_secs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/wait_loop.html#WaitLoop.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.wait_loop.WaitLoop.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sleep_secs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration_secs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/wait_loop.html#WaitLoop.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.wait_loop.WaitLoop.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>WaitLoop is for use in a while loop. Create an instance of this class and add
 it as the condition/expression to the while loop.</p>
 <dl class="field-list simple">

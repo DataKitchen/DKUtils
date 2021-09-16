@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.gmail_api.gmail_client module &mdash; DKUtils 1.10.0 documentation</title>
+  <title>dkutils.gmail_api.gmail_client module &mdash; DKUtils 1.11.0 documentation</title>
   
 
   
@@ -24,7 +24,6 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -109,6 +108,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-11-0">v1.11.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-10-0">v1.10.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-9-0">v1.9.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-8-2">v1.8.2</a></li>
@@ -238,13 +238,13 @@
 <span id="dkutils-gmail-api-gmail-client-module"></span><h1>dkutils.gmail_api.gmail_client module<a class="headerlink" href="#module-dkutils.gmail_api.gmail_client" title="Permalink to this headline">¶</a></h1>
 <dl class="py exception">
 <dt id="dkutils.gmail_api.gmail_client.GmailClientException">
-<em class="property">exception </em><code class="sig-prename descclassname">dkutils.gmail_api.gmail_client.</code><code class="sig-name descname">GmailClientException</code><a class="reference internal" href="../_modules/dkutils/gmail_api/gmail_client.html#GmailClientException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.gmail_api.gmail_client.GmailClientException" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">dkutils.gmail_api.gmail_client.</span></code><code class="sig-name descname"><span class="pre">GmailClientException</span></code><a class="reference internal" href="../_modules/dkutils/gmail_api/gmail_client.html#GmailClientException"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.gmail_api.gmail_client.GmailClientException" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 </dd></dl>
 
 <dl class="py class">
 <dt id="dkutils.gmail_api.gmail_client.GMailClient">
-<em class="property">class </em><code class="sig-prename descclassname">dkutils.gmail_api.gmail_client.</code><code class="sig-name descname">GMailClient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">credentials</span><span class="p">:</span> <span class="n">google.oauth2.credentials.Credentials</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/gmail_api/gmail_client.html#GMailClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.gmail_api.gmail_client.GMailClient" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">dkutils.gmail_api.gmail_client.</span></code><code class="sig-name descname"><span class="pre">GMailClient</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">credentials</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">google.oauth2.credentials.Credentials</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/gmail_api/gmail_client.html#GMailClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.gmail_api.gmail_client.GMailClient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Client object for access the GMail API. The create_base64_encoded_token function can be
 used to initially create a set of credentials which are base64 encoded in a file that can
@@ -258,7 +258,7 @@ from the environment variable.</p>
 </dl>
 <dl class="py method">
 <dt id="dkutils.gmail_api.gmail_client.GMailClient.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">credentials</span><span class="p">:</span> <span class="n">google.oauth2.credentials.Credentials</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/gmail_api/gmail_client.html#GMailClient.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.gmail_api.gmail_client.GMailClient.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">credentials</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">google.oauth2.credentials.Credentials</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/gmail_api/gmail_client.html#GMailClient.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.gmail_api.gmail_client.GMailClient.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Client object for access the GMail API. The create_base64_encoded_token function can be
 used to initially create a set of credentials which are base64 encoded in a file that can
 be looded into vault. This value from vault can then be used as an environment variable in
@@ -273,7 +273,7 @@ from the environment variable.</p>
 
 <dl class="py method">
 <dt id="dkutils.gmail_api.gmail_client.GMailClient.has_approval">
-<code class="sig-name descname">has_approval</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subject</span></em>, <em class="sig-param"><span class="n">approval_string</span><span class="o">=</span><span class="default_value">'Approved'</span></em>, <em class="sig-param"><span class="n">sleep_seconds</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">max_wait</span><span class="o">=</span><span class="default_value">30</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/gmail_api/gmail_client.html#GMailClient.has_approval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.gmail_api.gmail_client.GMailClient.has_approval" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">has_approval</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">approval_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Approved'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sleep_seconds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_wait</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/gmail_api/gmail_client.html#GMailClient.has_approval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.gmail_api.gmail_client.GMailClient.has_approval" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function can be used to determine if a response has been received containing the
 specified approval string. The given subject is used to retrieve messages of interest. This
 function will poll for new email every sleep seconds until the max wait seconds have been
@@ -301,7 +301,7 @@ will default to 30</p></li>
 
 <dl class="py method">
 <dt id="dkutils.gmail_api.gmail_client.GMailClient.send_message">
-<code class="sig-name descname">send_message</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span></em>, <em class="sig-param"><span class="n">user_id</span><span class="o">=</span><span class="default_value">'me'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/gmail_api/gmail_client.html#GMailClient.send_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.gmail_api.gmail_client.GMailClient.send_message" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">send_message</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'me'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/gmail_api/gmail_client.html#GMailClient.send_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.gmail_api.gmail_client.GMailClient.send_message" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send an email message.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -324,64 +324,64 @@ user if no value is provided</p></li>
 
 <dl class="py class">
 <dt id="dkutils.gmail_api.gmail_client.Scope">
-<em class="property">class </em><code class="sig-prename descclassname">dkutils.gmail_api.gmail_client.</code><code class="sig-name descname">Scope</code><a class="reference internal" href="../_modules/dkutils/gmail_api/gmail_client.html#Scope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.gmail_api.gmail_client.Scope" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">dkutils.gmail_api.gmail_client.</span></code><code class="sig-name descname"><span class="pre">Scope</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/gmail_api/gmail_client.html#Scope"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.gmail_api.gmail_client.Scope" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
 <p>An enumeration.</p>
 <dl class="py attribute">
 <dt id="dkutils.gmail_api.gmail_client.Scope.BASIC">
-<code class="sig-name descname">BASIC</code><em class="property"> = 'https://www.googleapis.com/auth/gmail.settings.basic'</em><a class="headerlink" href="#dkutils.gmail_api.gmail_client.Scope.BASIC" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">BASIC</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'https://www.googleapis.com/auth/gmail.settings.basic'</span></em><a class="headerlink" href="#dkutils.gmail_api.gmail_client.Scope.BASIC" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="dkutils.gmail_api.gmail_client.Scope.COMPOSE">
-<code class="sig-name descname">COMPOSE</code><em class="property"> = 'https://www.googleapis.com/auth/gmail.compose'</em><a class="headerlink" href="#dkutils.gmail_api.gmail_client.Scope.COMPOSE" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">COMPOSE</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'https://www.googleapis.com/auth/gmail.compose'</span></em><a class="headerlink" href="#dkutils.gmail_api.gmail_client.Scope.COMPOSE" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="dkutils.gmail_api.gmail_client.Scope.FULL">
-<code class="sig-name descname">FULL</code><em class="property"> = 'https://mail.google.com/'</em><a class="headerlink" href="#dkutils.gmail_api.gmail_client.Scope.FULL" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">FULL</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'https://mail.google.com/'</span></em><a class="headerlink" href="#dkutils.gmail_api.gmail_client.Scope.FULL" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="dkutils.gmail_api.gmail_client.Scope.INSERT">
-<code class="sig-name descname">INSERT</code><em class="property"> = 'https://www.googleapis.com/auth/gmail.insert'</em><a class="headerlink" href="#dkutils.gmail_api.gmail_client.Scope.INSERT" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">INSERT</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'https://www.googleapis.com/auth/gmail.insert'</span></em><a class="headerlink" href="#dkutils.gmail_api.gmail_client.Scope.INSERT" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="dkutils.gmail_api.gmail_client.Scope.LABELS">
-<code class="sig-name descname">LABELS</code><em class="property"> = 'https://www.googleapis.com/auth/gmail.labels'</em><a class="headerlink" href="#dkutils.gmail_api.gmail_client.Scope.LABELS" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">LABELS</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'https://www.googleapis.com/auth/gmail.labels'</span></em><a class="headerlink" href="#dkutils.gmail_api.gmail_client.Scope.LABELS" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="dkutils.gmail_api.gmail_client.Scope.METADATA">
-<code class="sig-name descname">METADATA</code><em class="property"> = 'https://www.googleapis.com/auth/gmail.metadata'</em><a class="headerlink" href="#dkutils.gmail_api.gmail_client.Scope.METADATA" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">METADATA</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'https://www.googleapis.com/auth/gmail.metadata'</span></em><a class="headerlink" href="#dkutils.gmail_api.gmail_client.Scope.METADATA" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="dkutils.gmail_api.gmail_client.Scope.MODIFY">
-<code class="sig-name descname">MODIFY</code><em class="property"> = 'https://www.googleapis.com/auth/gmail.modify'</em><a class="headerlink" href="#dkutils.gmail_api.gmail_client.Scope.MODIFY" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">MODIFY</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'https://www.googleapis.com/auth/gmail.modify'</span></em><a class="headerlink" href="#dkutils.gmail_api.gmail_client.Scope.MODIFY" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="dkutils.gmail_api.gmail_client.Scope.READ_ONLY">
-<code class="sig-name descname">READ_ONLY</code><em class="property"> = 'https://www.googleapis.com/auth/gmail.readonly'</em><a class="headerlink" href="#dkutils.gmail_api.gmail_client.Scope.READ_ONLY" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">READ_ONLY</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'https://www.googleapis.com/auth/gmail.readonly'</span></em><a class="headerlink" href="#dkutils.gmail_api.gmail_client.Scope.READ_ONLY" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="dkutils.gmail_api.gmail_client.Scope.SEND">
-<code class="sig-name descname">SEND</code><em class="property"> = 'https://www.googleapis.com/auth/gmail.send'</em><a class="headerlink" href="#dkutils.gmail_api.gmail_client.Scope.SEND" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">SEND</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'https://www.googleapis.com/auth/gmail.send'</span></em><a class="headerlink" href="#dkutils.gmail_api.gmail_client.Scope.SEND" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="dkutils.gmail_api.gmail_client.Scope.SHARING">
-<code class="sig-name descname">SHARING</code><em class="property"> = 'https://www.googleapis.com/auth/gmail.settings.sharing'</em><a class="headerlink" href="#dkutils.gmail_api.gmail_client.Scope.SHARING" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">SHARING</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'https://www.googleapis.com/auth/gmail.settings.sharing'</span></em><a class="headerlink" href="#dkutils.gmail_api.gmail_client.Scope.SHARING" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
 <dt id="dkutils.gmail_api.gmail_client.create_base64_encoded_token">
-<code class="sig-prename descclassname">dkutils.gmail_api.gmail_client.</code><code class="sig-name descname">create_base64_encoded_token</code><span class="sig-paren">(</span><em class="sig-param">credentials_path: pathlib.Path, token_path: pathlib.Path, scopes: List[dkutils.gmail_api.gmail_client.Scope] = [&lt;Scope.READ_ONLY: 'https://www.googleapis.com/auth/gmail.readonly'&gt;]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/gmail_api/gmail_client.html#create_base64_encoded_token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.gmail_api.gmail_client.create_base64_encoded_token" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">dkutils.gmail_api.gmail_client.</span></code><code class="sig-name descname"><span class="pre">create_base64_encoded_token</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">credentials_path:</span> <span class="pre">pathlib.Path,</span> <span class="pre">token_path:</span> <span class="pre">pathlib.Path,</span> <span class="pre">scopes:</span> <span class="pre">List[dkutils.gmail_api.gmail_client.Scope]</span> <span class="pre">=</span> <span class="pre">[&lt;Scope.READ_ONLY:</span> <span class="pre">'https://www.googleapis.com/auth/gmail.readonly'&gt;]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/gmail_api/gmail_client.html#create_base64_encoded_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.gmail_api.gmail_client.create_base64_encoded_token" title="Permalink to this definition">¶</a></dt>
 <dd><p>This will use the provided Path for the json.credentials file and create a token with the scopes
 provided and base64 encode it at the path specified. The base64 encoded file can then be loaded into vault for
 use by other methods in this library. When you run this function keep in mind that a browser window will be opened
@@ -402,7 +402,7 @@ for a list of the scopes. Will default to [Scope.READ_ONLY]</p></li>
 
 <dl class="py function">
 <dt id="dkutils.gmail_api.gmail_client.create_message">
-<code class="sig-prename descclassname">dkutils.gmail_api.gmail_client.</code><code class="sig-name descname">create_message</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sender</span></em>, <em class="sig-param"><span class="n">to</span></em>, <em class="sig-param"><span class="n">subject</span></em>, <em class="sig-param"><span class="n">message_text</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/gmail_api/gmail_client.html#create_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.gmail_api.gmail_client.create_message" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">dkutils.gmail_api.gmail_client.</span></code><code class="sig-name descname"><span class="pre">create_message</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/gmail_api/gmail_client.html#create_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.gmail_api.gmail_client.create_message" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a message for an email.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -424,7 +424,7 @@ for a list of the scopes. Will default to [Scope.READ_ONLY]</p></li>
 
 <dl class="py function">
 <dt id="dkutils.gmail_api.gmail_client.create_message_with_attachment">
-<code class="sig-prename descclassname">dkutils.gmail_api.gmail_client.</code><code class="sig-name descname">create_message_with_attachment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sender</span></em>, <em class="sig-param"><span class="n">to</span></em>, <em class="sig-param"><span class="n">subject</span></em>, <em class="sig-param"><span class="n">message_text</span></em>, <em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/gmail_api/gmail_client.html#create_message_with_attachment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.gmail_api.gmail_client.create_message_with_attachment" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">dkutils.gmail_api.gmail_client.</span></code><code class="sig-name descname"><span class="pre">create_message_with_attachment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/gmail_api/gmail_client.html#create_message_with_attachment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.gmail_api.gmail_client.create_message_with_attachment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a message for an email.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -447,7 +447,7 @@ for a list of the scopes. Will default to [Scope.READ_ONLY]</p></li>
 
 <dl class="py function">
 <dt id="dkutils.gmail_api.gmail_client.get_object_from_environment">
-<code class="sig-prename descclassname">dkutils.gmail_api.gmail_client.</code><code class="sig-name descname">get_object_from_environment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment_variable_name</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/gmail_api/gmail_client.html#get_object_from_environment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.gmail_api.gmail_client.get_object_from_environment" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">dkutils.gmail_api.gmail_client.</span></code><code class="sig-name descname"><span class="pre">get_object_from_environment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">environment_variable_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/gmail_api/gmail_client.html#get_object_from_environment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.gmail_api.gmail_client.get_object_from_environment" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function will get an object that has been pickled and base64 encoded from an environment
 variable with the specified name. This was intended to be used for retrieving the credentials
 for using the GMail API from an environment variable but it can be used to retrieve any python

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.dictionary_comparator module &mdash; DKUtils 1.10.0 documentation</title>
+  <title>dkutils.dictionary_comparator module &mdash; DKUtils 1.11.0 documentation</title>
   
 
   
@@ -24,7 +24,6 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -109,6 +108,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-11-0">v1.11.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-10-0">v1.10.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-9-0">v1.9.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-8-2">v1.8.2</a></li>
@@ -236,7 +236,7 @@
 <span id="dkutils-dictionary-comparator-module"></span><h1>dkutils.dictionary_comparator module<a class="headerlink" href="#module-dkutils.dictionary_comparator" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="dkutils.dictionary_comparator.DictionaryComparator">
-<em class="property">class </em><code class="sig-prename descclassname">dkutils.dictionary_comparator.</code><code class="sig-name descname">DictionaryComparator</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">left</span></em>, <em class="sig-param"><span class="n">right</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/dictionary_comparator.html#DictionaryComparator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.dictionary_comparator.DictionaryComparator" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">dkutils.dictionary_comparator.</span></code><code class="sig-name descname"><span class="pre">DictionaryComparator</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">left</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/dictionary_comparator.html#DictionaryComparator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.dictionary_comparator.DictionaryComparator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Utility that can be used to perform a shallow comparison on two dictionaries.</p>
 <dl class="field-list simple">
@@ -249,7 +249,7 @@
 </dl>
 <dl class="py method">
 <dt id="dkutils.dictionary_comparator.DictionaryComparator.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">left</span></em>, <em class="sig-param"><span class="n">right</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/dictionary_comparator.html#DictionaryComparator.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.dictionary_comparator.DictionaryComparator.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">left</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/dictionary_comparator.html#DictionaryComparator.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.dictionary_comparator.DictionaryComparator.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Utility that can be used to perform a shallow comparison on two dictionaries.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -263,7 +263,7 @@
 
 <dl class="py method">
 <dt id="dkutils.dictionary_comparator.DictionaryComparator.get_keys_in_both">
-<code class="sig-name descname">get_keys_in_both</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/dictionary_comparator.html#DictionaryComparator.get_keys_in_both"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.dictionary_comparator.DictionaryComparator.get_keys_in_both" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_keys_in_both</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/dictionary_comparator.html#DictionaryComparator.get_keys_in_both"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.dictionary_comparator.DictionaryComparator.get_keys_in_both" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the set of keys that are present on botch sides</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -277,7 +277,7 @@
 
 <dl class="py method">
 <dt id="dkutils.dictionary_comparator.DictionaryComparator.get_keys_only_in_left">
-<code class="sig-name descname">get_keys_only_in_left</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/dictionary_comparator.html#DictionaryComparator.get_keys_only_in_left"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.dictionary_comparator.DictionaryComparator.get_keys_only_in_left" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_keys_only_in_left</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/dictionary_comparator.html#DictionaryComparator.get_keys_only_in_left"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.dictionary_comparator.DictionaryComparator.get_keys_only_in_left" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the set of keys that are only present in the left side</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -291,7 +291,7 @@
 
 <dl class="py method">
 <dt id="dkutils.dictionary_comparator.DictionaryComparator.get_keys_only_in_right">
-<code class="sig-name descname">get_keys_only_in_right</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/dictionary_comparator.html#DictionaryComparator.get_keys_only_in_right"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.dictionary_comparator.DictionaryComparator.get_keys_only_in_right" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_keys_only_in_right</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/dictionary_comparator.html#DictionaryComparator.get_keys_only_in_right"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.dictionary_comparator.DictionaryComparator.get_keys_only_in_right" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the set of keys that are only present in the right side</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -305,7 +305,7 @@
 
 <dl class="py method">
 <dt id="dkutils.dictionary_comparator.DictionaryComparator.get_same_keys_different_values">
-<code class="sig-name descname">get_same_keys_different_values</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/dictionary_comparator.html#DictionaryComparator.get_same_keys_different_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.dictionary_comparator.DictionaryComparator.get_same_keys_different_values" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_same_keys_different_values</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/dictionary_comparator.html#DictionaryComparator.get_same_keys_different_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.dictionary_comparator.DictionaryComparator.get_same_keys_different_values" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the key and values where the keys were the same for left and right but the values differed</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -320,7 +320,7 @@ up of the value from the left and the value from the right</p>
 
 <dl class="py method">
 <dt id="dkutils.dictionary_comparator.DictionaryComparator.left_equals_right">
-<code class="sig-name descname">left_equals_right</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/dictionary_comparator.html#DictionaryComparator.left_equals_right"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.dictionary_comparator.DictionaryComparator.left_equals_right" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">left_equals_right</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/dictionary_comparator.html#DictionaryComparator.left_equals_right"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.dictionary_comparator.DictionaryComparator.left_equals_right" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test is the the left dictionary is equal to the right dictionary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -334,7 +334,7 @@ up of the value from the left and the value from the right</p>
 
 <dl class="py method">
 <dt id="dkutils.dictionary_comparator.DictionaryComparator.merge_left">
-<code class="sig-name descname">merge_left</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/dictionary_comparator.html#DictionaryComparator.merge_left"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.dictionary_comparator.DictionaryComparator.merge_left" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">merge_left</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/dictionary_comparator.html#DictionaryComparator.merge_left"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.dictionary_comparator.DictionaryComparator.merge_left" title="Permalink to this definition">¶</a></dt>
 <dd><p>Merge the dictionaries with preference being given to dictionary on the right if a key exists on both sides.
 For example given:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">left</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;one&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;three&#39;</span><span class="p">:</span> <span class="mi">3</span> <span class="p">}</span>
@@ -358,7 +358,7 @@ will be returned if a key exists in both dictionaries</p>
 
 <dl class="py method">
 <dt id="dkutils.dictionary_comparator.DictionaryComparator.merge_right">
-<code class="sig-name descname">merge_right</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/dictionary_comparator.html#DictionaryComparator.merge_right"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dkutils.dictionary_comparator.DictionaryComparator.merge_right" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">merge_right</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/dictionary_comparator.html#DictionaryComparator.merge_right"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.dictionary_comparator.DictionaryComparator.merge_right" title="Permalink to this definition">¶</a></dt>
 <dd><p>Merge the dictionaries with preference being given to dictionary on the left if a key exists on both sides.
 For example given:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">left</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;one&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;three&#39;</span><span class="p">:</span> <span class="mi">3</span> <span class="p">}</span>
@@ -382,12 +382,12 @@ will be returned if a key exists in both dictionaries</p>
 
 <dl class="py method">
 <dt id="dkutils.dictionary_comparator.DictionaryComparator.left">
-<em class="property">property </em><code class="sig-name descname">left</code><a class="headerlink" href="#dkutils.dictionary_comparator.DictionaryComparator.left" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">left</span></code><a class="headerlink" href="#dkutils.dictionary_comparator.DictionaryComparator.left" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="dkutils.dictionary_comparator.DictionaryComparator.right">
-<em class="property">property </em><code class="sig-name descname">right</code><a class="headerlink" href="#dkutils.dictionary_comparator.DictionaryComparator.right" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">right</span></code><a class="headerlink" href="#dkutils.dictionary_comparator.DictionaryComparator.right" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
