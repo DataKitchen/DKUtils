@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+v1.11.0
+-------
+* Updated Documentation and added a Jupyter notebook with DataKitchenClient examples
+* Added delete_order_run and get_kitchens to DataKitchenClient
+
 v1.10.0
 -------
 * Added stop_on_error argument to DataKitchenClient's create_and_monitor_orders and resume_and_monitor_orders methods.
