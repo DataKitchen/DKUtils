@@ -357,6 +357,30 @@ class DataKitchenClient:
         self._ensure_attributes(KITCHEN)
         return self._api_request(API_DELETE, 'order', 'delete', order_id, kitchen_name=self.kitchen)
 
+    def delete_order_run(self, order_run_id):
+        """
+        Delete an Order Run. Kitchen attribute must be set prior to invoking this method.
+
+        Parameters
+        ----------
+        order_run_id : str
+            ID of the order run being deleted.
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+
+        Returns
+        ------
+        requests.Response
+            :class:`Response <Response>` object
+        """
+        self._ensure_attributes(KITCHEN)
+        return self._api_request(
+            API_DELETE, 'serving', 'delete', order_run_id, kitchen_name=self.kitchen
+        )
+
     def resume_order_run(self, order_run_id):
         """
         Resume a failed order run. Kitchen attribute must be set prior to invoking this method.
@@ -617,7 +641,7 @@ class DataKitchenClient:
             ).json()
             return api_response['servings']
         except HTTPError:
-            print(
+            logger.error(
                 f'No order runs found for provided order id ({order_id}) in kitchen {self.kitchen}'
             )
 
@@ -709,7 +733,7 @@ class DataKitchenClient:
         try:
             return self.get_order_run_details(order_run_id)['status']
         except HTTPError:
-            print(f'Order run retrieval failure:\n{traceback.format_exc()}')
+            logger.error(f'Order run retrieval failure:\n{traceback.format_exc()}')
             return None
 
     def monitor_order_run(self, sleep_secs, duration_secs, order_run_id):
@@ -993,6 +1017,17 @@ class DataKitchenClient:
                 break
 
         return completed_orders, active_orders, queued_orders
+
+    def get_kitchens(self):
+        """
+        Retrieve a list of all kitchen names:
+
+        Returns
+        -------
+        list
+            List of all kitchen names.
+        """
+        return list(self._get_kitchens_info().keys())
 
     def update_kitchen_vault(
         self,
