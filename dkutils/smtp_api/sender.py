@@ -1,7 +1,7 @@
 import mimetypes
-from smtplib import SMTP
 from email.message import EmailMessage
 from email.utils import COMMASPACE
+from smtplib import SMTP
 
 
 def _convert_to_strings(list_of_strs):
@@ -11,7 +11,7 @@ def _convert_to_strings(list_of_strs):
 
 
 def create_message(
-    sender, recipients, subject, plain_text, html_text=None, files=None, reply_addresses=None
+        sender, recipients, subject, plain_text, html_text=None, files=None, reply_addresses=None
 ):
     """
         Create a message for an email.
@@ -89,6 +89,14 @@ class SMTP_Sender():
         self.use_tls = use_tls
 
     def do_send(self, message):
+        """
+        Send an email message via SMTP
+        Parameters
+        ----------
+        message:EmailMessage
+            An email message to be sent
+
+        """
         with SMTP(self.host, self.port) as server:
             if self.use_tls:
                 server.starttls()
