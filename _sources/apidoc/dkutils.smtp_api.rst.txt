@@ -1,0 +1,15 @@
+dkutils.smtp\_api package
+=========================
+
+.. automodule:: dkutils.smtp_api
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   dkutils.smtp_api.sender

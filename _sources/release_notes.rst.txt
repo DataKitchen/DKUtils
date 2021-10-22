@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+v1.12.0
+-------
+* Add function create_message in sender module for creating email messages
+* Add SMTP_Sender class for sending email messages via SMTP
+
 v1.11.0
 -------
 * Updated Documentation and added a Jupyter notebook with DataKitchenClient examples

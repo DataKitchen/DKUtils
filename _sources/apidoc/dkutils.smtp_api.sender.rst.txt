@@ -1,0 +1,7 @@
+dkutils.smtp\_api.sender module
+===============================
+
+.. automodule:: dkutils.smtp_api.sender
+   :members:
+   :undoc-members:
+   :show-inheritance:
