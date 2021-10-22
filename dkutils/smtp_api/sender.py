@@ -11,7 +11,7 @@ def _convert_to_strings(list_of_strs):
 
 
 def create_message(
-        sender, recipients, subject, plain_text, html_text=None, files=None, reply_addresses=None
+    sender, recipients, subject, plain_text, html_text=None, files=None, reply_addresses=None
 ):
     """
         Create a message for an email.
