@@ -52,6 +52,9 @@ Client to interact with a remote host via SSH & SCP.
 Create a client for accessing Veeva Network. This class should not be instantiated directly. You should use either
 VeevaSourceSubscriptionClient or VeevaTargetSubscriptionClient.
 
+:ref:`SMTP_Sender <dkutils.smtp\\_api.sender module>`
+--------------------------------------------------------------
+Module for creating email messages and then sending them via an SMTP server.
 
 .. toctree::
    :maxdepth: 2
