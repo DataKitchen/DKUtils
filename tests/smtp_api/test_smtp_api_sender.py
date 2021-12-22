@@ -26,9 +26,16 @@ class Test(TestCase):
         with self.assertRaises(TypeError) as cm:
             create_message()
         self.assertEqual(
+            "create_message() missing 3 required positional arguments: 'sender', "
+            "'recipients', and 'subject'",
+            cm.exception.args[0]
+        )
+    def test_create_message_when_no_plain_text_or_html_text(self):
+        with self.assertRaises(TypeError) as cm:
+            create_message(SENDER, RECIPIENT, SUBJECT)
+        self.assertEqual(
+            "Either plain_text or html_text is required",
             cm.exception.args[0],
-            "create_message() missing 4 required positional arguments: 'sender', "
-            "'recipients', 'subject', and 'plain_text'"
         )
 
     def test_create_message_plain_text(self):
@@ -57,11 +64,12 @@ class Test(TestCase):
     @patch('dkutils.smtp_api.sender.EmailMessage')
     def test_create_message_with_attachment(self, _):
         data = "some data"
-        file_name = Path(self.test_dir.name) / 'file.txt'
-        with file_name.open("w+") as output_file:
+        file_name = 'file.txt'
+        full_file_name = Path(self.test_dir.name) / file_name
+        with full_file_name.open("w+") as output_file:
             output_file.write(data)
 
-        message = create_message(SENDER, RECIPIENT, SUBJECT, PLAIN_TEXT, files=str(file_name))
+        message = create_message(SENDER, RECIPIENT, SUBJECT, PLAIN_TEXT, files=str(full_file_name))
         message.__setitem__.assert_has_calls([
             call('Subject', SUBJECT),
             call('From', SENDER),
@@ -69,7 +77,7 @@ class Test(TestCase):
         ])
         message.set_content.assert_called_once_with(PLAIN_TEXT)
         message.add_attachment.assert_called_once_with(
-            str.encode(data), maintype='text', subtype='plain'
+            str.encode(data), maintype='text', subtype='plain', filename=file_name, cid=f"<{file_name}>"
         )
 
     def test_constructor_with_defaults(self):
