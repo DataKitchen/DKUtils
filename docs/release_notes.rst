@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+
+v1.12.1
+-------
+* Add filename and cid when creating message with attachments
+
 v1.12.0
 -------
 * Add function create_message in sender module for creating email messages

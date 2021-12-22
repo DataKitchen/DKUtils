@@ -2,6 +2,7 @@ import mimetypes
 from email.message import EmailMessage
 from email.utils import COMMASPACE
 from smtplib import SMTP
+import os
 
 
 def _convert_to_strings(list_of_strs):
@@ -11,7 +12,7 @@ def _convert_to_strings(list_of_strs):
 
 
 def create_message(
-    sender, recipients, subject, plain_text, html_text=None, files=None, reply_addresses=None
+    sender, recipients, subject, plain_text=None, html_text=None, files=None, reply_addresses=None
 ):
     """
         Create a message for an email.
@@ -38,13 +39,16 @@ def create_message(
         EmailMessage
             An EmailMessage that can be sent
         """
+    if not plain_text and not html_text:
+        raise TypeError("Either plain_text or html_text is required")
     message = EmailMessage()
     message["Subject"] = subject
     message["From"] = sender
     message["To"] = _convert_to_strings(recipients)
     if reply_addresses:
         message["Reply-To"] = _convert_to_strings(reply_addresses)
-    message.set_content(plain_text)
+    if plain_text:
+        message.set_content(plain_text)
     if html_text:
         message.make_alternative()
         message.add_attachment(html_text, 'html')
@@ -52,13 +56,16 @@ def create_message(
         if isinstance(files, str):
             files = [files]
         for file_path in files:
+            filename = os.path.basename(file_path)
             content_type, encoding = mimetypes.guess_type(file_path)
             if content_type is None or encoding is not None:
                 content_type = 'application/octet-stream'
             maintype, subtype = content_type.split('/', 1)
             with open(file_path, 'rb') as fp:
                 data = fp.read()
-            message.add_attachment(data, maintype=maintype, subtype=subtype)
+            message.add_attachment(
+                data, maintype=maintype, subtype=subtype, filename=filename, cid=f"<{filename}>"
+            )
 
     return message
 
