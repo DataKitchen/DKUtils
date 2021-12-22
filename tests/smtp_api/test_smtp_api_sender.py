@@ -27,9 +27,9 @@ class Test(TestCase):
             create_message()
         self.assertEqual(
             "create_message() missing 3 required positional arguments: 'sender', "
-            "'recipients', and 'subject'",
-            cm.exception.args[0]
+            "'recipients', and 'subject'", cm.exception.args[0]
         )
+
     def test_create_message_when_no_plain_text_or_html_text(self):
         with self.assertRaises(TypeError) as cm:
             create_message(SENDER, RECIPIENT, SUBJECT)
@@ -77,7 +77,11 @@ class Test(TestCase):
         ])
         message.set_content.assert_called_once_with(PLAIN_TEXT)
         message.add_attachment.assert_called_once_with(
-            str.encode(data), maintype='text', subtype='plain', filename=file_name, cid=f"<{file_name}>"
+            str.encode(data),
+            maintype='text',
+            subtype='plain',
+            filename=file_name,
+            cid=f"<{file_name}>"
         )
 
     def test_constructor_with_defaults(self):

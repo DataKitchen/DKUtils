@@ -63,7 +63,9 @@ def create_message(
             maintype, subtype = content_type.split('/', 1)
             with open(file_path, 'rb') as fp:
                 data = fp.read()
-            message.add_attachment(data, maintype=maintype, subtype=subtype, filename=filename, cid=f"<{filename}>")
+            message.add_attachment(
+                data, maintype=maintype, subtype=subtype, filename=filename, cid=f"<{filename}>"
+            )
 
     return message
 
