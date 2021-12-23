@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.smtp_api.sender &mdash; DKUtils 1.12.0 documentation</title>
+  <title>dkutils.smtp_api.sender &mdash; DKUtils 1.12.1 documentation</title>
   
 
   
@@ -106,6 +106,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-12-1">v1.12.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-12-0">v1.12.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-11-0">v1.11.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-10-0">v1.10.0</a></li>
@@ -221,6 +222,7 @@
 <span class="kn">from</span> <span class="nn">email.message</span> <span class="kn">import</span> <span class="n">EmailMessage</span>
 <span class="kn">from</span> <span class="nn">email.utils</span> <span class="kn">import</span> <span class="n">COMMASPACE</span>
 <span class="kn">from</span> <span class="nn">smtplib</span> <span class="kn">import</span> <span class="n">SMTP</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 
 <span class="k">def</span> <span class="nf">_convert_to_strings</span><span class="p">(</span><span class="n">list_of_strs</span><span class="p">):</span>
@@ -230,7 +232,7 @@
 
 
 <div class="viewcode-block" id="create_message"><a class="viewcode-back" href="../../../apidoc/dkutils.smtp_api.sender.html#dkutils.smtp_api.sender.create_message">[docs]</a><span class="k">def</span> <span class="nf">create_message</span><span class="p">(</span>
-    <span class="n">sender</span><span class="p">,</span> <span class="n">recipients</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">plain_text</span><span class="p">,</span> <span class="n">html_text</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reply_addresses</span><span class="o">=</span><span class="kc">None</span>
+    <span class="n">sender</span><span class="p">,</span> <span class="n">recipients</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">plain_text</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">html_text</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reply_addresses</span><span class="o">=</span><span class="kc">None</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a message for an email.</span>
@@ -257,13 +259,16 @@
 <span class="sd">        EmailMessage</span>
 <span class="sd">            An EmailMessage that can be sent</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">plain_text</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">html_text</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Either plain_text or html_text is required&quot;</span><span class="p">)</span>
     <span class="n">message</span> <span class="o">=</span> <span class="n">EmailMessage</span><span class="p">()</span>
     <span class="n">message</span><span class="p">[</span><span class="s2">&quot;Subject&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subject</span>
     <span class="n">message</span><span class="p">[</span><span class="s2">&quot;From&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sender</span>
     <span class="n">message</span><span class="p">[</span><span class="s2">&quot;To&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_convert_to_strings</span><span class="p">(</span><span class="n">recipients</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">reply_addresses</span><span class="p">:</span>
         <span class="n">message</span><span class="p">[</span><span class="s2">&quot;Reply-To&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_convert_to_strings</span><span class="p">(</span><span class="n">reply_addresses</span><span class="p">)</span>
-    <span class="n">message</span><span class="o">.</span><span class="n">set_content</span><span class="p">(</span><span class="n">plain_text</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">plain_text</span><span class="p">:</span>
+        <span class="n">message</span><span class="o">.</span><span class="n">set_content</span><span class="p">(</span><span class="n">plain_text</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">html_text</span><span class="p">:</span>
         <span class="n">message</span><span class="o">.</span><span class="n">make_alternative</span><span class="p">()</span>
         <span class="n">message</span><span class="o">.</span><span class="n">add_attachment</span><span class="p">(</span><span class="n">html_text</span><span class="p">,</span> <span class="s1">&#39;html&#39;</span><span class="p">)</span>
@@ -271,13 +276,16 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">files</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">file_path</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
             <span class="n">content_type</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="n">mimetypes</span><span class="o">.</span><span class="n">guess_type</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">content_type</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">encoding</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">content_type</span> <span class="o">=</span> <span class="s1">&#39;application/octet-stream&#39;</span>
             <span class="n">maintype</span><span class="p">,</span> <span class="n">subtype</span> <span class="o">=</span> <span class="n">content_type</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
                 <span class="n">data</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-            <span class="n">message</span><span class="o">.</span><span class="n">add_attachment</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">maintype</span><span class="o">=</span><span class="n">maintype</span><span class="p">,</span> <span class="n">subtype</span><span class="o">=</span><span class="n">subtype</span><span class="p">)</span>
+            <span class="n">message</span><span class="o">.</span><span class="n">add_attachment</span><span class="p">(</span>
+                <span class="n">data</span><span class="p">,</span> <span class="n">maintype</span><span class="o">=</span><span class="n">maintype</span><span class="p">,</span> <span class="n">subtype</span><span class="o">=</span><span class="n">subtype</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="n">cid</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;&lt;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
+            <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">message</span></div>
 
