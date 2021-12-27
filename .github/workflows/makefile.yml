@@ -30,3 +30,11 @@ jobs:
 
       - name: Run yapf
         run: make yapf-diff
+
+      - name: run unit tests
+        run: make test_unit
+
+      - name: scan secrets
+        run: make scan_secrets
+
+
