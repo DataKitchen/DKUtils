@@ -311,7 +311,7 @@ class VeevaNetworkClient:
         """
         self.base_url = f'https://{dns}/api/{version if version else "v16.0"}/'
 
-        logger.info(f'VEEVA NETWORK: Attempting Authenticating')
+        logger.info('VEEVA NETWORK: Attempting Authenticating')
         response = requests.post(
             self.base_url + 'auth', data={
                 'username': username,
@@ -330,7 +330,7 @@ class VeevaNetworkClient:
         if self.admin_header['Authorization'] is None:
             _raise_exception('Could not get an authorization header')
         else:
-            logger.info(f'VEEVA NETWORK: Authentication Successful!')
+            logger.info('VEEVA NETWORK: Authentication Successful!')
 
 
 class VeevaSourceSubscriptionClient(VeevaNetworkClient):
