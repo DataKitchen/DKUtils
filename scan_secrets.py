@@ -232,11 +232,11 @@ def print_issues(results):
         for issue in issues:
             if issue.error.strip() != '*':
                 error = '.*%s.*' % issue.error\
-                    .replace('(', '\(')\
-                    .replace(')', '\)')\
-                    .replace('[', '\[')\
-                    .replace(']', '\]')\
-                    .replace('.', '\.')  # noqa: E231
+                    .replace('(', r'\(')\
+                    .replace(')', r'\)')\
+                    .replace('[', r'\[')\
+                    .replace(']', r'\]')\
+                    .replace('.', r'\.')  # noqa: E231
             else:
                 error = '*'
             print('%s,%d,%s' % (path, issue.line, error))
