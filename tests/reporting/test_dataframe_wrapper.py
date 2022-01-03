@@ -12,7 +12,7 @@ HOSTNAME = 'somehost'
 PORT = 123
 QUERY = "select this from that"
 TYPE_HTML = 'html'
-TYPE_PING = 'ping'
+TYPE_PLOT = 'plot'
 TYPE_TEXT = 'text'
 
 
@@ -63,7 +63,7 @@ class TestDataFrameWrapper(TestCase):
         with self.assertRaises(TypeError) as cm:
             self.sut.create_report(QUERY, bad_type)
         self.assertEqual(
-            f"query_type must be one of ['html', 'ping', 'text'] but was: {bad_type}",
+            f"query_type must be one of ['html', 'plot', 'text'] but was: {bad_type}",
             cm.exception.args[0]
         )
 
@@ -96,7 +96,7 @@ class TestDataFrameWrapper(TestCase):
     @patch('dkutils.reporting.dataframe_wrapper.pd')
     def test_create_report_with_query_type_ping_with_additional_parms(self, mock_pd):
         additional_parms = {"header": False}
-        filename = self.sut.create_report(QUERY, TYPE_PING, additional_parms=additional_parms)
+        filename = self.sut.create_report(QUERY, TYPE_PLOT, additional_parms=additional_parms)
 
         self.assertEqual("file_000.png", filename)
         mock_pd.read_sql.assert_called_with(QUERY, self.mock_engine)

@@ -104,7 +104,7 @@ class DataFrameWrapper:
         for each time this method is called with a particular file type. The extension will be determined by the
         query_type as follows:
             html = html
-            ping = png
+            plot = png
             text = txt
         Parameters
         ----------
@@ -133,7 +133,7 @@ class DataFrameWrapper:
                 df.to_html(file_name)
             return file_name
 
-        def handle_ping(file_name):
+        def handle_plot(file_name):
             if not file_name:
                 file_name = self.file_name_generator.getFileName('png')
             if additional_parms:
@@ -152,7 +152,7 @@ class DataFrameWrapper:
                 df.to_string(file_name)
             return file_name
 
-        handlers = {'html': handle_html, 'ping': handle_ping, 'text': handle_text}
+        handlers = {'html': handle_html, 'plot': handle_plot, 'text': handle_text}
         if query_type not in handlers.keys():
             raise TypeError(f"query_type must be one of {[*handlers]} but was: {query_type}")
         df = pd.read_sql(query, self.engine)
