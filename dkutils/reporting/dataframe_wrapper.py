@@ -120,6 +120,8 @@ class DataFrameWrapper:
 
         Returns
         -------
+        int
+            A integer containing the number of rows returned by the query
         str
             A string containing the name of the file created
         """
@@ -156,4 +158,5 @@ class DataFrameWrapper:
         if query_type not in handlers.keys():
             raise TypeError(f"query_type must be one of {[*handlers]} but was: {query_type}")
         df = pd.read_sql(query, self.engine)
-        return handlers[query_type](filename)
+        total_rows = len(df.index)
+        return (total_rows, handlers[query_type](filename))

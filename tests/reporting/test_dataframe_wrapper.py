@@ -85,8 +85,13 @@ class TestDataFrameWrapper(TestCase):
     @patch('dkutils.reporting.dataframe_wrapper.pd')
     def test_create_report_with_query_type_html_with_additional_parms(self, mock_pd):
         additional_parms = {"header": False}
-        filename = self.sut.create_report(QUERY, TYPE_HTML, additional_parms=additional_parms)
+        mock_pd.read_sql.return_value.index = [1]
 
+        total_records, filename = self.sut.create_report(
+            QUERY, TYPE_HTML, additional_parms=additional_parms
+        )
+
+        self.assertEqual(1, total_records)
         self.assertEqual("file_000.html", filename)
         mock_pd.read_sql.assert_called_with(QUERY, self.mock_engine)
         mock_pd.read_sql.return_value.to_html.assert_called_with(
@@ -96,7 +101,7 @@ class TestDataFrameWrapper(TestCase):
     @patch('dkutils.reporting.dataframe_wrapper.pd')
     def test_create_report_with_query_type_ping_with_additional_parms(self, mock_pd):
         additional_parms = {"header": False}
-        filename = self.sut.create_report(QUERY, TYPE_PLOT, additional_parms=additional_parms)
+        _, filename = self.sut.create_report(QUERY, TYPE_PLOT, additional_parms=additional_parms)
 
         self.assertEqual("file_000.png", filename)
         mock_pd.read_sql.assert_called_with(QUERY, self.mock_engine)
@@ -108,7 +113,7 @@ class TestDataFrameWrapper(TestCase):
     @patch('dkutils.reporting.dataframe_wrapper.pd')
     def test_create_report_with_query_type_text_with_additional_parms(self, mock_pd):
         additional_parms = {"header": False}
-        filename = self.sut.create_report(QUERY, TYPE_TEXT, additional_parms=additional_parms)
+        _, filename = self.sut.create_report(QUERY, TYPE_TEXT, additional_parms=additional_parms)
 
         self.assertEqual("file_000.txt", filename)
         mock_pd.read_sql.assert_called_with(QUERY, self.mock_engine)
