@@ -1,0 +1,7 @@
+dkutils.util module
+===================
+
+.. automodule:: dkutils.util
+   :members:
+   :undoc-members:
+   :show-inheritance:

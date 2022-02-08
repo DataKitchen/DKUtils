@@ -16,6 +16,7 @@ Subpackages
    dkutils.datakitchen_api
    dkutils.gmail_api
    dkutils.jira_api
+   dkutils.reporting
    dkutils.smtp_api
    dkutils.ssh
    dkutils.streamsets_api
@@ -29,5 +30,6 @@ Submodules
 
    dkutils.constants
    dkutils.dictionary_comparator
+   dkutils.util
    dkutils.validation
    dkutils.wait_loop

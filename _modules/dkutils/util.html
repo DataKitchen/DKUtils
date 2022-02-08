@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.wait_loop &mdash; DKUtils 2.0.0 documentation</title>
+  <title>dkutils.util &mdash; DKUtils 2.0.0 documentation</title>
   
 
   
@@ -203,7 +203,7 @@
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
-      <li>dkutils.wait_loop</li>
+      <li>dkutils.util</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -218,46 +218,36 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for dkutils.wait_loop</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">time</span>
+  <h1>Source code for dkutils.util</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="FileNameGenerator"><a class="viewcode-back" href="../../apidoc/dkutils.util.html#dkutils.util.FileNameGenerator">[docs]</a><span></span><span class="k">class</span> <span class="nc">FileNameGenerator</span><span class="p">():</span>
 
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="p">{}</span>
 
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Simple class that can be used to generate sequential file names for a given extension.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="WaitLoop"><a class="viewcode-back" href="../../apidoc/dkutils.wait_loop.html#dkutils.wait_loop.WaitLoop">[docs]</a><span class="k">class</span> <span class="nc">WaitLoop</span><span class="p">:</span>
-
-<div class="viewcode-block" id="WaitLoop.__init__"><a class="viewcode-back" href="../../apidoc/dkutils.wait_loop.html#dkutils.wait_loop.WaitLoop.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sleep_secs</span><span class="p">,</span> <span class="n">duration_secs</span><span class="p">):</span>
+<div class="viewcode-block" id="FileNameGenerator.getFileName"><a class="viewcode-back" href="../../apidoc/dkutils.util.html#dkutils.util.FileNameGenerator.getFileName">[docs]</a>    <span class="k">def</span> <span class="nf">getFileName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extension</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        WaitLoop is for use in a while loop. Create an instance of this class and add</span>
-<span class="sd">        it as the condition/expression to the while loop.</span>
-
+<span class="sd">        Generate a sequential filename for a given extension</span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        sleep_secs : int</span>
-<span class="sd">            Number of seconds to sleep in between loop executions.</span>
-<span class="sd">        duration_secs : int</span>
-<span class="sd">            Max duration in seconds after which the loop will exit.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">first_pass</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">resume</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_sleep_secs</span> <span class="o">=</span> <span class="n">sleep_secs</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_timeout_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="n">duration_secs</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="WaitLoop.__bool__"><a class="viewcode-back" href="../../apidoc/dkutils.wait_loop.html#dkutils.wait_loop.WaitLoop.__bool__">[docs]</a>    <span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Determines if the loop should exit.</span>
+<span class="sd">        extension the extension to be used in the generated filename</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        bool</span>
-<span class="sd">            True if loop should exit, False otherwise.</span>
+<span class="sd">        a filename in the following form:</span>
+<span class="sd">            file_ddd.ext</span>
+<span class="sd">        Where ddd will be a 3 digit number with leading zeros that&#39;s incremented each time the method is called for</span>
+<span class="sd">        a particular extension. ext will be replace with given extension</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_pass</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">first_pass</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sleep_secs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">resume</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timeout_time</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">resume</span></div></div>
+        <span class="k">if</span> <span class="n">extension</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="n">extension</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;file_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="n">extension</span><span class="p">]</span><span class="si">:</span><span class="s1">03d</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">extension</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="n">extension</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">file_name</span></div></div>
 </pre></div>
 
            </div>

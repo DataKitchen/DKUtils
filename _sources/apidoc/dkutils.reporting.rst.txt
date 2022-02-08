@@ -1,0 +1,15 @@
+dkutils.reporting package
+=========================
+
+.. automodule:: dkutils.reporting
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   dkutils.reporting.dataframe_wrapper

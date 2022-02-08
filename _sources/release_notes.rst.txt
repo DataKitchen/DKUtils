@@ -1,6 +1,9 @@
 Release Notes
 =============
 
+v1.13.0
+-------
+* Add DataFrameWrapper Class that facilitates running a query in a database via a Pandas Dataframe and then writing the data to files.
 
 v1.12.1
 -------

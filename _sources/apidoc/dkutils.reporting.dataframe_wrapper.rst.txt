@@ -1,0 +1,7 @@
+dkutils.reporting.dataframe\_wrapper module
+===========================================
+
+.. automodule:: dkutils.reporting.dataframe_wrapper
+   :members:
+   :undoc-members:
+   :show-inheritance:

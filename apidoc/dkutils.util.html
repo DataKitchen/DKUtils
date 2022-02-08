@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.smtp_api package &mdash; DKUtils 2.0.0 documentation</title>
+  <title>dkutils.util module &mdash; DKUtils 2.0.0 documentation</title>
   
 
   
@@ -36,8 +36,8 @@
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="dkutils.smtp_api.sender module" href="dkutils.smtp_api.sender.html" />
-    <link rel="prev" title="dkutils.reporting.dataframe_wrapper module" href="dkutils.reporting.dataframe_wrapper.html" /> 
+    <link rel="next" title="dkutils.validation module" href="dkutils.validation.html" />
+    <link rel="prev" title="dkutils.dictionary_comparator module" href="dkutils.dictionary_comparator.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -85,8 +85,8 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Code Documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="dkutils.html">dkutils package</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="dkutils.html#subpackages">Subpackages</a></li>
-<li class="toctree-l3"><a class="reference internal" href="dkutils.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dkutils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="dkutils.html#submodules">Submodules</a></li>
 </ul>
 </li>
 </ul>
@@ -207,13 +207,13 @@
         
           <li><a href="dkutils.html">dkutils package</a> &raquo;</li>
         
-      <li>dkutils.smtp_api package</li>
+      <li>dkutils.util module</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/apidoc/dkutils.smtp_api.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/apidoc/dkutils.util.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -223,10 +223,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="dkutils.smtp_api.sender.html" class="btn btn-neutral float-right" title="dkutils.smtp_api.sender module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="dkutils.validation.html" class="btn btn-neutral float-right" title="dkutils.validation module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="dkutils.reporting.dataframe_wrapper.html" class="btn btn-neutral float-left" title="dkutils.reporting.dataframe_wrapper module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="dkutils.dictionary_comparator.html" class="btn btn-neutral float-left" title="dkutils.dictionary_comparator module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -235,16 +235,31 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-dkutils.smtp_api">
-<span id="dkutils-smtp-api-package"></span><h1>dkutils.smtp_api package<a class="headerlink" href="#module-dkutils.smtp_api" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="dkutils.smtp_api.sender.html">dkutils.smtp_api.sender module</a></li>
+  <div class="section" id="module-dkutils.util">
+<span id="dkutils-util-module"></span><h1>dkutils.util module<a class="headerlink" href="#module-dkutils.util" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="dkutils.util.FileNameGenerator">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">dkutils.util.</span></code><code class="sig-name descname"><span class="pre">FileNameGenerator</span></code><a class="reference internal" href="../_modules/dkutils/util.html#FileNameGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.util.FileNameGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="dkutils.util.FileNameGenerator.getFileName">
+<code class="sig-name descname"><span class="pre">getFileName</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/util.html#FileNameGenerator.getFileName"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.util.FileNameGenerator.getFileName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a sequential filename for a given extension
+:param extension the extension to be used in the generated filename:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>a filename in the following form</em> – file_ddd.ext</p></li>
+<li><p><em>Where ddd will be a 3 digit number with leading zeros that’s incremented each time the method is called for</em></p></li>
+<li><p><em>a particular extension. ext will be replace with given extension</em></p></li>
 </ul>
-</div>
-</div>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 
@@ -255,10 +270,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="dkutils.smtp_api.sender.html" class="btn btn-neutral float-right" title="dkutils.smtp_api.sender module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="dkutils.validation.html" class="btn btn-neutral float-right" title="dkutils.validation module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="dkutils.reporting.dataframe_wrapper.html" class="btn btn-neutral float-left" title="dkutils.reporting.dataframe_wrapper module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="dkutils.dictionary_comparator.html" class="btn btn-neutral float-left" title="dkutils.dictionary_comparator module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
