@@ -7,7 +7,7 @@ from functools import cmp_to_key
 
 import requests
 from requests.exceptions import HTTPError
-
+from requests.auth import _basic_auth_str
 from dkutils.constants import (
     API_DELETE,
     API_GET,
@@ -104,7 +104,14 @@ def ensure_and_get_kitchen(kitchen, kitchens):
 class DataKitchenClient:
 
     def __init__(
-        self, username, password, base_url=None, kitchen=None, recipe=None, variation=None
+        self,
+        username,
+        password,
+        base_url=None,
+        kitchen=None,
+        recipe=None,
+        variation=None,
+        is_api_token=False
     ):
         """
         Client object for invoking DataKitchen API calls. If the API call requires a kitchen,
@@ -126,12 +133,15 @@ class DataKitchenClient:
             Recipe to use in API requests
         variation : str, optional
             Variation to use in API requests
+        is_api_token: bool, optional
+            Indicates whether username and possword are an api token pair
         """
         self._username = username
         self._password = password
         self._base_url = base_url if base_url else DEFAULT_DATAKITCHEN_URL
         self._token = None
         self._headers = None
+        self._is_api_token = is_api_token
         self._refresh_token()
         self.kitchen = kitchen
         self.recipe = recipe
@@ -272,6 +282,8 @@ class DataKitchenClient:
         boolean
             True if the current token is valid, False otherwise
         """
+        if self._is_api_token:
+            return True
         try:
             self._api_request(API_GET, 'validatetoken')
             return True
@@ -289,6 +301,9 @@ class DataKitchenClient:
         HTTPError
             If the login request fails to obtain a new token (e.g. login credentials are invalid).
         """
+        if self._is_api_token:
+            self._set_headers()
+
         if self._validate_token():
             return
 
@@ -299,9 +314,12 @@ class DataKitchenClient:
 
     def _set_headers(self):
         """
-        Set the headers dictionary with the current token.
+        Set the headers dictionary with the current token or api_token
         """
-        self._headers = {'Authorization': f'Bearer {self._token}'}
+        if self._is_api_token:
+            self._headers = {'Authorization': _basic_auth_str(self._username, self._password)}
+        else:
+            self._headers = {'Authorization': f'Bearer {self._token}'}
 
     def create_order(self, parameters={}):
         """
