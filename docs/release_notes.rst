@@ -4,7 +4,7 @@ Release Notes
 
 v2.1.0
 -------
-* Add additional parameter to constructor for DataKitchenClient to indicat username and password are API Token
+* Add additional parameter to constructor for DataKitchenClient to indicate username and password are API Token
 
 v2.0.0
 -------
