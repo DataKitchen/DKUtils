@@ -114,6 +114,12 @@ class TestDataKitchenClient(TestCase):
         self.assertEqual(dk_client._headers, DUMMY_HEADERS)
         self.assertEqual(dk_client._token, DUMMY_AUTH_TOKEN)
 
+    @patch('dkutils.datakitchen_api.datakitchen_client._basic_auth_str')
+    def test_with_api_token(self, mock_auth):
+        dk_client = DataKitchenClient(DUMMY_USERNAME, DUMMY_PASSWORD, is_api_token=True)
+        mock_auth.assert_called_with(DUMMY_USERNAME, DUMMY_PASSWORD)
+        self.assertEqual(dk_client._headers, {'Authorization': mock_auth.return_value})
+
     def test_with_kitchen(self):
         self.assertEqual(self.dk_client._kitchen, DUMMY_KITCHEN)
 

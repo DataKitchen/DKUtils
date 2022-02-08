@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+
+v1.13.1
+-------
+* Add additional parameter to constructor for DataKitchenClient to indicat username and password are API Token
+
 v1.13.0
 -------
 * Add DataFrameWrapper Class that facilitates running a query in a database via a Pandas Dataframe and then writing the data to files.
