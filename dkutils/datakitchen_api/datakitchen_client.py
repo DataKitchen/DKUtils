@@ -32,6 +32,7 @@ from dkutils.dictionary_comparator import DictionaryComparator
 from dkutils.validation import get_max_concurrency, skip_token_validation
 from dkutils.wait_loop import WaitLoop
 from .datetime_utils import get_utc_timestamp
+from .kitchen import Kitchen
 
 logger = logging.getLogger(__name__)
 
@@ -320,6 +321,32 @@ class DataKitchenClient:
             self._headers = {'Authorization': _basic_auth_str(self._username, self._password)}
         else:
             self._headers = {'Authorization': f'Bearer {self._token}'}
+
+    def get_kitchen(self):
+        """
+        Create and return a kitchen object for use in making kitchen related API requests.
+        """
+        self._ensure_attributes(KITCHEN)
+        return Kitchen(self, self.kitchen)
+
+    def create_kitchen(self, name: str, description: str = ''):
+        """
+        Create a child kitchen off of self.kitchen and return a Kitchen object for the newly
+        created kitchen.
+
+        Parameters
+        ----------
+        name : str
+            New kitchen name
+        description : str
+            New kitchen description
+
+        Returns
+        -------
+        Kitchen
+        """
+        self._ensure_attributes(KITCHEN)
+        return Kitchen.create(self, self.kitchen, name, description)
 
     def create_order(self, parameters={}):
         """
