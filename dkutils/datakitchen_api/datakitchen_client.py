@@ -261,9 +261,15 @@ class DataKitchenClient:
         api_request = getattr(requests, http_method)
         api_path = f'{self._base_url}/v2/{"/".join(args)}'
         if is_json:
-            response = api_request(api_path, headers=self._headers, json=kwargs)
+            if len(kwargs) == 1 and 'json' in kwargs:
+                response = api_request(api_path, headers=self._headers, json=kwargs['json'])
+            else:
+                response = api_request(api_path, headers=self._headers, json=kwargs)
         else:
-            response = api_request(api_path, headers=self._headers, data=kwargs)
+            if len(kwargs) == 1 and 'data' in kwargs:
+                response = api_request(api_path, headers=self._headers, data=kwargs['data'])
+            else:
+                response = api_request(api_path, headers=self._headers, data=kwargs)
 
         try:
             response.raise_for_status()

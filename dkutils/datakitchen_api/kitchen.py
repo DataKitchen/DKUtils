@@ -6,6 +6,8 @@ from typing import TYPE_CHECKING
 
 from dkutils.constants import (
     API_DELETE,
+    API_GET,
+    API_POST,
     API_PUT,
 )
 
@@ -81,3 +83,137 @@ class Kitchen:
         response = self._client._api_request(API_DELETE, 'kitchen', 'delete', self._name)
         response.raise_for_status()
         return response
+
+    def _get_settings(self):
+        """
+        Retrieve kitchen settings JSON.
+
+        Returns
+        -------
+        kitchen_settings : dict
+        """
+        logger.debug(f'Retrieving settings for kitchen: {self._name}...')
+        response = self._client._api_request(API_GET, 'kitchen', self._name)
+        response.raise_for_status()
+        return response.json()
+
+    def _update_settings(self, kitchen_settings):
+        """
+        Update kitchen settings JSON.
+
+        Parameters
+        ----------
+        kitchen_settings : dict
+            Kitchen settings JSON with updated values.
+
+        Returns
+        -------
+        requests.Response
+            :class:`Response <Response>` object
+        """
+        response = self._client._api_request(
+            API_POST,
+            'kitchen',
+            'update',
+            kitchen_settings['kitchen']['name'],
+            json={"kitchen.json": kitchen_settings['kitchen']}
+        )
+        response.raise_for_status()
+        return response.json()
+
+    def get_alerts(self):
+        """
+        Retrieve alerts set on this kitchen.
+
+        Returns
+        -------
+        alerts : dict
+            Dictionary of current kitchen alerts of the form::
+                {
+                    'Start': ['foo@gmail.com'],
+                    'Warning': None,
+                    'OverDuration': ['foo@gmail.com', 'bar@gmail.com'],
+                    'Success': None,
+                    'Failure': ['foo@gmail.com'],
+                }
+        """
+        alerts = self._get_settings()['kitchen']['settings']['alerts']
+        return {
+            'Start': alerts['orderrunStart'],
+            'Warning': alerts['orderrunWarning'],
+            'OverDuration': alerts['orderrunOverDuration'],
+            'Success': alerts['orderrunSuccess'],
+            'Failure': alerts['orderrunError'],
+        }
+
+    def add_alerts(self, alerts):
+        """
+        Add the provided alerts to the kitchen.
+
+        Parameters
+        ----------
+        alerts : dict
+            Alerts to add in the form::
+
+                {
+                    'Start': ['foo@gmail.com'],
+                    'Warning': None,
+                    'OverDuration': ['foo@gmail.com', 'bar@gmail.com'],
+                    'Success': None,
+                    'Failure': ['foo@gmail.com'],
+                }
+        """
+
+        kitchen_settings = self._get_settings()
+        existing_alerts = kitchen_settings['kitchen']['settings']['alerts']
+        for k, v in alerts.items():
+            k = 'orderrunError' if k == 'Failure' else f'orderrun{k}'
+            if k not in existing_alerts:
+                raise KeyError(
+                    'Unrecognized alert field: {k}. Expected fields are Start, Warning, OverDuration, Success, and Failure'  # noqa: E501
+                )
+
+            if isinstance(v, str):
+                v = [v]
+
+            alert_emails = set(existing_alerts[k]) if existing_alerts[k] else set()
+            alert_emails = list(alert_emails.union(set(v)))
+            existing_alerts[k] = alert_emails
+
+        self._update_settings(kitchen_settings)
+
+    def delete_alerts(self, alerts):
+        """
+        Delete the provided kitchen alerts.
+
+        Parameters
+        ----------
+        alerts : dict
+            Alerts to delete in the form::
+
+                {
+                    'Start': ['foo@gmail.com'],
+                    'Warning': None,
+                    'OverDuration': ['foo@gmail.com', 'bar@gmail.com'],
+                    'Success': None,
+                    'Failure': ['foo@gmail.com'],
+                }
+        """
+        kitchen_settings = self._get_settings()
+
+        existing_alerts = kitchen_settings['kitchen']['settings']['alerts']
+        for k, v in alerts.items():
+            k = 'orderrunError' if k == 'Failure' else f'orderrun{k}'
+            if k not in existing_alerts:
+                raise KeyError(
+                    'Unrecognized alert field: {k}. Expected fields are Start, Warning, OverDuration, Success, and Failure'  # noqa: E501
+                )
+
+            if isinstance(v, str):
+                v = [v]
+
+            if existing_alerts[k] is not None:
+                alert_emails = list(set(existing_alerts[k]) - set(v))
+                existing_alerts[k] = alert_emails
+
+        self._update_settings(kitchen_settings)
