@@ -2,6 +2,12 @@ Release Notes
 =============
 
 
+v2.2.0
+-------
+* Added new Kitchen class to DataKitchenClient
+* Added create and delete kitchens to Kitchen class
+* Added get, create, and delete alerts to Kitchen class
+
 v2.1.0
 -------
 * Add additional parameter to constructor for DataKitchenClient to indicate username and password are API Token
