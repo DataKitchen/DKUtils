@@ -1,0 +1,487 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>dkutils.datakitchen_api.kitchen &mdash; DKUtils 2.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> DKUtils
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../apidoc/modules.html">Code Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../apidoc/dkutils.html">dkutils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../apidoc/dkutils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../apidoc/dkutils.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guide.html">Development Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#development-process">Development Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#deployment-checklist">Deployment Checklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#code-formatting-and-standards">Code formatting and standards</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#pre-commit-anchor">pre-commit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#flake8-anchor">Flake8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#yapf-anchor">YAPF</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#documentation-best-practices">Documentation Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#versioning">Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#makefile">Makefile</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-2-0">v2.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-1-0">v2.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-0-0">v2.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-12-1">v1.12.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-12-0">v1.12.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-11-0">v1.11.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-10-0">v1.10.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-9-0">v1.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-8-2">v1.8.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-8-1">v1.8.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-8-0">v1.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-7-1">v1.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-7-0">v1.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-6-0">v1.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-5-0">v1.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-4-0">v1.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-3">v1.3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-2">v1.3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-1">v1.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-0">v1.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-2-0">v1.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-1-0">v1.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-0-1">v1.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-0-0">v1.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-16-0">v0.16.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-15-0">v0.15.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-14-0">v0.14.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-13-0">v0.13.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-12-0">v0.12.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-11-0">v0.11.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-10-2">v0.10.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-10-1">v0.10.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-10-0">v0.10.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-9-0">v0.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-8-2">v0.8.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-8-1">v0.8.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-8-0">v0.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-7-1">v0.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-7-0">v0.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-6-1">v0.6.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-6-0">v0.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-5-0">v0.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-4-0">v0.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-3-0">v0.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-2-0">v0.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-1-0">v0.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-4">v0.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-3">v0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-2">v0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-1">v0.0.1</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DKUtils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>dkutils.datakitchen_api.kitchen</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for dkutils.datakitchen_api.kitchen</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
+
+<span class="kn">from</span> <span class="nn">dkutils.constants</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">API_DELETE</span><span class="p">,</span>
+    <span class="n">API_GET</span><span class="p">,</span>
+    <span class="n">API_POST</span><span class="p">,</span>
+    <span class="n">API_PUT</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">.datakitchen_client</span> <span class="kn">import</span> <span class="n">DataKitchenClient</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Kitchen"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen">[docs]</a><span class="k">class</span> <span class="nc">Kitchen</span><span class="p">:</span>
+
+<div class="viewcode-block" id="Kitchen.__init__"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">DataKitchenClient</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Kitchen object for performing kitchen related API requests.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        client : DataKitchenClient</span>
+<span class="sd">            Client for making requests .</span>
+<span class="sd">        name : str</span>
+<span class="sd">            Name of existing kitchen.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span></div>
+
+<div class="viewcode-block" id="Kitchen.create"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.create">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span>
+            <span class="n">client</span><span class="p">:</span> <span class="n">DataKitchenClient</span><span class="p">,</span>
+            <span class="n">parent_kitchen_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">new_kitchen_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Kitchen</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new kitchen and return a kitchen object</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        client : DataKitchenClient</span>
+<span class="sd">        parent_kitchen_name : str</span>
+<span class="sd">            New kitchen will be a child of this parent kitchen</span>
+<span class="sd">        new_kitchen_name : str</span>
+<span class="sd">            New kitchen name</span>
+<span class="sd">        description : str</span>
+<span class="sd">            New kitchen description</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Kitchen</span>
+<span class="sd">            :class:`Kitchen &lt;Kitchen&gt;` object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Creating child kitchen of </span><span class="si">{</span><span class="n">parent_kitchen_name</span><span class="si">}</span><span class="s1"> named </span><span class="si">{</span><span class="n">new_kitchen_name</span><span class="si">}</span><span class="s1">...&#39;</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span>
+            <span class="n">API_PUT</span><span class="p">,</span>
+            <span class="s1">&#39;kitchen&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;create&#39;</span><span class="p">,</span>
+            <span class="n">parent_kitchen_name</span><span class="p">,</span>
+            <span class="n">new_kitchen_name</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">Kitchen</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">new_kitchen_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Kitchen.delete"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete the current kitchen.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        requests.Response</span>
+<span class="sd">            :class:`Response &lt;Response&gt;` object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Deleting kitchen: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s1">...&#39;</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_DELETE</span><span class="p">,</span> <span class="s1">&#39;kitchen&#39;</span><span class="p">,</span> <span class="s1">&#39;delete&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">response</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve kitchen settings JSON.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        kitchen_settings : dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Retrieving settings for kitchen: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s1">...&#39;</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_GET</span><span class="p">,</span> <span class="s1">&#39;kitchen&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_update_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kitchen_settings</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update kitchen settings JSON.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        kitchen_settings : dict</span>
+<span class="sd">            Kitchen settings JSON with updated values.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        requests.Response</span>
+<span class="sd">            :class:`Response &lt;Response&gt;` object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span>
+            <span class="n">API_POST</span><span class="p">,</span>
+            <span class="s1">&#39;kitchen&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;update&#39;</span><span class="p">,</span>
+            <span class="n">kitchen_settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+            <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;kitchen.json&quot;</span><span class="p">:</span> <span class="n">kitchen_settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">]}</span>
+        <span class="p">)</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Kitchen.get_alerts"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.get_alerts">[docs]</a>    <span class="k">def</span> <span class="nf">get_alerts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve alerts set on this kitchen.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        alerts : dict</span>
+<span class="sd">            Dictionary of current kitchen alerts of the form::</span>
+<span class="sd">                {</span>
+<span class="sd">                    &#39;Start&#39;: [&#39;foo@gmail.com&#39;],</span>
+<span class="sd">                    &#39;Warning&#39;: None,</span>
+<span class="sd">                    &#39;OverDuration&#39;: [&#39;foo@gmail.com&#39;, &#39;bar@gmail.com&#39;],</span>
+<span class="sd">                    &#39;Success&#39;: None,</span>
+<span class="sd">                    &#39;Failure&#39;: [&#39;foo@gmail.com&#39;],</span>
+<span class="sd">                }</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">alerts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_settings</span><span class="p">()[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;settings&#39;</span><span class="p">][</span><span class="s1">&#39;alerts&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;Start&#39;</span><span class="p">:</span> <span class="n">alerts</span><span class="p">[</span><span class="s1">&#39;orderrunStart&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;Warning&#39;</span><span class="p">:</span> <span class="n">alerts</span><span class="p">[</span><span class="s1">&#39;orderrunWarning&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;OverDuration&#39;</span><span class="p">:</span> <span class="n">alerts</span><span class="p">[</span><span class="s1">&#39;orderrunOverDuration&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;Success&#39;</span><span class="p">:</span> <span class="n">alerts</span><span class="p">[</span><span class="s1">&#39;orderrunSuccess&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;Failure&#39;</span><span class="p">:</span> <span class="n">alerts</span><span class="p">[</span><span class="s1">&#39;orderrunError&#39;</span><span class="p">],</span>
+        <span class="p">}</span></div>
+
+<div class="viewcode-block" id="Kitchen.add_alerts"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.add_alerts">[docs]</a>    <span class="k">def</span> <span class="nf">add_alerts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alerts</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add the provided alerts to the kitchen.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        alerts : dict</span>
+<span class="sd">            Alerts to add in the form::</span>
+
+<span class="sd">                {</span>
+<span class="sd">                    &#39;Start&#39;: [&#39;foo@gmail.com&#39;],</span>
+<span class="sd">                    &#39;Warning&#39;: None,</span>
+<span class="sd">                    &#39;OverDuration&#39;: [&#39;foo@gmail.com&#39;, &#39;bar@gmail.com&#39;],</span>
+<span class="sd">                    &#39;Success&#39;: None,</span>
+<span class="sd">                    &#39;Failure&#39;: [&#39;foo@gmail.com&#39;],</span>
+<span class="sd">                }</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">kitchen_settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_settings</span><span class="p">()</span>
+        <span class="n">existing_alerts</span> <span class="o">=</span> <span class="n">kitchen_settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;settings&#39;</span><span class="p">][</span><span class="s1">&#39;alerts&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">alerts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="s1">&#39;orderrunError&#39;</span> <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="s1">&#39;Failure&#39;</span> <span class="k">else</span> <span class="sa">f</span><span class="s1">&#39;orderrun</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">existing_alerts</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+                    <span class="s1">&#39;Unrecognized alert field: </span><span class="si">{k}</span><span class="s1">. Expected fields are Start, Warning, OverDuration, Success, and Failure&#39;</span>  <span class="c1"># noqa: E501</span>
+                <span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="p">]</span>
+
+            <span class="n">alert_emails</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">existing_alerts</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">if</span> <span class="n">existing_alerts</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">else</span> <span class="nb">set</span><span class="p">()</span>
+            <span class="n">alert_emails</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">alert_emails</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">v</span><span class="p">)))</span>
+            <span class="n">existing_alerts</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">alert_emails</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_settings</span><span class="p">(</span><span class="n">kitchen_settings</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Kitchen.delete_alerts"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.delete_alerts">[docs]</a>    <span class="k">def</span> <span class="nf">delete_alerts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alerts</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete the provided kitchen alerts.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        alerts : dict</span>
+<span class="sd">            Alerts to delete in the form::</span>
+
+<span class="sd">                {</span>
+<span class="sd">                    &#39;Start&#39;: [&#39;foo@gmail.com&#39;],</span>
+<span class="sd">                    &#39;Warning&#39;: None,</span>
+<span class="sd">                    &#39;OverDuration&#39;: [&#39;foo@gmail.com&#39;, &#39;bar@gmail.com&#39;],</span>
+<span class="sd">                    &#39;Success&#39;: None,</span>
+<span class="sd">                    &#39;Failure&#39;: [&#39;foo@gmail.com&#39;],</span>
+<span class="sd">                }</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">kitchen_settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_settings</span><span class="p">()</span>
+
+        <span class="n">existing_alerts</span> <span class="o">=</span> <span class="n">kitchen_settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;settings&#39;</span><span class="p">][</span><span class="s1">&#39;alerts&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">alerts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="s1">&#39;orderrunError&#39;</span> <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="s1">&#39;Failure&#39;</span> <span class="k">else</span> <span class="sa">f</span><span class="s1">&#39;orderrun</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">existing_alerts</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+                    <span class="s1">&#39;Unrecognized alert field: </span><span class="si">{k}</span><span class="s1">. Expected fields are Start, Warning, OverDuration, Success, and Failure&#39;</span>  <span class="c1"># noqa: E501</span>
+                <span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">existing_alerts</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">alert_emails</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">existing_alerts</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+                <span class="n">existing_alerts</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">alert_emails</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_settings</span><span class="p">(</span><span class="n">kitchen_settings</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, DataKitchen
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

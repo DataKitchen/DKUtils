@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.ssh.remote_client module &mdash; DKUtils 2.1.0 documentation</title>
+  <title>dkutils.ssh.remote_client module &mdash; DKUtils 2.2.0 documentation</title>
   
 
   
@@ -21,6 +21,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -32,6 +33,8 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -81,7 +84,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Code Documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="dkutils.html">dkutils package</a><ul class="current">
@@ -108,6 +111,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-2-0">v2.2.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-1-0">v2.1.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-0-0">v2.0.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-12-1">v1.12.1</a></li>
@@ -242,49 +246,49 @@
 <span id="dkutils-ssh-remote-client-module"></span><h1>dkutils.ssh.remote_client module<a class="headerlink" href="#module-dkutils.ssh.remote_client" title="Permalink to this headline">¶</a></h1>
 <p>Client to handle connections and actions executed against a remote host.</p>
 <dl class="py class">
-<dt id="dkutils.ssh.remote_client.CommandResult">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">dkutils.ssh.remote_client.</span></code><code class="sig-name descname"><span class="pre">CommandResult</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdout</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stderr</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dkutils.ssh.remote_client.CommandResult" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.ssh.remote_client.CommandResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dkutils.ssh.remote_client.</span></span><span class="sig-name descname"><span class="pre">CommandResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdout</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stderr</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dkutils.ssh.remote_client.CommandResult" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
 <p>A namedtuple containing the results of command execution</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><a class="reference internal" href="#dkutils.ssh.remote_client.CommandResult.status" title="dkutils.ssh.remote_client.CommandResult.status"><strong>status</strong></a> (<em>int</em>) – which contains an integer the exit code of the process on the server. Normally this should be 0</p></li>
-<li><p><a class="reference internal" href="#dkutils.ssh.remote_client.CommandResult.stdin" title="dkutils.ssh.remote_client.CommandResult.stdin"><strong>stdin</strong></a> (<em>file-like</em>) – a file-like object representing the stdin for the command</p></li>
-<li><p><a class="reference internal" href="#dkutils.ssh.remote_client.CommandResult.stdout" title="dkutils.ssh.remote_client.CommandResult.stdout"><strong>stdout</strong></a> (<em>file-like</em>) – a file-like object representing the stdout for the command</p></li>
-<li><p><a class="reference internal" href="#dkutils.ssh.remote_client.CommandResult.stderr" title="dkutils.ssh.remote_client.CommandResult.stderr"><strong>stderr</strong></a> (<em>file-like</em>) – a file-like object representing the stderr for the command</p></li>
+<li><p><strong>status</strong> (<em>int</em>) – which contains an integer the exit code of the process on the server. Normally this should be 0</p></li>
+<li><p><strong>stdin</strong> (<em>file-like</em>) – a file-like object representing the stdin for the command</p></li>
+<li><p><strong>stdout</strong> (<em>file-like</em>) – a file-like object representing the stdout for the command</p></li>
+<li><p><strong>stderr</strong> (<em>file-like</em>) – a file-like object representing the stderr for the command</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
-<dt id="dkutils.ssh.remote_client.CommandResult.status">
-<code class="sig-name descname"><span class="pre">status</span></code><a class="headerlink" href="#dkutils.ssh.remote_client.CommandResult.status" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.ssh.remote_client.CommandResult.status">
+<span class="sig-name descname"><span class="pre">status</span></span><a class="headerlink" href="#dkutils.ssh.remote_client.CommandResult.status" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for field number 0</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.ssh.remote_client.CommandResult.stderr">
-<code class="sig-name descname"><span class="pre">stderr</span></code><a class="headerlink" href="#dkutils.ssh.remote_client.CommandResult.stderr" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.ssh.remote_client.CommandResult.stderr">
+<span class="sig-name descname"><span class="pre">stderr</span></span><a class="headerlink" href="#dkutils.ssh.remote_client.CommandResult.stderr" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for field number 3</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.ssh.remote_client.CommandResult.stdin">
-<code class="sig-name descname"><span class="pre">stdin</span></code><a class="headerlink" href="#dkutils.ssh.remote_client.CommandResult.stdin" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.ssh.remote_client.CommandResult.stdin">
+<span class="sig-name descname"><span class="pre">stdin</span></span><a class="headerlink" href="#dkutils.ssh.remote_client.CommandResult.stdin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for field number 1</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.ssh.remote_client.CommandResult.stdout">
-<code class="sig-name descname"><span class="pre">stdout</span></code><a class="headerlink" href="#dkutils.ssh.remote_client.CommandResult.stdout" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.ssh.remote_client.CommandResult.stdout">
+<span class="sig-name descname"><span class="pre">stdout</span></span><a class="headerlink" href="#dkutils.ssh.remote_client.CommandResult.stdout" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for field number 2</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="dkutils.ssh.remote_client.RemoteClient">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">dkutils.ssh.remote_client.</span></code><code class="sig-name descname"><span class="pre">RemoteClient</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/ssh/remote_client.html#RemoteClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.ssh.remote_client.RemoteClient" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.ssh.remote_client.RemoteClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dkutils.ssh.remote_client.</span></span><span class="sig-name descname"><span class="pre">RemoteClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/ssh/remote_client.html#RemoteClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.ssh.remote_client.RemoteClient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Client to interact with a remote host via SSH &amp; SCP.</p>
 <dl class="field-list simple">
@@ -299,8 +303,8 @@
 </dd>
 </dl>
 <dl class="py method">
-<dt id="dkutils.ssh.remote_client.RemoteClient.__init__">
-<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/ssh/remote_client.html#RemoteClient.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.ssh.remote_client.RemoteClient.__init__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.ssh.remote_client.RemoteClient.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/ssh/remote_client.html#RemoteClient.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.ssh.remote_client.RemoteClient.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Client to interact with a remote host via SSH &amp; SCP.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -316,8 +320,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="dkutils.ssh.remote_client.RemoteClient.bulk_download">
-<code class="sig-name descname"><span class="pre">bulk_download</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">remote_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/ssh/remote_client.html#RemoteClient.bulk_download"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.ssh.remote_client.RemoteClient.bulk_download" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.ssh.remote_client.RemoteClient.bulk_download">
+<span class="sig-name descname"><span class="pre">bulk_download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">remote_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/ssh/remote_client.html#RemoteClient.bulk_download"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.ssh.remote_client.RemoteClient.bulk_download" title="Permalink to this definition">¶</a></dt>
 <dd><p>Download multiple files from remote directory.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -331,8 +335,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="dkutils.ssh.remote_client.RemoteClient.bulk_upload">
-<code class="sig-name descname"><span class="pre">bulk_upload</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">remote_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/ssh/remote_client.html#RemoteClient.bulk_upload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.ssh.remote_client.RemoteClient.bulk_upload" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.ssh.remote_client.RemoteClient.bulk_upload">
+<span class="sig-name descname"><span class="pre">bulk_upload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">remote_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/ssh/remote_client.html#RemoteClient.bulk_upload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.ssh.remote_client.RemoteClient.bulk_upload" title="Permalink to this definition">¶</a></dt>
 <dd><p>Upload multiple files to a remote directory.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -345,14 +349,14 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="dkutils.ssh.remote_client.RemoteClient.disconnect">
-<code class="sig-name descname"><span class="pre">disconnect</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/ssh/remote_client.html#RemoteClient.disconnect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.ssh.remote_client.RemoteClient.disconnect" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.ssh.remote_client.RemoteClient.disconnect">
+<span class="sig-name descname"><span class="pre">disconnect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/ssh/remote_client.html#RemoteClient.disconnect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.ssh.remote_client.RemoteClient.disconnect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Close SSH &amp; SCP connection.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="dkutils.ssh.remote_client.RemoteClient.execute_commands">
-<code class="sig-name descname"><span class="pre">execute_commands</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commands</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream_logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/ssh/remote_client.html#RemoteClient.execute_commands"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.ssh.remote_client.RemoteClient.execute_commands" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.ssh.remote_client.RemoteClient.execute_commands">
+<span class="sig-name descname"><span class="pre">execute_commands</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commands</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream_logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/ssh/remote_client.html#RemoteClient.execute_commands"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.ssh.remote_client.RemoteClient.execute_commands" title="Permalink to this definition">¶</a></dt>
 <dd><p>Execute multiple commands in succession.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -361,11 +365,8 @@
 <li><p><strong>stream_logs</strong> (<em>Boolean</em><em>, </em><em>optional</em>) – Stream logs to python logger - this exhausts stdout</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>list of CommandResult</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list of CommandResult</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>

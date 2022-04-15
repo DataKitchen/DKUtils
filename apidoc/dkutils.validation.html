@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.validation module &mdash; DKUtils 2.1.0 documentation</title>
+  <title>dkutils.validation module &mdash; DKUtils 2.2.0 documentation</title>
   
 
   
@@ -21,6 +21,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -32,6 +33,8 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -81,7 +84,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Code Documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="dkutils.html">dkutils package</a><ul class="current">
@@ -108,6 +111,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-2-0">v2.2.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-1-0">v2.1.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-0-0">v2.0.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-12-1">v1.12.1</a></li>
@@ -239,8 +243,8 @@
   <div class="section" id="module-dkutils.validation">
 <span id="dkutils-validation-module"></span><h1>dkutils.validation module<a class="headerlink" href="#module-dkutils.validation" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
-<dt id="dkutils.validation.ensure_pathlib">
-<code class="sig-prename descclassname"><span class="pre">dkutils.validation.</span></code><code class="sig-name descname"><span class="pre">ensure_pathlib</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/validation.html#ensure_pathlib"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.validation.ensure_pathlib" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.validation.ensure_pathlib">
+<span class="sig-prename descclassname"><span class="pre">dkutils.validation.</span></span><span class="sig-name descname"><span class="pre">ensure_pathlib</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/validation.html#ensure_pathlib"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.validation.ensure_pathlib" title="Permalink to this definition">¶</a></dt>
 <dd><p>If provided path is a pathlib.PurePath instance, return it. If it’s a string, convert it to a
 pathlib.PurePath instance and return it. Otherwise, raise a TypeError.</p>
 <dl class="field-list simple">
@@ -250,18 +254,15 @@ pathlib.PurePath instance and return it. Otherwise, raise a TypeError.</p>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><p><strong>TypeError</strong> – If provided path is neither a string nor a pathlib.PurePath instance.</p>
 </dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p></p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>pathlib.PurePath</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pathlib.PurePath</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt id="dkutils.validation.get_globals_config">
-<code class="sig-prename descclassname"><span class="pre">dkutils.validation.</span></code><code class="sig-name descname"><span class="pre">get_globals_config</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">global_var_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cur_globals</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/validation.html#get_globals_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.validation.get_globals_config" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.validation.get_globals_config">
+<span class="sig-prename descclassname"><span class="pre">dkutils.validation.</span></span><span class="sig-name descname"><span class="pre">get_globals_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">global_var_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cur_globals</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/validation.html#get_globals_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.validation.get_globals_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load the specified glabal variables from a file named globals_config.json if it exists. This is to facillitate
 a way of initializing the globals variables when running the code outside of DataKitchen. These global variables
 would normally be passed from DataKitchen.
@@ -270,8 +271,8 @@ would normally be passed from DataKitchen.
 </dd></dl>
 
 <dl class="py function">
-<dt id="dkutils.validation.get_max_concurrency">
-<code class="sig-prename descclassname"><span class="pre">dkutils.validation.</span></code><code class="sig-name descname"><span class="pre">get_max_concurrency</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_orders</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_concurrent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/validation.html#get_max_concurrency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.validation.get_max_concurrency" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.validation.get_max_concurrency">
+<span class="sig-prename descclassname"><span class="pre">dkutils.validation.</span></span><span class="sig-name descname"><span class="pre">get_max_concurrency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_orders</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_concurrent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/validation.html#get_max_concurrency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.validation.get_max_concurrency" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a specified maximum concurrency and the number of orders being created/resumed, return
 a valid maximum concurrency value (i.e. 1 &lt;= max_concurrent &lt;= num_orders). If max_concurrent
 is None, return num_orders.</p>
@@ -293,8 +294,8 @@ max_concurrent is None.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="dkutils.validation.set_logging_level">
-<code class="sig-prename descclassname"><span class="pre">dkutils.validation.</span></code><code class="sig-name descname"><span class="pre">set_logging_level</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logging_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/validation.html#set_logging_level"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.validation.set_logging_level" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.validation.set_logging_level">
+<span class="sig-prename descclassname"><span class="pre">dkutils.validation.</span></span><span class="sig-name descname"><span class="pre">set_logging_level</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logging_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/validation.html#set_logging_level"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.validation.set_logging_level" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the logging level for the logger in the global variable LOGGER. If the global variable LOOGER does
 not exist it will be set to a logger obtained from the logging library. This is to allow code to be run
 outside of DataKitchen without the need to add code to initialize the global variable LOGGER has is done
@@ -307,8 +308,8 @@ by DataKitchen.make</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="dkutils.validation.skip_token_validation">
-<code class="sig-prename descclassname"><span class="pre">dkutils.validation.</span></code><code class="sig-name descname"><span class="pre">skip_token_validation</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/validation.html#skip_token_validation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.validation.skip_token_validation" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.validation.skip_token_validation">
+<span class="sig-prename descclassname"><span class="pre">dkutils.validation.</span></span><span class="sig-name descname"><span class="pre">skip_token_validation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/validation.html#skip_token_validation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.validation.skip_token_validation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determine if the outgoing API request should validate the current auth token and
 refresh it if invalid.</p>
 <dl class="field-list simple">
@@ -322,8 +323,8 @@ refresh it if invalid.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="dkutils.validation.validate_globals">
-<code class="sig-prename descclassname"><span class="pre">dkutils.validation.</span></code><code class="sig-name descname"><span class="pre">validate_globals</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">global_var_names</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/validation.html#validate_globals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.validation.validate_globals" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.validation.validate_globals">
+<span class="sig-prename descclassname"><span class="pre">dkutils.validation.</span></span><span class="sig-name descname"><span class="pre">validate_globals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">global_var_names</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/validation.html#validate_globals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.validation.validate_globals" title="Permalink to this definition">¶</a></dt>
 <dd><p>Validate that the list of provided global variable names exist in the global namespace
 of the calling function.</p>
 <dl class="field-list simple">

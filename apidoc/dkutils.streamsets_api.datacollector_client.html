@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.streamsets_api.datacollector_client module &mdash; DKUtils 2.1.0 documentation</title>
+  <title>dkutils.streamsets_api.datacollector_client module &mdash; DKUtils 2.2.0 documentation</title>
   
 
   
@@ -21,6 +21,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -32,6 +33,8 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -81,7 +84,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Code Documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="dkutils.html">dkutils package</a><ul class="current">
@@ -108,6 +111,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-2-0">v2.2.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-1-0">v2.1.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-0-0">v2.0.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-12-1">v1.12.1</a></li>
@@ -241,8 +245,8 @@
   <div class="section" id="module-dkutils.streamsets_api.datacollector_client">
 <span id="dkutils-streamsets-api-datacollector-client-module"></span><h1>dkutils.streamsets_api.datacollector_client module<a class="headerlink" href="#module-dkutils.streamsets_api.datacollector_client" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="dkutils.streamsets_api.datacollector_client.DataCollectorClient">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">dkutils.streamsets_api.datacollector_client.</span></code><code class="sig-name descname"><span class="pre">DataCollectorClient</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/streamsets_api/datacollector_client.html#DataCollectorClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.DataCollectorClient" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.streamsets_api.datacollector_client.DataCollectorClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dkutils.streamsets_api.datacollector_client.</span></span><span class="sig-name descname"><span class="pre">DataCollectorClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/streamsets_api/datacollector_client.html#DataCollectorClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.DataCollectorClient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Client object for invoking <a class="reference external" href="https://streamsets.com/blog/retrieving-metrics-via-streamsets-data-collector-rest-api/">StreamSets Data Collector
 REST API</a></p>
@@ -257,8 +261,8 @@ REST API</a></p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="dkutils.streamsets_api.datacollector_client.DataCollectorClient.__init__">
-<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/streamsets_api/datacollector_client.html#DataCollectorClient.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.DataCollectorClient.__init__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.streamsets_api.datacollector_client.DataCollectorClient.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/streamsets_api/datacollector_client.html#DataCollectorClient.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.DataCollectorClient.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Client object for invoking <a class="reference external" href="https://streamsets.com/blog/retrieving-metrics-via-streamsets-data-collector-rest-api/">StreamSets Data Collector
 REST API</a></p>
 <dl class="field-list simple">
@@ -274,8 +278,8 @@ REST API</a></p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="dkutils.streamsets_api.datacollector_client.DataCollectorClient.get_pipeline_full_status">
-<code class="sig-name descname"><span class="pre">get_pipeline_full_status</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/streamsets_api/datacollector_client.html#DataCollectorClient.get_pipeline_full_status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.DataCollectorClient.get_pipeline_full_status" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.streamsets_api.datacollector_client.DataCollectorClient.get_pipeline_full_status">
+<span class="sig-name descname"><span class="pre">get_pipeline_full_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/streamsets_api/datacollector_client.html#DataCollectorClient.get_pipeline_full_status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.DataCollectorClient.get_pipeline_full_status" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the JSON containing the status of the pipeline with the given pipeline_id</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -287,18 +291,15 @@ REST API</a></p>
 <li><p><strong>ValueError</strong> – If the pipeline_id is None</p></li>
 </ul>
 </dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p></p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>requests.Response.json()</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>requests.Response.json()</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt id="dkutils.streamsets_api.datacollector_client.DataCollectorClient.get_pipeline_status">
-<code class="sig-name descname"><span class="pre">get_pipeline_status</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/streamsets_api/datacollector_client.html#DataCollectorClient.get_pipeline_status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.DataCollectorClient.get_pipeline_status" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.streamsets_api.datacollector_client.DataCollectorClient.get_pipeline_status">
+<span class="sig-name descname"><span class="pre">get_pipeline_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/streamsets_api/datacollector_client.html#DataCollectorClient.get_pipeline_status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.DataCollectorClient.get_pipeline_status" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get an instance of Pipeline.Status that represents the status of the pipeline with the given pipeline_id</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -320,8 +321,8 @@ REST API</a></p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="dkutils.streamsets_api.datacollector_client.DataCollectorClient.reset_pipeline">
-<code class="sig-name descname"><span class="pre">reset_pipeline</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/streamsets_api/datacollector_client.html#DataCollectorClient.reset_pipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.DataCollectorClient.reset_pipeline" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.streamsets_api.datacollector_client.DataCollectorClient.reset_pipeline">
+<span class="sig-name descname"><span class="pre">reset_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/streamsets_api/datacollector_client.html#DataCollectorClient.reset_pipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.DataCollectorClient.reset_pipeline" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resets the origin offset of the pipeline with the given pipeline_id</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -337,8 +338,8 @@ REST API</a></p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="dkutils.streamsets_api.datacollector_client.DataCollectorClient.start_pipeline">
-<code class="sig-name descname"><span class="pre">start_pipeline</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/streamsets_api/datacollector_client.html#DataCollectorClient.start_pipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.DataCollectorClient.start_pipeline" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.streamsets_api.datacollector_client.DataCollectorClient.start_pipeline">
+<span class="sig-name descname"><span class="pre">start_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/streamsets_api/datacollector_client.html#DataCollectorClient.start_pipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.DataCollectorClient.start_pipeline" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start the pipeline with the given pipeline_id</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -353,18 +354,15 @@ REST API</a></p>
 <li><p><strong>ValueError</strong> – If the pipeline_id is None</p></li>
 </ul>
 </dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p></p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>requests.Response.json()</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>requests.Response.json()</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt id="dkutils.streamsets_api.datacollector_client.DataCollectorClient.stop_pipeline">
-<code class="sig-name descname"><span class="pre">stop_pipeline</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/streamsets_api/datacollector_client.html#DataCollectorClient.stop_pipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.DataCollectorClient.stop_pipeline" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.streamsets_api.datacollector_client.DataCollectorClient.stop_pipeline">
+<span class="sig-name descname"><span class="pre">stop_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/streamsets_api/datacollector_client.html#DataCollectorClient.stop_pipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.DataCollectorClient.stop_pipeline" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stop the pipeline with the given pipeline_id</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -379,11 +377,8 @@ REST API</a></p>
 <li><p><strong>ValueError</strong> – If the pipeline_id is None</p></li>
 </ul>
 </dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p></p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>requests.Response.json()</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>requests.Response.json()</p>
 </dd>
 </dl>
 </dd></dl>
@@ -391,93 +386,93 @@ REST API</a></p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">dkutils.streamsets_api.datacollector_client.</span></code><code class="sig-name descname"><span class="pre">PipelineStatus</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/streamsets_api/datacollector_client.html#PipelineStatus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.streamsets_api.datacollector_client.PipelineStatus">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dkutils.streamsets_api.datacollector_client.</span></span><span class="sig-name descname"><span class="pre">PipelineStatus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/streamsets_api/datacollector_client.html#PipelineStatus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
 <p>An enumeration.</p>
 <dl class="py attribute">
-<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.CONNECTING">
-<code class="sig-name descname"><span class="pre">CONNECTING</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'CONNECTING'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.CONNECTING" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.streamsets_api.datacollector_client.PipelineStatus.CONNECTING">
+<span class="sig-name descname"><span class="pre">CONNECTING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'CONNECTING'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.CONNECTING" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.CONNECT_ERROR">
-<code class="sig-name descname"><span class="pre">CONNECT_ERROR</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'CONNECT_ERROR'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.CONNECT_ERROR" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.streamsets_api.datacollector_client.PipelineStatus.CONNECT_ERROR">
+<span class="sig-name descname"><span class="pre">CONNECT_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'CONNECT_ERROR'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.CONNECT_ERROR" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.DISCONNECTED">
-<code class="sig-name descname"><span class="pre">DISCONNECTED</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'DISCONNECTED'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.DISCONNECTED" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.streamsets_api.datacollector_client.PipelineStatus.DISCONNECTED">
+<span class="sig-name descname"><span class="pre">DISCONNECTED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'DISCONNECTED'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.DISCONNECTED" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.EDITED">
-<code class="sig-name descname"><span class="pre">EDITED</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'EDITED'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.EDITED" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.streamsets_api.datacollector_client.PipelineStatus.EDITED">
+<span class="sig-name descname"><span class="pre">EDITED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'EDITED'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.EDITED" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.FINISHED">
-<code class="sig-name descname"><span class="pre">FINISHED</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'FINISHED'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.FINISHED" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.streamsets_api.datacollector_client.PipelineStatus.FINISHED">
+<span class="sig-name descname"><span class="pre">FINISHED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FINISHED'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.FINISHED" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.FINISHING">
-<code class="sig-name descname"><span class="pre">FINISHING</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'FINISHING'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.FINISHING" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.streamsets_api.datacollector_client.PipelineStatus.FINISHING">
+<span class="sig-name descname"><span class="pre">FINISHING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FINISHING'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.FINISHING" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.RETRY">
-<code class="sig-name descname"><span class="pre">RETRY</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'RETRY'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.RETRY" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.streamsets_api.datacollector_client.PipelineStatus.RETRY">
+<span class="sig-name descname"><span class="pre">RETRY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'RETRY'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.RETRY" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.RUNNING">
-<code class="sig-name descname"><span class="pre">RUNNING</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'RUNNING'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.RUNNING" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.streamsets_api.datacollector_client.PipelineStatus.RUNNING">
+<span class="sig-name descname"><span class="pre">RUNNING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'RUNNING'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.RUNNING" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.RUNNING_ERROR">
-<code class="sig-name descname"><span class="pre">RUNNING_ERROR</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'RUNNING_ERROR'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.RUNNING_ERROR" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.streamsets_api.datacollector_client.PipelineStatus.RUNNING_ERROR">
+<span class="sig-name descname"><span class="pre">RUNNING_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'RUNNING_ERROR'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.RUNNING_ERROR" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.RUN_ERROR">
-<code class="sig-name descname"><span class="pre">RUN_ERROR</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'RUN_ERROR'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.RUN_ERROR" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.streamsets_api.datacollector_client.PipelineStatus.RUN_ERROR">
+<span class="sig-name descname"><span class="pre">RUN_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'RUN_ERROR'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.RUN_ERROR" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.STARTING">
-<code class="sig-name descname"><span class="pre">STARTING</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'STARTING'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.STARTING" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.streamsets_api.datacollector_client.PipelineStatus.STARTING">
+<span class="sig-name descname"><span class="pre">STARTING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'STARTING'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.STARTING" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.STARTING_ERROR">
-<code class="sig-name descname"><span class="pre">STARTING_ERROR</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'STARTING_ERROR'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.STARTING_ERROR" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.streamsets_api.datacollector_client.PipelineStatus.STARTING_ERROR">
+<span class="sig-name descname"><span class="pre">STARTING_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'STARTING_ERROR'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.STARTING_ERROR" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.START_ERROR">
-<code class="sig-name descname"><span class="pre">START_ERROR</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'START_ERROR'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.START_ERROR" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.streamsets_api.datacollector_client.PipelineStatus.START_ERROR">
+<span class="sig-name descname"><span class="pre">START_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'START_ERROR'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.START_ERROR" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.STOPPED">
-<code class="sig-name descname"><span class="pre">STOPPED</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'STOPPED'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.STOPPED" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.streamsets_api.datacollector_client.PipelineStatus.STOPPED">
+<span class="sig-name descname"><span class="pre">STOPPED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'STOPPED'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.STOPPED" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.STOPPING">
-<code class="sig-name descname"><span class="pre">STOPPING</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'STOPPING'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.STOPPING" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.streamsets_api.datacollector_client.PipelineStatus.STOPPING">
+<span class="sig-name descname"><span class="pre">STOPPING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'STOPPING'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.STOPPING" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.STOPPING_ERROR">
-<code class="sig-name descname"><span class="pre">STOPPING_ERROR</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'STOPPING_ERROR'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.STOPPING_ERROR" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.streamsets_api.datacollector_client.PipelineStatus.STOPPING_ERROR">
+<span class="sig-name descname"><span class="pre">STOPPING_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'STOPPING_ERROR'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.STOPPING_ERROR" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.streamsets_api.datacollector_client.PipelineStatus.STOP_ERROR">
-<code class="sig-name descname"><span class="pre">STOP_ERROR</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'STOP_ERROR'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.STOP_ERROR" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.streamsets_api.datacollector_client.PipelineStatus.STOP_ERROR">
+<span class="sig-name descname"><span class="pre">STOP_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'STOP_ERROR'</span></em><a class="headerlink" href="#dkutils.streamsets_api.datacollector_client.PipelineStatus.STOP_ERROR" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api.tests_utils module &mdash; DKUtils 2.1.0 documentation</title>
+  <title>dkutils.datakitchen_api.tests_utils module &mdash; DKUtils 2.2.0 documentation</title>
   
 
   
@@ -21,6 +21,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -32,12 +33,14 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="dkutils.gmail_api package" href="dkutils.gmail_api.html" />
-    <link rel="prev" title="dkutils.datakitchen_api.datetime_utils module" href="dkutils.datakitchen_api.datetime_utils.html" /> 
+    <link rel="prev" title="dkutils.datakitchen_api.kitchen module" href="dkutils.datakitchen_api.kitchen.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -81,7 +84,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Code Documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="dkutils.html">dkutils package</a><ul class="current">
@@ -108,6 +111,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-2-0">v2.2.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-1-0">v2.1.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-0-0">v2.0.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-12-1">v1.12.1</a></li>
@@ -229,7 +233,7 @@
         <a href="dkutils.gmail_api.html" class="btn btn-neutral float-right" title="dkutils.gmail_api package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="dkutils.datakitchen_api.datetime_utils.html" class="btn btn-neutral float-left" title="dkutils.datakitchen_api.datetime_utils module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="dkutils.datakitchen_api.kitchen.html" class="btn btn-neutral float-left" title="dkutils.datakitchen_api.kitchen module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -241,79 +245,79 @@
   <div class="section" id="module-dkutils.datakitchen_api.tests_utils">
 <span id="dkutils-datakitchen-api-tests-utils-module"></span><h1>dkutils.datakitchen_api.tests_utils module<a class="headerlink" href="#module-dkutils.datakitchen_api.tests_utils" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="dkutils.datakitchen_api.tests_utils.TestInfo">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">dkutils.datakitchen_api.tests_utils.</span></code><code class="sig-name descname"><span class="pre">TestInfo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datestamp</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kitchen</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">failure_action</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variable</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comparison</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expression</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/tests_utils.html#TestInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.tests_utils.TestInfo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dkutils.datakitchen_api.tests_utils.</span></span><span class="sig-name descname"><span class="pre">TestInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kitchen</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">failure_action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comparison</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expression</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/tests_utils.html#TestInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
-<dt id="dkutils.datakitchen_api.tests_utils.TestInfo.get">
-<code class="sig-name descname"><span class="pre">get</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/tests_utils.html#TestInfo.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo.get" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.tests_utils.TestInfo.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/tests_utils.html#TestInfo.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo.get" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="dkutils.datakitchen_api.tests_utils.TestInfo.keys">
-<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">keys</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/tests_utils.html#TestInfo.keys"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo.keys" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.tests_utils.TestInfo.keys">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/tests_utils.html#TestInfo.keys"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo.keys" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.datakitchen_api.tests_utils.TestInfo.comparison">
-<code class="sig-name descname"><span class="pre">comparison</span></code><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo.comparison" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.tests_utils.TestInfo.comparison">
+<span class="sig-name descname"><span class="pre">comparison</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo.comparison" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.datakitchen_api.tests_utils.TestInfo.datestamp">
-<code class="sig-name descname"><span class="pre">datestamp</span></code><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo.datestamp" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.tests_utils.TestInfo.datestamp">
+<span class="sig-name descname"><span class="pre">datestamp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo.datestamp" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.datakitchen_api.tests_utils.TestInfo.description">
-<code class="sig-name descname"><span class="pre">description</span></code><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo.description" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.tests_utils.TestInfo.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo.description" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.datakitchen_api.tests_utils.TestInfo.expression">
-<code class="sig-name descname"><span class="pre">expression</span></code><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo.expression" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.tests_utils.TestInfo.expression">
+<span class="sig-name descname"><span class="pre">expression</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo.expression" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.datakitchen_api.tests_utils.TestInfo.failure_action">
-<code class="sig-name descname"><span class="pre">failure_action</span></code><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo.failure_action" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.tests_utils.TestInfo.failure_action">
+<span class="sig-name descname"><span class="pre">failure_action</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo.failure_action" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.datakitchen_api.tests_utils.TestInfo.kitchen">
-<code class="sig-name descname"><span class="pre">kitchen</span></code><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo.kitchen" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.tests_utils.TestInfo.kitchen">
+<span class="sig-name descname"><span class="pre">kitchen</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo.kitchen" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.datakitchen_api.tests_utils.TestInfo.metric">
-<code class="sig-name descname"><span class="pre">metric</span></code><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo.metric" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.tests_utils.TestInfo.metric">
+<span class="sig-name descname"><span class="pre">metric</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo.metric" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.datakitchen_api.tests_utils.TestInfo.node">
-<code class="sig-name descname"><span class="pre">node</span></code><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo.node" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.tests_utils.TestInfo.node">
+<span class="sig-name descname"><span class="pre">node</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo.node" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.datakitchen_api.tests_utils.TestInfo.recipe">
-<code class="sig-name descname"><span class="pre">recipe</span></code><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo.recipe" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.tests_utils.TestInfo.recipe">
+<span class="sig-name descname"><span class="pre">recipe</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo.recipe" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.datakitchen_api.tests_utils.TestInfo.test">
-<code class="sig-name descname"><span class="pre">test</span></code><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo.test" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.tests_utils.TestInfo.test">
+<span class="sig-name descname"><span class="pre">test</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo.test" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="dkutils.datakitchen_api.tests_utils.TestInfo.variable">
-<code class="sig-name descname"><span class="pre">variable</span></code><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo.variable" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.tests_utils.TestInfo.variable">
+<span class="sig-name descname"><span class="pre">variable</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.TestInfo.variable" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
-<dt id="dkutils.datakitchen_api.tests_utils.extract_tests_from_files">
-<code class="sig-prename descclassname"><span class="pre">dkutils.datakitchen_api.tests_utils.</span></code><code class="sig-name descname"><span class="pre">extract_tests_from_files</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datestamp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_paths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kitchen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#dkutils.datakitchen_api.tests_utils.TestInfo" title="dkutils.datakitchen_api.tests_utils.TestInfo"><span class="pre">dkutils.datakitchen_api.tests_utils.TestInfo</span></a><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/tests_utils.html#extract_tests_from_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.extract_tests_from_files" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.tests_utils.extract_tests_from_files">
+<span class="sig-prename descclassname"><span class="pre">dkutils.datakitchen_api.tests_utils.</span></span><span class="sig-name descname"><span class="pre">extract_tests_from_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datestamp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_paths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kitchen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#dkutils.datakitchen_api.tests_utils.TestInfo" title="dkutils.datakitchen_api.tests_utils.TestInfo"><span class="pre">dkutils.datakitchen_api.tests_utils.TestInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/tests_utils.html#extract_tests_from_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.extract_tests_from_files" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract tests from the provided test_paths. The kitchen and recipe are derived from the client,
 unless otherwise specified as optional input arguments. If kitchen and/or recipe arguments are
 provided, they are set accordingly on the provided client.</p>
@@ -338,8 +342,8 @@ kitchen and/or recipe arguments are provided</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="dkutils.datakitchen_api.tests_utils.get_recipe_test_paths">
-<code class="sig-prename descclassname"><span class="pre">dkutils.datakitchen_api.tests_utils.</span></code><code class="sig-name descname"><span class="pre">get_recipe_test_paths</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kitchen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/tests_utils.html#get_recipe_test_paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.get_recipe_test_paths" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.tests_utils.get_recipe_test_paths">
+<span class="sig-prename descclassname"><span class="pre">dkutils.datakitchen_api.tests_utils.</span></span><span class="sig-name descname"><span class="pre">get_recipe_test_paths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kitchen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/tests_utils.html#get_recipe_test_paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.get_recipe_test_paths" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a list of paths to all recipe files that potentially contain tests. The kitchen and
 and recipe that are interrogated for tests are derived from the client, unless otherwise
 specified as optional input arguments. If kitchen and/or recipe arguments are provided, they
@@ -363,8 +367,8 @@ kitchen and/or recipe arguments are provided</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="dkutils.datakitchen_api.tests_utils.get_test_infos">
-<code class="sig-prename descclassname"><span class="pre">dkutils.datakitchen_api.tests_utils.</span></code><code class="sig-name descname"><span class="pre">get_test_infos</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datestamp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kitchen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#dkutils.datakitchen_api.tests_utils.TestInfo" title="dkutils.datakitchen_api.tests_utils.TestInfo"><span class="pre">dkutils.datakitchen_api.tests_utils.TestInfo</span></a><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/tests_utils.html#get_test_infos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.get_test_infos" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.tests_utils.get_test_infos">
+<span class="sig-prename descclassname"><span class="pre">dkutils.datakitchen_api.tests_utils.</span></span><span class="sig-name descname"><span class="pre">get_test_infos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datestamp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kitchen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#dkutils.datakitchen_api.tests_utils.TestInfo" title="dkutils.datakitchen_api.tests_utils.TestInfo"><span class="pre">dkutils.datakitchen_api.tests_utils.TestInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/tests_utils.html#get_test_infos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.get_test_infos" title="Permalink to this definition">¶</a></dt>
 <dd><p>For a set of recipes in a kitchen, retrieve all the defined tests and their associated metadata.
 Return a list of test_info dictionaries, one per test.</p>
 <dl class="field-list simple">
@@ -387,8 +391,8 @@ kitchen argument is provided</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="dkutils.datakitchen_api.tests_utils.is_valid_test_directory">
-<code class="sig-prename descclassname"><span class="pre">dkutils.datakitchen_api.tests_utils.</span></code><code class="sig-name descname"><span class="pre">is_valid_test_directory</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_depth</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/tests_utils.html#is_valid_test_directory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.is_valid_test_directory" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.tests_utils.is_valid_test_directory">
+<span class="sig-prename descclassname"><span class="pre">dkutils.datakitchen_api.tests_utils.</span></span><span class="sig-name descname"><span class="pre">is_valid_test_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_depth</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/tests_utils.html#is_valid_test_directory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.is_valid_test_directory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Only node directories and their immediate subdirectories may contain tests. This function takes
 a recipe subdirectory and returns True if it may contain tests or False otherwise.</p>
 <dl class="field-list simple">
@@ -411,8 +415,8 @@ direct subdirectories (i.e. file_depth == 2 or 3)</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="dkutils.datakitchen_api.tests_utils.is_valid_test_file">
-<code class="sig-prename descclassname"><span class="pre">dkutils.datakitchen_api.tests_utils.</span></code><code class="sig-name descname"><span class="pre">is_valid_test_file</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_depth</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/tests_utils.html#is_valid_test_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.is_valid_test_file" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.tests_utils.is_valid_test_file">
+<span class="sig-prename descclassname"><span class="pre">dkutils.datakitchen_api.tests_utils.</span></span><span class="sig-name descname"><span class="pre">is_valid_test_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_depth</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/tests_utils.html#is_valid_test_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.is_valid_test_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Only certain files may contain tests. This function returns True if the provided file may
 contain tests or False otherwise.</p>
 <dl class="field-list simple">
@@ -432,8 +436,8 @@ contain tests or False otherwise.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="dkutils.datakitchen_api.tests_utils.write_test_infos_csv">
-<code class="sig-prename descclassname"><span class="pre">dkutils.datakitchen_api.tests_utils.</span></code><code class="sig-name descname"><span class="pre">write_test_infos_csv</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_infos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_csv_path</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/tests_utils.html#write_test_infos_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.write_test_infos_csv" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.tests_utils.write_test_infos_csv">
+<span class="sig-prename descclassname"><span class="pre">dkutils.datakitchen_api.tests_utils.</span></span><span class="sig-name descname"><span class="pre">write_test_infos_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_infos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_csv_path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/tests_utils.html#write_test_infos_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.tests_utils.write_test_infos_csv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write a list of TestInfo objects to a CSV file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -458,7 +462,7 @@ contain tests or False otherwise.</p>
         <a href="dkutils.gmail_api.html" class="btn btn-neutral float-right" title="dkutils.gmail_api package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="dkutils.datakitchen_api.datetime_utils.html" class="btn btn-neutral float-left" title="dkutils.datakitchen_api.datetime_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="dkutils.datakitchen_api.kitchen.html" class="btn btn-neutral float-left" title="dkutils.datakitchen_api.kitchen module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
