@@ -21,7 +21,7 @@ setuptools.setup(
     classifiers=[
         "Programming Language :: Python :: 3",
     ],
-    python_requires='>=3.7',
+    python_requires='>=3.8',
     install_requires=[
         "dataclasses>=0.6",
         "jira>=2.0.0",
