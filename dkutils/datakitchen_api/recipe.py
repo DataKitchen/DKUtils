@@ -87,7 +87,7 @@ class Recipe:
         response = self._client._api_request(API_DELETE, 'recipe', kitchen_name, self._name)
         return response
 
-    def get_recipe_files(self, kitchen_name):
+    def get_recipe_files(self, kitchen_name: str):
         """
         Retrieve all the files for this recipe in the provided kitchen.
 
@@ -123,7 +123,7 @@ class Recipe:
 
         return recipe_files_dict
 
-    def update_recipe_files(self, kitchen_name, filepaths):
+    def update_recipe_files(self, kitchen_name: str, filepaths: dict):
         """
         Update the files for this recipe in the provided kitchen.
 
@@ -163,7 +163,7 @@ class Recipe:
         )
         return response
 
-    def delete_recipe_files(self, kitchen_name, filepaths):
+    def delete_recipe_files(self, kitchen_name: str, filepaths: list):
         """
         Delete the provided files from this recipe in the provided kitchen.
 
