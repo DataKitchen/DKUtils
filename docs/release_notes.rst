@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+v2.3.0
+------
+* Added new Recipe class to DataKitchenClient
+* Added create and delete recipes to Recipe class
+* Added get, update, and delete recipe files to Recipe class
 
 v2.2.0
 -------

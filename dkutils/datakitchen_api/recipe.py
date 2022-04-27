@@ -1,0 +1,200 @@
+from __future__ import annotations
+
+import logging
+
+from typing import TYPE_CHECKING
+from pathlib import Path
+
+from dkutils.constants import (
+    API_DELETE,
+    API_GET,
+    API_POST,
+    KITCHEN,
+)
+
+if TYPE_CHECKING:
+    from .datakitchen_client import DataKitchenClient
+
+logger = logging.getLogger(__name__)
+
+
+class Recipe:
+
+    def __init__(self, client: DataKitchenClient, name: str) -> None:
+        """
+        Recipe object for performing recipe related API requests.
+
+        Parameters
+        ----------
+        client : DataKitchenClient
+            Client for making requests .
+        name : str
+            Name of existing recipe.
+        """
+        self._client = client
+        self._name = name
+
+    @staticmethod
+    def create(client: DataKitchenClient, recipe_name: str, description: str = None) -> Recipe:
+        """
+        Create a new recipe in the kitchen set on the provided client and return a Recipe object
+
+        Parameters
+        ----------
+        client : DataKitchenClient
+            Client for making requests.
+        recipe_name : str
+            New recipe name
+        description : str
+            New recipe description
+
+        Returns
+        -------
+        Recipe
+            :class:`Recipe <Recipe>` object
+        """
+        logger.debug(f'Creating recipe named {recipe_name} in kitchen {client.kitchen}...')
+        client._ensure_attributes(KITCHEN)
+
+        if not recipe_name:
+            raise ValueError('Recipe name cannot be empty or None')
+
+        # Ensure recipe doesn't already exist
+        recipes = client.get_recipes()
+        if recipe_name in recipes:
+            raise ValueError(f'Recipe {recipe_name} already exists in kitchen {client.kitchen}')
+
+        client._api_request(
+            API_POST, 'recipe', 'create', client.kitchen, recipe_name, description=description
+        )
+        return Recipe(client, recipe_name)
+
+    def delete(self, kitchen_name: str):
+        """
+        Delete this recipe from the provided kitchen.
+
+        Parameters
+        ----------
+        kitchen_name : str
+            Kitchen from which the recipe will be deleted.
+
+        Returns
+        -------
+        requests.Response
+            :class:`Response <Response>` object
+        """
+        logger.debug(f'Deleting recipe named {self._name} in kitchen {kitchen_name}...')
+        response = self._client._api_request(API_DELETE, 'recipe', kitchen_name, self._name)
+        return response
+
+    def get_recipe_files(self, kitchen_name: str):
+        """
+        Retrieve all the files for this recipe in the provided kitchen.
+
+        Parameters
+        ----------
+        kitchen_name : str
+            Kitchen from which the recipe files will be retrieved.
+
+        Returns
+        -------
+        dict
+            Dictionary keyed by file path and valued by file contents string.
+        """
+        logger.debug(f'Retrieving files for recipe {self._name} in kitchen {kitchen_name}...')
+        response = self._client._api_request(API_GET, 'recipe', 'get', kitchen_name, self._name)
+
+        recipe_files_dict = {}
+        for path, file_details_array in response.json()['recipes'][self._name].items():
+
+            # Strip recipe name from filepath
+            root_path = Path(*Path(path).parts[1:])
+
+            for file_details in file_details_array:
+                filepath = str(root_path / file_details['filename'])
+                if 'text' in file_details:
+                    recipe_files_dict[filepath] = file_details['text']
+                elif 'json' in file_details:
+                    recipe_files_dict[filepath] = file_details['json']
+                else:
+                    raise Exception(
+                        f'Unrecognized file type for {filepath}: accepted types are TEXT or JSON'
+                    )
+
+        return recipe_files_dict
+
+    def update_recipe_files(self, kitchen_name: str, filepaths: dict):
+        """
+        Update the files for this recipe in the provided kitchen.
+
+        Parameters
+        ----------
+        kitchen_name : str
+            Kitchen for which the recipe files will be updated.
+        filepaths : dict
+            Dictionary keyed by file path and valued by new/updated file contents.
+
+        Returns
+        -------
+        requests.Response
+            :class:`Response <Response>` object
+        """
+        logger.debug(
+            f'Updating files ({list(filepaths.keys())}) for recipe {self._name} in kitchen {kitchen_name}...'
+        )
+
+        # Retrieve all the existing files in the recipe
+        recipe_files = self.get_recipe_files(kitchen_name)
+
+        files = {}
+        for p, c in filepaths.items():
+            files[p] = {'contents': c, 'isNew': False if p in recipe_files else True}
+
+        response = self._client._api_request(
+            API_POST,
+            'recipe',
+            'update',
+            kitchen_name,
+            self._name,
+            skipFormat=True,
+            skipCompile=True,
+            files=files,
+            message=f'Creating recipe files {files.keys()}'
+        )
+        return response
+
+    def delete_recipe_files(self, kitchen_name: str, filepaths: list):
+        """
+        Delete the provided files from this recipe in the provided kitchen.
+
+        Parameters
+        ----------
+        kitchen_name : str
+            Kitchen from which the recipe files will be deleted.
+        filepaths : list
+            List of file paths to delete.
+
+        Returns
+        -------
+        requests.Response
+            :class:`Response <Response>` object
+        """
+        logger.debug(
+            f'Deleting files ({filepaths}) for recipe {self._name} in kitchen {kitchen_name}...'
+        )
+
+        # Including an empty dictionary for a file path implies file deletion
+        files = {p: {} for p in filepaths}
+
+        response = self._client._api_request(
+            API_POST,
+            'recipe',
+            'update',
+            kitchen_name,
+            self._name,
+            skipFormat=True,
+            skipCompile=True,
+            files=files,
+            message=f'Deleting recipe files {filepaths}'
+        )
+        return response

@@ -26,7 +26,7 @@ class Kitchen:
         Parameters
         ----------
         client : DataKitchenClient
-            Client for making requests .
+            Client for making requests.
         name : str
             Name of existing kitchen.
         """
@@ -59,7 +59,7 @@ class Kitchen:
             :class:`Kitchen <Kitchen>` object
         """
         logger.debug(f'Creating child kitchen of {parent_kitchen_name} named {new_kitchen_name}...')
-        response = client._api_request(
+        client._api_request(
             API_PUT,
             'kitchen',
             'create',
@@ -67,7 +67,6 @@ class Kitchen:
             new_kitchen_name,
             description=description,
         )
-        response.raise_for_status()
         return Kitchen(client, new_kitchen_name)
 
     def delete(self):
@@ -80,9 +79,7 @@ class Kitchen:
             :class:`Response <Response>` object
         """
         logger.debug(f'Deleting kitchen: {self._name}...')
-        response = self._client._api_request(API_DELETE, 'kitchen', 'delete', self._name)
-        response.raise_for_status()
-        return response
+        return self._client._api_request(API_DELETE, 'kitchen', 'delete', self._name)
 
     def _get_settings(self):
         """
@@ -94,7 +91,6 @@ class Kitchen:
         """
         logger.debug(f'Retrieving settings for kitchen: {self._name}...')
         response = self._client._api_request(API_GET, 'kitchen', self._name)
-        response.raise_for_status()
         return response.json()
 
     def _update_settings(self, kitchen_settings):
@@ -118,7 +114,6 @@ class Kitchen:
             kitchen_settings['kitchen']['name'],
             json={"kitchen.json": kitchen_settings['kitchen']}
         )
-        response.raise_for_status()
         return response.json()
 
     def get_alerts(self):
