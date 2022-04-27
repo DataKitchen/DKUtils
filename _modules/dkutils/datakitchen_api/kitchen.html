@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api.kitchen &mdash; DKUtils 2.2.0 documentation</title>
+  <title>dkutils.datakitchen_api.kitchen &mdash; DKUtils 2.3.0 documentation</title>
   
 
   
@@ -109,6 +109,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-3-0">v2.3.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-2-0">v2.2.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-1-0">v2.1.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-0-0">v2.0.0</a></li>
@@ -252,7 +253,7 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        client : DataKitchenClient</span>
-<span class="sd">            Client for making requests .</span>
+<span class="sd">            Client for making requests.</span>
 <span class="sd">        name : str</span>
 <span class="sd">            Name of existing kitchen.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -285,7 +286,7 @@
 <span class="sd">            :class:`Kitchen &lt;Kitchen&gt;` object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Creating child kitchen of </span><span class="si">{</span><span class="n">parent_kitchen_name</span><span class="si">}</span><span class="s1"> named </span><span class="si">{</span><span class="n">new_kitchen_name</span><span class="si">}</span><span class="s1">...&#39;</span><span class="p">)</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span>
             <span class="n">API_PUT</span><span class="p">,</span>
             <span class="s1">&#39;kitchen&#39;</span><span class="p">,</span>
             <span class="s1">&#39;create&#39;</span><span class="p">,</span>
@@ -293,7 +294,6 @@
             <span class="n">new_kitchen_name</span><span class="p">,</span>
             <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">Kitchen</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">new_kitchen_name</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Kitchen.delete"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -306,9 +306,7 @@
 <span class="sd">            :class:`Response &lt;Response&gt;` object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Deleting kitchen: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s1">...&#39;</span><span class="p">)</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_DELETE</span><span class="p">,</span> <span class="s1">&#39;kitchen&#39;</span><span class="p">,</span> <span class="s1">&#39;delete&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
-        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">response</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_DELETE</span><span class="p">,</span> <span class="s1">&#39;kitchen&#39;</span><span class="p">,</span> <span class="s1">&#39;delete&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_get_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -320,7 +318,6 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Retrieving settings for kitchen: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s1">...&#39;</span><span class="p">)</span>
         <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_GET</span><span class="p">,</span> <span class="s1">&#39;kitchen&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
-        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_update_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kitchen_settings</span><span class="p">):</span>
@@ -344,7 +341,6 @@
             <span class="n">kitchen_settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
             <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;kitchen.json&quot;</span><span class="p">:</span> <span class="n">kitchen_settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">]}</span>
         <span class="p">)</span>
-        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Kitchen.get_alerts"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.get_alerts">[docs]</a>    <span class="k">def</span> <span class="nf">get_alerts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

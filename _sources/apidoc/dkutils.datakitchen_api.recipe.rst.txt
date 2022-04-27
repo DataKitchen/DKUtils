@@ -1,0 +1,7 @@
+dkutils.datakitchen\_api.recipe module
+======================================
+
+.. automodule:: dkutils.datakitchen_api.recipe
+   :members:
+   :undoc-members:
+   :show-inheritance:

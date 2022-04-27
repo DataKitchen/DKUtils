@@ -1,0 +1,423 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>dkutils.datakitchen_api.recipe module &mdash; DKUtils 2.3.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="dkutils.datakitchen_api.tests_utils module" href="dkutils.datakitchen_api.tests_utils.html" />
+    <link rel="prev" title="dkutils.datakitchen_api.kitchen module" href="dkutils.datakitchen_api.kitchen.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> DKUtils
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="dkutils.html">dkutils package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="dkutils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dkutils.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guide.html">Development Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#development-process">Development Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#deployment-checklist">Deployment Checklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#code-formatting-and-standards">Code formatting and standards</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#pre-commit-anchor">pre-commit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#flake8-anchor">Flake8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#yapf-anchor">YAPF</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#documentation-best-practices">Documentation Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#versioning">Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#makefile">Makefile</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-3-0">v2.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-2-0">v2.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-1-0">v2.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-0-0">v2.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-12-1">v1.12.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-12-0">v1.12.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-11-0">v1.11.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-10-0">v1.10.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-9-0">v1.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-8-2">v1.8.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-8-1">v1.8.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-8-0">v1.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-7-1">v1.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-7-0">v1.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-6-0">v1.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-5-0">v1.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-4-0">v1.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-3">v1.3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-2">v1.3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-1">v1.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-0">v1.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-2-0">v1.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-1-0">v1.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-0-1">v1.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-0-0">v1.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-16-0">v0.16.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-15-0">v0.15.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-14-0">v0.14.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-13-0">v0.13.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-12-0">v0.12.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-11-0">v0.11.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-10-2">v0.10.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-10-1">v0.10.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-10-0">v0.10.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-9-0">v0.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-8-2">v0.8.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-8-1">v0.8.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-8-0">v0.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-7-1">v0.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-7-0">v0.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-6-1">v0.6.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-6-0">v0.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-5-0">v0.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-4-0">v0.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-3-0">v0.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-2-0">v0.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-1-0">v0.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-4">v0.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-3">v0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-2">v0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-1">v0.0.1</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DKUtils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">dkutils</a> &raquo;</li>
+        
+          <li><a href="dkutils.html">dkutils package</a> &raquo;</li>
+        
+          <li><a href="dkutils.datakitchen_api.html">dkutils.datakitchen_api package</a> &raquo;</li>
+        
+      <li>dkutils.datakitchen_api.recipe module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/apidoc/dkutils.datakitchen_api.recipe.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="dkutils.datakitchen_api.tests_utils.html" class="btn btn-neutral float-right" title="dkutils.datakitchen_api.tests_utils module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="dkutils.datakitchen_api.kitchen.html" class="btn btn-neutral float-left" title="dkutils.datakitchen_api.kitchen module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-dkutils.datakitchen_api.recipe">
+<span id="dkutils-datakitchen-api-recipe-module"></span><h1>dkutils.datakitchen_api.recipe module<a class="headerlink" href="#module-dkutils.datakitchen_api.recipe" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.recipe.Recipe">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dkutils.datakitchen_api.recipe.</span></span><span class="sig-name descname"><span class="pre">Recipe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient" title="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient"><span class="pre">DataKitchenClient</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/recipe.html#Recipe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.recipe.Recipe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Recipe object for performing recipe related API requests.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<a class="reference internal" href="dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient" title="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient"><em>DataKitchenClient</em></a>) – Client for making requests .</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – Name of existing recipe.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.recipe.Recipe.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient" title="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient"><span class="pre">DataKitchenClient</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/recipe.html#Recipe.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.recipe.Recipe.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recipe object for performing recipe related API requests.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<a class="reference internal" href="dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient" title="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient"><em>DataKitchenClient</em></a>) – Client for making requests .</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – Name of existing recipe.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.recipe.Recipe.create">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient" title="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient"><span class="pre">DataKitchenClient</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#dkutils.datakitchen_api.recipe.Recipe" title="dkutils.datakitchen_api.recipe.Recipe"><span class="pre">Recipe</span></a></span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/recipe.html#Recipe.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.recipe.Recipe.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new recipe in the kitchen set on the provided client and return a Recipe object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<a class="reference internal" href="dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient" title="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient"><em>DataKitchenClient</em></a>) – Client for making requests.</p></li>
+<li><p><strong>recipe_name</strong> (<em>str</em>) – New recipe name</p></li>
+<li><p><strong>description</strong> (<em>str</em>) – New recipe description</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><a class="reference internal" href="#dkutils.datakitchen_api.recipe.Recipe" title="dkutils.datakitchen_api.recipe.Recipe"><code class="xref py py-class docutils literal notranslate"><span class="pre">Recipe</span></code></a> object</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#dkutils.datakitchen_api.recipe.Recipe" title="dkutils.datakitchen_api.recipe.Recipe">Recipe</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.recipe.Recipe.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kitchen_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/recipe.html#Recipe.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.recipe.Recipe.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete this recipe from the provided kitchen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>kitchen_name</strong> (<em>str</em>) – Kitchen from which the recipe will be deleted.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code> object</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>requests.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.recipe.Recipe.delete_recipe_files">
+<span class="sig-name descname"><span class="pre">delete_recipe_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kitchen_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepaths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/recipe.html#Recipe.delete_recipe_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.recipe.Recipe.delete_recipe_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the provided files from this recipe in the provided kitchen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kitchen_name</strong> (<em>str</em>) – Kitchen from which the recipe files will be deleted.</p></li>
+<li><p><strong>filepaths</strong> (<em>list</em>) – List of file paths to delete.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code> object</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>requests.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.recipe.Recipe.get_recipe_files">
+<span class="sig-name descname"><span class="pre">get_recipe_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kitchen_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/recipe.html#Recipe.get_recipe_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.recipe.Recipe.get_recipe_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve all the files for this recipe in the provided kitchen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>kitchen_name</strong> (<em>str</em>) – Kitchen from which the recipe files will be retrieved.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary keyed by file path and valued by file contents string.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.recipe.Recipe.update_recipe_files">
+<span class="sig-name descname"><span class="pre">update_recipe_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kitchen_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepaths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/recipe.html#Recipe.update_recipe_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.recipe.Recipe.update_recipe_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the files for this recipe in the provided kitchen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kitchen_name</strong> (<em>str</em>) – Kitchen for which the recipe files will be updated.</p></li>
+<li><p><strong>filepaths</strong> (<em>dict</em>) – Dictionary keyed by file path and valued by new/updated file contents.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code> object</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>requests.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="dkutils.datakitchen_api.tests_utils.html" class="btn btn-neutral float-right" title="dkutils.datakitchen_api.tests_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="dkutils.datakitchen_api.kitchen.html" class="btn btn-neutral float-left" title="dkutils.datakitchen_api.kitchen module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, DataKitchen
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
