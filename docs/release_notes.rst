@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v2.3.1
+------
+* Update paramiko package to v2.10.4 to address vulnerability found in versions <=2.10.1
+
 v2.3.0
 ------
 * Added new Recipe class to DataKitchenClient
