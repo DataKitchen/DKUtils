@@ -53,6 +53,11 @@ class Kitchen:
         description : str
             New kitchen description
 
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+
         Returns
         -------
         Kitchen
@@ -73,6 +78,11 @@ class Kitchen:
         """
         Delete the current kitchen.
 
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+
         Returns
         -------
         requests.Response
@@ -85,34 +95,50 @@ class Kitchen:
         """
         Retrieve kitchen settings JSON.
 
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+
         Returns
         -------
-        kitchen_settings : dict
+        settings : dict
         """
         logger.debug(f'Retrieving settings for kitchen: {self._name}...')
         response = self._client._api_request(API_GET, 'kitchen', self._name)
         return response.json()
 
-    def _update_settings(self, kitchen_settings):
+    def _update_settings(self, settings):
         """
         Update kitchen settings JSON.
 
         Parameters
         ----------
-        kitchen_settings : dict
+        settings : dict
             Kitchen settings JSON with updated values.
 
-        Returns
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+        ValueError
+            If the name in the given settings does not match that of the current kitchen.
+
+       Returns
         -------
         requests.Response
             :class:`Response <Response>` object
         """
+        kitchen_name = settings['kitchen']['name']
+        if kitchen_name != self._name:
+            raise (
+                ValueError(
+                    f'Name in settings: {kitchen_name} does not match current kitchen: {self._name}'
+                )
+            )
+
         response = self._client._api_request(
-            API_POST,
-            'kitchen',
-            'update',
-            kitchen_settings['kitchen']['name'],
-            json={"kitchen.json": kitchen_settings['kitchen']}
+            API_POST, 'kitchen', 'update', self._name, json={"kitchen.json": settings['kitchen']}
         )
         return response.json()
 
@@ -145,6 +171,12 @@ class Kitchen:
         """
         Add the provided alerts to the kitchen.
 
+        Raises
+        ------
+        KeyError
+            If an unrecognized alert field is provided - valid fields are Start, Warning,
+            OverDuration, Success, and Failure
+
         Parameters
         ----------
         alerts : dict
@@ -159,8 +191,8 @@ class Kitchen:
                 }
         """
 
-        kitchen_settings = self._get_settings()
-        existing_alerts = kitchen_settings['kitchen']['settings']['alerts']
+        settings = self._get_settings()
+        existing_alerts = settings['kitchen']['settings']['alerts']
         for k, v in alerts.items():
             k = 'orderrunError' if k == 'Failure' else f'orderrun{k}'
             if k not in existing_alerts:
@@ -175,11 +207,17 @@ class Kitchen:
             alert_emails = list(alert_emails.union(set(v)))
             existing_alerts[k] = alert_emails
 
-        self._update_settings(kitchen_settings)
+        self._update_settings(settings)
 
     def delete_alerts(self, alerts):
         """
         Delete the provided kitchen alerts.
+
+        Raises
+        ------
+        KeyError
+            If an unrecognized alert field is provided - valid fields are Start, Warning,
+            OverDuration, Success, and Failure
 
         Parameters
         ----------
@@ -194,9 +232,9 @@ class Kitchen:
                     'Failure': ['foo@gmail.com'],
                 }
         """
-        kitchen_settings = self._get_settings()
+        settings = self._get_settings()
 
-        existing_alerts = kitchen_settings['kitchen']['settings']['alerts']
+        existing_alerts = settings['kitchen']['settings']['alerts']
         for k, v in alerts.items():
             k = 'orderrunError' if k == 'Failure' else f'orderrun{k}'
             if k not in existing_alerts:
@@ -211,4 +249,4 @@ class Kitchen:
                 alert_emails = list(set(existing_alerts[k]) - set(v))
                 existing_alerts[k] = alert_emails
 
-        self._update_settings(kitchen_settings)
+        self._update_settings(settings)
