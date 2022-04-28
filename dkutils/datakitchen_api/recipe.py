@@ -52,6 +52,14 @@ class Recipe:
         -------
         Recipe
             :class:`Recipe <Recipe>` object
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+        ValueError
+            If recipe_name is empty or None
+            If recipe_name already exists in the provided kitchen
         """
         logger.debug(f'Creating recipe named {recipe_name} in kitchen {client.kitchen}...')
         client._ensure_attributes(KITCHEN)
@@ -82,10 +90,14 @@ class Recipe:
         -------
         requests.Response
             :class:`Response <Response>` object
-        """
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+       """
         logger.debug(f'Deleting recipe named {self._name} in kitchen {kitchen_name}...')
-        response = self._client._api_request(API_DELETE, 'recipe', kitchen_name, self._name)
-        return response
+        return self._client._api_request(API_DELETE, 'recipe', kitchen_name, self._name)
 
     def get_recipe_files(self, kitchen_name: str):
         """
@@ -100,6 +112,13 @@ class Recipe:
         -------
         dict
             Dictionary keyed by file path and valued by file contents string.
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+        Exception
+            If a filetype is unrecognized.
         """
         logger.debug(f'Retrieving files for recipe {self._name} in kitchen {kitchen_name}...')
         response = self._client._api_request(API_GET, 'recipe', 'get', kitchen_name, self._name)
@@ -138,6 +157,11 @@ class Recipe:
         -------
         requests.Response
             :class:`Response <Response>` object
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
         """
         logger.debug(
             f'Updating files ({list(filepaths.keys())}) for recipe {self._name} in kitchen {kitchen_name}...'
@@ -150,7 +174,7 @@ class Recipe:
         for p, c in filepaths.items():
             files[p] = {'contents': c, 'isNew': False if p in recipe_files else True}
 
-        response = self._client._api_request(
+        return self._client._api_request(
             API_POST,
             'recipe',
             'update',
@@ -161,7 +185,6 @@ class Recipe:
             files=files,
             message=f'Creating recipe files {files.keys()}'
         )
-        return response
 
     def delete_recipe_files(self, kitchen_name: str, filepaths: list):
         """
@@ -178,6 +201,11 @@ class Recipe:
         -------
         requests.Response
             :class:`Response <Response>` object
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
         """
         logger.debug(
             f'Deleting files ({filepaths}) for recipe {self._name} in kitchen {kitchen_name}...'
@@ -186,7 +214,7 @@ class Recipe:
         # Including an empty dictionary for a file path implies file deletion
         files = {p: {} for p in filepaths}
 
-        response = self._client._api_request(
+        return self._client._api_request(
             API_POST,
             'recipe',
             'update',
@@ -197,4 +225,3 @@ class Recipe:
             files=files,
             message=f'Deleting recipe files {filepaths}'
         )
-        return response

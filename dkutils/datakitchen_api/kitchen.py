@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import logging
 
+from requests import Response
 from typing import TYPE_CHECKING
 
 from dkutils.constants import (
@@ -53,15 +54,15 @@ class Kitchen:
         description : str
             New kitchen description
 
-        Raises
-        ------
-        HTTPError
-            If the request fails.
-
         Returns
         -------
         Kitchen
             :class:`Kitchen <Kitchen>` object
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
         """
         logger.debug(f'Creating child kitchen of {parent_kitchen_name} named {new_kitchen_name}...')
         client._api_request(
@@ -74,41 +75,41 @@ class Kitchen:
         )
         return Kitchen(client, new_kitchen_name)
 
-    def delete(self):
+    def delete(self) -> Response:
         """
         Delete the current kitchen.
-
-        Raises
-        ------
-        HTTPError
-            If the request fails.
 
         Returns
         -------
         requests.Response
             :class:`Response <Response>` object
-        """
-        logger.debug(f'Deleting kitchen: {self._name}...')
-        return self._client._api_request(API_DELETE, 'kitchen', 'delete', self._name)
-
-    def _get_settings(self):
-        """
-        Retrieve kitchen settings JSON.
 
         Raises
         ------
         HTTPError
             If the request fails.
+        """
+        logger.debug(f'Deleting kitchen: {self._name}...')
+        return self._client._api_request(API_DELETE, 'kitchen', 'delete', self._name)
+
+    def _get_settings(self) -> dict:
+        """
+        Retrieve kitchen settings JSON.
 
         Returns
         -------
         settings : dict
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
         """
         logger.debug(f'Retrieving settings for kitchen: {self._name}...')
         response = self._client._api_request(API_GET, 'kitchen', self._name)
         return response.json()
 
-    def _update_settings(self, settings):
+    def _update_settings(self, settings: dict) -> Response:
         """
         Update kitchen settings JSON.
 
@@ -117,17 +118,17 @@ class Kitchen:
         settings : dict
             Kitchen settings JSON with updated values.
 
+       Returns
+        -------
+        requests.Response
+            :class:`Response <Response>` object
+
         Raises
         ------
         HTTPError
             If the request fails.
         ValueError
             If the name in the given settings does not match that of the current kitchen.
-
-       Returns
-        -------
-        requests.Response
-            :class:`Response <Response>` object
         """
         kitchen_name = settings['kitchen']['name']
         if kitchen_name != self._name:
@@ -142,7 +143,7 @@ class Kitchen:
         )
         return response.json()
 
-    def get_alerts(self):
+    def get_alerts(self) -> dict:
         """
         Retrieve alerts set on this kitchen.
 
@@ -167,15 +168,9 @@ class Kitchen:
             'Failure': alerts['orderrunError'],
         }
 
-    def add_alerts(self, alerts):
+    def add_alerts(self, alerts: dict) -> None:
         """
         Add the provided alerts to the kitchen.
-
-        Raises
-        ------
-        KeyError
-            If an unrecognized alert field is provided - valid fields are Start, Warning,
-            OverDuration, Success, and Failure
 
         Parameters
         ----------
@@ -189,6 +184,12 @@ class Kitchen:
                     'Success': None,
                     'Failure': ['foo@gmail.com'],
                 }
+
+        Raises
+        ------
+        KeyError
+            If an unrecognized alert field is provided - valid fields are Start, Warning,
+            OverDuration, Success, and Failure
         """
 
         settings = self._get_settings()
@@ -209,15 +210,9 @@ class Kitchen:
 
         self._update_settings(settings)
 
-    def delete_alerts(self, alerts):
+    def delete_alerts(self, alerts: dict) -> None:
         """
         Delete the provided kitchen alerts.
-
-        Raises
-        ------
-        KeyError
-            If an unrecognized alert field is provided - valid fields are Start, Warning,
-            OverDuration, Success, and Failure
 
         Parameters
         ----------
@@ -231,6 +226,12 @@ class Kitchen:
                     'Success': None,
                     'Failure': ['foo@gmail.com'],
                 }
+
+        Raises
+        ------
+        KeyError
+            If an unrecognized alert field is provided - valid fields are Start, Warning,
+            OverDuration, Success, and Failure
         """
         settings = self._get_settings()
 
