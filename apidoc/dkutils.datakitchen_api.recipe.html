@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api.recipe module &mdash; DKUtils 2.3.1 documentation</title>
+  <title>dkutils.datakitchen_api.recipe module &mdash; DKUtils 2.4.0 documentation</title>
   
 
   
@@ -111,6 +111,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-4-0">v2.4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-3-1">v2.3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-3-0">v2.3.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-2-0">v2.2.0</a></li>
@@ -291,12 +292,19 @@
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#dkutils.datakitchen_api.recipe.Recipe" title="dkutils.datakitchen_api.recipe.Recipe">Recipe</a></p>
 </dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the request fails.</p></li>
+<li><p><strong>ValueError</strong> – If recipe_name is empty or None
+    If recipe_name already exists in the provided kitchen</p></li>
+</ul>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dkutils.datakitchen_api.recipe.Recipe.delete">
-<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kitchen_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/recipe.html#Recipe.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.recipe.Recipe.delete" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kitchen_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">requests.models.Response</span></span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/recipe.html#Recipe.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.recipe.Recipe.delete" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete this recipe from the provided kitchen.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -308,12 +316,15 @@
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>requests.Response</p>
 </dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>HTTPError</strong> – If the request fails.</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dkutils.datakitchen_api.recipe.Recipe.delete_recipe_files">
-<span class="sig-name descname"><span class="pre">delete_recipe_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kitchen_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepaths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/recipe.html#Recipe.delete_recipe_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.recipe.Recipe.delete_recipe_files" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">delete_recipe_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kitchen_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepaths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">requests.models.Response</span></span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/recipe.html#Recipe.delete_recipe_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.recipe.Recipe.delete_recipe_files" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete the provided files from this recipe in the provided kitchen.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -328,12 +339,15 @@
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>requests.Response</p>
 </dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>HTTPError</strong> – If the request fails.</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dkutils.datakitchen_api.recipe.Recipe.get_recipe_files">
-<span class="sig-name descname"><span class="pre">get_recipe_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kitchen_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/recipe.html#Recipe.get_recipe_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.recipe.Recipe.get_recipe_files" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_recipe_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kitchen_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/recipe.html#Recipe.get_recipe_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.recipe.Recipe.get_recipe_files" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve all the files for this recipe in the provided kitchen.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -345,12 +359,18 @@
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>dict</p>
 </dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the request fails.</p></li>
+<li><p><strong>Exception</strong> – If a filetype is unrecognized.</p></li>
+</ul>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dkutils.datakitchen_api.recipe.Recipe.update_recipe_files">
-<span class="sig-name descname"><span class="pre">update_recipe_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kitchen_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepaths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/recipe.html#Recipe.update_recipe_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.recipe.Recipe.update_recipe_files" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">update_recipe_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kitchen_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepaths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">requests.models.Response</span></span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/recipe.html#Recipe.update_recipe_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.recipe.Recipe.update_recipe_files" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the files for this recipe in the provided kitchen.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -364,6 +384,9 @@
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>requests.Response</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>HTTPError</strong> – If the request fails.</p>
 </dd>
 </dl>
 </dd></dl>

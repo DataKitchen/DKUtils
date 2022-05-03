@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api.kitchen &mdash; DKUtils 2.3.1 documentation</title>
+  <title>dkutils.datakitchen_api.kitchen &mdash; DKUtils 2.4.0 documentation</title>
   
 
   
@@ -109,6 +109,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-4-0">v2.4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-3-1">v2.3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-3-0">v2.3.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-2-0">v2.2.0</a></li>
@@ -228,9 +229,11 @@
   <h1>Source code for dkutils.datakitchen_api.kitchen</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
+<span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">Response</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">from</span> <span class="nn">dkutils.constants</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">API_DELETE</span><span class="p">,</span>
@@ -285,6 +288,11 @@
 <span class="sd">        -------</span>
 <span class="sd">        Kitchen</span>
 <span class="sd">            :class:`Kitchen &lt;Kitchen&gt;` object</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Creating child kitchen of </span><span class="si">{</span><span class="n">parent_kitchen_name</span><span class="si">}</span><span class="s1"> named </span><span class="si">{</span><span class="n">new_kitchen_name</span><span class="si">}</span><span class="s1">...&#39;</span><span class="p">)</span>
         <span class="n">client</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span>
@@ -297,7 +305,7 @@
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">Kitchen</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">new_kitchen_name</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Kitchen.delete"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Kitchen.delete"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete the current kitchen.</span>
 
@@ -305,46 +313,172 @@
 <span class="sd">        -------</span>
 <span class="sd">        requests.Response</span>
 <span class="sd">            :class:`Response &lt;Response&gt;` object</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Deleting kitchen: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s1">...&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_DELETE</span><span class="p">,</span> <span class="s1">&#39;kitchen&#39;</span><span class="p">,</span> <span class="s1">&#39;delete&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_get_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve kitchen settings JSON.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        kitchen_settings : dict</span>
+<span class="sd">        settings : dict</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Retrieving settings for kitchen: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s1">...&#39;</span><span class="p">)</span>
         <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_GET</span><span class="p">,</span> <span class="s1">&#39;kitchen&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_update_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kitchen_settings</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_update_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update kitchen settings JSON.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        kitchen_settings : dict</span>
+<span class="sd">        settings : dict</span>
 <span class="sd">            Kitchen settings JSON with updated values.</span>
 
-<span class="sd">        Returns</span>
+<span class="sd">       Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        requests.Response</span>
 <span class="sd">            :class:`Response &lt;Response&gt;` object</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the name in the given settings does not match that of the current kitchen.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">kitchen_name</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">kitchen_name</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="p">(</span>
+                <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s1">&#39;Name in settings: </span><span class="si">{</span><span class="n">kitchen_name</span><span class="si">}</span><span class="s1"> does not match current kitchen: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
         <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span>
-            <span class="n">API_POST</span><span class="p">,</span>
-            <span class="s1">&#39;kitchen&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;update&#39;</span><span class="p">,</span>
-            <span class="n">kitchen_settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
-            <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;kitchen.json&quot;</span><span class="p">:</span> <span class="n">kitchen_settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">]}</span>
+            <span class="n">API_POST</span><span class="p">,</span> <span class="s1">&#39;kitchen&#39;</span><span class="p">,</span> <span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;kitchen.json&quot;</span><span class="p">:</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">]}</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
-<div class="viewcode-block" id="Kitchen.get_alerts"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.get_alerts">[docs]</a>    <span class="k">def</span> <span class="nf">get_alerts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_roles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve the staff and their associated roles assigned to this kitchen.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        settings : dict, optional</span>
+<span class="sd">            Dictionary representing kitchen_settings.json.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        roles : dict</span>
+<span class="sd">            Dictionary of current kitchen staff and their associated roles of the form::</span>
+
+<span class="sd">                {</span>
+<span class="sd">                    &#39;Admin&#39;: [&#39;admin@gmail.com&#39;],</span>
+<span class="sd">                    &#39;Developer&#39;: [&#39;developer1@gmail.com&#39;, &#39;developer2@gmail.com&#39;],</span>
+<span class="sd">                }</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">settings</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-roles&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_settings</span><span class="p">()[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-roles&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_get_staff_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve the set of staff usernames assigned to this kitchen.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        settings : dict, optional</span>
+<span class="sd">            Dictionary representing kitchen_settings.json.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        roles : list</span>
+<span class="sd">            set of current kitchen staff usernames of the form::</span>
+
+<span class="sd">                {</span>
+<span class="sd">                    &#39;admin@gmail.com&#39;,</span>
+<span class="sd">                    &#39;developer1@gmail.com&#39;,</span>
+<span class="sd">                    &#39;developer2@gmail.com&#39;,</span>
+<span class="sd">                }</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">settings</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-staff&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_settings</span><span class="p">()[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-staff&#39;</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">_ensure_admin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">roles</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Ensure the user in the provided client has Admin privileges in this kitchen. Otherwise,</span>
+<span class="sd">        raise a PermissionError.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        roles : dict, optional</span>
+<span class="sd">            Dictionary keyed by role and valued by list of associated usernames.</span>
+<span class="sd">        settings : dict, optional</span>
+<span class="sd">            Dictionary representing kitchen_settings.json.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        PermissionError</span>
+<span class="sd">            If the client user is not an Admin in this kitchen.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">roles</span><span class="p">:</span>
+            <span class="n">roles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_roles</span><span class="p">(</span><span class="n">settings</span><span class="o">=</span><span class="n">settings</span><span class="p">)</span>
+
+        <span class="n">current_user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">_username</span>
+        <span class="k">if</span> <span class="n">current_user</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">roles</span><span class="p">[</span><span class="s1">&#39;Admin&#39;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">PermissionError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Current user (</span><span class="si">{</span><span class="n">current_user</span><span class="si">}</span><span class="s1">) not an Admin. Permission denied.&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_ensure_disjoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lists</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return True if all the provided lists (converted to sets) are disjoint, False otherwise.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        lists : list</span>
+<span class="sd">            List of lists. Each list will be converted to a set to ensure they are all disjoint.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            True if provided lists are disjoint, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lists</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">merged_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">lists</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lists</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">merged_set</span><span class="o">.</span><span class="n">isdisjoint</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">l</span><span class="p">)):</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+                <span class="n">merged_set</span> <span class="o">=</span> <span class="n">merged_set</span> <span class="o">|</span> <span class="nb">set</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+<div class="viewcode-block" id="Kitchen.get_alerts"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.get_alerts">[docs]</a>    <span class="k">def</span> <span class="nf">get_alerts</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve alerts set on this kitchen.</span>
 
@@ -369,7 +503,7 @@
             <span class="s1">&#39;Failure&#39;</span><span class="p">:</span> <span class="n">alerts</span><span class="p">[</span><span class="s1">&#39;orderrunError&#39;</span><span class="p">],</span>
         <span class="p">}</span></div>
 
-<div class="viewcode-block" id="Kitchen.add_alerts"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.add_alerts">[docs]</a>    <span class="k">def</span> <span class="nf">add_alerts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alerts</span><span class="p">):</span>
+<div class="viewcode-block" id="Kitchen.add_alerts"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.add_alerts">[docs]</a>    <span class="k">def</span> <span class="nf">add_alerts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alerts</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add the provided alerts to the kitchen.</span>
 
@@ -385,10 +519,16 @@
 <span class="sd">                    &#39;Success&#39;: None,</span>
 <span class="sd">                    &#39;Failure&#39;: [&#39;foo@gmail.com&#39;],</span>
 <span class="sd">                }</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        KeyError</span>
+<span class="sd">            If an unrecognized alert field is provided - valid fields are Start, Warning,</span>
+<span class="sd">            OverDuration, Success, and Failure</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">kitchen_settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_settings</span><span class="p">()</span>
-        <span class="n">existing_alerts</span> <span class="o">=</span> <span class="n">kitchen_settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;settings&#39;</span><span class="p">][</span><span class="s1">&#39;alerts&#39;</span><span class="p">]</span>
+        <span class="n">settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_settings</span><span class="p">()</span>
+        <span class="n">existing_alerts</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;settings&#39;</span><span class="p">][</span><span class="s1">&#39;alerts&#39;</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">alerts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">k</span> <span class="o">=</span> <span class="s1">&#39;orderrunError&#39;</span> <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="s1">&#39;Failure&#39;</span> <span class="k">else</span> <span class="sa">f</span><span class="s1">&#39;orderrun</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">&#39;</span>
             <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">existing_alerts</span><span class="p">:</span>
@@ -403,9 +543,9 @@
             <span class="n">alert_emails</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">alert_emails</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">v</span><span class="p">)))</span>
             <span class="n">existing_alerts</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">alert_emails</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_update_settings</span><span class="p">(</span><span class="n">kitchen_settings</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_settings</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Kitchen.delete_alerts"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.delete_alerts">[docs]</a>    <span class="k">def</span> <span class="nf">delete_alerts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alerts</span><span class="p">):</span>
+<div class="viewcode-block" id="Kitchen.delete_alerts"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.delete_alerts">[docs]</a>    <span class="k">def</span> <span class="nf">delete_alerts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alerts</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete the provided kitchen alerts.</span>
 
@@ -421,10 +561,16 @@
 <span class="sd">                    &#39;Success&#39;: None,</span>
 <span class="sd">                    &#39;Failure&#39;: [&#39;foo@gmail.com&#39;],</span>
 <span class="sd">                }</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">kitchen_settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_settings</span><span class="p">()</span>
 
-        <span class="n">existing_alerts</span> <span class="o">=</span> <span class="n">kitchen_settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;settings&#39;</span><span class="p">][</span><span class="s1">&#39;alerts&#39;</span><span class="p">]</span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        KeyError</span>
+<span class="sd">            If an unrecognized alert field is provided - valid fields are Start, Warning,</span>
+<span class="sd">            OverDuration, Success, and Failure</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_settings</span><span class="p">()</span>
+
+        <span class="n">existing_alerts</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;settings&#39;</span><span class="p">][</span><span class="s1">&#39;alerts&#39;</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">alerts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">k</span> <span class="o">=</span> <span class="s1">&#39;orderrunError&#39;</span> <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="s1">&#39;Failure&#39;</span> <span class="k">else</span> <span class="sa">f</span><span class="s1">&#39;orderrun</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">&#39;</span>
             <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">existing_alerts</span><span class="p">:</span>
@@ -439,7 +585,183 @@
                 <span class="n">alert_emails</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">existing_alerts</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
                 <span class="n">existing_alerts</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">alert_emails</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_update_settings</span><span class="p">(</span><span class="n">kitchen_settings</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_settings</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Kitchen.get_staff"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.get_staff">[docs]</a>    <span class="k">def</span> <span class="nf">get_staff</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve the staff and their associated roles assigned to this kitchen.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        PermissionError</span>
+<span class="sd">            If the current user is not an Admin</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        staff : dict</span>
+<span class="sd">            Dictionary of current kitchen staff and their associated roles of the form::</span>
+
+<span class="sd">                {</span>
+<span class="sd">                    &#39;Admin&#39;: [&#39;admin@gmail.com&#39;],</span>
+<span class="sd">                    &#39;Developer&#39;: [&#39;developer1@gmail.com&#39;, &#39;developer2@gmail.com&#39;],</span>
+<span class="sd">                }</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_roles</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Kitchen.delete_staff"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.delete_staff">[docs]</a>    <span class="k">def</span> <span class="nf">delete_staff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">staff_to_delete</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">set</span><span class="p">,</span> <span class="nb">list</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete the provided staff from this kitchen.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        staff_to_delete : set or list</span>
+<span class="sd">            List or set of usernames to delete from this kitchen&#39;s staff.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        PermissionError</span>
+<span class="sd">            If the current user is not an Admin</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        requests.Response</span>
+<span class="sd">            :class:`Response &lt;Response&gt;` object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">staff_to_delete</span><span class="p">,</span> <span class="nb">set</span><span class="p">):</span>
+            <span class="n">staff_to_delete</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">staff_to_delete</span><span class="p">)</span>
+
+        <span class="n">settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_settings</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_admin</span><span class="p">(</span><span class="n">settings</span><span class="o">=</span><span class="n">settings</span><span class="p">)</span>
+
+        <span class="c1"># Remove staff from list</span>
+        <span class="n">current_staff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_staff_set</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+        <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-staff&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">current_staff</span> <span class="o">-</span> <span class="n">staff_to_delete</span><span class="p">)</span>
+
+        <span class="c1"># Remove staff from roles</span>
+        <span class="k">for</span> <span class="n">role</span><span class="p">,</span> <span class="n">role_staff</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_roles</span><span class="p">(</span><span class="n">settings</span><span class="o">=</span><span class="n">settings</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-roles&#39;</span><span class="p">][</span><span class="n">role</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">role_staff</span><span class="p">)</span> <span class="o">-</span> <span class="n">staff_to_delete</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_settings</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Kitchen.add_staff"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.add_staff">[docs]</a>    <span class="k">def</span> <span class="nf">add_staff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">staff_to_add</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add the provided staff to this kitchen.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        staff_to_add : dict</span>
+<span class="sd">            Dictionary keyed by role and valued with list of users to add to that role in the form::</span>
+
+<span class="sd">                {</span>
+<span class="sd">                    &#39;Admin&#39;: [&#39;admin@gmail.com&#39;],</span>
+<span class="sd">                    &#39;Developer&#39;: [&#39;developer1@gmail.com&#39;, &#39;developer2@gmail.com&#39;],</span>
+<span class="sd">                }</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        PermissionError</span>
+<span class="sd">            If the current user is not an Admin</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the provided staff are not new or unique across roles.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        requests.Response</span>
+<span class="sd">            :class:`Response &lt;Response&gt;` object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_disjoint</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">staff_to_add</span><span class="o">.</span><span class="n">values</span><span class="p">())):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Staff lists for each role must be unique.&#39;</span><span class="p">)</span>
+
+        <span class="n">settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_settings</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_admin</span><span class="p">(</span><span class="n">settings</span><span class="o">=</span><span class="n">settings</span><span class="p">)</span>
+
+        <span class="c1"># Add staff to list</span>
+        <span class="n">current_staff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_staff_set</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+        <span class="n">new_staff</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">staff_to_add</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">current_staff</span><span class="o">.</span><span class="n">isdisjoint</span><span class="p">(</span><span class="n">new_staff</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;The following staff already exist in kitchen: </span><span class="si">{</span><span class="n">current_staff</span> <span class="o">&amp;</span> <span class="n">new_staff</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
+
+        <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-staff&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">current_staff</span> <span class="o">|</span> <span class="n">new_staff</span><span class="p">)</span>
+
+        <span class="c1"># Add staff to roles</span>
+        <span class="k">for</span> <span class="n">role</span><span class="p">,</span> <span class="n">role_staff_to_add</span> <span class="ow">in</span> <span class="n">staff_to_add</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">cur_role_staff</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-roles&#39;</span><span class="p">][</span><span class="n">role</span><span class="p">]</span>
+            <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-roles&#39;</span><span class="p">][</span><span class="n">role</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                <span class="nb">set</span><span class="p">(</span><span class="n">cur_role_staff</span><span class="p">)</span> <span class="o">|</span> <span class="nb">set</span><span class="p">(</span><span class="n">role_staff_to_add</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_settings</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Kitchen.update_staff"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.update_staff">[docs]</a>    <span class="k">def</span> <span class="nf">update_staff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">staff_to_update</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update roles for the provided staff to this kitchen.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        staff_to_update : dict</span>
+<span class="sd">            Dictionary keyed by role and valued with list of users to update to that role in the form::</span>
+
+<span class="sd">                {</span>
+<span class="sd">                    &#39;Admin&#39;: [&#39;admin@gmail.com&#39;],</span>
+<span class="sd">                    &#39;Developer&#39;: [&#39;developer1@gmail.com&#39;, &#39;developer2@gmail.com&#39;],</span>
+<span class="sd">                }</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        PermissionError</span>
+<span class="sd">            If the current user is not an Admin</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the provided staff are not new or unique across roles.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        requests.Response</span>
+<span class="sd">            :class:`Response &lt;Response&gt;` object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_disjoint</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">staff_to_update</span><span class="o">.</span><span class="n">values</span><span class="p">())):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Staff lists for each role must be unique.&#39;</span><span class="p">)</span>
+
+        <span class="n">settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_settings</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_admin</span><span class="p">(</span><span class="n">settings</span><span class="o">=</span><span class="n">settings</span><span class="p">)</span>
+
+        <span class="c1"># Add staff to list</span>
+        <span class="n">current_staff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_staff_set</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+        <span class="n">updated_staff</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">staff_to_update</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">updated_staff</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">current_staff</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;The following staff do not already exist in kitchen: </span><span class="si">{</span><span class="n">updated_staff</span> <span class="o">-</span> <span class="n">current_staff</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Update staff to roles</span>
+
+        <span class="k">for</span> <span class="n">role</span><span class="p">,</span> <span class="n">role_staff_to_update</span> <span class="ow">in</span> <span class="n">staff_to_update</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># Update role staff</span>
+            <span class="n">cur_role_staff</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-roles&#39;</span><span class="p">][</span><span class="n">role</span><span class="p">]</span>
+            <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-roles&#39;</span><span class="p">][</span><span class="n">role</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                <span class="nb">set</span><span class="p">(</span><span class="n">cur_role_staff</span><span class="p">)</span> <span class="o">|</span> <span class="nb">set</span><span class="p">(</span><span class="n">role_staff_to_update</span><span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Remove updated staff from other roles</span>
+            <span class="k">for</span> <span class="n">other_role</span><span class="p">,</span> <span class="n">cur_staff</span> <span class="ow">in</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-roles&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">other_role</span> <span class="o">!=</span> <span class="n">role</span><span class="p">:</span>
+                    <span class="n">cur_other_role_staff</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-roles&#39;</span><span class="p">][</span><span class="n">other_role</span><span class="p">]</span>
+                    <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-roles&#39;</span><span class="p">][</span><span class="n">other_role</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                        <span class="nb">set</span><span class="p">(</span><span class="n">cur_other_role_staff</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">role_staff_to_update</span><span class="p">)</span>
+                    <span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_settings</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

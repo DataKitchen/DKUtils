@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api.kitchen module &mdash; DKUtils 2.3.1 documentation</title>
+  <title>dkutils.datakitchen_api.kitchen module &mdash; DKUtils 2.4.0 documentation</title>
   
 
   
@@ -111,6 +111,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-4-0">v2.4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-3-1">v2.3.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-3-0">v2.3.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-2-0">v2.2.0</a></li>
@@ -275,7 +276,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dkutils.datakitchen_api.kitchen.Kitchen.add_alerts">
-<span class="sig-name descname"><span class="pre">add_alerts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alerts</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/kitchen.html#Kitchen.add_alerts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.kitchen.Kitchen.add_alerts" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_alerts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alerts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/kitchen.html#Kitchen.add_alerts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.kitchen.Kitchen.add_alerts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add the provided alerts to the kitchen.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -290,6 +291,41 @@
 </pre></div>
 </div>
 </p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>KeyError</strong> – If an unrecognized alert field is provided - valid fields are Start, Warning,
+    OverDuration, Success, and Failure</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.kitchen.Kitchen.add_staff">
+<span class="sig-name descname"><span class="pre">add_staff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">staff_to_add</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">requests.models.Response</span></span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/kitchen.html#Kitchen.add_staff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.kitchen.Kitchen.add_staff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the provided staff to this kitchen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>staff_to_add</strong> (<em>dict</em>) – <p>Dictionary keyed by role and valued with list of users to add to that role in the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;Admin&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;admin@gmail.com&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Developer&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;developer1@gmail.com&#39;</span><span class="p">,</span> <span class="s1">&#39;developer2@gmail.com&#39;</span><span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the request fails.</p></li>
+<li><p><strong>PermissionError</strong> – If the current user is not an Admin</p></li>
+<li><p><strong>ValueError</strong> – If the provided staff are not new or unique across roles.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code> object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>requests.Response</p>
 </dd>
 </dl>
 </dd></dl>
@@ -313,12 +349,15 @@
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#dkutils.datakitchen_api.kitchen.Kitchen" title="dkutils.datakitchen_api.kitchen.Kitchen">Kitchen</a></p>
 </dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>HTTPError</strong> – If the request fails.</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dkutils.datakitchen_api.kitchen.Kitchen.delete">
-<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/kitchen.html#Kitchen.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.kitchen.Kitchen.delete" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">requests.models.Response</span></span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/kitchen.html#Kitchen.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.kitchen.Kitchen.delete" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete the current kitchen.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -327,12 +366,15 @@
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>requests.Response</p>
 </dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>HTTPError</strong> – If the request fails.</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dkutils.datakitchen_api.kitchen.Kitchen.delete_alerts">
-<span class="sig-name descname"><span class="pre">delete_alerts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alerts</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/kitchen.html#Kitchen.delete_alerts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.kitchen.Kitchen.delete_alerts" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">delete_alerts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alerts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/kitchen.html#Kitchen.delete_alerts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.kitchen.Kitchen.delete_alerts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete the provided kitchen alerts.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -348,12 +390,39 @@
 </div>
 </p>
 </dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>KeyError</strong> – If an unrecognized alert field is provided - valid fields are Start, Warning,
+    OverDuration, Success, and Failure</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.kitchen.Kitchen.delete_staff">
+<span class="sig-name descname"><span class="pre">delete_staff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">staff_to_delete</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">requests.models.Response</span></span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/kitchen.html#Kitchen.delete_staff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.kitchen.Kitchen.delete_staff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the provided staff from this kitchen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>staff_to_delete</strong> (<em>set</em><em> or </em><em>list</em>) – List or set of usernames to delete from this kitchen’s staff.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the request fails.</p></li>
+<li><p><strong>PermissionError</strong> – If the current user is not an Admin</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code> object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>requests.Response</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dkutils.datakitchen_api.kitchen.Kitchen.get_alerts">
-<span class="sig-name descname"><span class="pre">get_alerts</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/kitchen.html#Kitchen.get_alerts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.kitchen.Kitchen.get_alerts" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_alerts</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/kitchen.html#Kitchen.get_alerts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.kitchen.Kitchen.get_alerts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve alerts set on this kitchen.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -374,6 +443,65 @@
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.kitchen.Kitchen.get_staff">
+<span class="sig-name descname"><span class="pre">get_staff</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/kitchen.html#Kitchen.get_staff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.kitchen.Kitchen.get_staff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the staff and their associated roles assigned to this kitchen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the request fails.</p></li>
+<li><p><strong>PermissionError</strong> – If the current user is not an Admin</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p><strong>staff</strong> –</p>
+<p>Dictionary of current kitchen staff and their associated roles of the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;Admin&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;admin@gmail.com&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Developer&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;developer1@gmail.com&#39;</span><span class="p">,</span> <span class="s1">&#39;developer2@gmail.com&#39;</span><span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.kitchen.Kitchen.update_staff">
+<span class="sig-name descname"><span class="pre">update_staff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">staff_to_update</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">requests.models.Response</span></span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/kitchen.html#Kitchen.update_staff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.kitchen.Kitchen.update_staff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update roles for the provided staff to this kitchen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>staff_to_update</strong> (<em>dict</em>) – <p>Dictionary keyed by role and valued with list of users to update to that role in the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;Admin&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;admin@gmail.com&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Developer&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;developer1@gmail.com&#39;</span><span class="p">,</span> <span class="s1">&#39;developer2@gmail.com&#39;</span><span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the request fails.</p></li>
+<li><p><strong>PermissionError</strong> – If the current user is not an Admin</p></li>
+<li><p><strong>ValueError</strong> – If the provided staff are not new or unique across roles.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code> object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>requests.Response</p>
 </dd>
 </dl>
 </dd></dl>
