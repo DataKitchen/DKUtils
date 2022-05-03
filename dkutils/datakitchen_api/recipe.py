@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import logging
 
+from requests import Response
 from typing import TYPE_CHECKING
 from pathlib import Path
 
@@ -77,7 +78,7 @@ class Recipe:
         )
         return Recipe(client, recipe_name)
 
-    def delete(self, kitchen_name: str):
+    def delete(self, kitchen_name: str) -> Response:
         """
         Delete this recipe from the provided kitchen.
 
@@ -99,7 +100,7 @@ class Recipe:
         logger.debug(f'Deleting recipe named {self._name} in kitchen {kitchen_name}...')
         return self._client._api_request(API_DELETE, 'recipe', kitchen_name, self._name)
 
-    def get_recipe_files(self, kitchen_name: str):
+    def get_recipe_files(self, kitchen_name: str) -> dict:
         """
         Retrieve all the files for this recipe in the provided kitchen.
 
@@ -142,7 +143,7 @@ class Recipe:
 
         return recipe_files_dict
 
-    def update_recipe_files(self, kitchen_name: str, filepaths: dict):
+    def update_recipe_files(self, kitchen_name: str, filepaths: dict) -> Response:
         """
         Update the files for this recipe in the provided kitchen.
 
@@ -186,7 +187,7 @@ class Recipe:
             message=f'Creating recipe files {files.keys()}'
         )
 
-    def delete_recipe_files(self, kitchen_name: str, filepaths: list):
+    def delete_recipe_files(self, kitchen_name: str, filepaths: list) -> Response:
         """
         Delete the provided files from this recipe in the provided kitchen.
 
