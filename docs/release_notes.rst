@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+v2.4.0
+------
+* Add get/add/delete/update kitchen staff/roles functions to DataKitchenClient.
+* Update docstrings in Recipe class.
+
 v2.3.1
 ------
 * Update paramiko package to v2.10.4 to address vulnerability found in versions <=2.10.1

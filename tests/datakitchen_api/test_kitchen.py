@@ -165,3 +165,111 @@ class TestKitchen(TestCase):
         mock_post.assert_called_with(
             f'{DUMMY_URL}/v2/kitchen/update/foo', headers=None, json=exp_json
         )
+
+    def test_get_roles_with_settings(self):
+        roles = Kitchen(self.dk_client, 'foo')._get_roles(settings=KITCHEN_SETTINGS)
+        self.assertEqual(roles, KITCHEN_SETTINGS['kitchen']['kitchen-roles'])
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    def test_get_roles_without_settings(self, mock_get):
+        mock_get.return_value = MockResponse(json=KITCHEN_SETTINGS)
+        roles = Kitchen(self.dk_client, 'foo')._get_roles()
+        self.assertEqual(roles, KITCHEN_SETTINGS['kitchen']['kitchen-roles'])
+
+    def test_get_staff_set_with_settings(self):
+        roles = Kitchen(self.dk_client, 'foo')._get_staff_set(settings=KITCHEN_SETTINGS)
+        self.assertEqual(roles, set(KITCHEN_SETTINGS['kitchen']['kitchen-staff']))
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    def test_get_staff_set_with_no_settings(self, mock_get):
+        mock_get.return_value = MockResponse(json=KITCHEN_SETTINGS)
+        roles = Kitchen(self.dk_client, 'foo')._get_staff_set()
+        self.assertEqual(roles, set(KITCHEN_SETTINGS['kitchen']['kitchen-staff']))
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    def test_ensure_admin(self, mock_get):
+        settings = deepcopy(KITCHEN_SETTINGS)
+        settings['kitchen']['kitchen-roles']['Admin'].append(DUMMY_USERNAME)
+        mock_get.return_value = MockResponse(json=settings)
+        Kitchen(self.dk_client, 'foo')._ensure_admin()
+
+    def test_ensure_admin_with_settings(self):
+        settings = deepcopy(KITCHEN_SETTINGS)
+        settings['kitchen']['kitchen-roles']['Admin'].append(DUMMY_USERNAME)
+        Kitchen(self.dk_client, 'foo')._ensure_admin(settings=settings)
+
+    def test_ensure_admin_with_roles(self):
+        kitchen = Kitchen(self.dk_client, 'foo')
+        roles = deepcopy(kitchen._get_roles(settings=KITCHEN_SETTINGS))
+        roles['Admin'].append(DUMMY_USERNAME)
+        kitchen._ensure_admin(roles=roles)
+
+    def test_ensure_admin_error(self):
+        with self.assertRaises(PermissionError):
+            Kitchen(self.dk_client, 'foo')._ensure_admin(settings=KITCHEN_SETTINGS)
+
+    def test_ensure_disjoint(self):
+        lists = [[1, 2], [3, 4], [5, 6]]
+        self.assertTrue(Kitchen(self.dk_client, 'foo')._ensure_disjoint(lists))
+
+    def test_ensure_disjoint_fail(self):
+        lists = [[1, 2], [3, 4], [4, 6]]
+        self.assertFalse(Kitchen(self.dk_client, 'foo')._ensure_disjoint(lists))
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    def test_get_staff(self, mock_get):
+        mock_get.return_value = MockResponse(json=KITCHEN_SETTINGS)
+        staff = Kitchen(self.dk_client, 'foo').get_staff()
+        self.assertEqual(staff, KITCHEN_SETTINGS['kitchen']['kitchen-roles'])
+
+    @patch('dkutils.datakitchen_api.kitchen.Kitchen._ensure_admin')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
+    def test_delete_staff(self, mock_post, mock_get, _):
+        mock_get.return_value = MockResponse(json=deepcopy(KITCHEN_SETTINGS))
+        Kitchen(self.dk_client, 'foo').delete_staff(['atiwari+im@datakitchen.io'])
+        exp_settings = {'kitchen.json': deepcopy(KITCHEN_SETTINGS['kitchen'])}
+        exp_settings['kitchen.json']['kitchen-roles']['Developer'].remove(
+            'atiwari+im@datakitchen.io'
+        )
+        exp_settings['kitchen.json']['kitchen-staff'].remove('atiwari+im@datakitchen.io')
+        mock_post.assert_called_with(
+            f'{DUMMY_URL}/v2/kitchen/update/foo', headers=None, json=exp_settings
+        )
+
+    @patch('dkutils.datakitchen_api.kitchen.Kitchen._ensure_admin')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
+    def test_add_staff(self, mock_post, mock_get, _):
+        mock_get.return_value = MockResponse(json=deepcopy(KITCHEN_SETTINGS))
+        Kitchen(self.dk_client, 'foo').add_staff({'Developer': ['new_developer@datakitchen.io']})
+
+        exp_settings = {'kitchen.json': deepcopy(KITCHEN_SETTINGS['kitchen'])}
+        dev_roles = exp_settings['kitchen.json']['kitchen-roles']['Developer'] + [
+            'new_developer@datakitchen.io'
+        ]
+        dev_roles = list(set(dev_roles))
+        exp_settings['kitchen.json']['kitchen-roles']['Developer'] = dev_roles
+        staff = exp_settings['kitchen.json']['kitchen-staff'] + ['new_developer@datakitchen.io']
+        staff = list(set(staff))
+        exp_settings['kitchen.json']['kitchen-staff'] = staff
+        mock_post.assert_called_with(
+            f'{DUMMY_URL}/v2/kitchen/update/foo', headers=None, json=exp_settings
+        )
+
+    @patch('dkutils.datakitchen_api.kitchen.Kitchen._ensure_admin')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
+    def test_update_staff(self, mock_post, mock_get, _):
+        mock_get.return_value = MockResponse(json=deepcopy(KITCHEN_SETTINGS))
+        Kitchen(self.dk_client, 'foo').update_staff({
+            'Admin': ['atiwari+im@datakitchen.io'],
+            'Developer': ['ddicara+im@datakitchen.io'],
+        })
+
+        exp_settings = {'kitchen.json': deepcopy(KITCHEN_SETTINGS['kitchen'])}
+        exp_settings['kitchen.json']['kitchen-roles']['Admin'] = ['atiwari+im@datakitchen.io']
+        exp_settings['kitchen.json']['kitchen-roles']['Developer'] = ['ddicara+im@datakitchen.io']
+        mock_post.assert_called_with(
+            f'{DUMMY_URL}/v2/kitchen/update/foo', headers=None, json=exp_settings
+        )
