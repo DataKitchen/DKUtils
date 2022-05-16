@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v2.4.1
+------
+* Downgrade sqlalchemy dependency to 1.4.27 to resolve conflict when installing DKUtils in Google Composer.
+
 v2.4.0
 ------
 * Add get/add/delete/update kitchen staff/roles functions to DataKitchenClient.
