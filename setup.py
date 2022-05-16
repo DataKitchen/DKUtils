@@ -33,7 +33,7 @@ setuptools.setup(
         "google-api-python-client>=1.10.1",
         "google-auth-httplib2>=0.0.4",
         "google-auth-oauthlib>=0.4.2",
-        "sqlalchemy>=1.4.28",
+        "sqlalchemy>=1.4.27",
     ],
     tests_require=[
         'bumpversion>=0.5.3',
