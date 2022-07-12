@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import itertools
 import logging
+import re
 
 from requests import Response
 from typing import TYPE_CHECKING, Union
@@ -34,6 +35,28 @@ class Kitchen:
         """
         self._client = client
         self._name = name
+        self._parent_name = None
+
+    @property
+    def parent_name(self) -> str:
+        """
+        Parent kitchen name
+        """
+        if self._parent_name is None:
+            self._parent_name = self._get_settings()['kitchen']['parent-kitchen']
+        return self._parent_name
+
+    def is_ingredient(self) -> bool:
+        """
+        Return true if this is an ingredient kitchen, False otherwise.
+
+        Returns
+        -------
+        bool
+            True if this kitchen is an ingredient kitchen, False otherwise.
+        """
+        match = re.match(pattern=r'(?P<parent_name>\w+)_(?P<uuid>\w{32})', string=self._name)
+        return match.group('parent_name') == self.parent_name if match else False
 
     @staticmethod
     def create(

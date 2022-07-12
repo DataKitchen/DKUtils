@@ -1,6 +1,12 @@
 Release Notes
 =============
 
+v2.5.0
+------
+* Add retry decorator for retrying API requests that return an HTTP 50X error
+* Expose optional arguments in the DK Client get_order_run_details method
+* Add parent kitchen name and is ingredient kitchen methods to Kitchen class
+
 v2.4.1
 ------
 * Downgrade sqlalchemy dependency to 1.4.27 to resolve conflict when installing DKUtils in Google Composer.
