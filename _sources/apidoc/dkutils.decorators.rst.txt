@@ -1,0 +1,7 @@
+dkutils.decorators module
+=========================
+
+.. automodule:: dkutils.decorators
+   :members:
+   :undoc-members:
+   :show-inheritance:

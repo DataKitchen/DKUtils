@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.wait_loop &mdash; DKUtils 2.5.0 documentation</title>
+  <title>dkutils.decorators &mdash; DKUtils 2.5.0 documentation</title>
   
 
   
@@ -213,7 +213,7 @@
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
-      <li>dkutils.wait_loop</li>
+      <li>dkutils.decorators</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -228,46 +228,58 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for dkutils.wait_loop</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">time</span>
+  <h1>Source code for dkutils.decorators</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+<span class="kn">from</span> <span class="nn">requests.exceptions</span> <span class="kn">import</span> <span class="n">HTTPError</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="WaitLoop"><a class="viewcode-back" href="../../apidoc/dkutils.wait_loop.html#dkutils.wait_loop.WaitLoop">[docs]</a><span class="k">class</span> <span class="nc">WaitLoop</span><span class="p">:</span>
+<div class="viewcode-block" id="retry_50X_httperror"><a class="viewcode-back" href="../../apidoc/dkutils.decorators.html#dkutils.decorators.retry_50X_httperror">[docs]</a><span class="k">def</span> <span class="nf">retry_50X_httperror</span><span class="p">(</span><span class="n">tries</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">backoff</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Retry calling the decorated function using an exponential backoff.</span>
 
-<div class="viewcode-block" id="WaitLoop.__init__"><a class="viewcode-back" href="../../apidoc/dkutils.wait_loop.html#dkutils.wait_loop.WaitLoop.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sleep_secs</span><span class="p">,</span> <span class="n">duration_secs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        WaitLoop is for use in a while loop. Create an instance of this class and add</span>
-<span class="sd">        it as the condition/expression to the while loop.</span>
+<span class="sd">    Based on:</span>
+<span class="sd">    http://www.saltycrane.com/blog/2009/11/trying-out-retry-decorator-python/</span>
+<span class="sd">    original from: http://wiki.python.org/moin/PythonDecoratorLibrary#Retry</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        sleep_secs : int</span>
-<span class="sd">            Number of seconds to sleep in between loop executions.</span>
-<span class="sd">        duration_secs : int</span>
-<span class="sd">            Max duration in seconds after which the loop will exit.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">first_pass</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">resume</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_sleep_secs</span> <span class="o">=</span> <span class="n">sleep_secs</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_timeout_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="n">duration_secs</span><span class="p">)</span></div>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    tries: int</span>
+<span class="sd">        Number of times to try (not retry) before giving up</span>
+<span class="sd">    delay: int</span>
+<span class="sd">        Initial delay between retries in seconds</span>
+<span class="sd">    backoff: int</span>
+<span class="sd">        Backoff multiplier e.g. value of 2 will double the delay each retry</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="WaitLoop.__bool__"><a class="viewcode-back" href="../../apidoc/dkutils.wait_loop.html#dkutils.wait_loop.WaitLoop.__bool__">[docs]</a>    <span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Determines if the loop should exit.</span>
+    <span class="k">def</span> <span class="nf">deco_retry</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        bool</span>
-<span class="sd">            True if loop should exit, False otherwise.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_pass</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">first_pass</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sleep_secs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">resume</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timeout_time</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">resume</span></div></div>
+        <span class="nd">@wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">f_retry</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">mtries</span><span class="p">,</span> <span class="n">mdelay</span> <span class="o">=</span> <span class="n">tries</span><span class="p">,</span> <span class="n">delay</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;mtries: </span><span class="si">{</span><span class="n">mtries</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">while</span> <span class="n">mtries</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                <span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">status_code</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span>
+                    <span class="k">if</span> <span class="mi">500</span> <span class="o">&lt;=</span> <span class="n">status_code</span> <span class="o">&lt;</span> <span class="mi">600</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s1">, Retrying in </span><span class="si">{</span><span class="n">mdelay</span><span class="si">}</span><span class="s1"> seconds...&#39;</span><span class="p">)</span>
+                        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">mdelay</span><span class="p">)</span>
+                        <span class="n">mtries</span> <span class="o">-=</span> <span class="mi">1</span>
+                        <span class="n">mdelay</span> <span class="o">*=</span> <span class="n">backoff</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">raise</span>
+
+            <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">f_retry</span>  <span class="c1"># true decorator</span>
+
+    <span class="k">return</span> <span class="n">deco_retry</span></div>
 </pre></div>
 
            </div>

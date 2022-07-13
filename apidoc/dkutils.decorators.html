@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api package &mdash; DKUtils 2.5.0 documentation</title>
+  <title>dkutils.decorators module &mdash; DKUtils 2.5.0 documentation</title>
   
 
   
@@ -39,8 +39,8 @@
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="dkutils.datakitchen_api.datakitchen_client module" href="dkutils.datakitchen_api.datakitchen_client.html" />
-    <link rel="prev" title="dkutils.alteryx_api.gallery_client module" href="dkutils.alteryx_api.gallery_client.html" /> 
+    <link rel="next" title="dkutils.dictionary_comparator module" href="dkutils.dictionary_comparator.html" />
+    <link rel="prev" title="dkutils.constants module" href="dkutils.constants.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -88,8 +88,8 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Code Documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="dkutils.html">dkutils package</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="dkutils.html#subpackages">Subpackages</a></li>
-<li class="toctree-l3"><a class="reference internal" href="dkutils.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dkutils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="dkutils.html#submodules">Submodules</a></li>
 </ul>
 </li>
 </ul>
@@ -217,13 +217,13 @@
         
           <li><a href="dkutils.html">dkutils package</a> &raquo;</li>
         
-      <li>dkutils.datakitchen_api package</li>
+      <li>dkutils.decorators module</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/apidoc/dkutils.datakitchen_api.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/apidoc/dkutils.decorators.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -233,10 +233,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="dkutils.datakitchen_api.datakitchen_client.html" class="btn btn-neutral float-right" title="dkutils.datakitchen_api.datakitchen_client module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="dkutils.dictionary_comparator.html" class="btn btn-neutral float-right" title="dkutils.dictionary_comparator module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="dkutils.alteryx_api.gallery_client.html" class="btn btn-neutral float-left" title="dkutils.alteryx_api.gallery_client module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="dkutils.constants.html" class="btn btn-neutral float-left" title="dkutils.constants module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -245,20 +245,26 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-dkutils.datakitchen_api">
-<span id="dkutils-datakitchen-api-package"></span><h1>dkutils.datakitchen_api package<a class="headerlink" href="#module-dkutils.datakitchen_api" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="dkutils.datakitchen_api.datakitchen_client.html">dkutils.datakitchen_api.datakitchen_client module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dkutils.datakitchen_api.datetime_utils.html">dkutils.datakitchen_api.datetime_utils module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dkutils.datakitchen_api.kitchen.html">dkutils.datakitchen_api.kitchen module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dkutils.datakitchen_api.recipe.html">dkutils.datakitchen_api.recipe module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dkutils.datakitchen_api.tests_utils.html">dkutils.datakitchen_api.tests_utils module</a></li>
+  <div class="section" id="module-dkutils.decorators">
+<span id="dkutils-decorators-module"></span><h1>dkutils.decorators module<a class="headerlink" href="#module-dkutils.decorators" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="dkutils.decorators.retry_50X_httperror">
+<span class="sig-prename descclassname"><span class="pre">dkutils.decorators.</span></span><span class="sig-name descname"><span class="pre">retry_50X_httperror</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/decorators.html#retry_50X_httperror"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.decorators.retry_50X_httperror" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retry calling the decorated function using an exponential backoff.</p>
+<p>Based on:
+<a class="reference external" href="http://www.saltycrane.com/blog/2009/11/trying-out-retry-decorator-python/">http://www.saltycrane.com/blog/2009/11/trying-out-retry-decorator-python/</a>
+original from: <a class="reference external" href="http://wiki.python.org/moin/PythonDecoratorLibrary#Retry">http://wiki.python.org/moin/PythonDecoratorLibrary#Retry</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tries</strong> (<em>int</em>) – Number of times to try (not retry) before giving up</p></li>
+<li><p><strong>delay</strong> (<em>int</em>) – Initial delay between retries in seconds</p></li>
+<li><p><strong>backoff</strong> (<em>int</em>) – Backoff multiplier e.g. value of 2 will double the delay each retry</p></li>
 </ul>
-</div>
-</div>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 
 
@@ -269,10 +275,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="dkutils.datakitchen_api.datakitchen_client.html" class="btn btn-neutral float-right" title="dkutils.datakitchen_api.datakitchen_client module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="dkutils.dictionary_comparator.html" class="btn btn-neutral float-right" title="dkutils.dictionary_comparator module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="dkutils.alteryx_api.gallery_client.html" class="btn btn-neutral float-left" title="dkutils.alteryx_api.gallery_client module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="dkutils.constants.html" class="btn btn-neutral float-left" title="dkutils.constants module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

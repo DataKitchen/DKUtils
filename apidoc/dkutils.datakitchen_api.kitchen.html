@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api.kitchen module &mdash; DKUtils 2.4.1 documentation</title>
+  <title>dkutils.datakitchen_api.kitchen module &mdash; DKUtils 2.5.0 documentation</title>
   
 
   
@@ -111,6 +111,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-5-0">v2.5.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-4-1">v2.4.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-4-0">v2.4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-3-1">v2.3.1</a></li>
@@ -477,6 +478,20 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.kitchen.Kitchen.is_ingredient">
+<span class="sig-name descname"><span class="pre">is_ingredient</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/kitchen.html#Kitchen.is_ingredient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.kitchen.Kitchen.is_ingredient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return true if this is an ingredient kitchen, False otherwise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if this kitchen is an ingredient kitchen, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="dkutils.datakitchen_api.kitchen.Kitchen.update_staff">
 <span class="sig-name descname"><span class="pre">update_staff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">staff_to_update</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">requests.models.Response</span></span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/kitchen.html#Kitchen.update_staff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.kitchen.Kitchen.update_staff" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update roles for the provided staff to this kitchen.</p>
@@ -505,6 +520,12 @@
 <dd class="field-even"><p>requests.Response</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.kitchen.Kitchen.parent_name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parent_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#dkutils.datakitchen_api.kitchen.Kitchen.parent_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parent kitchen name</p>
 </dd></dl>
 
 </dd></dl>

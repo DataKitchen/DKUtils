@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api.datakitchen_client module &mdash; DKUtils 2.4.1 documentation</title>
+  <title>dkutils.datakitchen_api.datakitchen_client module &mdash; DKUtils 2.5.0 documentation</title>
   
 
   
@@ -111,6 +111,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-5-0">v2.5.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-4-1">v2.4.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-4-0">v2.4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-3-1">v2.3.1</a></li>
@@ -515,11 +516,18 @@ this method.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_run_details">
-<span class="sig-name descname"><span class="pre">get_order_run_details</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">order_run_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.get_order_run_details"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_run_details" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_order_run_details</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">order_run_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_servingjson</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_summary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_testresults</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_timingresults</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/datakitchen_client.html#DataKitchenClient.get_order_run_details"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_run_details" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve the details of an order run.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>order_run_id</strong> (<em>str</em>) – Order run id for which to retrieve details</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>order_run_id</strong> (<em>str</em>) – Order run id for which to retrieve details</p></li>
+<li><p><strong>include_logs</strong> (<em>boolean</em>) – Include logs in response (Default: False)</p></li>
+<li><p><strong>include_servingjson</strong> (<em>boolean</em>) – Include servings in response (Default: False)</p></li>
+<li><p><strong>include_summary</strong> (<em>boolean</em>) – Include summary information in response (Default: False)</p></li>
+<li><p><strong>include_testresults</strong> (<em>boolean</em>) – Include test results in response (Default: False)</p></li>
+<li><p><strong>include_timingresults</strong> (<em>boolean</em>) – Include timing results in response (Default: False)</p></li>
+</ul>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><p><strong>HTTPError</strong> – If the request fails.</p>

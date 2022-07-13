@@ -29,6 +29,7 @@ Submodules
    :maxdepth: 4
 
    dkutils.constants
+   dkutils.decorators
    dkutils.dictionary_comparator
    dkutils.util
    dkutils.validation

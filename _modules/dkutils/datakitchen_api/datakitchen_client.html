@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api.datakitchen_client &mdash; DKUtils 2.4.1 documentation</title>
+  <title>dkutils.datakitchen_api.datakitchen_client &mdash; DKUtils 2.5.0 documentation</title>
   
 
   
@@ -109,6 +109,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-5-0">v2.5.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-4-1">v2.4.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-4-0">v2.4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-3-1">v2.3.1</a></li>
@@ -926,7 +927,15 @@
                 <span class="sa">f</span><span class="s1">&#39;No order runs found for provided order id (</span><span class="si">{</span><span class="n">order_id</span><span class="si">}</span><span class="s1">) in kitchen </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="si">}</span><span class="s1">&#39;</span>
             <span class="p">)</span></div>
 
-<div class="viewcode-block" id="DataKitchenClient.get_order_run_details"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_run_details">[docs]</a>    <span class="k">def</span> <span class="nf">get_order_run_details</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">):</span>
+<div class="viewcode-block" id="DataKitchenClient.get_order_run_details"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_run_details">[docs]</a>    <span class="k">def</span> <span class="nf">get_order_run_details</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">order_run_id</span><span class="p">,</span>
+        <span class="n">include_logs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">include_servingjson</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">include_summary</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">include_testresults</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">include_timingresults</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve the details of an order run.</span>
 
@@ -934,6 +943,16 @@
 <span class="sd">        ----------</span>
 <span class="sd">        order_run_id : str</span>
 <span class="sd">            Order run id for which to retrieve details</span>
+<span class="sd">        include_logs : boolean</span>
+<span class="sd">             Include logs in response (Default: False)</span>
+<span class="sd">        include_servingjson : boolean</span>
+<span class="sd">            Include servings in response (Default: False)</span>
+<span class="sd">        include_summary : boolean</span>
+<span class="sd">            Include summary information in response (Default: False)</span>
+<span class="sd">        include_testresults : boolean</span>
+<span class="sd">            Include test results in response (Default: False)</span>
+<span class="sd">        include_timingresults : boolean</span>
+<span class="sd">            Include timing results in response (Default: False)</span>
 
 <span class="sd">        Raises</span>
 <span class="sd">        ------</span>
@@ -986,12 +1005,12 @@
             <span class="s1">&#39;order&#39;</span><span class="p">,</span>
             <span class="s1">&#39;details&#39;</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">,</span>
-            <span class="n">logs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">logs</span><span class="o">=</span><span class="n">include_logs</span><span class="p">,</span>
             <span class="n">serving_hid</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">order_run_id</span><span class="p">),</span>
-            <span class="n">servingjson</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="n">summary</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="n">testresults</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="n">timingresults</span><span class="o">=</span><span class="kc">False</span>
+            <span class="n">servingjson</span><span class="o">=</span><span class="n">include_servingjson</span><span class="p">,</span>
+            <span class="n">summary</span><span class="o">=</span><span class="n">include_summary</span><span class="p">,</span>
+            <span class="n">testresults</span><span class="o">=</span><span class="n">include_testresults</span><span class="p">,</span>
+            <span class="n">timingresults</span><span class="o">=</span><span class="n">include_timingresults</span>
         <span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">api_response</span><span class="p">[</span><span class="s1">&#39;servings&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></div>
 
