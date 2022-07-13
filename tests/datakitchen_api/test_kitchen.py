@@ -3,7 +3,9 @@ from unittest import TestCase
 from unittest.mock import patch
 
 from requests.exceptions import HTTPError
+from uuid import UUID, uuid1
 
+from dkutils.constants import API_GET
 from dkutils.datakitchen_api.datakitchen_client import DataKitchenClient
 from dkutils.datakitchen_api.kitchen import Kitchen
 from .test_datakitchen_client import (
@@ -66,6 +68,25 @@ class TestKitchen(TestCase):
         self.dk_client = DataKitchenClient(
             DUMMY_USERNAME, DUMMY_PASSWORD, kitchen=DUMMY_KITCHEN, base_url=DUMMY_URL
         )
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._api_request')
+    def test_parent_name(self, mock_request):
+        mock_request.return_value = MockResponse(json=KITCHEN_SETTINGS)
+        parent_name = Kitchen(self.dk_client, 'foo').parent_name
+        mock_request.assert_called_with(API_GET, 'kitchen', 'foo')
+        self.assertEqual(parent_name, KITCHEN_SETTINGS['kitchen']['parent-kitchen'])
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._api_request')
+    def test_is_ingredient_true(self, mock_request):
+        mock_request.return_value = MockResponse(json=KITCHEN_SETTINGS)
+        ingredient_kitchen_name = KITCHEN_SETTINGS['kitchen']['parent-kitchen']
+        ingredient_kitchen_name += f'_{UUID(str(uuid1())).hex}'
+        self.assertTrue(Kitchen(self.dk_client, ingredient_kitchen_name).is_ingredient())
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._api_request')
+    def test_is_ingredient_false(self, mock_request):
+        mock_request.return_value = MockResponse(json=KITCHEN_SETTINGS)
+        self.assertFalse(Kitchen(self.dk_client, 'foo').is_ingredient())
 
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.put')

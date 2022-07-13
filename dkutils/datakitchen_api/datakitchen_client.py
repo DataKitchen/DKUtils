@@ -696,7 +696,15 @@ class DataKitchenClient:
                 f'No order runs found for provided order id ({order_id}) in kitchen {self.kitchen}'
             )
 
-    def get_order_run_details(self, order_run_id):
+    def get_order_run_details(
+        self,
+        order_run_id,
+        include_logs=False,
+        include_servingjson=False,
+        include_summary=False,
+        include_testresults=False,
+        include_timingresults=False
+    ):
         """
         Retrieve the details of an order run.
 
@@ -704,6 +712,16 @@ class DataKitchenClient:
         ----------
         order_run_id : str
             Order run id for which to retrieve details
+        include_logs : boolean
+             Include logs in response (Default: False)
+        include_servingjson : boolean
+            Include servings in response (Default: False)
+        include_summary : boolean
+            Include summary information in response (Default: False)
+        include_testresults : boolean
+            Include test results in response (Default: False)
+        include_timingresults : boolean
+            Include timing results in response (Default: False)
 
         Raises
         ------
@@ -756,12 +774,12 @@ class DataKitchenClient:
             'order',
             'details',
             self.kitchen,
-            logs=False,
+            logs=include_logs,
             serving_hid=str(order_run_id),
-            servingjson=False,
-            summary=False,
-            testresults=False,
-            timingresults=False
+            servingjson=include_servingjson,
+            summary=include_summary,
+            testresults=include_testresults,
+            timingresults=include_timingresults
         ).json()
         return api_response['servings'][0]
 
