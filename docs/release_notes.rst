@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v2.6.0
+------
+* Added DataKitchen API class for performing CRUD operations on vault.
+
 v2.5.0
 ------
 * Add retry decorator for retrying API requests that return an HTTP 50X error
