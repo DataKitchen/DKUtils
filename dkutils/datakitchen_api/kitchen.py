@@ -14,6 +14,8 @@ from dkutils.constants import (
     API_PUT,
 )
 
+from dkutils.datakitchen_api.vault import Vault
+
 if TYPE_CHECKING:
     from .datakitchen_client import DataKitchenClient
 
@@ -556,3 +558,6 @@ class Kitchen:
                     )
 
         return self._update_settings(settings)
+
+    def get_vault(self):
+        return Vault(self._client, self._name)

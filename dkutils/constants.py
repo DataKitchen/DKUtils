@@ -39,6 +39,7 @@ VALID_TEST_DIRECTORIES = ['actions', 'data_sources', 'data_sinks']
 
 # Vault
 DEFAULT_VAULT_URL = 'https://vault2.datakitchen.io:8200'
+GLOBAL = '**__GLOBAL__**'
 
 # GMail API
 GMAIL_APPROVAL_STRING = "Approved"
