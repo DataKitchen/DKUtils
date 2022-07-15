@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api.kitchen &mdash; DKUtils 2.5.0 documentation</title>
+  <title>dkutils.datakitchen_api.kitchen &mdash; DKUtils 2.6.0 documentation</title>
   
 
   
@@ -109,6 +109,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-6-0">v2.6.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-5-0">v2.5.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-4-1">v2.4.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-4-0">v2.4.0</a></li>
@@ -244,6 +245,8 @@
     <span class="n">API_POST</span><span class="p">,</span>
     <span class="n">API_PUT</span><span class="p">,</span>
 <span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">dkutils.datakitchen_api.vault</span> <span class="kn">import</span> <span class="n">Vault</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">.datakitchen_client</span> <span class="kn">import</span> <span class="n">DataKitchenClient</span>
@@ -786,7 +789,10 @@
                         <span class="nb">set</span><span class="p">(</span><span class="n">cur_other_role_staff</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">role_staff_to_update</span><span class="p">)</span>
                     <span class="p">)</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_settings</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_settings</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Kitchen.get_vault"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.get_vault">[docs]</a>    <span class="k">def</span> <span class="nf">get_vault</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Vault</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

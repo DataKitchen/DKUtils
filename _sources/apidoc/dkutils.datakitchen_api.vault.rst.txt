@@ -1,0 +1,7 @@
+dkutils.datakitchen\_api.vault module
+=====================================
+
+.. automodule:: dkutils.datakitchen_api.vault
+   :members:
+   :undoc-members:
+   :show-inheritance:

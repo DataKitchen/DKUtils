@@ -1,0 +1,462 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>dkutils.datakitchen_api.vault module &mdash; DKUtils 2.6.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="dkutils.gmail_api package" href="dkutils.gmail_api.html" />
+    <link rel="prev" title="dkutils.datakitchen_api.tests_utils module" href="dkutils.datakitchen_api.tests_utils.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> DKUtils
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Code Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="dkutils.html">dkutils package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="dkutils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dkutils.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guide.html">Development Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#development-process">Development Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#deployment-checklist">Deployment Checklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#code-formatting-and-standards">Code formatting and standards</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#pre-commit-anchor">pre-commit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#flake8-anchor">Flake8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guide.html#yapf-anchor">YAPF</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#documentation-best-practices">Documentation Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#versioning">Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#makefile">Makefile</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-6-0">v2.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-5-0">v2.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-4-1">v2.4.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-4-0">v2.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-3-1">v2.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-3-0">v2.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-2-0">v2.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-1-0">v2.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v2-0-0">v2.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-12-1">v1.12.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-12-0">v1.12.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-11-0">v1.11.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-10-0">v1.10.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-9-0">v1.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-8-2">v1.8.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-8-1">v1.8.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-8-0">v1.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-7-1">v1.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-7-0">v1.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-6-0">v1.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-5-0">v1.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-4-0">v1.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-3">v1.3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-2">v1.3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-1">v1.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-3-0">v1.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-2-0">v1.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-1-0">v1.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-0-1">v1.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v1-0-0">v1.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-16-0">v0.16.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-15-0">v0.15.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-14-0">v0.14.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-13-0">v0.13.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-12-0">v0.12.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-11-0">v0.11.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-10-2">v0.10.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-10-1">v0.10.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-10-0">v0.10.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-9-0">v0.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-8-2">v0.8.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-8-1">v0.8.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-8-0">v0.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-7-1">v0.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-7-0">v0.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-6-1">v0.6.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-6-0">v0.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-5-0">v0.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-4-0">v0.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-3-0">v0.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-2-0">v0.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-1-0">v0.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-4">v0.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-3">v0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-2">v0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes.html#v0-0-1">v0.0.1</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DKUtils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">dkutils</a> &raquo;</li>
+        
+          <li><a href="dkutils.html">dkutils package</a> &raquo;</li>
+        
+          <li><a href="dkutils.datakitchen_api.html">dkutils.datakitchen_api package</a> &raquo;</li>
+        
+      <li>dkutils.datakitchen_api.vault module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/apidoc/dkutils.datakitchen_api.vault.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="dkutils.gmail_api.html" class="btn btn-neutral float-right" title="dkutils.gmail_api package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="dkutils.datakitchen_api.tests_utils.html" class="btn btn-neutral float-left" title="dkutils.datakitchen_api.tests_utils module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-dkutils.datakitchen_api.vault">
+<span id="dkutils-datakitchen-api-vault-module"></span><h1>dkutils.datakitchen_api.vault module<a class="headerlink" href="#module-dkutils.datakitchen_api.vault" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.vault.Vault">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dkutils.datakitchen_api.vault.</span></span><span class="sig-name descname"><span class="pre">Vault</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient" title="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient"><span class="pre">DataKitchenClient</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">kitchen_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/vault.html#Vault"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.vault.Vault" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Vault object for performing vault related API requests.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<a class="reference internal" href="dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient" title="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient"><em>DataKitchenClient</em></a>) – Client for making requests.</p></li>
+<li><p><strong>kitchen_name</strong> (<em>str</em>) – Name of existing kitchen.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.vault.Vault.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient" title="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient"><span class="pre">DataKitchenClient</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">kitchen_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/vault.html#Vault.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.vault.Vault.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Vault object for performing vault related API requests.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<a class="reference internal" href="dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient" title="dkutils.datakitchen_api.datakitchen_client.DataKitchenClient"><em>DataKitchenClient</em></a>) – Client for making requests.</p></li>
+<li><p><strong>kitchen_name</strong> (<em>str</em>) – Name of existing kitchen.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.vault.Vault.delete_secret">
+<span class="sig-name descname"><span class="pre">delete_secret</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_global</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">requests.models.Response</span></span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/vault.html#Vault.delete_secret"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.vault.Vault.delete_secret" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a secret from vault.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – Path in vault to the secret being deleted.</p></li>
+<li><p><strong>is_global</strong> (<em>boolean</em><em>, </em><em>optional</em>) – If True, delete from the global vault. Otherwise, delete from the kitchen vault.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>HTTPError</strong> – If the request fails.</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code> object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>requests.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.vault.Vault.get_config">
+<span class="sig-name descname"><span class="pre">get_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_global</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/vault.html#Vault.get_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.vault.Vault.get_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the vault configuration for the global or kitchen vault.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>is_global</strong> (<em>boolean</em><em>, </em><em>optional</em>) – If True, return global vault config. Otherwise, return kitchen vault config.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>HTTPError</strong> – If the request fails.</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><p>Dictionary of vault config of the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;inheritable&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;prefix&#39;</span><span class="p">:</span> <span class="s1">&#39;Acme/development&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;private&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s1">&#39;service&#39;</span><span class="p">:</span> <span class="s1">&#39;custom&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;sourceKitchen&#39;</span><span class="p">:</span> <span class="s1">&#39;Development&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://vault2.datakitchen.io:8200&#39;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.vault.Vault.get_secrets">
+<span class="sig-name descname"><span class="pre">get_secrets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_global</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/vault.html#Vault.get_secrets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.vault.Vault.get_secrets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of paths for all the secrets in the kitchen or global vault. No secret values are
+returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>is_global</strong> (<em>boolean</em><em>, </em><em>optional</em>) – If True, return global vault secret paths. Otherwise, return kitchen vault secret paths.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the request fails.</p></li>
+<li><p><strong>ValueError</strong> – If there is an error retrieving the secrets (e.g. the kitchen does not exist)</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of secret paths.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.vault.Vault.update_config">
+<span class="sig-name descname"><span class="pre">update_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vault_token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vault_url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'https://vault2.datakitchen.io:8200'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">private</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inheritable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/vault.html#Vault.update_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.vault.Vault.update_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the custom vault configuration for a Kitchen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prefix</strong> (<em>str</em>) – Prefix specifying the vault location (e.g. Implementation/dev).</p></li>
+<li><p><strong>vault_token</strong> (<em>str</em>) – Token for the custom vault.</p></li>
+<li><p><strong>vault_url</strong> (<em>str</em><em>, </em><em>optional</em>) – Vault URL (default: <a class="reference external" href="https://vault2.datakitchen.io:8200">https://vault2.datakitchen.io:8200</a>).</p></li>
+<li><p><strong>private</strong> (<em>str</em><em>, </em><em>optional</em>) – Set to True if this is a private vault service, otherwise set to False (default: False)</p></li>
+<li><p><strong>inheritable</strong> (<em>str</em><em>, </em><em>optional</em>) – Set to True if this vault should be inherited by child kitchens, otherwise set to false
+(default: True).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>HTTPError</strong> – If the request fails.</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code> object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>requests.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dkutils.datakitchen_api.vault.Vault.update_or_add_secret">
+<span class="sig-name descname"><span class="pre">update_or_add_secret</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_global</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">requests.models.Response</span></span></span><a class="reference internal" href="../_modules/dkutils/datakitchen_api/vault.html#Vault.update_or_add_secret"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dkutils.datakitchen_api.vault.Vault.update_or_add_secret" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update an existing secret value or add a new secret if one does not already exist.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – Path in vault where the secret will be stored.</p></li>
+<li><p><strong>value</strong> (<em>str</em>) – Value of the secret being stored.</p></li>
+<li><p><strong>is_global</strong> (<em>boolean</em><em>, </em><em>optional</em>) – If True, add to the global vault. Otherwise, add to the kitchen vault.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>HTTPError</strong> – If the request fails.</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code> object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>requests.Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="dkutils.gmail_api.html" class="btn btn-neutral float-right" title="dkutils.gmail_api package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="dkutils.datakitchen_api.tests_utils.html" class="btn btn-neutral float-left" title="dkutils.datakitchen_api.tests_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, DataKitchen
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

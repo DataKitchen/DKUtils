@@ -1,0 +1,468 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>dkutils.datakitchen_api.vault &mdash; DKUtils 2.6.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> DKUtils
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../apidoc/modules.html">Code Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../apidoc/dkutils.html">dkutils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../apidoc/dkutils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../apidoc/dkutils.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guide.html">Development Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#development-process">Development Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#deployment-checklist">Deployment Checklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#code-formatting-and-standards">Code formatting and standards</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#pre-commit-anchor">pre-commit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#flake8-anchor">Flake8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#yapf-anchor">YAPF</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#documentation-best-practices">Documentation Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#versioning">Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#makefile">Makefile</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-6-0">v2.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-5-0">v2.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-4-1">v2.4.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-4-0">v2.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-3-1">v2.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-3-0">v2.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-2-0">v2.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-1-0">v2.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-0-0">v2.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-12-1">v1.12.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-12-0">v1.12.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-11-0">v1.11.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-10-0">v1.10.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-9-0">v1.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-8-2">v1.8.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-8-1">v1.8.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-8-0">v1.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-7-1">v1.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-7-0">v1.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-6-0">v1.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-5-0">v1.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-4-0">v1.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-3">v1.3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-2">v1.3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-1">v1.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-0">v1.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-2-0">v1.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-1-0">v1.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-0-1">v1.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-0-0">v1.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-16-0">v0.16.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-15-0">v0.15.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-14-0">v0.14.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-13-0">v0.13.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-12-0">v0.12.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-11-0">v0.11.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-10-2">v0.10.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-10-1">v0.10.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-10-0">v0.10.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-9-0">v0.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-8-2">v0.8.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-8-1">v0.8.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-8-0">v0.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-7-1">v0.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-7-0">v0.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-6-1">v0.6.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-6-0">v0.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-5-0">v0.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-4-0">v0.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-3-0">v0.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-2-0">v0.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-1-0">v0.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-4">v0.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-3">v0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-2">v0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-1">v0.0.1</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DKUtils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>dkutils.datakitchen_api.vault</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for dkutils.datakitchen_api.vault</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">Response</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
+
+<span class="kn">from</span> <span class="nn">dkutils.constants</span> <span class="kn">import</span> <span class="p">(</span><span class="n">API_DELETE</span><span class="p">,</span> <span class="n">API_GET</span><span class="p">,</span> <span class="n">API_POST</span><span class="p">,</span> <span class="n">GLOBAL</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">dkutils.datakitchen_api.datakitchen_client</span> <span class="kn">import</span> <span class="n">DEFAULT_VAULT_URL</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">dkutils.datakitchen_api.datakitchen_client</span> <span class="kn">import</span> <span class="n">DataKitchenClient</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Vault"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.vault.html#dkutils.datakitchen_api.vault.Vault">[docs]</a><span class="k">class</span> <span class="nc">Vault</span><span class="p">:</span>
+
+<div class="viewcode-block" id="Vault.__init__"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.vault.html#dkutils.datakitchen_api.vault.Vault.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">DataKitchenClient</span><span class="p">,</span> <span class="n">kitchen_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Vault object for performing vault related API requests.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        client : DataKitchenClient</span>
+<span class="sd">            Client for making requests.</span>
+<span class="sd">        kitchen_name : str</span>
+<span class="sd">            Name of existing kitchen.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kitchen_name</span> <span class="o">=</span> <span class="n">kitchen_name</span></div>
+
+<div class="viewcode-block" id="Vault.get_config"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.vault.html#dkutils.datakitchen_api.vault.Vault.get_config">[docs]</a>    <span class="k">def</span> <span class="nf">get_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">is_global</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the vault configuration for the global or kitchen vault.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        is_global : boolean, optional</span>
+<span class="sd">            If True, return global vault config. Otherwise, return kitchen vault config.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Dictionary of vault config of the form::</span>
+
+<span class="sd">                {</span>
+<span class="sd">                    &#39;inheritable&#39;: True,</span>
+<span class="sd">                    &#39;prefix&#39;: &#39;Acme/development&#39;,</span>
+<span class="sd">                    &#39;private&#39;: False,</span>
+<span class="sd">                    &#39;service&#39;: &#39;custom&#39;,</span>
+<span class="sd">                    &#39;sourceKitchen&#39;: &#39;Development&#39;,</span>
+<span class="sd">                    &#39;url&#39;: &#39;https://vault2.datakitchen.io:8200&#39;</span>
+<span class="sd">                }</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span>
+            <span class="n">API_GET</span><span class="p">,</span> <span class="s2">&quot;vault&quot;</span><span class="p">,</span> <span class="s2">&quot;config&quot;</span><span class="p">,</span> <span class="n">kitchens</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_kitchen_name</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;config&#39;</span><span class="p">][</span><span class="n">GLOBAL</span> <span class="k">if</span> <span class="n">is_global</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kitchen_name</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Vault.update_config"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.vault.html#dkutils.datakitchen_api.vault.Vault.update_config">[docs]</a>    <span class="k">def</span> <span class="nf">update_config</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">vault_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">vault_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_VAULT_URL</span><span class="p">,</span>
+        <span class="n">private</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">inheritable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the custom vault configuration for a Kitchen.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        prefix : str</span>
+<span class="sd">            Prefix specifying the vault location (e.g. Implementation/dev).</span>
+<span class="sd">        vault_token : str</span>
+<span class="sd">            Token for the custom vault.</span>
+<span class="sd">        vault_url : str, optional</span>
+<span class="sd">            Vault URL (default: https://vault2.datakitchen.io:8200).</span>
+<span class="sd">        private : str, optional</span>
+<span class="sd">            Set to True if this is a private vault service, otherwise set to False (default: False)</span>
+<span class="sd">        inheritable : str, optional</span>
+<span class="sd">            Set to True if this vault should be inherited by child kitchens, otherwise set to false</span>
+<span class="sd">            (default: True).</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        ------</span>
+<span class="sd">        requests.Response</span>
+<span class="sd">            :class:`Response &lt;Response&gt;` object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update_kitchen_vault</span><span class="p">(</span>
+            <span class="n">prefix</span><span class="p">,</span>
+            <span class="n">vault_token</span><span class="p">,</span>
+            <span class="n">vault_url</span><span class="o">=</span><span class="n">vault_url</span><span class="p">,</span>
+            <span class="n">private</span><span class="o">=</span><span class="n">private</span><span class="p">,</span>
+            <span class="n">inheritable</span><span class="o">=</span><span class="n">inheritable</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Vault.get_secrets"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.vault.html#dkutils.datakitchen_api.vault.Vault.get_secrets">[docs]</a>    <span class="k">def</span> <span class="nf">get_secrets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">is_global</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a list of paths for all the secrets in the kitchen or global vault. No secret values are</span>
+<span class="sd">        returned.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        is_global : boolean, optional</span>
+<span class="sd">            If True, return global vault secret paths. Otherwise, return kitchen vault secret paths.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If there is an error retrieving the secrets (e.g. the kitchen does not exist)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        ------</span>
+<span class="sd">        list</span>
+<span class="sd">            List of secret paths.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">secrets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span>
+            <span class="n">API_GET</span><span class="p">,</span> <span class="s2">&quot;secret&quot;</span><span class="p">,</span> <span class="n">kitchens</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_kitchen_name</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="n">GLOBAL</span> <span class="k">if</span> <span class="n">is_global</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kitchen_name</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">secrets</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Error retrieving secrets: </span><span class="si">{</span><span class="n">secrets</span><span class="p">[</span><span class="s2">&quot;error-message&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">secrets</span><span class="p">[</span><span class="s1">&#39;list&#39;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Vault.update_or_add_secret"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.vault.html#dkutils.datakitchen_api.vault.Vault.update_or_add_secret">[docs]</a>    <span class="k">def</span> <span class="nf">update_or_add_secret</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">is_global</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update an existing secret value or add a new secret if one does not already exist.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        path : str</span>
+<span class="sd">            Path in vault where the secret will be stored.</span>
+<span class="sd">        value : str</span>
+<span class="sd">            Value of the secret being stored.</span>
+<span class="sd">        is_global : boolean, optional</span>
+<span class="sd">            If True, add to the global vault. Otherwise, add to the kitchen vault.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        ------</span>
+<span class="sd">        requests.Response</span>
+<span class="sd">            :class:`Response &lt;Response&gt;` object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span>
+            <span class="n">API_POST</span><span class="p">,</span>
+            <span class="s2">&quot;secret&quot;</span><span class="p">,</span>
+            <span class="n">path</span><span class="p">,</span>
+            <span class="n">kitchen</span><span class="o">=</span><span class="kc">None</span> <span class="k">if</span> <span class="n">is_global</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kitchen_name</span><span class="p">,</span>
+            <span class="n">value</span><span class="o">=</span><span class="n">value</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Vault.delete_secret"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.vault.html#dkutils.datakitchen_api.vault.Vault.delete_secret">[docs]</a>    <span class="k">def</span> <span class="nf">delete_secret</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">is_global</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete a secret from vault.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        path : str</span>
+<span class="sd">            Path in vault to the secret being deleted.</span>
+<span class="sd">        is_global : boolean, optional</span>
+<span class="sd">            If True, delete from the global vault. Otherwise, delete from the kitchen vault.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        ------</span>
+<span class="sd">        requests.Response</span>
+<span class="sd">            :class:`Response &lt;Response&gt;` object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span>
+            <span class="n">API_DELETE</span><span class="p">,</span> <span class="s2">&quot;secret&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">kitchen</span><span class="o">=</span><span class="kc">None</span> <span class="k">if</span> <span class="n">is_global</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kitchen_name</span>
+        <span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, DataKitchen
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
