@@ -24,6 +24,7 @@ setuptools.setup(
     python_requires='>=3.8',
     install_requires=[
         "dataclasses>=0.6",
+        "events_ingestion_client>=0.0.5",
         "jira>=2.0.0",
         "pandas>=1.1.2",
         "paramiko>=2.10.4",

@@ -30,7 +30,6 @@ def retry_50X_httperror(tries=3, delay=2, backoff=2):
         @wraps(f)
         def f_retry(*args, **kwargs):
             mtries, mdelay = tries, delay
-            print(f'mtries: {mtries}')
             while mtries > 1:
                 try:
                     return f(*args, **kwargs)

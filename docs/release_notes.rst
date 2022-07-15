@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v2.7.0
+------
+* Added OrderRunMonitor class that publishes order run events to the Events Ingestion API.
+
 v2.6.0
 ------
 * Added DataKitchen API class for performing CRUD operations on vault.
