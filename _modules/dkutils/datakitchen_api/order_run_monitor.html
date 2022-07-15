@@ -1,0 +1,449 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>dkutils.datakitchen_api.order_run_monitor &mdash; DKUtils 2.7.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> DKUtils
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../apidoc/modules.html">Code Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../apidoc/dkutils.html">dkutils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../apidoc/dkutils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../apidoc/dkutils.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guide.html">Development Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#development-process">Development Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#deployment-checklist">Deployment Checklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#code-formatting-and-standards">Code formatting and standards</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#pre-commit-anchor">pre-commit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#flake8-anchor">Flake8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../guide.html#yapf-anchor">YAPF</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#documentation-best-practices">Documentation Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#versioning">Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide.html#makefile">Makefile</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-7-0">v2.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-6-0">v2.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-5-0">v2.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-4-1">v2.4.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-4-0">v2.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-3-1">v2.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-3-0">v2.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-2-0">v2.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-1-0">v2.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-0-0">v2.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-12-1">v1.12.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-12-0">v1.12.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-11-0">v1.11.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-10-0">v1.10.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-9-0">v1.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-8-2">v1.8.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-8-1">v1.8.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-8-0">v1.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-7-1">v1.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-7-0">v1.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-6-0">v1.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-5-0">v1.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-4-0">v1.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-3">v1.3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-2">v1.3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-1">v1.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-3-0">v1.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-2-0">v1.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-1-0">v1.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-0-1">v1.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v1-0-0">v1.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-16-0">v0.16.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-15-0">v0.15.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-14-0">v0.14.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-13-0">v0.13.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-12-0">v0.12.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-11-0">v0.11.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-10-2">v0.10.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-10-1">v0.10.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-10-0">v0.10.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-9-0">v0.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-8-2">v0.8.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-8-1">v0.8.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-8-0">v0.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-7-1">v0.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-7-0">v0.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-6-1">v0.6.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-6-0">v0.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-5-0">v0.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-4-0">v0.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-3-0">v0.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-2-0">v0.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-1-0">v0.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-4">v0.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-3">v0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-2">v0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v0-0-1">v0.0.1</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DKUtils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>dkutils.datakitchen_api.order_run_monitor</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for dkutils.datakitchen_api.order_run_monitor</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="kn">from</span> <span class="nn">dkutils.datakitchen_api.datakitchen_client</span> <span class="kn">import</span> <span class="n">DataKitchenClient</span>
+<span class="kn">from</span> <span class="nn">dkutils.decorators</span> <span class="kn">import</span> <span class="n">retry_50X_httperror</span>
+<span class="kn">from</span> <span class="nn">events_ingestion_client</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ApiClient</span><span class="p">,</span>
+    <span class="n">CloseRunSchemaRequestBody</span><span class="p">,</span>
+    <span class="n">Configuration</span><span class="p">,</span>
+    <span class="n">EventsApi</span><span class="p">,</span>
+    <span class="n">TaskStatusSchemaRequestBody</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">events_ingestion_client.rest</span> <span class="kn">import</span> <span class="n">ApiException</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">NODE_UNKNOWN</span> <span class="o">=</span> <span class="s1">&#39;DKNodeStatus_Unknown&#39;</span>
+<span class="n">NODE_TEMPLATE</span> <span class="o">=</span> <span class="s1">&#39;DKNodeStatus_Template&#39;</span>
+<span class="n">NODE_IN_CONFIGURATION</span> <span class="o">=</span> <span class="s1">&#39;DKNodeStatus_in_configuration&#39;</span>
+<span class="n">NODE_FULLY_CONFIGURED</span> <span class="o">=</span> <span class="s1">&#39;DKNodeStatus_fully_configured&#39;</span>
+<span class="n">NODE_NOT_RUN</span> <span class="o">=</span> <span class="s1">&#39;DKNodeStatus_ready_for_production&#39;</span>
+<span class="n">NODE_RUNNING</span> <span class="o">=</span> <span class="s1">&#39;DKNodeStatus_in_production&#39;</span>
+<span class="n">NODE_SUCCESSFULL</span> <span class="o">=</span> <span class="s1">&#39;DKNodeStatus_completed_production&#39;</span>
+<span class="n">NODE_FAILED</span> <span class="o">=</span> <span class="s1">&#39;DKNodeStatus_production_error&#39;</span>
+<span class="n">NODE_STOPPED</span> <span class="o">=</span> <span class="s1">&#39;DKNodeStatus_production_stopped&#39;</span>
+<span class="n">NODE_SKIPPED</span> <span class="o">=</span> <span class="s1">&#39;DKNodeStatus_Skipped&#39;</span>
+
+
+<div class="viewcode-block" id="TaskStatus"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.TaskStatus">[docs]</a><span class="k">class</span> <span class="nc">TaskStatus</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">STARTED</span> <span class="o">=</span> <span class="s2">&quot;STARTED&quot;</span>
+    <span class="n">COMPLETED</span> <span class="o">=</span> <span class="s2">&quot;COMPLETED&quot;</span>
+    <span class="n">WARNING</span> <span class="o">=</span> <span class="s2">&quot;WARNING&quot;</span>
+    <span class="n">ERROR</span> <span class="o">=</span> <span class="s2">&quot;ERROR&quot;</span></div>
+
+
+<div class="viewcode-block" id="EventInfoProvider"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.EventInfoProvider">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">EventInfoProvider</span><span class="p">:</span>
+    <span class="n">pipeline_name</span><span class="p">:</span> <span class="nb">str</span>
+
+<div class="viewcode-block" id="EventInfoProvider.get_event_info"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.EventInfoProvider.get_event_info">[docs]</a>    <span class="k">def</span> <span class="nf">get_event_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;pipeline_name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_name</span><span class="p">,</span>
+            <span class="s2">&quot;event_timestamp&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">}</span></div></div>
+
+
+<div class="viewcode-block" id="Node"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.Node">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
+    <span class="n">events_api_client</span><span class="p">:</span> <span class="n">EventsApi</span>
+    <span class="n">event_info_provider</span><span class="p">:</span> <span class="n">EventInfoProvider</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">status</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">running</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">NODE_RUNNING</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">succeeded</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">NODE_SUCCESSFULL</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">stopped</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">NODE_STOPPED</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">failed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">NODE_FAILED</span>
+
+<div class="viewcode-block" id="Node.init"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.Node.init">[docs]</a>    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_handle_event</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="Node.update"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.Node.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodes_info</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="n">new_status</span> <span class="o">=</span> <span class="n">nodes_info</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;status&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="n">new_status</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">new_status</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_handle_event</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_handle_event</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">running</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_publish_task_status_event</span><span class="p">(</span><span class="n">TaskStatus</span><span class="o">.</span><span class="n">STARTED</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">succeeded</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">stopped</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_publish_task_status_event</span><span class="p">(</span><span class="n">TaskStatus</span><span class="o">.</span><span class="n">COMPLETED</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">failed</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_publish_task_status_event</span><span class="p">(</span><span class="n">TaskStatus</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_publish_task_status_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_status</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">event_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_info_provider</span><span class="o">.</span><span class="n">get_event_info</span><span class="p">(</span>
+                <span class="n">task_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">task_status</span><span class="o">=</span><span class="n">task_status</span><span class="o">.</span><span class="n">name</span>
+            <span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Publishing event: </span><span class="si">{</span><span class="n">event_info</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">events_api_client</span><span class="o">.</span><span class="n">post_task_status</span><span class="p">(</span>
+                <span class="n">TaskStatusSchemaRequestBody</span><span class="p">(</span><span class="o">**</span><span class="n">event_info</span><span class="p">),</span> <span class="n">event_source</span><span class="o">=</span><span class="s1">&#39;API&#39;</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="n">ApiException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Exception when calling EventsApi-&gt;post_task_status: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">e</span><span class="p">)</span>
+            <span class="k">raise</span></div>
+
+
+<div class="viewcode-block" id="OrderRunMonitor"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.OrderRunMonitor">[docs]</a><span class="k">class</span> <span class="nc">OrderRunMonitor</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">dk_client</span><span class="p">:</span> <span class="n">DataKitchenClient</span><span class="p">,</span>
+        <span class="n">events_api_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">pipeline_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">order_run_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">nodes_to_ignore</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">sleep_time_secs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dk_client</span> <span class="o">=</span> <span class="n">dk_client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_event_info_provider</span> <span class="o">=</span> <span class="n">EventInfoProvider</span><span class="p">(</span><span class="n">pipeline_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_order_run_id</span> <span class="o">=</span> <span class="n">order_run_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_nodes_to_ignore</span> <span class="o">=</span> <span class="n">nodes_to_ignore</span> <span class="k">if</span> <span class="n">nodes_to_ignore</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_nodes_to_ignore</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;Monitor_and_Publish_Order_Run_Events&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_nodes_to_ignore</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_conditional_nodes</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sleep_time_secs</span> <span class="o">=</span> <span class="n">sleep_time_secs</span>
+
+        <span class="c1"># Configure API key authorization: SAKey</span>
+        <span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">()</span>
+        <span class="n">configuration</span><span class="o">.</span><span class="n">api_key</span><span class="p">[</span><span class="s1">&#39;ServiceAccountAuthenticationKey&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">events_api_key</span>
+
+        <span class="c1"># Create an instance of the API class</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_events_api_client</span> <span class="o">=</span> <span class="n">EventsApi</span><span class="p">(</span><span class="n">ApiClient</span><span class="p">(</span><span class="n">configuration</span><span class="p">))</span>
+
+<div class="viewcode-block" id="OrderRunMonitor.get_order_run_details"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.OrderRunMonitor.get_order_run_details">[docs]</a>    <span class="nd">@retry_50X_httperror</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">get_order_run_details</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dk_client</span><span class="o">.</span><span class="n">get_order_run_details</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_order_run_id</span><span class="p">,</span> <span class="n">include_summary</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OrderRunMonitor.get_conditional_nodes"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.OrderRunMonitor.get_conditional_nodes">[docs]</a>    <span class="k">def</span> <span class="nf">get_conditional_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">order_run_details</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_order_run_details</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="n">v</span><span class="p">[</span><span class="s1">&#39;node&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">order_run_details</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;conditions&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">values</span><span class="p">()]))</span></div>
+
+<div class="viewcode-block" id="OrderRunMonitor.get_nodes_info"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.OrderRunMonitor.get_nodes_info">[docs]</a>    <span class="k">def</span> <span class="nf">get_nodes_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">nodes_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_order_run_details</span><span class="p">()[</span><span class="s1">&#39;summary&#39;</span><span class="p">][</span><span class="s1">&#39;nodes&#39;</span><span class="p">]</span>
+        <span class="p">[</span><span class="n">nodes_info</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">node_name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="k">for</span> <span class="n">node_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nodes_to_ignore</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">nodes_info</span></div>
+
+<div class="viewcode-block" id="OrderRunMonitor.monitor"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.OrderRunMonitor.monitor">[docs]</a>    <span class="k">def</span> <span class="nf">monitor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">nodes_are_running</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">nodes_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nodes_info</span><span class="p">()</span>
+            <span class="n">nodes</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">Node</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_events_api_client</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_event_info_provider</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span>
+                     <span class="n">info</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">init</span><span class="p">()</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">nodes_info</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="p">]</span>
+
+            <span class="k">while</span> <span class="n">nodes_are_running</span><span class="p">:</span>
+                <span class="c1"># Update all the nodes with the latest run info</span>
+                <span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">nodes_info</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">]</span>
+                <span class="n">nodes_are_running</span> <span class="o">=</span> <span class="nb">any</span><span class="p">([</span><span class="n">node</span><span class="o">.</span><span class="n">running</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">])</span>
+
+                <span class="k">if</span> <span class="n">nodes_are_running</span><span class="p">:</span>
+                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sleep_time_secs</span><span class="p">)</span>
+                    <span class="n">nodes_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nodes_info</span><span class="p">()</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Order run finished. Shutting Down...&#39;</span><span class="p">)</span>
+            <span class="n">successful_nodes</span> <span class="o">=</span> <span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span> <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">succeeded</span><span class="p">]</span>
+            <span class="n">failed_nodes</span> <span class="o">=</span> <span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span> <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">failed</span><span class="p">]</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_events_api_client</span><span class="o">.</span><span class="n">post_close_run</span><span class="p">(</span>
+                <span class="n">CloseRunSchemaRequestBody</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_event_info_provider</span><span class="o">.</span><span class="n">get_event_info</span><span class="p">())</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">successful_nodes</span><span class="p">,</span> <span class="n">failed_nodes</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, DataKitchen
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

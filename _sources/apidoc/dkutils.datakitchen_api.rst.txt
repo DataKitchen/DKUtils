@@ -15,6 +15,7 @@ Submodules
    dkutils.datakitchen_api.datakitchen_client
    dkutils.datakitchen_api.datetime_utils
    dkutils.datakitchen_api.kitchen
+   dkutils.datakitchen_api.order_run_monitor
    dkutils.datakitchen_api.recipe
    dkutils.datakitchen_api.tests_utils
    dkutils.datakitchen_api.vault
