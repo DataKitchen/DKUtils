@@ -33,7 +33,7 @@ class Vault:
 
     def get_config(self, is_global: bool = False) -> dict:
         """
-        Return the vault configuration for this kitchen.
+        Return the vault configuration for the global or kitchen vault.
 
         Parameters
         ----------
