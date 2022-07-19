@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import os
 
 from requests import Response
 from typing import TYPE_CHECKING
@@ -19,6 +20,10 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
+class NodeNotFoundError(FileNotFoundError):
+    pass
+
+
 class Recipe:
 
     def __init__(self, client: DataKitchenClient, name: str) -> None:
@@ -34,6 +39,10 @@ class Recipe:
         """
         self._client = client
         self._name = name
+
+    @property
+    def name(self):
+        return self._name
 
     @staticmethod
     def create(client: DataKitchenClient, recipe_name: str, description: str = None) -> Recipe:
@@ -97,8 +106,8 @@ class Recipe:
         HTTPError
             If the request fails.
        """
-        logger.debug(f'Deleting recipe named {self._name} in kitchen {kitchen_name}...')
-        return self._client._api_request(API_DELETE, 'recipe', kitchen_name, self._name)
+        logger.debug(f'Deleting recipe named {self.name} in kitchen {kitchen_name}...')
+        return self._client._api_request(API_DELETE, 'recipe', kitchen_name, self.name)
 
     def get_recipe_files(self, kitchen_name: str) -> dict:
         """
@@ -121,11 +130,11 @@ class Recipe:
         Exception
             If a filetype is unrecognized.
         """
-        logger.debug(f'Retrieving files for recipe {self._name} in kitchen {kitchen_name}...')
-        response = self._client._api_request(API_GET, 'recipe', 'get', kitchen_name, self._name)
+        logger.debug(f'Retrieving files for recipe {self.name} in kitchen {kitchen_name}...')
+        response = self._client._api_request(API_GET, 'recipe', 'get', kitchen_name, self.name)
 
         recipe_files_dict = {}
-        for path, file_details_array in response.json()['recipes'][self._name].items():
+        for path, file_details_array in response.json()['recipes'][self.name].items():
 
             # Strip recipe name from filepath
             root_path = Path(*Path(path).parts[1:])
@@ -142,6 +151,45 @@ class Recipe:
                     )
 
         return recipe_files_dict
+
+    def get_node_files(self, kitchen_name: str, nodes: list) -> dict:
+        """
+        Retrieve all the files associated with the provided list of nodes.
+
+        Parameters
+        ----------
+        kitchen_name : str
+            Kitchen from which the recipe node files will be retrieved.
+        nodes : list
+            List of node names
+
+        Raises
+        ------
+        HTTPError
+            If the request fails.
+        NodeNotFoundError
+            If any of the provided nodes do not exist in this recipe.
+
+        Returns
+        -------
+        dict
+            Dictionary keyed by file path and valued by file contents.
+        """
+        recipe_files = self.get_recipe_files(kitchen_name)
+
+        # Ensure the nodes being retrieved actually exist in this recipe
+        available_nodes = {f.split(os.sep)[0] for f in recipe_files.keys() if os.sep in f}
+        missing_nodes = set(nodes) - available_nodes
+        if len(missing_nodes) > 0:
+            raise NodeNotFoundError(
+                f'The following nodes do not exist in kitchen {kitchen_name} and recipe {self.name}: {list(missing_nodes)}'  # noqa: E501
+            )
+
+        return {
+            path: recipe_files[path]
+            for path in recipe_files.keys()
+            if os.sep in path and path.split(os.sep)[0] in nodes
+        }
 
     def update_recipe_files(self, kitchen_name: str, filepaths: dict) -> Response:
         """
@@ -165,7 +213,7 @@ class Recipe:
             If the request fails.
         """
         logger.debug(
-            f'Updating files ({list(filepaths.keys())}) for recipe {self._name} in kitchen {kitchen_name}...'
+            f'Updating files ({list(filepaths.keys())}) for recipe {self.name} in kitchen {kitchen_name}...'
         )
 
         # Retrieve all the existing files in the recipe
@@ -180,7 +228,7 @@ class Recipe:
             'recipe',
             'update',
             kitchen_name,
-            self._name,
+            self.name,
             skipFormat=True,
             skipCompile=True,
             files=files,
@@ -209,7 +257,7 @@ class Recipe:
             If the request fails.
         """
         logger.debug(
-            f'Deleting files ({filepaths}) for recipe {self._name} in kitchen {kitchen_name}...'
+            f'Deleting files ({filepaths}) for recipe {self.name} in kitchen {kitchen_name}...'
         )
 
         # Including an empty dictionary for a file path implies file deletion
@@ -220,7 +268,7 @@ class Recipe:
             'recipe',
             'update',
             kitchen_name,
-            self._name,
+            self.name,
             skipFormat=True,
             skipCompile=True,
             files=files,
