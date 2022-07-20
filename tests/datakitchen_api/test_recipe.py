@@ -4,7 +4,7 @@ from unittest.mock import patch
 from requests.exceptions import HTTPError
 
 from dkutils.datakitchen_api.datakitchen_client import DataKitchenClient
-from dkutils.datakitchen_api.recipe import Recipe
+from dkutils.datakitchen_api.recipe import Recipe, NodeNotFoundError
 from .test_datakitchen_client import (
     DUMMY_USERNAME, DUMMY_PASSWORD, DUMMY_URL, DUMMY_KITCHEN, DUMMY_RECIPE, MockResponse
 )
@@ -18,6 +18,14 @@ MOCK_RECIPE_FILES_RESPONSE_JSON = {
             }, {
                 'filename': 'variables.json',
                 'json': '{\n    "variable-list": {\n\n    }\n\n}\n',
+            }],
+            f'{DUMMY_RECIPE}/node1': [{
+                'filename': 'description1.json',
+                'json': '{\n    "type": "DKNode_Container"\n}'
+            }],
+            f'{DUMMY_RECIPE}/node2': [{
+                'filename': 'description2.json',
+                'json': '{\n    "type": "DKNode_Container"\n}'
             }]
         }
     }
@@ -25,7 +33,14 @@ MOCK_RECIPE_FILES_RESPONSE_JSON = {
 
 RECIPE_FILES_DICT_OUTPUT = {
     'README.md': 'README contents',
-    'variables.json': '{\n    "variable-list": {\n\n    }\n\n}\n'
+    'variables.json': '{\n    "variable-list": {\n\n    }\n\n}\n',
+    'node1/description1.json': '{\n    "type": "DKNode_Container"\n}',
+    'node2/description2.json': '{\n    "type": "DKNode_Container"\n}'
+}
+
+NODE_FILES_DICT_OUTPUT = {
+    'node1/description1.json': '{\n    "type": "DKNode_Container"\n}',
+    'node2/description2.json': '{\n    "type": "DKNode_Container"\n}'
 }
 
 UPDATE_FILES = {'README.md': 'New README contents', 'new_file.txt': 'New file contents'}
@@ -97,6 +112,25 @@ class TestRecipe(TestCase):
             f'{DUMMY_URL}/v2/recipe/get/{DUMMY_KITCHEN}/{DUMMY_RECIPE}', headers=None, json={}
         )
         self.assertEqual(RECIPE_FILES_DICT_OUTPUT, recipe_files_dict)
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    def test_get_node_files(self, mock_get, _):
+        mock_get.return_value = MockResponse(json=MOCK_RECIPE_FILES_RESPONSE_JSON)
+        recipe = Recipe(self.dk_client, DUMMY_RECIPE)
+        node_files_dict = recipe.get_node_files(DUMMY_KITCHEN, ['node1', 'node2'])
+        mock_get.assert_called_with(
+            f'{DUMMY_URL}/v2/recipe/get/{DUMMY_KITCHEN}/{DUMMY_RECIPE}', headers=None, json={}
+        )
+        self.assertEqual(NODE_FILES_DICT_OUTPUT, node_files_dict)
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    def test_get_node_files_missing_nodes(self, mock_get, _):
+        mock_get.return_value = MockResponse(json=MOCK_RECIPE_FILES_RESPONSE_JSON)
+        recipe = Recipe(self.dk_client, DUMMY_RECIPE)
+        with self.assertRaises(NodeNotFoundError):
+            recipe.get_node_files(DUMMY_KITCHEN, ['node1', 'node3'])
 
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._validate_token')
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')

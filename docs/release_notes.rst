@@ -1,6 +1,13 @@
 Release Notes
 =============
 
+v2.8.0
+------
+* Added testing and docstrings to OrderRunMonitor class
+* Order run id being used as the run_tag to events ingestion API requests in OrderRunMonitor
+* Added get_node_files method to Recipe class
+* Exposed events-ingestion-api host parameter in OrderRunMonitor class constructor
+
 v2.7.0
 ------
 * Added OrderRunMonitor class that publishes order run events to the Events Ingestion API.
