@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api.recipe &mdash; DKUtils 2.7.0 documentation</title>
+  <title>dkutils.datakitchen_api.recipe &mdash; DKUtils 2.8.0 documentation</title>
   
 
   
@@ -109,6 +109,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-8-0">v2.8.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-7-0">v2.7.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-6-0">v2.6.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-5-0">v2.5.0</a></li>
@@ -234,6 +235,7 @@
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 <span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">Response</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
@@ -252,6 +254,10 @@
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
+<div class="viewcode-block" id="NodeNotFoundError"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.recipe.html#dkutils.datakitchen_api.recipe.NodeNotFoundError">[docs]</a><span class="k">class</span> <span class="nc">NodeNotFoundError</span><span class="p">(</span><span class="ne">FileNotFoundError</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
 <div class="viewcode-block" id="Recipe"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.recipe.html#dkutils.datakitchen_api.recipe.Recipe">[docs]</a><span class="k">class</span> <span class="nc">Recipe</span><span class="p">:</span>
 
 <div class="viewcode-block" id="Recipe.__init__"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.recipe.html#dkutils.datakitchen_api.recipe.Recipe.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">DataKitchenClient</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -267,6 +273,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">client</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
 
 <div class="viewcode-block" id="Recipe.create"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.recipe.html#dkutils.datakitchen_api.recipe.Recipe.create">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">DataKitchenClient</span><span class="p">,</span> <span class="n">recipe_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Recipe</span><span class="p">:</span>
@@ -330,8 +340,8 @@
 <span class="sd">        HTTPError</span>
 <span class="sd">            If the request fails.</span>
 <span class="sd">       &quot;&quot;&quot;</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Deleting recipe named </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s1"> in kitchen </span><span class="si">{</span><span class="n">kitchen_name</span><span class="si">}</span><span class="s1">...&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_DELETE</span><span class="p">,</span> <span class="s1">&#39;recipe&#39;</span><span class="p">,</span> <span class="n">kitchen_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span></div>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Deleting recipe named </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> in kitchen </span><span class="si">{</span><span class="n">kitchen_name</span><span class="si">}</span><span class="s1">...&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_DELETE</span><span class="p">,</span> <span class="s1">&#39;recipe&#39;</span><span class="p">,</span> <span class="n">kitchen_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Recipe.get_recipe_files"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.recipe.html#dkutils.datakitchen_api.recipe.Recipe.get_recipe_files">[docs]</a>    <span class="k">def</span> <span class="nf">get_recipe_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kitchen_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -354,11 +364,11 @@
 <span class="sd">        Exception</span>
 <span class="sd">            If a filetype is unrecognized.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Retrieving files for recipe </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s1"> in kitchen </span><span class="si">{</span><span class="n">kitchen_name</span><span class="si">}</span><span class="s1">...&#39;</span><span class="p">)</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_GET</span><span class="p">,</span> <span class="s1">&#39;recipe&#39;</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">kitchen_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Retrieving files for recipe </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> in kitchen </span><span class="si">{</span><span class="n">kitchen_name</span><span class="si">}</span><span class="s1">...&#39;</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_GET</span><span class="p">,</span> <span class="s1">&#39;recipe&#39;</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">kitchen_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
         <span class="n">recipe_files_dict</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">path</span><span class="p">,</span> <span class="n">file_details_array</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;recipes&#39;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">path</span><span class="p">,</span> <span class="n">file_details_array</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;recipes&#39;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
 
             <span class="c1"># Strip recipe name from filepath</span>
             <span class="n">root_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="o">*</span><span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
@@ -375,6 +385,45 @@
                     <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">recipe_files_dict</span></div>
+
+<div class="viewcode-block" id="Recipe.get_node_files"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.recipe.html#dkutils.datakitchen_api.recipe.Recipe.get_node_files">[docs]</a>    <span class="k">def</span> <span class="nf">get_node_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kitchen_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">nodes</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve all the files associated with the provided list of nodes.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        kitchen_name : str</span>
+<span class="sd">            Kitchen from which the recipe node files will be retrieved.</span>
+<span class="sd">        nodes : list</span>
+<span class="sd">            List of node names</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        HTTPError</span>
+<span class="sd">            If the request fails.</span>
+<span class="sd">        NodeNotFoundError</span>
+<span class="sd">            If any of the provided nodes do not exist in this recipe.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Dictionary keyed by file path and valued by file contents.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">recipe_files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_recipe_files</span><span class="p">(</span><span class="n">kitchen_name</span><span class="p">)</span>
+
+        <span class="c1"># Ensure the nodes being retrieved actually exist in this recipe</span>
+        <span class="n">available_nodes</span> <span class="o">=</span> <span class="p">{</span><span class="n">f</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">recipe_files</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="ow">in</span> <span class="n">f</span><span class="p">}</span>
+        <span class="n">missing_nodes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span> <span class="o">-</span> <span class="n">available_nodes</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">missing_nodes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">NodeNotFoundError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;The following nodes do not exist in kitchen </span><span class="si">{</span><span class="n">kitchen_name</span><span class="si">}</span><span class="s1"> and recipe </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">missing_nodes</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>  <span class="c1"># noqa: E501</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="n">path</span><span class="p">:</span> <span class="n">recipe_files</span><span class="p">[</span><span class="n">path</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">recipe_files</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="ow">in</span> <span class="n">path</span> <span class="ow">and</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">nodes</span>
+        <span class="p">}</span></div>
 
 <div class="viewcode-block" id="Recipe.update_recipe_files"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.recipe.html#dkutils.datakitchen_api.recipe.Recipe.update_recipe_files">[docs]</a>    <span class="k">def</span> <span class="nf">update_recipe_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kitchen_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">filepaths</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -398,7 +447,7 @@
 <span class="sd">            If the request fails.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s1">&#39;Updating files (</span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">filepaths</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s1">) for recipe </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s1"> in kitchen </span><span class="si">{</span><span class="n">kitchen_name</span><span class="si">}</span><span class="s1">...&#39;</span>
+            <span class="sa">f</span><span class="s1">&#39;Updating files (</span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">filepaths</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s1">) for recipe </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> in kitchen </span><span class="si">{</span><span class="n">kitchen_name</span><span class="si">}</span><span class="s1">...&#39;</span>
         <span class="p">)</span>
 
         <span class="c1"># Retrieve all the existing files in the recipe</span>
@@ -413,7 +462,7 @@
             <span class="s1">&#39;recipe&#39;</span><span class="p">,</span>
             <span class="s1">&#39;update&#39;</span><span class="p">,</span>
             <span class="n">kitchen_name</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
             <span class="n">skipFormat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">skipCompile</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">,</span>
@@ -442,7 +491,7 @@
 <span class="sd">            If the request fails.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s1">&#39;Deleting files (</span><span class="si">{</span><span class="n">filepaths</span><span class="si">}</span><span class="s1">) for recipe </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s1"> in kitchen </span><span class="si">{</span><span class="n">kitchen_name</span><span class="si">}</span><span class="s1">...&#39;</span>
+            <span class="sa">f</span><span class="s1">&#39;Deleting files (</span><span class="si">{</span><span class="n">filepaths</span><span class="si">}</span><span class="s1">) for recipe </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> in kitchen </span><span class="si">{</span><span class="n">kitchen_name</span><span class="si">}</span><span class="s1">...&#39;</span>
         <span class="p">)</span>
 
         <span class="c1"># Including an empty dictionary for a file path implies file deletion</span>
@@ -453,7 +502,7 @@
             <span class="s1">&#39;recipe&#39;</span><span class="p">,</span>
             <span class="s1">&#39;update&#39;</span><span class="p">,</span>
             <span class="n">kitchen_name</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
             <span class="n">skipFormat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">skipCompile</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">,</span>
