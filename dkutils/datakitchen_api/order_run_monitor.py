@@ -47,12 +47,12 @@ class EventInfoProvider:
     order_run_id: str
 
     def get_event_info(self, **kwargs):
-        return {
-            "pipeline_name": self.pipeline_name,
-            "event_timestamp": datetime.now().isoformat(),
-            "run_tag": self.order_run_id,
-            **kwargs
-        }
+        event_info = {'pipeline_name': self.pipeline_name, 'run_tag': self.order_run_id, **kwargs}
+
+        if 'event_timestamp' not in event_info:
+            event_info['event_timestamp'] = datetime.now().isoformat()
+
+        return event_info
 
 
 @dataclass
@@ -61,6 +61,7 @@ class Node:
     event_info_provider: EventInfoProvider
     name: str
     status: str
+    start_time: int
 
     @property
     def running(self):
@@ -98,15 +99,16 @@ class Node:
 
     def _publish_task_status_event(self, task_status: str) -> None:
         try:
+            event_timestamp = datetime.utcfromtimestamp(self.start_time / 1000).isoformat()
             event_info = self.event_info_provider.get_event_info(
-                task_name=self.name, task_status=task_status.name
+                task_name=self.name, task_status=task_status.name, event_timestamp=event_timestamp
             )
-            logger.info(f"Publishing event: {event_info}")
+            logger.info(f'Publishing event: {event_info}')
             self.events_api_client.post_task_status(
                 TaskStatusSchemaRequestBody(**event_info), event_source='API'
             )
         except ApiException as e:
-            logger.error("Exception when calling EventsApi->post_task_status: %s\n" % e)
+            logger.error(f'Exception when calling EventsApi->post_task_status: {str(e)}\n')
             raise
 
 
@@ -198,6 +200,27 @@ class OrderRunMonitor:
         [nodes_info.pop(node_name, None) for node_name in self._nodes_to_ignore]
         return nodes_info
 
+    def _create_node(self, name, status, start_time) -> Node:
+        """
+        Create a Node object and initialize it.
+
+        Parameters
+        ----------
+        name : str
+            Node name
+        status : str
+            Node status
+        start_time : int
+            Milliseconds from epoch when the node started executing
+
+        Returns
+        -------
+        Node
+
+        """
+        return Node(self._events_api_client, self._event_info_provider, name, status,
+                    start_time).init()
+
     def monitor(self) -> tuple:
         """
         Poll the DataKitchen platform API for the status of the associated Order Run. Report the
@@ -214,8 +237,8 @@ class OrderRunMonitor:
             nodes_are_running = True
             nodes_info = self.get_nodes_info()
             nodes = [
-                Node(self._events_api_client, self._event_info_provider, name,
-                     info['status']).init() for name, info in nodes_info.items()
+                self._create_node(name, info['status'], info['start_time'])
+                for name, info in nodes_info.items()
             ]
 
             while nodes_are_running:

@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v2.9.0
+------
+* OrderRunMonitor now uses the node's start_time for the event_timestamp (previously it used datetime.now())
+
 v2.8.0
 ------
 * Added testing and docstrings to OrderRunMonitor class

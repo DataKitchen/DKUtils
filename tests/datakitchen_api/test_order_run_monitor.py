@@ -28,37 +28,48 @@ ORDER_RUN_DETAILS = {
     'summary': {
         'nodes': {
             'Action_Node_Test': {
-                'status': 'DKNodeStatus_completed_production'
+                'status': 'DKNodeStatus_completed_production',
+                'start_time': 1660678738681
             },
             'Condition': {
-                'status': 'DKNodeStatus_completed_production'
+                'status': 'DKNodeStatus_completed_production',
+                'start_time': 1660678738681
             },
             'Condition_False': {
-                'status': 'DKNodeStatus_Skipped'
+                'status': 'DKNodeStatus_Skipped',
+                'start_time': 1660678738681
             },
             'Condition_True': {
-                'status': 'DKNodeStatus_completed_production'
+                'status': 'DKNodeStatus_completed_production',
+                'start_time': 1660678738681
             },
             'DataMapper_Node_Test': {
-                'status': 'DKNodeStatus_completed_production'
+                'status': 'DKNodeStatus_completed_production',
+                'start_time': 1660678738681
             },
             'Fail_Node': {
-                'status': 'DKNodeStatus_production_error'
+                'status': 'DKNodeStatus_production_error',
+                'start_time': 1660678738681
             },
             'Node_After_Fail': {
-                'status': 'DKNodeStatus_ready_for_production'
+                'status': 'DKNodeStatus_ready_for_production',
+                'start_time': 1660678738681
             },
             'Node_After_Sleep': {
-                'status': 'DKNodeStatus_completed_production'
+                'status': 'DKNodeStatus_completed_production',
+                'start_time': 1660678738681
             },
             'Order_Run_Monitor': {
-                'status': 'DKNodeStatus_completed_production'
+                'status': 'DKNodeStatus_completed_production',
+                'start_time': 1660678738681
             },
             'Quick_Node': {
-                'status': 'DKNodeStatus_completed_production'
+                'status': 'DKNodeStatus_completed_production',
+                'start_time': 1660678738681
             },
             'Sleep': {
-                'status': 'DKNodeStatus_completed_production'
+                'status': 'DKNodeStatus_completed_production',
+                'start_time': 1660678738681
             }
         }
     }
