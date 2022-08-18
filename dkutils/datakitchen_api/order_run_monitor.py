@@ -14,6 +14,7 @@ from events_ingestion_client import (
     CloseRunSchemaRequestBody,
     Configuration,
     EventsApi,
+    MessageLogEventSchemaRequestBody,
     TaskStatusSchemaRequestBody,
 )
 from events_ingestion_client.rest import ApiException
@@ -32,6 +33,9 @@ NODE_SUCCESSFULL = 'DKNodeStatus_completed_production'
 NODE_FAILED = 'DKNodeStatus_production_error'
 NODE_STOPPED = 'DKNodeStatus_production_stopped'
 NODE_SKIPPED = 'DKNodeStatus_Skipped'
+
+LOG_LEVELS_TO_REPORT = ['WARNING', 'ERROR', 'CRITICAL']
+LOG_METADATA_KEYS_TO_REPORT = ['exc_desc', 'exc_type', 'traceback']
 
 
 class TaskStatus(Enum):
@@ -163,16 +167,23 @@ class OrderRunMonitor:
         self._events_api_client = EventsApi(ApiClient(configuration))
 
     @retry_50X_httperror()
-    def get_order_run_details(self) -> dict:
+    def get_order_run_details(self, **kwargs) -> dict:
         """
-        Retrieve order run details for the associated order run.
+        Retrieve order run details for the associated order run. The provided kwargs may be used to
+        augment the returned value with more granular details.
+
+        Parameters
+        ----------
+        kwargs
+            Optional keyword arguments as found in DataKitchenClient's
+            :func:`~dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_run_details`
 
         Returns
         -------
         dict
             Dictionary of order run details
         """
-        return self._dk_client.get_order_run_details(self._order_run_id, include_summary=True)
+        return self._dk_client.get_order_run_details(self._order_run_id, **kwargs)
 
     def get_conditional_nodes(self) -> list:
         """
@@ -196,7 +207,7 @@ class OrderRunMonitor:
         dict
             Dictionary keyed by node name and valued by a dictionary of node details.
         """
-        nodes_info = self.get_order_run_details()['summary']['nodes']
+        nodes_info = self.get_order_run_details(include_summary=True)['summary']['nodes']
         [nodes_info.pop(node_name, None) for node_name in self._nodes_to_ignore]
         return nodes_info
 
@@ -220,6 +231,80 @@ class OrderRunMonitor:
         """
         return Node(self._events_api_client, self._event_info_provider, name, status,
                     start_time).init()
+
+    @staticmethod
+    def parse_log_entry(log_entry):
+        """
+        Parse a log entry dictionary to derive the fields required for the
+        MessageLogEventSchemaRequestBody.
+
+        Parameters
+        ----------
+        log_entry : dict
+            Dictionary of log details for a single log entry of the form::
+
+                {
+                    'datetime': '2022-08-16T14:38:58.611000',
+                    'disk_used': '5.8984375 MB',
+                    'exc_desc': None,
+                    'exc_type': None,
+                    'hostname': '0d4e31d0-1d9b-11ed-971d-621c363ef06a-lqq9t',
+                    'mem_usage': '127.33 MB',
+                    'message': 'Test Fail: DKDataTestFailed',
+                    'node': 'Fail_Node',
+                    'order_run_id': '115d3e42-1d9b-11ed-b495-c216e4cc8e61',
+                    'pid': 22,
+                    'priority': 27,
+                    'record_type': 'ERROR',
+                    'syslogts': '2022-08-16T14:38:58-05:00',
+                    'thread_name': 'NodeExecutorThread:0',
+                    'traceback': None
+                }
+
+        Returns
+        -------
+        dict
+            Dictionary of required and optional fields for the MessageLogEventSchemaRequestBody
+        """
+        # Permitted log levels: "ERROR", "WARNING", and "INFO"
+        log_level = log_entry['record_type'] if log_entry['record_type'] != 'CRITICAL' else 'ERROR'
+
+        metadata = {}
+
+        def add_metadata(key):
+            if key in log_entry and log_entry[key] is not None:
+                metadata[key] = log_entry[key]
+
+        [add_metadata(k) for k in LOG_METADATA_KEYS_TO_REPORT]
+
+        return {
+            'event_timestamp': log_entry['syslogts'],
+            'log_level': log_level,
+            'message': log_entry['message'],
+            'metadata': metadata,
+            'task_name': log_entry['node']
+        }
+
+    def process_log_entries(self):
+        """
+        Send MessageLog events for WARNING and ERROR log messages.
+        """
+        try:
+            for log_entry in self.get_order_run_details(include_logs=True)['log']['lines']:
+                if log_entry['record_type'] in LOG_LEVELS_TO_REPORT and log_entry[
+                        'node'] not in self._nodes_to_ignore:
+                    try:
+                        event_info = self._event_info_provider.get_event_info(
+                            **self.parse_log_entry(log_entry)
+                        )
+                        body = MessageLogEventSchemaRequestBody(**event_info)
+                        self._events_api_client.post_message_log(body, event_source='API')
+                    except ApiException as e:
+                        logger.error(
+                            f'Exception when calling EventsApi->post_message_log: {str(e)}'
+                        )
+        except Exception as e:
+            logger.error(f'Failed to process logs: {str(e)}')
 
     def monitor(self) -> tuple:
         """
@@ -254,6 +339,7 @@ class OrderRunMonitor:
             successful_nodes = [node.name for node in nodes if node.succeeded]
             failed_nodes = [node.name for node in nodes if node.failed]
         finally:
+            self.process_log_entries()
             self._events_api_client.post_close_run(
                 CloseRunSchemaRequestBody(**self._event_info_provider.get_event_info())
             )
