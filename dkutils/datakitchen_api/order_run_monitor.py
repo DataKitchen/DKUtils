@@ -16,12 +16,15 @@ from events_ingestion_client import (
     EventsApi,
     MessageLogEventSchemaRequestBody,
     TaskStatusSchemaRequestBody,
+    TestReport,
+    TestResultSchemaRequestBody,
 )
 from events_ingestion_client.rest import ApiException
 
 logger = logging.getLogger(__name__)
 
 DEFAULT_HOST = 'https://dev-api.datakitchen.io'
+EVENT_SOURCE = 'API'
 
 NODE_UNKNOWN = 'DKNodeStatus_Unknown'
 NODE_TEMPLATE = 'DKNodeStatus_Template'
@@ -36,6 +39,8 @@ NODE_SKIPPED = 'DKNodeStatus_Skipped'
 
 LOG_LEVELS_TO_REPORT = ['WARNING', 'ERROR', 'CRITICAL']
 LOG_METADATA_KEYS_TO_REPORT = ['exc_desc', 'exc_type', 'traceback']
+ALLOWED_TEST_STATUS_TYPES = ['PASSED', 'FAILED', 'WARNING']
+TEST_SUITE = 'DataKitchen Tests'
 
 
 class TaskStatus(Enum):
@@ -64,23 +69,30 @@ class Node:
     events_api_client: EventsApi
     event_info_provider: EventInfoProvider
     name: str
-    status: str
-    start_time: int
+    info: dict
 
     @property
-    def running(self):
+    def status(self) -> str:
+        return self.info['status']
+
+    @property
+    def start_time(self) -> int:
+        return self.info['start_time']
+
+    @property
+    def running(self) -> bool:
         return self.status == NODE_RUNNING
 
     @property
-    def succeeded(self):
+    def succeeded(self) -> bool:
         return self.status == NODE_SUCCESSFULL
 
     @property
-    def stopped(self):
+    def stopped(self) -> bool:
         return self.status == NODE_STOPPED
 
     @property
-    def failed(self):
+    def failed(self) -> bool:
         return self.status == NODE_FAILED
 
     def init(self):
@@ -109,11 +121,50 @@ class Node:
             )
             logger.info(f'Publishing event: {event_info}')
             self.events_api_client.post_task_status(
-                TaskStatusSchemaRequestBody(**event_info), event_source='API'
+                TaskStatusSchemaRequestBody(**event_info), event_source=EVENT_SOURCE
             )
         except ApiException as e:
             logger.error(f'Exception when calling EventsApi->post_task_status: {str(e)}\n')
             raise
+
+    def publish_tests(self) -> None:
+        test_reports = self._get_test_reports()
+
+        if len(test_reports) == 0:
+            return
+
+        try:
+            event_info = self.event_info_provider.get_event_info(
+                task_name=self.name, test_results=test_reports, test_suite=TEST_SUITE
+            )
+            self.events_api_client.post_test_result(
+                TestResultSchemaRequestBody(**event_info), event_source=EVENT_SOURCE
+            )
+        except ApiException as e:
+            logger.error(f'Exception when calling EventsApi->post_test_result:: {str(e)}\n')
+
+    def _extract_tests(self, tests: dict) -> list:
+        test_reports = []
+        for name, test in tests.items():
+            status = test['status'].upper()
+            if status in ALLOWED_TEST_STATUS_TYPES:
+                test_reports.append(
+                    TestReport(description=test['results'], name=name, status=status)
+                )
+        return test_reports
+
+    def _get_test_reports(self) -> list:
+        test_reports = []
+        test_reports.extend(self._extract_tests(self.info['tests']))
+
+        def add_reports(key):
+            if key in self.info:
+                for value in self.info[key].values():
+                    test_reports.extend(self._extract_tests(value['tests']))
+
+        [add_reports(key) for key in ['data_sources', 'data_sinks', 'actions']]
+
+        return test_reports
 
 
 class OrderRunMonitor:
@@ -211,7 +262,7 @@ class OrderRunMonitor:
         [nodes_info.pop(node_name, None) for node_name in self._nodes_to_ignore]
         return nodes_info
 
-    def _create_node(self, name, status, start_time) -> Node:
+    def _create_node(self, name: str, info: dict) -> Node:
         """
         Create a Node object and initialize it.
 
@@ -219,21 +270,17 @@ class OrderRunMonitor:
         ----------
         name : str
             Node name
-        status : str
-            Node status
-        start_time : int
+        info : dict
             Milliseconds from epoch when the node started executing
 
         Returns
         -------
         Node
-
         """
-        return Node(self._events_api_client, self._event_info_provider, name, status,
-                    start_time).init()
+        return Node(self._events_api_client, self._event_info_provider, name, info).init()
 
     @staticmethod
-    def parse_log_entry(log_entry):
+    def parse_log_entry(log_entry: dict) -> dict:
         """
         Parse a log entry dictionary to derive the fields required for the
         MessageLogEventSchemaRequestBody.
@@ -285,7 +332,7 @@ class OrderRunMonitor:
             'task_name': log_entry['node']
         }
 
-    def process_log_entries(self):
+    def process_log_entries(self) -> None:
         """
         Send MessageLog events for WARNING and ERROR log messages.
         """
@@ -298,7 +345,7 @@ class OrderRunMonitor:
                             **self.parse_log_entry(log_entry)
                         )
                         body = MessageLogEventSchemaRequestBody(**event_info)
-                        self._events_api_client.post_message_log(body, event_source='API')
+                        self._events_api_client.post_message_log(body, event_source=EVENT_SOURCE)
                     except ApiException as e:
                         logger.error(
                             f'Exception when calling EventsApi->post_message_log: {str(e)}'
@@ -318,13 +365,11 @@ class OrderRunMonitor:
             Contains two lists. The first list contains names of the nodes that succeeded, whereas
             the second list contains names of the nodes that failed.
         """
+        nodes = []
         try:
             nodes_are_running = True
             nodes_info = self.get_nodes_info()
-            nodes = [
-                self._create_node(name, info['status'], info['start_time'])
-                for name, info in nodes_info.items()
-            ]
+            nodes = [self._create_node(name, info) for name, info in nodes_info.items()]
 
             while nodes_are_running:
                 # Update all the nodes with the latest run info
@@ -340,6 +385,7 @@ class OrderRunMonitor:
             failed_nodes = [node.name for node in nodes if node.failed]
         finally:
             self.process_log_entries()
+            [node.publish_tests() for node in nodes]
             self._events_api_client.post_close_run(
                 CloseRunSchemaRequestBody(**self._event_info_provider.get_event_info())
             )

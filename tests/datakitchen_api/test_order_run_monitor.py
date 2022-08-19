@@ -29,47 +29,95 @@ ORDER_RUN_DETAILS = {
         'nodes': {
             'Action_Node_Test': {
                 'status': 'DKNodeStatus_completed_production',
-                'start_time': 1660678738681
+                'start_time': 1660678738681,
+                'tests': {},
+                'actions': {
+                    'source': {
+                        'tests': {
+                            'Action_Node_Test': {
+                                'applies-to-keys': None,
+                                'metric': 'condition',
+                                'results': 'True '
+                                           'equal-to '
+                                           'condition=True',
+                                'status': 'Passed',
+                                'value': True
+                            }
+                        }
+                    }
+                }
             },
             'Condition': {
                 'status': 'DKNodeStatus_completed_production',
-                'start_time': 1660678738681
+                'start_time': 1660678738681,
+                'tests': {}
             },
             'Condition_False': {
                 'status': 'DKNodeStatus_Skipped',
-                'start_time': 1660678738681
+                'start_time': 1660678738681,
+                'tests': {}
             },
             'Condition_True': {
                 'status': 'DKNodeStatus_completed_production',
-                'start_time': 1660678738681
+                'start_time': 1660678738681,
+                'tests': {}
             },
             'DataMapper_Node_Test': {
                 'status': 'DKNodeStatus_completed_production',
-                'start_time': 1660678738681
+                'start_time': 1660678738681,
+                'tests': {}
             },
             'Fail_Node': {
                 'status': 'DKNodeStatus_production_error',
-                'start_time': 1660678738681
+                'start_time': 1660678738681,
+                'tests': {
+                    'Fail': {
+                        'applies-to-keys': [],
+                        'metric': 'condition == False',
+                        'results': 'True condition == False',
+                        'status': 'Failed',
+                        'value': True
+                    }
+                },
             },
             'Node_After_Fail': {
                 'status': 'DKNodeStatus_ready_for_production',
-                'start_time': 1660678738681
+                'start_time': 1660678738681,
+                'tests': {}
             },
             'Node_After_Sleep': {
                 'status': 'DKNodeStatus_completed_production',
-                'start_time': 1660678738681
+                'start_time': 1660678738681,
+                'tests': {}
             },
             'Order_Run_Monitor': {
                 'status': 'DKNodeStatus_completed_production',
-                'start_time': 1660678738681
+                'start_time': 1660678738681,
+                'tests': {}
             },
             'Quick_Node': {
                 'status': 'DKNodeStatus_completed_production',
-                'start_time': 1660678738681
+                'start_time': 1660678738681,
+                'tests': {}
             },
             'Sleep': {
                 'status': 'DKNodeStatus_completed_production',
-                'start_time': 1660678738681
+                'start_time': 1660678738681,
+                'tests': {},
+                'data_sinks': {
+                    's3_sink': {
+                        'tests': {
+                            'S3_Sink_Test': {
+                                'applies-to-keys': None,
+                                'metric': 'condition',
+                                'results': 'True '
+                                           'condition',
+                                'status': 'Passed',
+                                'value': True
+                            }
+                        }
+                    }
+                },
             }
         }
     }
