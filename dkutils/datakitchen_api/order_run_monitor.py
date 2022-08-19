@@ -8,6 +8,7 @@ from datetime import datetime
 from enum import Enum
 
 from dkutils.datakitchen_api.datakitchen_client import DataKitchenClient
+from dkutils.datakitchen_api.datetime_utils import get_utc_timestamp
 from dkutils.decorators import retry_50X_httperror
 from events_ingestion_client import (
     ApiClient,
@@ -83,7 +84,7 @@ class Node:
     def start_time(self) -> int:
         if self.info['start_time'] == 0:
             # Due to a race condition, the start_time is occasionally 0 (i.e. 01/01/1970)
-            return datetime.utcnow().isoformat()
+            return get_utc_timestamp()
         return self.info['start_time']
 
     @property
