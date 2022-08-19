@@ -1,8 +1,13 @@
 # DKUtils
 
+## Description
+The DKUtils python package was written to provide utility functions and classes that are used in DataKitchen recipes. 
+It serves two main purposes.
 
-This python package is intended to house utility functions and classes that are used in DataKitchen recipes.
+1. Provide a Python API Client for interacting with the DataKitchen platform’s REST API (DataKitchenClient)
+2. Provide utility classes and methods for interacting with tools commonly orchestrated in recipes in the DataKitchen platform (Alteryx, Jira, Gmail, etc.)
 
+## Development Info
 Building and testing this module is conveniently done using Make. Issue the `make` command to see a list
 of available targets (shown below for convenience). Note that any target can be suffixed with `-ext` to 
 run that target inside a Docker container. This allows testing and development in a standard and portable
