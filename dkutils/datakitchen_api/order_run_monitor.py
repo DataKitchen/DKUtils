@@ -75,6 +75,10 @@ class Node:
     def status(self) -> str:
         return self.info['status']
 
+    @status.setter
+    def status(self, status):
+        self.info['status'] = status
+
     @property
     def start_time(self) -> int:
         return self.info['start_time']
