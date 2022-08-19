@@ -59,7 +59,7 @@ class EventInfoProvider:
         event_info = {'pipeline_name': self.pipeline_name, 'run_tag': self.order_run_id, **kwargs}
 
         if 'event_timestamp' not in event_info:
-            event_info['event_timestamp'] = datetime.now().isoformat()
+            event_info['event_timestamp'] = datetime.utcnow().isoformat()
 
         return event_info
 
