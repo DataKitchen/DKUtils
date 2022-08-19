@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v2.9.4
+------
+* Bugfix start_time must be an int, not a string in the OrderRunMonitor
+
 v2.9.3
 ------
 * Bugfix to handle a start_time of 0 (i.e. 01/01/1970) in the OrderRunMonitor
