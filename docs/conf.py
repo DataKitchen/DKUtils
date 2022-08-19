@@ -21,7 +21,7 @@ copyright = '2020, DataKitchen'
 author = 'DataKitchen'
 
 # The full version, including alpha/beta/rc tags
-release = u'2.9.3'
+release = u'2.9.4'
 
 # -- General configuration ---------------------------------------------------
 
