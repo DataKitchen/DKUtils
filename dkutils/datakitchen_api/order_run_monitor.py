@@ -81,6 +81,9 @@ class Node:
 
     @property
     def start_time(self) -> int:
+        if self.info['start_time'] == 0:
+            # Due to a race condition, the start_time is occasionally 0 (i.e. 01/01/1970)
+            return datetime.utcnow().isoformat()
         return self.info['start_time']
 
     @property

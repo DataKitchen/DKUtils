@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v2.9.3
+------
+* Bugfix to handle a start_time of 0 (i.e. 01/01/1970) in the OrderRunMonitor
+
 v2.9.2
 ------
 * Bugfix event timestamp in OrderRunMonitor
