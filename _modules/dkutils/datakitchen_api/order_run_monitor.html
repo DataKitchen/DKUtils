@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api.order_run_monitor &mdash; DKUtils 2.9.4 documentation</title>
+  <title>dkutils.datakitchen_api.order_run_monitor &mdash; DKUtils 2.9.5 documentation</title>
   
 
   
@@ -109,6 +109,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-9-5">v2.9.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-9-4">v2.9.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-9-3">v2.9.3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-9-2">v2.9.2</a></li>
@@ -321,9 +322,10 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">start_time</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;start_time&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;start_time&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;start_time&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="c1"># Due to a race condition, the start_time is occasionally 0 (i.e. 01/01/1970)</span>
-            <span class="k">return</span> <span class="n">get_utc_timestamp</span><span class="p">()</span>
+            <span class="c1"># Due to a platform bug, the start_time is occasionally None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;start_time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_utc_timestamp</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;start_time&#39;</span><span class="p">]</span>
 
     <span class="nd">@property</span>

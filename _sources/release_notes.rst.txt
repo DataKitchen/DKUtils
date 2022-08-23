@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v2.9.5
+------
+* Handle a platform bug where start_time may be None in the OrderRunMonitor
+
 v2.9.4
 ------
 * Bugfix start_time must be an int, not a string in the OrderRunMonitor
