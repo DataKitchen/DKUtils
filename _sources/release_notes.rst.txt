@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v2.9.6
+------
+* Node start_time was not being updated properly in the OrderRunMonitor
+
 v2.9.5
 ------
 * Handle a platform bug where start_time may be None in the OrderRunMonitor
