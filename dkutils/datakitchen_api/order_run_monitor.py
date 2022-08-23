@@ -77,7 +77,7 @@ class Node:
         return self.info['status']
 
     @status.setter
-    def status(self, status):
+    def status(self, status) -> None:
         self.info['status'] = status
 
     @property
@@ -85,8 +85,12 @@ class Node:
         if self.info['start_time'] is None or self.info['start_time'] == 0:
             # Due to a race condition, the start_time is occasionally 0 (i.e. 01/01/1970)
             # Due to a platform bug, the start_time is occasionally None
-            self.info['start_time'] = get_utc_timestamp()
+            self.start_time = get_utc_timestamp()
         return self.info['start_time']
+
+    @start_time.setter
+    def start_time(self, start_time) -> None:
+        self.info['start_time'] = start_time
 
     @property
     def running(self) -> bool:
@@ -110,8 +114,10 @@ class Node:
 
     def update(self, nodes_info: dict) -> None:
         new_status = nodes_info[self.name]['status']
+        start_time = nodes_info[self.name]['start_time']
         if self.status != new_status:
             self.status = new_status
+            self.start_time = start_time
             self._handle_event()
 
     def _handle_event(self) -> None:
