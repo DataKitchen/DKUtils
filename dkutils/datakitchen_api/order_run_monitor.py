@@ -8,7 +8,6 @@ from datetime import datetime
 from enum import Enum
 
 from dkutils.datakitchen_api.datakitchen_client import DataKitchenClient
-from dkutils.datakitchen_api.datetime_utils import get_utc_timestamp
 from dkutils.decorators import retry_50X_httperror
 from events_ingestion_client import (
     ApiClient,
@@ -70,27 +69,11 @@ class Node:
     events_api_client: EventsApi
     event_info_provider: EventInfoProvider
     name: str
-    info: dict
-
-    @property
-    def status(self) -> str:
-        return self.info['status']
-
-    @status.setter
-    def status(self, status) -> None:
-        self.info['status'] = status
-
-    @property
-    def start_time(self) -> int:
-        if self.info['start_time'] is None or self.info['start_time'] == 0:
-            # Due to a race condition, the start_time is occasionally 0 (i.e. 01/01/1970)
-            # Due to a platform bug, the start_time is occasionally None
-            self.start_time = get_utc_timestamp()
-        return self.info['start_time']
-
-    @start_time.setter
-    def start_time(self, start_time) -> None:
-        self.info['start_time'] = start_time
+    info: dict = None
+    started_event_published: bool = False
+    status: str = None
+    start_time: int = None
+    end_time: int = None
 
     @property
     def running(self) -> bool:
@@ -108,29 +91,49 @@ class Node:
     def failed(self) -> bool:
         return self.status == NODE_FAILED
 
-    def init(self):
-        self._handle_event()
+    def update(self, info: dict) -> None:
+        self.info = info
+        prev_status = self.status
+        self.status = self.info['status']
+
+        if prev_status != self.status:
+            self._update_timings()
+            self._handle_event()
+
         return self
 
-    def update(self, nodes_info: dict) -> None:
-        new_status = nodes_info[self.name]['status']
-        start_time = nodes_info[self.name]['start_time']
-        if self.status != new_status:
-            self.status = new_status
+    def _update_timings(self) -> None:
+        start_time = self.info['start_time']
+        timing = self.info['timing']
+
+        if start_time:
             self.start_time = start_time
-            self._handle_event()
+        elif self.start_time is None:
+            self.start_time = int(time.time() * 1000)
+
+        if timing:
+            self.end_time = self.start_time + timing
+        else:
+            self.end_time = self.start_time
 
     def _handle_event(self) -> None:
         if self.running:
-            self._publish_task_status_event(TaskStatus.STARTED)
+            self._publish_task_status_event(TaskStatus.STARTED, self.start_time)
+            self.started_event_published = True
         elif self.succeeded or self.stopped:
-            self._publish_task_status_event(TaskStatus.COMPLETED)
+            if not self.started_event_published:
+                self._publish_task_status_event(TaskStatus.STARTED, self.start_time)
+                self.started_event_published = True
+            self._publish_task_status_event(TaskStatus.COMPLETED, self.end_time)
         elif self.failed:
-            self._publish_task_status_event(TaskStatus.ERROR)
+            if not self.started_event_published:
+                self._publish_task_status_event(TaskStatus.STARTED, self.start_time)
+                self.started_event_published = True
+            self._publish_task_status_event(TaskStatus.ERROR, self.end_time)
 
-    def _publish_task_status_event(self, task_status: str) -> None:
+    def _publish_task_status_event(self, task_status: str, milliseconds_from_epoch: int) -> None:
         try:
-            event_timestamp = datetime.utcfromtimestamp(self.start_time / 1000).isoformat()
+            event_timestamp = datetime.utcfromtimestamp(milliseconds_from_epoch / 1000).isoformat()
             event_info = self.event_info_provider.get_event_info(
                 task_name=self.name, task_status=task_status.name, event_timestamp=event_timestamp
             )
@@ -292,7 +295,7 @@ class OrderRunMonitor:
         -------
         Node
         """
-        return Node(self._events_api_client, self._event_info_provider, name, info).init()
+        return Node(self._events_api_client, self._event_info_provider, name).update(info)
 
     @staticmethod
     def parse_log_entry(log_entry: dict) -> dict:
@@ -388,7 +391,7 @@ class OrderRunMonitor:
 
             while nodes_are_running:
                 # Update all the nodes with the latest run info
-                [node.update(nodes_info) for node in nodes]
+                [node.update(nodes_info[node.name]) for node in nodes]
                 nodes_are_running = any([node.running for node in nodes])
 
                 if nodes_are_running:
