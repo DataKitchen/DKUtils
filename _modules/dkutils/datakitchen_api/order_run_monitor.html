@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api.order_run_monitor &mdash; DKUtils 2.9.6 documentation</title>
+  <title>dkutils.datakitchen_api.order_run_monitor &mdash; DKUtils 2.10.0 documentation</title>
   
 
   
@@ -109,6 +109,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-10-0">v2.10.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-9-6">v2.9.6</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-9-5">v2.9.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-9-4">v2.9.4</a></li>
@@ -249,7 +250,6 @@
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 
 <span class="kn">from</span> <span class="nn">dkutils.datakitchen_api.datakitchen_client</span> <span class="kn">import</span> <span class="n">DataKitchenClient</span>
-<span class="kn">from</span> <span class="nn">dkutils.datakitchen_api.datetime_utils</span> <span class="kn">import</span> <span class="n">get_utc_timestamp</span>
 <span class="kn">from</span> <span class="nn">dkutils.decorators</span> <span class="kn">import</span> <span class="n">retry_50X_httperror</span>
 <span class="kn">from</span> <span class="nn">events_ingestion_client</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">ApiClient</span><span class="p">,</span>
@@ -311,27 +311,11 @@
     <span class="n">events_api_client</span><span class="p">:</span> <span class="n">EventsApi</span>
     <span class="n">event_info_provider</span><span class="p">:</span> <span class="n">EventInfoProvider</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">info</span><span class="p">:</span> <span class="nb">dict</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span>
-
-    <span class="nd">@status</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">status</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">start_time</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;start_time&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;start_time&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="c1"># Due to a race condition, the start_time is occasionally 0 (i.e. 01/01/1970)</span>
-            <span class="c1"># Due to a platform bug, the start_time is occasionally None</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="n">get_utc_timestamp</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;start_time&#39;</span><span class="p">]</span>
-
-    <span class="nd">@start_time</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">start_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;start_time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">start_time</span>
+    <span class="n">info</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">started_event_published</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">status</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">start_time</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">end_time</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">running</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -349,29 +333,49 @@
     <span class="k">def</span> <span class="nf">failed</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">NODE_FAILED</span>
 
-<div class="viewcode-block" id="Node.init"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.Node.init">[docs]</a>    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_handle_event</span><span class="p">()</span>
+<div class="viewcode-block" id="Node.update"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.Node.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">info</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="n">info</span>
+        <span class="n">prev_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">prev_status</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_timings</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_handle_event</span><span class="p">()</span>
+
         <span class="k">return</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="Node.update"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.Node.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodes_info</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">new_status</span> <span class="o">=</span> <span class="n">nodes_info</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;status&#39;</span><span class="p">]</span>
-        <span class="n">start_time</span> <span class="o">=</span> <span class="n">nodes_info</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;start_time&#39;</span><span class="p">]</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="n">new_status</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">new_status</span>
+    <span class="k">def</span> <span class="nf">_update_timings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;start_time&#39;</span><span class="p">]</span>
+        <span class="n">timing</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;timing&#39;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">start_time</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="n">start_time</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_handle_event</span><span class="p">()</span></div>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">timing</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">end_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">+</span> <span class="n">timing</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">end_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span>
 
     <span class="k">def</span> <span class="nf">_handle_event</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">running</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_publish_task_status_event</span><span class="p">(</span><span class="n">TaskStatus</span><span class="o">.</span><span class="n">STARTED</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_publish_task_status_event</span><span class="p">(</span><span class="n">TaskStatus</span><span class="o">.</span><span class="n">STARTED</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">started_event_published</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">succeeded</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">stopped</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_publish_task_status_event</span><span class="p">(</span><span class="n">TaskStatus</span><span class="o">.</span><span class="n">COMPLETED</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">started_event_published</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_publish_task_status_event</span><span class="p">(</span><span class="n">TaskStatus</span><span class="o">.</span><span class="n">STARTED</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">started_event_published</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_publish_task_status_event</span><span class="p">(</span><span class="n">TaskStatus</span><span class="o">.</span><span class="n">COMPLETED</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_time</span><span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">failed</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_publish_task_status_event</span><span class="p">(</span><span class="n">TaskStatus</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">started_event_published</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_publish_task_status_event</span><span class="p">(</span><span class="n">TaskStatus</span><span class="o">.</span><span class="n">STARTED</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">started_event_published</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_publish_task_status_event</span><span class="p">(</span><span class="n">TaskStatus</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_time</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_publish_task_status_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_status</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_publish_task_status_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_status</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">milliseconds_from_epoch</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">event_timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcfromtimestamp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+            <span class="n">event_timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcfromtimestamp</span><span class="p">(</span><span class="n">milliseconds_from_epoch</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
             <span class="n">event_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_info_provider</span><span class="o">.</span><span class="n">get_event_info</span><span class="p">(</span>
                 <span class="n">task_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">task_status</span><span class="o">=</span><span class="n">task_status</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">event_timestamp</span><span class="o">=</span><span class="n">event_timestamp</span>
             <span class="p">)</span>
@@ -533,7 +537,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        Node</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">Node</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_events_api_client</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_event_info_provider</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">Node</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_events_api_client</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_event_info_provider</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
 
 <div class="viewcode-block" id="OrderRunMonitor.parse_log_entry"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.OrderRunMonitor.parse_log_entry">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">parse_log_entry</span><span class="p">(</span><span class="n">log_entry</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
@@ -629,7 +633,7 @@
 
             <span class="k">while</span> <span class="n">nodes_are_running</span><span class="p">:</span>
                 <span class="c1"># Update all the nodes with the latest run info</span>
-                <span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">nodes_info</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">]</span>
+                <span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">nodes_info</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">])</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">]</span>
                 <span class="n">nodes_are_running</span> <span class="o">=</span> <span class="nb">any</span><span class="p">([</span><span class="n">node</span><span class="o">.</span><span class="n">running</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">])</span>
 
                 <span class="k">if</span> <span class="n">nodes_are_running</span><span class="p">:</span>
