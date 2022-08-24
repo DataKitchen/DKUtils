@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+v2.10.0
+-------
+* Nodes now always publish a STARTED task event in the OrderRunMonitor
+* Nodes now report correct elapsed run time in the OrderRunMonitor
+
 v2.9.6
 ------
 * Node start_time was not being updated properly in the OrderRunMonitor

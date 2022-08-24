@@ -30,6 +30,7 @@ ORDER_RUN_DETAILS = {
             'Action_Node_Test': {
                 'status': 'DKNodeStatus_completed_production',
                 'start_time': 1660678738681,
+                'timing': 10000,
                 'tests': {},
                 'actions': {
                     'source': {
@@ -50,26 +51,31 @@ ORDER_RUN_DETAILS = {
             'Condition': {
                 'status': 'DKNodeStatus_completed_production',
                 'start_time': 1660678738681,
+                'timing': None,
                 'tests': {}
             },
             'Condition_False': {
                 'status': 'DKNodeStatus_Skipped',
                 'start_time': 1660678738681,
+                'timing': None,
                 'tests': {}
             },
             'Condition_True': {
                 'status': 'DKNodeStatus_completed_production',
                 'start_time': 1660678738681,
+                'timing': None,
                 'tests': {}
             },
             'DataMapper_Node_Test': {
                 'status': 'DKNodeStatus_completed_production',
                 'start_time': 1660678738681,
+                'timing': None,
                 'tests': {}
             },
             'Fail_Node': {
                 'status': 'DKNodeStatus_production_error',
                 'start_time': 1660678738681,
+                'timing': None,
                 'tests': {
                     'Fail': {
                         'applies-to-keys': [],
@@ -83,26 +89,31 @@ ORDER_RUN_DETAILS = {
             'Node_After_Fail': {
                 'status': 'DKNodeStatus_ready_for_production',
                 'start_time': 1660678738681,
+                'timing': None,
                 'tests': {}
             },
             'Node_After_Sleep': {
                 'status': 'DKNodeStatus_completed_production',
                 'start_time': 1660678738681,
+                'timing': None,
                 'tests': {}
             },
             'Order_Run_Monitor': {
                 'status': 'DKNodeStatus_completed_production',
                 'start_time': 1660678738681,
+                'timing': None,
                 'tests': {}
             },
             'Quick_Node': {
                 'status': 'DKNodeStatus_completed_production',
                 'start_time': 1660678738681,
+                'timing': None,
                 'tests': {}
             },
             'Sleep': {
                 'status': 'DKNodeStatus_completed_production',
                 'start_time': 1660678738681,
+                'timing': None,
                 'tests': {},
                 'data_sinks': {
                     's3_sink': {
