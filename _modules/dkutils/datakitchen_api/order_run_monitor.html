@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api.order_run_monitor &mdash; DKUtils 2.10.0 documentation</title>
+  <title>dkutils.datakitchen_api.order_run_monitor &mdash; DKUtils 2.11.0 documentation</title>
   
 
   
@@ -109,6 +109,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-0">v2.11.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-10-0">v2.10.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-9-6">v2.9.6</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-9-5">v2.9.5</a></li>
@@ -240,15 +241,17 @@
            <div itemprop="articleBody">
             
   <h1>Source code for dkutils.datakitchen_api.order_run_monitor</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
 <span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 
+<span class="kn">from</span> <span class="nn">dkutils.constants</span> <span class="kn">import</span> <span class="n">API_GET</span>
 <span class="kn">from</span> <span class="nn">dkutils.datakitchen_api.datakitchen_client</span> <span class="kn">import</span> <span class="n">DataKitchenClient</span>
 <span class="kn">from</span> <span class="nn">dkutils.decorators</span> <span class="kn">import</span> <span class="n">retry_50X_httperror</span>
 <span class="kn">from</span> <span class="nn">events_ingestion_client</span> <span class="kn">import</span> <span class="p">(</span>
@@ -285,6 +288,18 @@
 <span class="n">TEST_SUITE</span> <span class="o">=</span> <span class="s1">&#39;DataKitchen Tests&#39;</span>
 
 
+<div class="viewcode-block" id="get_customer_code"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.get_customer_code">[docs]</a><span class="nd">@retry_50X_httperror</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">get_customer_code</span><span class="p">(</span><span class="n">dk_client</span><span class="p">:</span> <span class="n">DataKitchenClient</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">user_info</span> <span class="o">=</span> <span class="n">dk_client</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_GET</span><span class="p">,</span> <span class="s1">&#39;userinfo&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">user_info</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;customer_git_name&#39;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="get_order_run_url"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.get_order_run_url">[docs]</a><span class="k">def</span> <span class="nf">get_order_run_url</span><span class="p">(</span><span class="n">dk_client</span><span class="p">:</span> <span class="n">DataKitchenClient</span><span class="p">,</span> <span class="n">customer_code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">base_url</span> <span class="o">=</span> <span class="n">dk_client</span><span class="o">.</span><span class="n">_base_url</span>
+    <span class="n">kitchen</span> <span class="o">=</span> <span class="n">dk_client</span><span class="o">.</span><span class="n">kitchen</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">base_url</span><span class="p">,</span> <span class="s1">&#39;#&#39;</span><span class="p">,</span> <span class="s1">&#39;orders&#39;</span><span class="p">,</span> <span class="n">customer_code</span><span class="p">,</span> <span class="n">kitchen</span><span class="p">,</span> <span class="s1">&#39;runs&#39;</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">])</span></div>
+
+
 <div class="viewcode-block" id="TaskStatus"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.TaskStatus">[docs]</a><span class="k">class</span> <span class="nc">TaskStatus</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
     <span class="n">STARTED</span> <span class="o">=</span> <span class="s2">&quot;STARTED&quot;</span>
     <span class="n">COMPLETED</span> <span class="o">=</span> <span class="s2">&quot;COMPLETED&quot;</span>
@@ -294,14 +309,28 @@
 
 <div class="viewcode-block" id="EventInfoProvider"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.EventInfoProvider">[docs]</a><span class="nd">@dataclass</span>
 <span class="k">class</span> <span class="nc">EventInfoProvider</span><span class="p">:</span>
+    <span class="n">dk_client</span><span class="p">:</span> <span class="n">DataKitchenClient</span>
+    <span class="n">customer_code</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">pipeline_name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">order_run_id</span><span class="p">:</span> <span class="nb">str</span>
 
-<div class="viewcode-block" id="EventInfoProvider.get_event_info"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.EventInfoProvider.get_event_info">[docs]</a>    <span class="k">def</span> <span class="nf">get_event_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="EventInfoProvider.init"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.EventInfoProvider.init">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span>
+            <span class="bp">cls</span><span class="p">,</span> <span class="n">dk_client</span><span class="p">:</span> <span class="n">DataKitchenClient</span><span class="p">,</span> <span class="n">pipeline_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EventInfoProvider</span><span class="p">:</span>
+        <span class="n">customer_code</span> <span class="o">=</span> <span class="n">get_customer_code</span><span class="p">(</span><span class="n">dk_client</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">EventInfoProvider</span><span class="p">(</span><span class="n">dk_client</span><span class="p">,</span> <span class="n">customer_code</span><span class="p">,</span> <span class="n">pipeline_name</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="EventInfoProvider.get_event_info"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.EventInfoProvider.get_event_info">[docs]</a>    <span class="k">def</span> <span class="nf">get_event_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
         <span class="n">event_info</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;pipeline_name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_name</span><span class="p">,</span> <span class="s1">&#39;run_tag&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_run_id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">}</span>
 
         <span class="k">if</span> <span class="s1">&#39;event_timestamp&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">event_info</span><span class="p">:</span>
             <span class="n">event_info</span><span class="p">[</span><span class="s1">&#39;event_timestamp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="s1">&#39;external_url&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">event_info</span><span class="p">:</span>
+            <span class="n">event_info</span><span class="p">[</span><span class="s1">&#39;external_url&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_order_run_url</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dk_client</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">customer_code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_run_id</span>
+            <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">event_info</span></div></div>
 
@@ -462,7 +491,14 @@
 <span class="sd">            URL of the Events Ingestion API (default: https://dev-api.datakitchen.io&#39;).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dk_client</span> <span class="o">=</span> <span class="n">dk_client</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_event_info_provider</span> <span class="o">=</span> <span class="n">EventInfoProvider</span><span class="p">(</span><span class="n">pipeline_name</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">)</span>
+
+        <span class="c1"># Expected pipeline_name is &lt;KITCHEN&gt;.&lt;RECIPE&gt;.&lt;VARIATION&gt; - replace ingredient kitchen</span>
+        <span class="c1"># name with parent kitchen name to send ingredient events to the parent order run pipeline</span>
+        <span class="n">kitchen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dk_client</span><span class="o">.</span><span class="n">get_kitchen</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">kitchen</span><span class="o">.</span><span class="n">is_ingredient</span><span class="p">()</span> <span class="ow">and</span> <span class="n">kitchen</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">pipeline_name</span><span class="p">:</span>
+            <span class="n">pipeline_name</span> <span class="o">=</span> <span class="n">pipeline_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">kitchen</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">kitchen</span><span class="o">.</span><span class="n">parent_name</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_event_info_provider</span> <span class="o">=</span> <span class="n">EventInfoProvider</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">dk_client</span><span class="p">,</span> <span class="n">pipeline_name</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_order_run_id</span> <span class="o">=</span> <span class="n">order_run_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_nodes_to_ignore</span> <span class="o">=</span> <span class="n">nodes_to_ignore</span> <span class="k">if</span> <span class="n">nodes_to_ignore</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_nodes_to_ignore</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;Order_Run_Monitor&#39;</span><span class="p">]</span>
