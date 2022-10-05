@@ -40,6 +40,13 @@ class Kitchen:
         self._parent_name = None
 
     @property
+    def name(self) -> str:
+        """
+        Kitchen name
+        """
+        return self._name
+
+    @property
     def parent_name(self) -> str:
         """
         Parent kitchen name

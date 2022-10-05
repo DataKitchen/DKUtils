@@ -248,6 +248,13 @@ class OrderRunMonitor:
             URL of the Events Ingestion API (default: https://dev-api.datakitchen.io').
         """
         self._dk_client = dk_client
+
+        # Expected pipeline_name is <KITCHEN>.<RECIPE>.<VARIATION> - replace ingredient kitchen
+        # name with parent kitchen name to send ingredient events to the parent order run pipeline
+        kitchen = self._dk_client.get_kitchen()
+        if kitchen.is_ingredient() and kitchen.name in pipeline_name:
+            pipeline_name = pipeline_name.replace(kitchen.name, kitchen.parent_name)
+
         self._event_info_provider = EventInfoProvider.init(dk_client, pipeline_name, order_run_id)
         self._order_run_id = order_run_id
         self._nodes_to_ignore = nodes_to_ignore if nodes_to_ignore is not None else []
