@@ -5,6 +5,7 @@ v2.11.0
 -------
 * Add order run external url to published events in the order run monitor
 * Order Run Monitor now handles ingredients by replacing the ingredient kitchen name in the pipeline_name with the parent kitchen name to associate events with the parent order run.
+* Update dependency events_ingestion_client to v0.0.8
 
 v2.10.0
 -------
