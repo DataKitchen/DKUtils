@@ -1,12 +1,14 @@
-from __future__ import print_function
+from __future__ import annotations
 
 import logging
+import os
 import time
 
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
 
+from dkutils.constants import API_GET
 from dkutils.datakitchen_api.datakitchen_client import DataKitchenClient
 from dkutils.decorators import retry_50X_httperror
 from events_ingestion_client import (
@@ -43,6 +45,18 @@ ALLOWED_TEST_STATUS_TYPES = ['PASSED', 'FAILED', 'WARNING']
 TEST_SUITE = 'DataKitchen Tests'
 
 
+@retry_50X_httperror()
+def get_customer_code(dk_client: DataKitchenClient) -> str:
+    user_info = dk_client._api_request(API_GET, 'userinfo')
+    return user_info.json()['customer_git_name']
+
+
+def get_order_run_url(dk_client: DataKitchenClient, customer_code: str, order_run_id: str) -> str:
+    base_url = dk_client._base_url
+    kitchen = dk_client.kitchen
+    return os.sep.join([base_url, '#', 'orders', customer_code, kitchen, 'runs', order_run_id])
+
+
 class TaskStatus(Enum):
     STARTED = "STARTED"
     COMPLETED = "COMPLETED"
@@ -52,14 +66,28 @@ class TaskStatus(Enum):
 
 @dataclass
 class EventInfoProvider:
+    dk_client: DataKitchenClient
+    customer_code: str
     pipeline_name: str
     order_run_id: str
 
-    def get_event_info(self, **kwargs):
+    @classmethod
+    def init(
+            cls, dk_client: DataKitchenClient, pipeline_name: str, order_run_id: str
+    ) -> EventInfoProvider:
+        customer_code = get_customer_code(dk_client)
+        return EventInfoProvider(dk_client, customer_code, pipeline_name, order_run_id)
+
+    def get_event_info(self, **kwargs) -> dict:
         event_info = {'pipeline_name': self.pipeline_name, 'run_tag': self.order_run_id, **kwargs}
 
         if 'event_timestamp' not in event_info:
             event_info['event_timestamp'] = datetime.utcnow().isoformat()
+
+        if 'external_url' not in event_info:
+            event_info['external_url'] = get_order_run_url(
+                self.dk_client, self.customer_code, self.order_run_id
+            )
 
         return event_info
 
@@ -220,7 +248,7 @@ class OrderRunMonitor:
             URL of the Events Ingestion API (default: https://dev-api.datakitchen.io').
         """
         self._dk_client = dk_client
-        self._event_info_provider = EventInfoProvider(pipeline_name, order_run_id)
+        self._event_info_provider = EventInfoProvider.init(dk_client, pipeline_name, order_run_id)
         self._order_run_id = order_run_id
         self._nodes_to_ignore = nodes_to_ignore if nodes_to_ignore is not None else []
         self._nodes_to_ignore += ['Order_Run_Monitor']
