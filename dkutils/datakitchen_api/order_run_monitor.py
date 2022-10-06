@@ -47,14 +47,73 @@ TEST_SUITE = 'DataKitchen Tests'
 
 @retry_50X_httperror()
 def get_customer_code(dk_client: DataKitchenClient) -> str:
+    """
+    Retrieve the customer code from the authenticated user associated with the provided
+    DataKitchen client.
+
+    Parameters
+    ----------
+    dk_client: DataKitchenClient
+        Client for making requests to the DataKitchen platform API.
+
+    Returns
+    -------
+    str
+        Customer code - typically two or three letters.
+    """
     user_info = dk_client._api_request(API_GET, 'userinfo')
     return user_info.json()['customer_git_name']
 
 
 def get_order_run_url(dk_client: DataKitchenClient, customer_code: str, order_run_id: str) -> str:
+    """
+    Retrieve the URL for navigating to the Order Run Details page in the DataKitchen platform for
+    the provided order_run_id.
+
+    Parameters
+    ----------
+    dk_client: DataKitchenClient
+        Client for making requests to the DataKitchen platform API
+    customer_code: str
+        Customer code required for constructing the URL
+    order_run_id
+        Order run id the URL will link to
+    Returns
+    -------
+    str
+        URL for navigating to the Order Run Details page in the DataKitchen platform for the
+        provided order_run_id.
+    """
     base_url = dk_client._base_url
     kitchen = dk_client.kitchen
     return os.sep.join([base_url, '#', 'orders', customer_code, kitchen, 'runs', order_run_id])
+
+
+@retry_50X_httperror()
+def get_ingredient_owner_order_run_id(dk_client: DataKitchenClient):
+    """
+    If this order run is for an ingredient, then return the parent order run id. Otherwise, return
+    None.
+
+    Parameters
+    ----------
+    dk_client: DataKitchenClient
+        Client for making requests to the DataKitchen platform API.
+
+    Returns
+    -------
+    str or None
+        Return the parent order run id if the current order run is for an ingredient, otherwise
+        return None.
+    """
+    try:
+        order_run_status = dk_client._api_request('get', 'order/status', dk_client.kitchen).json()
+
+        # If this order run is for an ingredient, then it's in an ingredient kitchen with a single
+        # order and order run and the status should contain an ingredient_owner_order_run field.
+        return order_run_status['orders'][0]['input_settings']['ingredient_owner_order_run']
+    except KeyError:
+        return None
 
 
 class TaskStatus(Enum):
@@ -248,12 +307,12 @@ class OrderRunMonitor:
             URL of the Events Ingestion API (default: https://dev-api.datakitchen.io').
         """
         self._dk_client = dk_client
+        self.is_ingredient_order_run = False
 
-        # Expected pipeline_name is <KITCHEN>.<RECIPE>.<VARIATION> - replace ingredient kitchen
-        # name with parent kitchen name to send ingredient events to the parent order run pipeline
-        kitchen = self._dk_client.get_kitchen()
-        if kitchen.is_ingredient() and kitchen.name in pipeline_name:
-            pipeline_name = pipeline_name.replace(kitchen.name, kitchen.parent_name)
+        ingredient_owner_order_run_id = get_ingredient_owner_order_run_id(dk_client)
+        if ingredient_owner_order_run_id is not None:
+            logger.info(f'Ingredient order run originated from {ingredient_owner_order_run_id}')
+            self.is_ingredient_order_run = True
 
         self._event_info_provider = EventInfoProvider.init(dk_client, pipeline_name, order_run_id)
         self._order_run_id = order_run_id
@@ -410,14 +469,19 @@ class OrderRunMonitor:
         """
         Poll the DataKitchen platform API for the status of the associated Order Run. Report the
         status of each node until all the nodes have completed or if the run has failed and nodes
-        stopped processing.
+        stopped processing. If this order run is for an ingredient, monitoring is disabled.
 
         Returns
         -------
         tuple
             Contains two lists. The first list contains names of the nodes that succeeded, whereas
-            the second list contains names of the nodes that failed.
+            the second list contains names of the nodes that failed. Both are empty if this is an
+            ingredient order run.
         """
+        if self.is_ingredient_order_run:
+            logger.info('This is an ingredient order run - disabling monitoring.')
+            return [], []
+
         nodes = []
         try:
             nodes_are_running = True
