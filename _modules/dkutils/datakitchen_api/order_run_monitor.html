@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api.order_run_monitor &mdash; DKUtils 2.11.0 documentation</title>
+  <title>dkutils.datakitchen_api.order_run_monitor &mdash; DKUtils 2.11.1 documentation</title>
   
 
   
@@ -109,6 +109,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-1">v2.11.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-0">v2.11.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-10-0">v2.10.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-9-6">v2.9.6</a></li>
@@ -290,14 +291,73 @@
 
 <div class="viewcode-block" id="get_customer_code"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.get_customer_code">[docs]</a><span class="nd">@retry_50X_httperror</span><span class="p">()</span>
 <span class="k">def</span> <span class="nf">get_customer_code</span><span class="p">(</span><span class="n">dk_client</span><span class="p">:</span> <span class="n">DataKitchenClient</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Retrieve the customer code from the authenticated user associated with the provided</span>
+<span class="sd">    DataKitchen client.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dk_client: DataKitchenClient</span>
+<span class="sd">        Client for making requests to the DataKitchen platform API.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        Customer code - typically two or three letters.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">user_info</span> <span class="o">=</span> <span class="n">dk_client</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_GET</span><span class="p">,</span> <span class="s1">&#39;userinfo&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">user_info</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;customer_git_name&#39;</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="get_order_run_url"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.get_order_run_url">[docs]</a><span class="k">def</span> <span class="nf">get_order_run_url</span><span class="p">(</span><span class="n">dk_client</span><span class="p">:</span> <span class="n">DataKitchenClient</span><span class="p">,</span> <span class="n">customer_code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Retrieve the URL for navigating to the Order Run Details page in the DataKitchen platform for</span>
+<span class="sd">    the provided order_run_id.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dk_client: DataKitchenClient</span>
+<span class="sd">        Client for making requests to the DataKitchen platform API</span>
+<span class="sd">    customer_code: str</span>
+<span class="sd">        Customer code required for constructing the URL</span>
+<span class="sd">    order_run_id</span>
+<span class="sd">        Order run id the URL will link to</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        URL for navigating to the Order Run Details page in the DataKitchen platform for the</span>
+<span class="sd">        provided order_run_id.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">base_url</span> <span class="o">=</span> <span class="n">dk_client</span><span class="o">.</span><span class="n">_base_url</span>
     <span class="n">kitchen</span> <span class="o">=</span> <span class="n">dk_client</span><span class="o">.</span><span class="n">kitchen</span>
     <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">base_url</span><span class="p">,</span> <span class="s1">&#39;#&#39;</span><span class="p">,</span> <span class="s1">&#39;orders&#39;</span><span class="p">,</span> <span class="n">customer_code</span><span class="p">,</span> <span class="n">kitchen</span><span class="p">,</span> <span class="s1">&#39;runs&#39;</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="get_ingredient_owner_order_run_id"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.get_ingredient_owner_order_run_id">[docs]</a><span class="nd">@retry_50X_httperror</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">get_ingredient_owner_order_run_id</span><span class="p">(</span><span class="n">dk_client</span><span class="p">:</span> <span class="n">DataKitchenClient</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    If this order run is for an ingredient, then return the parent order run id. Otherwise, return</span>
+<span class="sd">    None.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dk_client: DataKitchenClient</span>
+<span class="sd">        Client for making requests to the DataKitchen platform API.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str or None</span>
+<span class="sd">        Return the parent order run id if the current order run is for an ingredient, otherwise</span>
+<span class="sd">        return None.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">order_run_status</span> <span class="o">=</span> <span class="n">dk_client</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="s1">&#39;order/status&#39;</span><span class="p">,</span> <span class="n">dk_client</span><span class="o">.</span><span class="n">kitchen</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+        <span class="c1"># If this order run is for an ingredient, then it&#39;s in an ingredient kitchen with a single</span>
+        <span class="c1"># order and order run and the status should contain an ingredient_owner_order_run field.</span>
+        <span class="k">return</span> <span class="n">order_run_status</span><span class="p">[</span><span class="s1">&#39;orders&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;input_settings&#39;</span><span class="p">][</span><span class="s1">&#39;ingredient_owner_order_run&#39;</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
 
 
 <div class="viewcode-block" id="TaskStatus"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.TaskStatus">[docs]</a><span class="k">class</span> <span class="nc">TaskStatus</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
@@ -491,12 +551,12 @@
 <span class="sd">            URL of the Events Ingestion API (default: https://dev-api.datakitchen.io&#39;).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dk_client</span> <span class="o">=</span> <span class="n">dk_client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_ingredient_order_run</span> <span class="o">=</span> <span class="kc">False</span>
 
-        <span class="c1"># Expected pipeline_name is &lt;KITCHEN&gt;.&lt;RECIPE&gt;.&lt;VARIATION&gt; - replace ingredient kitchen</span>
-        <span class="c1"># name with parent kitchen name to send ingredient events to the parent order run pipeline</span>
-        <span class="n">kitchen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dk_client</span><span class="o">.</span><span class="n">get_kitchen</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">kitchen</span><span class="o">.</span><span class="n">is_ingredient</span><span class="p">()</span> <span class="ow">and</span> <span class="n">kitchen</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">pipeline_name</span><span class="p">:</span>
-            <span class="n">pipeline_name</span> <span class="o">=</span> <span class="n">pipeline_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">kitchen</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">kitchen</span><span class="o">.</span><span class="n">parent_name</span><span class="p">)</span>
+        <span class="n">ingredient_owner_order_run_id</span> <span class="o">=</span> <span class="n">get_ingredient_owner_order_run_id</span><span class="p">(</span><span class="n">dk_client</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ingredient_owner_order_run_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Ingredient order run originated from </span><span class="si">{</span><span class="n">ingredient_owner_order_run_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_ingredient_order_run</span> <span class="o">=</span> <span class="kc">True</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_event_info_provider</span> <span class="o">=</span> <span class="n">EventInfoProvider</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">dk_client</span><span class="p">,</span> <span class="n">pipeline_name</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_order_run_id</span> <span class="o">=</span> <span class="n">order_run_id</span>
@@ -653,14 +713,19 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Poll the DataKitchen platform API for the status of the associated Order Run. Report the</span>
 <span class="sd">        status of each node until all the nodes have completed or if the run has failed and nodes</span>
-<span class="sd">        stopped processing.</span>
+<span class="sd">        stopped processing. If this order run is for an ingredient, monitoring is disabled.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        tuple</span>
 <span class="sd">            Contains two lists. The first list contains names of the nodes that succeeded, whereas</span>
-<span class="sd">            the second list contains names of the nodes that failed.</span>
+<span class="sd">            the second list contains names of the nodes that failed. Both are empty if this is an</span>
+<span class="sd">            ingredient order run.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_ingredient_order_run</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;This is an ingredient order run - disabling monitoring.&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[],</span> <span class="p">[]</span>
+
         <span class="n">nodes</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">nodes_are_running</span> <span class="o">=</span> <span class="kc">True</span>
