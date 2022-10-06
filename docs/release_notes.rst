@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v2.11.1
+-------
+* Revert Order Run Monitor change to handle ingredients. Instead, disable monitoring for ingredient order runs.
+
 v2.11.0
 -------
 * Add order run external url to published events in the order run monitor

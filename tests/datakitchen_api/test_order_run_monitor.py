@@ -5,6 +5,7 @@ from dkutils.datakitchen_api.datakitchen_client import DataKitchenClient
 from dkutils.datakitchen_api.order_run_monitor import (
     OrderRunMonitor,
     get_customer_code,
+    get_ingredient_owner_order_run_id,
     get_order_run_url,
 )
 from .test_datakitchen_client import (
@@ -164,6 +165,35 @@ USER_INFO = {
     'wiki_url': ''
 }
 
+ORDER_STATUS = {
+    'customer': 'DKImplementation',
+    'kitchenname': 'test_var_db9f45ce5f10d26a9f2d9cbfecce4db7',
+    'orders': [{
+        'hid': '2be0e314-4581-11ed-96f0-5ad89aed543c',
+        'input_settings': {
+            'customer_git_name': 'im',
+            'customer_git_org': 'DKImplementation',
+            'customer_name': 'Implementation',
+            'email': 'ddicara+im@datakitchen.io',
+            'email_verified': True,
+            'ingredient_owner_order_run': '273def96-4581-11ed-8565-ea3e88365b9c',
+            'login': 'ddicara+im@datakitchen.io',
+            'parameters': {},
+            'role': 'ADMIN',
+            'user_id': ''
+        },
+        'order_status': 'ACTIVE_ORDER',
+        'recipe': 'Utility_Monitor_DataKitchen_Events',
+        'schedule': None,
+        'servings': [],
+        'timezone': 'UTC',
+        'total_servings': 1,
+        'variation': 'Test_Ingredient'
+    }],
+    'repo': 'im',
+    'total': 1
+}
+
 
 class TestOrderRunMonitor(TestCase):
 
@@ -174,22 +204,32 @@ class TestOrderRunMonitor(TestCase):
         )
 
     @patch('dkutils.datakitchen_api.order_run_monitor.ApiClient')
+    @patch('dkutils.datakitchen_api.order_run_monitor.get_ingredient_owner_order_run_id')
     @patch('dkutils.datakitchen_api.order_run_monitor.get_customer_code')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_run_details')
-    def test_nodes_to_ignore(self, mock_get_order_run_details, mock_get_customer_code, _):
+    def test_nodes_to_ignore(
+        self, mock_get_order_run_details, mock_get_customer_code,
+        mock_get_ingredient_owner_order_run_id, _
+    ):
         mock_get_order_run_details.return_value = ORDER_RUN_DETAILS
         mock_get_customer_code.return_value = 'im'
+        mock_get_ingredient_owner_order_run_id.return_value = None
         self.order_run_monitor = OrderRunMonitor(
             self.dk_client, EVENTS_API_KEY, ORDER_RUN_ID, PIPELINE_NAME
         )
         self.assertListEqual(self.order_run_monitor._nodes_to_ignore, EXPECTED_NODES_TO_IGNORE)
 
     @patch('dkutils.datakitchen_api.order_run_monitor.ApiClient')
+    @patch('dkutils.datakitchen_api.order_run_monitor.get_ingredient_owner_order_run_id')
     @patch('dkutils.datakitchen_api.order_run_monitor.get_customer_code')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_run_details')
-    def test_get_conditional_nodes(self, mock_get_order_run_details, mock_get_customer_code, _):
+    def test_get_conditional_nodes(
+        self, mock_get_order_run_details, mock_get_customer_code,
+        mock_get_ingredient_owner_order_run_id, _
+    ):
         mock_get_order_run_details.side_effect = [ORDER_RUN_DETAILS, ORDER_RUN_DETAILS]
         mock_get_customer_code.return_value = 'im'
+        mock_get_ingredient_owner_order_run_id.return_value = None
         order_run_monitor = OrderRunMonitor(
             self.dk_client, EVENTS_API_KEY, ORDER_RUN_ID, PIPELINE_NAME
         )
@@ -197,17 +237,40 @@ class TestOrderRunMonitor(TestCase):
         self.assertListEqual(conditional_nodes, EXPECTED_CONDITIONAL_NODES)
 
     @patch('dkutils.datakitchen_api.order_run_monitor.ApiClient')
+    @patch('dkutils.datakitchen_api.order_run_monitor.get_ingredient_owner_order_run_id')
     @patch('dkutils.datakitchen_api.order_run_monitor.get_customer_code')
     @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_run_details')
-    def test_monitor(self, mock_get_order_run_details, mock_get_customer_code, _):
+    def test_monitor(
+        self, mock_get_order_run_details, mock_get_customer_code,
+        mock_get_ingredient_owner_order_run_id, _
+    ):
         mock_get_order_run_details.side_effect = [ORDER_RUN_DETAILS, ORDER_RUN_DETAILS]
         mock_get_customer_code.return_value = 'im'
+        mock_get_ingredient_owner_order_run_id.return_value = None
         order_run_monitor = OrderRunMonitor(
             self.dk_client, EVENTS_API_KEY, ORDER_RUN_ID, PIPELINE_NAME
         )
         result = order_run_monitor.monitor()
         self.assertListEqual(result[0], EXPECTED_SUCCESSFUL_NODES)
         self.assertListEqual(result[1], EXPECTED_FAILED_NODES)
+
+    @patch('dkutils.datakitchen_api.order_run_monitor.ApiClient')
+    @patch('dkutils.datakitchen_api.order_run_monitor.get_ingredient_owner_order_run_id')
+    @patch('dkutils.datakitchen_api.order_run_monitor.get_customer_code')
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_run_details')
+    def test_monitor_ingredient(
+        self, mock_get_order_run_details, mock_get_customer_code,
+        mock_get_ingredient_owner_order_run_id, _
+    ):
+        mock_get_order_run_details.side_effect = [ORDER_RUN_DETAILS, ORDER_RUN_DETAILS]
+        mock_get_customer_code.return_value = 'im'
+        mock_get_ingredient_owner_order_run_id.return_value = ORDER_RUN_ID
+        order_run_monitor = OrderRunMonitor(
+            self.dk_client, EVENTS_API_KEY, ORDER_RUN_ID, PIPELINE_NAME
+        )
+        result = order_run_monitor.monitor()
+        self.assertListEqual(result[0], [])
+        self.assertListEqual(result[1], [])
 
     def test_get_order_run_url(self):
         order_run_url = get_order_run_url(self.dk_client, 'im', 'order_run_id')
@@ -220,3 +283,11 @@ class TestOrderRunMonitor(TestCase):
         observed_customer_code = get_customer_code(self.dk_client)
         expected_customer_code = 'im'
         self.assertEqual(observed_customer_code, expected_customer_code)
+
+    @patch('dkutils.datakitchen_api.datakitchen_client.DataKitchenClient._api_request')
+    def test_get_ingredient_owner_order_run_id(self, mock_request):
+        mock_request.return_value = MockResponse(json=ORDER_STATUS)
+        observed_order_run_id = get_ingredient_owner_order_run_id(self.dk_client)
+        expected_order_run_id = ORDER_STATUS['orders'][0]['input_settings'][
+            'ingredient_owner_order_run']
+        self.assertEqual(observed_order_run_id, expected_order_run_id)
