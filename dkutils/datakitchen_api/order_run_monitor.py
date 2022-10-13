@@ -13,13 +13,13 @@ from dkutils.datakitchen_api.datakitchen_client import DataKitchenClient
 from dkutils.decorators import retry_50X_httperror
 from events_ingestion_client import (
     ApiClient,
-    CloseRunSchemaRequestBody,
+    CloseRunApiSchema,
     Configuration,
     EventsApi,
-    MessageLogEventSchemaRequestBody,
-    TaskStatusSchemaRequestBody,
+    MessageLogEventApiSchema,
+    TaskStatusApiSchema,
     TestReport,
-    TestResultSchemaRequestBody,
+    TestResultApiSchema,
 )
 from events_ingestion_client.rest import ApiException
 
@@ -226,7 +226,7 @@ class Node:
             )
             logger.info(f'Publishing event: {event_info}')
             self.events_api_client.post_task_status(
-                TaskStatusSchemaRequestBody(**event_info), event_source=EVENT_SOURCE
+                TaskStatusApiSchema(**event_info), event_source=EVENT_SOURCE
             )
         except ApiException as e:
             logger.error(f'Exception when calling EventsApi->post_task_status: {str(e)}\n')
@@ -243,7 +243,7 @@ class Node:
                 task_name=self.name, test_results=test_reports, test_suite=TEST_SUITE
             )
             self.events_api_client.post_test_result(
-                TestResultSchemaRequestBody(**event_info), event_source=EVENT_SOURCE
+                TestResultApiSchema(**event_info), event_source=EVENT_SOURCE
             )
         except ApiException as e:
             logger.error(f'Exception when calling EventsApi->post_test_result:: {str(e)}\n')
@@ -395,7 +395,7 @@ class OrderRunMonitor:
     def parse_log_entry(log_entry: dict) -> dict:
         """
         Parse a log entry dictionary to derive the fields required for the
-        MessageLogEventSchemaRequestBody.
+        MessageLogEventApiSchema.
 
         Parameters
         ----------
@@ -423,7 +423,7 @@ class OrderRunMonitor:
         Returns
         -------
         dict
-            Dictionary of required and optional fields for the MessageLogEventSchemaRequestBody
+            Dictionary of required and optional fields for the MessageLogEventApiSchema
         """
         # Permitted log levels: "ERROR", "WARNING", and "INFO"
         log_level = log_entry['record_type'] if log_entry['record_type'] != 'CRITICAL' else 'ERROR'
@@ -456,7 +456,7 @@ class OrderRunMonitor:
                         event_info = self._event_info_provider.get_event_info(
                             **self.parse_log_entry(log_entry)
                         )
-                        body = MessageLogEventSchemaRequestBody(**event_info)
+                        body = MessageLogEventApiSchema(**event_info)
                         self._events_api_client.post_message_log(body, event_source=EVENT_SOURCE)
                     except ApiException as e:
                         logger.error(
@@ -504,7 +504,7 @@ class OrderRunMonitor:
             self.process_log_entries()
             [node.publish_tests() for node in nodes]
             self._events_api_client.post_close_run(
-                CloseRunSchemaRequestBody(**self._event_info_provider.get_event_info())
+                CloseRunApiSchema(**self._event_info_provider.get_event_info())
             )
 
         return successful_nodes, failed_nodes
