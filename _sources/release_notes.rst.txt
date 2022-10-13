@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v2.11.2
+-------
+* Update events-ingestion-client dependency to v0.0.9
+
 v2.11.1
 -------
 * Revert Order Run Monitor change to handle ingredients. Instead, disable monitoring for ingredient order runs.

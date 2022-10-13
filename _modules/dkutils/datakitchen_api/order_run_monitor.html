@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api.order_run_monitor &mdash; DKUtils 2.11.1 documentation</title>
+  <title>dkutils.datakitchen_api.order_run_monitor &mdash; DKUtils 2.11.2 documentation</title>
   
 
   
@@ -109,6 +109,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-2">v2.11.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-1">v2.11.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-0">v2.11.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-10-0">v2.10.0</a></li>
@@ -257,13 +258,13 @@
 <span class="kn">from</span> <span class="nn">dkutils.decorators</span> <span class="kn">import</span> <span class="n">retry_50X_httperror</span>
 <span class="kn">from</span> <span class="nn">events_ingestion_client</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">ApiClient</span><span class="p">,</span>
-    <span class="n">CloseRunSchemaRequestBody</span><span class="p">,</span>
+    <span class="n">CloseRunApiSchema</span><span class="p">,</span>
     <span class="n">Configuration</span><span class="p">,</span>
     <span class="n">EventsApi</span><span class="p">,</span>
-    <span class="n">MessageLogEventSchemaRequestBody</span><span class="p">,</span>
-    <span class="n">TaskStatusSchemaRequestBody</span><span class="p">,</span>
+    <span class="n">MessageLogEventApiSchema</span><span class="p">,</span>
+    <span class="n">TaskStatusApiSchema</span><span class="p">,</span>
     <span class="n">TestReport</span><span class="p">,</span>
-    <span class="n">TestResultSchemaRequestBody</span><span class="p">,</span>
+    <span class="n">TestResultApiSchema</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">events_ingestion_client.rest</span> <span class="kn">import</span> <span class="n">ApiException</span>
 
@@ -470,7 +471,7 @@
             <span class="p">)</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Publishing event: </span><span class="si">{</span><span class="n">event_info</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">events_api_client</span><span class="o">.</span><span class="n">post_task_status</span><span class="p">(</span>
-                <span class="n">TaskStatusSchemaRequestBody</span><span class="p">(</span><span class="o">**</span><span class="n">event_info</span><span class="p">),</span> <span class="n">event_source</span><span class="o">=</span><span class="n">EVENT_SOURCE</span>
+                <span class="n">TaskStatusApiSchema</span><span class="p">(</span><span class="o">**</span><span class="n">event_info</span><span class="p">),</span> <span class="n">event_source</span><span class="o">=</span><span class="n">EVENT_SOURCE</span>
             <span class="p">)</span>
         <span class="k">except</span> <span class="n">ApiException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Exception when calling EventsApi-&gt;post_task_status: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -487,7 +488,7 @@
                 <span class="n">task_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">test_results</span><span class="o">=</span><span class="n">test_reports</span><span class="p">,</span> <span class="n">test_suite</span><span class="o">=</span><span class="n">TEST_SUITE</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">events_api_client</span><span class="o">.</span><span class="n">post_test_result</span><span class="p">(</span>
-                <span class="n">TestResultSchemaRequestBody</span><span class="p">(</span><span class="o">**</span><span class="n">event_info</span><span class="p">),</span> <span class="n">event_source</span><span class="o">=</span><span class="n">EVENT_SOURCE</span>
+                <span class="n">TestResultApiSchema</span><span class="p">(</span><span class="o">**</span><span class="n">event_info</span><span class="p">),</span> <span class="n">event_source</span><span class="o">=</span><span class="n">EVENT_SOURCE</span>
             <span class="p">)</span>
         <span class="k">except</span> <span class="n">ApiException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Exception when calling EventsApi-&gt;post_test_result:: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></div>
@@ -639,7 +640,7 @@
     <span class="k">def</span> <span class="nf">parse_log_entry</span><span class="p">(</span><span class="n">log_entry</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parse a log entry dictionary to derive the fields required for the</span>
-<span class="sd">        MessageLogEventSchemaRequestBody.</span>
+<span class="sd">        MessageLogEventApiSchema.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -667,7 +668,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        dict</span>
-<span class="sd">            Dictionary of required and optional fields for the MessageLogEventSchemaRequestBody</span>
+<span class="sd">            Dictionary of required and optional fields for the MessageLogEventApiSchema</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Permitted log levels: &quot;ERROR&quot;, &quot;WARNING&quot;, and &quot;INFO&quot;</span>
         <span class="n">log_level</span> <span class="o">=</span> <span class="n">log_entry</span><span class="p">[</span><span class="s1">&#39;record_type&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">log_entry</span><span class="p">[</span><span class="s1">&#39;record_type&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;CRITICAL&#39;</span> <span class="k">else</span> <span class="s1">&#39;ERROR&#39;</span>
@@ -700,7 +701,7 @@
                         <span class="n">event_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_event_info_provider</span><span class="o">.</span><span class="n">get_event_info</span><span class="p">(</span>
                             <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">parse_log_entry</span><span class="p">(</span><span class="n">log_entry</span><span class="p">)</span>
                         <span class="p">)</span>
-                        <span class="n">body</span> <span class="o">=</span> <span class="n">MessageLogEventSchemaRequestBody</span><span class="p">(</span><span class="o">**</span><span class="n">event_info</span><span class="p">)</span>
+                        <span class="n">body</span> <span class="o">=</span> <span class="n">MessageLogEventApiSchema</span><span class="p">(</span><span class="o">**</span><span class="n">event_info</span><span class="p">)</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_events_api_client</span><span class="o">.</span><span class="n">post_message_log</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">event_source</span><span class="o">=</span><span class="n">EVENT_SOURCE</span><span class="p">)</span>
                     <span class="k">except</span> <span class="n">ApiException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
@@ -748,7 +749,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">process_log_entries</span><span class="p">()</span>
             <span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">publish_tests</span><span class="p">()</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_events_api_client</span><span class="o">.</span><span class="n">post_close_run</span><span class="p">(</span>
-                <span class="n">CloseRunSchemaRequestBody</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_event_info_provider</span><span class="o">.</span><span class="n">get_event_info</span><span class="p">())</span>
+                <span class="n">CloseRunApiSchema</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_event_info_provider</span><span class="o">.</span><span class="n">get_event_info</span><span class="p">())</span>
             <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">successful_nodes</span><span class="p">,</span> <span class="n">failed_nodes</span></div></div>
