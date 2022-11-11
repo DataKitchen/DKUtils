@@ -17,8 +17,8 @@ from events_ingestion_client import (
     EventsApi,
     MessageLogEventApiSchema,
     RunStatusApiSchema,
-    TestReport,
-    TestResultApiSchema,
+    TestOutcomeItem,
+    TestOutcomesApiSchema,
 )
 from events_ingestion_client.rest import ApiException
 
@@ -41,7 +41,6 @@ NODE_SKIPPED = 'DKNodeStatus_Skipped'
 LOG_LEVELS_TO_REPORT = ['WARNING', 'ERROR', 'CRITICAL']
 LOG_METADATA_KEYS_TO_REPORT = ['exc_desc', 'exc_type', 'traceback']
 ALLOWED_TEST_STATUS_TYPES = ['PASSED', 'FAILED', 'WARNING']
-TEST_SUITE = 'DataKitchen Tests'
 
 
 @retry_50X_httperror()
@@ -239,10 +238,10 @@ class Node:
 
         try:
             event_info = self.event_info_provider.get_event_info(
-                task_key=self.name, test_results=test_reports, test_suite=TEST_SUITE
+                task_key=self.name, test_outcomes=test_reports
             )
-            self.events_api_client.post_test_result(
-                TestResultApiSchema(**event_info), event_source=EVENT_SOURCE
+            self.events_api_client.post_test_outcomes(
+                TestOutcomesApiSchema(**event_info), event_source=EVENT_SOURCE
             )
         except ApiException as e:
             logger.error(f'Exception when calling EventsApi->post_test_result:: {str(e)}\n')
@@ -253,7 +252,7 @@ class Node:
             status = test['status'].upper()
             if status in ALLOWED_TEST_STATUS_TYPES:
                 test_reports.append(
-                    TestReport(description=test['results'], name=name, status=status)
+                    TestOutcomeItem(description=test['results'], name=name, status=status)
                 )
         return test_reports
 
