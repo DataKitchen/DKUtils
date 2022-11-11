@@ -13,7 +13,6 @@ from dkutils.datakitchen_api.datakitchen_client import DataKitchenClient
 from dkutils.decorators import retry_50X_httperror
 from events_ingestion_client import (
     ApiClient,
-    CloseRunApiSchema,
     Configuration,
     EventsApi,
     MessageLogEventApiSchema,
@@ -483,6 +482,7 @@ class OrderRunMonitor:
             return [], []
 
         nodes = []
+        failed_nodes = []
         try:
             nodes_are_running = True
             nodes_info = self.get_nodes_info()
@@ -503,8 +503,9 @@ class OrderRunMonitor:
         finally:
             self.process_log_entries()
             [node.publish_tests() for node in nodes]
-            self._events_api_client.post_close_run(
-                CloseRunApiSchema(**self._event_info_provider.get_event_info())
+            run_status = RunStatus.COMPLETED if len(failed_nodes) == 0 else RunStatus.FAILED
+            self._events_api_client.post_run_status(
+                RunStatusApiSchema(status=run_status.name, **self._event_info_provider.get_event_info())
             )
 
         return successful_nodes, failed_nodes
