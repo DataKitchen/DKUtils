@@ -25,7 +25,6 @@ from events_ingestion_client.rest import ApiException
 logger = logging.getLogger(__name__)
 
 DEFAULT_HOST = 'https://dev-api.datakitchen.io'
-EVENT_SOURCE = 'API'
 
 NODE_UNKNOWN = 'DKNodeStatus_Unknown'
 NODE_TEMPLATE = 'DKNodeStatus_Template'
@@ -224,7 +223,7 @@ class Node:
             )
             logger.info(f'Publishing event: {event_info}')
             self.events_api_client.post_run_status(
-                RunStatusApiSchema(**event_info), event_source=EVENT_SOURCE
+                RunStatusApiSchema(**event_info)
             )
         except ApiException as e:
             logger.error(f'Exception when calling EventsApi->post_run_status: {str(e)}\n')
@@ -241,7 +240,7 @@ class Node:
                 task_key=self.name, test_outcomes=test_reports
             )
             self.events_api_client.post_test_outcomes(
-                TestOutcomesApiSchema(**event_info), event_source=EVENT_SOURCE
+                TestOutcomesApiSchema(**event_info)
             )
         except ApiException as e:
             logger.error(f'Exception when calling EventsApi->post_test_result:: {str(e)}\n')
@@ -455,7 +454,7 @@ class OrderRunMonitor:
                             **self.parse_log_entry(log_entry)
                         )
                         body = MessageLogEventApiSchema(**event_info)
-                        self._events_api_client.post_message_log(body, event_source=EVENT_SOURCE)
+                        self._events_api_client.post_message_log(body)
                     except ApiException as e:
                         logger.error(
                             f'Exception when calling EventsApi->post_message_log: {str(e)}'
