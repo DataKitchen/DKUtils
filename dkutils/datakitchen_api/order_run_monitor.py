@@ -17,7 +17,7 @@ from events_ingestion_client import (
     Configuration,
     EventsApi,
     MessageLogEventApiSchema,
-    TaskStatusApiSchema,
+    RunStatusApiSchema,
     TestReport,
     TestResultApiSchema,
 )
@@ -116,11 +116,11 @@ def get_ingredient_owner_order_run_id(dk_client: DataKitchenClient):
         return None
 
 
-class TaskStatus(Enum):
-    STARTED = "STARTED"
+class RunStatus(Enum):
+    RUNNING = "RUNNING"
     COMPLETED = "COMPLETED"
-    WARNING = "WARNING"
-    ERROR = "ERROR"
+    COMPLETED_WITH_WARNINGS = "COMPLETED_WITH_WARNINGS"
+    FAILED = "FAILED"
 
 
 @dataclass
@@ -205,31 +205,31 @@ class Node:
 
     def _handle_event(self) -> None:
         if self.running:
-            self._publish_task_status_event(TaskStatus.STARTED, self.start_time)
+            self._publish_run_status_event(RunStatus.RUNNING, self.start_time)
             self.started_event_published = True
         elif self.succeeded or self.stopped:
             if not self.started_event_published:
-                self._publish_task_status_event(TaskStatus.STARTED, self.start_time)
+                self._publish_run_status_event(RunStatus.RUNNING, self.start_time)
                 self.started_event_published = True
-            self._publish_task_status_event(TaskStatus.COMPLETED, self.end_time)
+            self._publish_run_status_event(RunStatus.COMPLETED, self.end_time)
         elif self.failed:
             if not self.started_event_published:
-                self._publish_task_status_event(TaskStatus.STARTED, self.start_time)
+                self._publish_run_status_event(RunStatus.RUNNING, self.start_time)
                 self.started_event_published = True
-            self._publish_task_status_event(TaskStatus.ERROR, self.end_time)
+            self._publish_run_status_event(RunStatus.FAILED, self.end_time)
 
-    def _publish_task_status_event(self, task_status: str, milliseconds_from_epoch: int) -> None:
+    def _publish_run_status_event(self, run_status: str, milliseconds_from_epoch: int) -> None:
         try:
             event_timestamp = datetime.utcfromtimestamp(milliseconds_from_epoch / 1000).isoformat()
             event_info = self.event_info_provider.get_event_info(
-                task_name=self.name, task_status=task_status.name, event_timestamp=event_timestamp
+                task_name=self.name, status=run_status.name, event_timestamp=event_timestamp
             )
             logger.info(f'Publishing event: {event_info}')
-            self.events_api_client.post_task_status(
-                TaskStatusApiSchema(**event_info), event_source=EVENT_SOURCE
+            self.events_api_client.post_run_status(
+                RunStatusApiSchema(**event_info), event_source=EVENT_SOURCE
             )
         except ApiException as e:
-            logger.error(f'Exception when calling EventsApi->post_task_status: {str(e)}\n')
+            logger.error(f'Exception when calling EventsApi->post_run_status: {str(e)}\n')
             raise
 
     def publish_tests(self) -> None:
