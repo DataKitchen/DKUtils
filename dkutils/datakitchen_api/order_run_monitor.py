@@ -127,18 +127,18 @@ class RunStatus(Enum):
 class EventInfoProvider:
     dk_client: DataKitchenClient
     customer_code: str
-    pipeline_name: str
+    pipeline_key: str
     order_run_id: str
 
     @classmethod
     def init(
-            cls, dk_client: DataKitchenClient, pipeline_name: str, order_run_id: str
+            cls, dk_client: DataKitchenClient, pipeline_key: str, order_run_id: str
     ) -> EventInfoProvider:
         customer_code = get_customer_code(dk_client)
-        return EventInfoProvider(dk_client, customer_code, pipeline_name, order_run_id)
+        return EventInfoProvider(dk_client, customer_code, pipeline_key, order_run_id)
 
     def get_event_info(self, **kwargs) -> dict:
-        event_info = {'pipeline_name': self.pipeline_name, 'run_tag': self.order_run_id, **kwargs}
+        event_info = {'pipeline_key': self.pipeline_key, 'run_key': self.order_run_id, **kwargs}
 
         if 'event_timestamp' not in event_info:
             event_info['event_timestamp'] = datetime.utcnow().isoformat()
@@ -222,7 +222,7 @@ class Node:
         try:
             event_timestamp = datetime.utcfromtimestamp(milliseconds_from_epoch / 1000).isoformat()
             event_info = self.event_info_provider.get_event_info(
-                task_name=self.name, status=run_status.name, event_timestamp=event_timestamp
+                task_key=self.name, status=run_status.name, event_timestamp=event_timestamp
             )
             logger.info(f'Publishing event: {event_info}')
             self.events_api_client.post_run_status(
@@ -240,7 +240,7 @@ class Node:
 
         try:
             event_info = self.event_info_provider.get_event_info(
-                task_name=self.name, test_results=test_reports, test_suite=TEST_SUITE
+                task_key=self.name, test_results=test_reports, test_suite=TEST_SUITE
             )
             self.events_api_client.post_test_result(
                 TestResultApiSchema(**event_info), event_source=EVENT_SOURCE
@@ -441,7 +441,7 @@ class OrderRunMonitor:
             'log_level': log_level,
             'message': log_entry['message'],
             'metadata': metadata,
-            'task_name': log_entry['node']
+            'task_key': log_entry['node']
         }
 
     def process_log_entries(self) -> None:
