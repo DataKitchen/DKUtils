@@ -3,16 +3,14 @@ import logging
 import pathlib
 from unittest import TestCase
 
-from dkutils.validation import get_max_concurrency, validate_globals, ensure_pathlib, set_logging_level
-
-GLOBALS_CONFIG_FILE = pathlib.Path(__file__).parent / "globals_config.json"
+from dkutils.validation import get_max_concurrency, validate_globals, ensure_pathlib, set_logging_level, GLOBALS_CONFIG_PATH
 
 
 class TestValidation(TestCase):
 
     def tearDown(self):
-        if GLOBALS_CONFIG_FILE.exists():
-            GLOBALS_CONFIG_FILE.unlink()
+        if GLOBALS_CONFIG_PATH.exists():
+            GLOBALS_CONFIG_PATH.unlink()
 
     def test_valid_globals(self):
         validate_globals(['__name__', '__file__'])
@@ -60,7 +58,7 @@ class TestValidation(TestCase):
     def test_valid_globals_when_globals_config_file_exists(self):
         global_var_name = 'BAZ'
         info = {global_var_name: "somevalue"}
-        with GLOBALS_CONFIG_FILE.open('w') as output:
+        with GLOBALS_CONFIG_PATH.open('w') as output:
             json.dump(info, output)
         validate_globals([global_var_name])
         self.assertEqual(info[global_var_name], globals().get(global_var_name))
