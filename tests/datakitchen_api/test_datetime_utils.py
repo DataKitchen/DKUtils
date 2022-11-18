@@ -9,6 +9,6 @@ class TestDatetimeUtils(TestCase):
 
     def test_get_utc_timestamp(self):
         utc_timestamp = get_utc_timestamp()
-        derived_utc_time = datetime.fromtimestamp(utc_timestamp / 1000)
+        derived_utc_time = datetime.utcfromtimestamp(utc_timestamp / 1000)
         cur_utc_time = datetime.utcnow()
         self.assertGreater(cur_utc_time, derived_utc_time)
