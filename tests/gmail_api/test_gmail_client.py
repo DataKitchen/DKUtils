@@ -3,7 +3,7 @@ import pickle
 import tempfile
 from pathlib import Path
 from unittest import TestCase
-from unittest.mock import patch, call, MagicMock
+from unittest.mock import ANY, patch, call, MagicMock
 
 from dkutils.constants import GMAIL_APPROVAL_STRING
 from dkutils.gmail_api.gmail_client import create_base64_encoded_token, GmailClientException, \
@@ -145,7 +145,7 @@ class Test(TestCase):
         calls = [call('to', TO), call('from', FROM), call('subject', SUBJECT)]
         mock_message.__setitem__.assert_has_calls(calls)
         mock_mime_text.assert_called_with(MSG_TEXT)
-        mock_mime_base.assert_called_with('model', 'x3d+binary')
+        mock_mime_base.assert_called_with('model', ANY)
         mock_mime_base.return_value.set_payload.assert_called_with(file_text)
         mock_mime_base.return_value.add_header.assert_called_with(
             'Content-Disposition', 'attachment', filename=SAMPLE_OTHER.name
