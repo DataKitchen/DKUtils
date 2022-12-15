@@ -3,7 +3,13 @@ import logging
 import pathlib
 from unittest import TestCase
 
-from dkutils.validation import get_max_concurrency, validate_globals, ensure_pathlib, set_logging_level, GLOBALS_CONFIG_PATH
+from dkutils.validation import (
+    get_max_concurrency,
+    validate_globals,
+    ensure_pathlib,
+    set_logging_level,
+    GLOBALS_CONFIG_PATH,
+)
 
 
 class TestValidation(TestCase):

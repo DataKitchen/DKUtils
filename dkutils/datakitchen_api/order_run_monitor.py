@@ -222,9 +222,7 @@ class Node:
                 task_key=self.name, status=run_status.name, event_timestamp=event_timestamp
             )
             logger.info(f'Publishing event: {event_info}')
-            self.events_api_client.post_run_status(
-                RunStatusApiSchema(**event_info)
-            )
+            self.events_api_client.post_run_status(RunStatusApiSchema(**event_info))
         except ApiException as e:
             logger.error(f'Exception when calling EventsApi->post_run_status: {str(e)}\n')
             raise
@@ -239,9 +237,7 @@ class Node:
             event_info = self.event_info_provider.get_event_info(
                 task_key=self.name, test_outcomes=test_reports
             )
-            self.events_api_client.post_test_outcomes(
-                TestOutcomesApiSchema(**event_info)
-            )
+            self.events_api_client.post_test_outcomes(TestOutcomesApiSchema(**event_info))
         except ApiException as e:
             logger.error(f'Exception when calling EventsApi->post_test_result:: {str(e)}\n')
 
@@ -503,7 +499,9 @@ class OrderRunMonitor:
             [node.publish_tests() for node in nodes]
             run_status = RunStatus.COMPLETED if len(failed_nodes) == 0 else RunStatus.FAILED
             self._events_api_client.post_run_status(
-                RunStatusApiSchema(status=run_status.name, **self._event_info_provider.get_event_info())
+                RunStatusApiSchema(
+                    status=run_status.name, **self._event_info_provider.get_event_info()
+                )
             )
 
         return successful_nodes, failed_nodes
