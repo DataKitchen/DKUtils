@@ -13,20 +13,18 @@ from dkutils.datakitchen_api.datakitchen_client import DataKitchenClient
 from dkutils.decorators import retry_50X_httperror
 from events_ingestion_client import (
     ApiClient,
-    CloseRunApiSchema,
     Configuration,
     EventsApi,
     MessageLogEventApiSchema,
-    TaskStatusApiSchema,
-    TestReport,
-    TestResultApiSchema,
+    RunStatusApiSchema,
+    TestOutcomeItem,
+    TestOutcomesApiSchema,
 )
 from events_ingestion_client.rest import ApiException
 
 logger = logging.getLogger(__name__)
 
 DEFAULT_HOST = 'https://dev-api.datakitchen.io'
-EVENT_SOURCE = 'API'
 
 NODE_UNKNOWN = 'DKNodeStatus_Unknown'
 NODE_TEMPLATE = 'DKNodeStatus_Template'
@@ -42,7 +40,6 @@ NODE_SKIPPED = 'DKNodeStatus_Skipped'
 LOG_LEVELS_TO_REPORT = ['WARNING', 'ERROR', 'CRITICAL']
 LOG_METADATA_KEYS_TO_REPORT = ['exc_desc', 'exc_type', 'traceback']
 ALLOWED_TEST_STATUS_TYPES = ['PASSED', 'FAILED', 'WARNING']
-TEST_SUITE = 'DataKitchen Tests'
 
 
 @retry_50X_httperror()
@@ -116,29 +113,29 @@ def get_ingredient_owner_order_run_id(dk_client: DataKitchenClient):
         return None
 
 
-class TaskStatus(Enum):
-    STARTED = "STARTED"
+class RunStatus(Enum):
+    RUNNING = "RUNNING"
     COMPLETED = "COMPLETED"
-    WARNING = "WARNING"
-    ERROR = "ERROR"
+    COMPLETED_WITH_WARNINGS = "COMPLETED_WITH_WARNINGS"
+    FAILED = "FAILED"
 
 
 @dataclass
 class EventInfoProvider:
     dk_client: DataKitchenClient
     customer_code: str
-    pipeline_name: str
+    pipeline_key: str
     order_run_id: str
 
     @classmethod
     def init(
-            cls, dk_client: DataKitchenClient, pipeline_name: str, order_run_id: str
+            cls, dk_client: DataKitchenClient, pipeline_key: str, order_run_id: str
     ) -> EventInfoProvider:
         customer_code = get_customer_code(dk_client)
-        return EventInfoProvider(dk_client, customer_code, pipeline_name, order_run_id)
+        return EventInfoProvider(dk_client, customer_code, pipeline_key, order_run_id)
 
     def get_event_info(self, **kwargs) -> dict:
-        event_info = {'pipeline_name': self.pipeline_name, 'run_tag': self.order_run_id, **kwargs}
+        event_info = {'pipeline_key': self.pipeline_key, 'run_key': self.order_run_id, **kwargs}
 
         if 'event_timestamp' not in event_info:
             event_info['event_timestamp'] = datetime.utcnow().isoformat()
@@ -205,31 +202,29 @@ class Node:
 
     def _handle_event(self) -> None:
         if self.running:
-            self._publish_task_status_event(TaskStatus.STARTED, self.start_time)
+            self._publish_run_status_event(RunStatus.RUNNING, self.start_time)
             self.started_event_published = True
         elif self.succeeded or self.stopped:
             if not self.started_event_published:
-                self._publish_task_status_event(TaskStatus.STARTED, self.start_time)
+                self._publish_run_status_event(RunStatus.RUNNING, self.start_time)
                 self.started_event_published = True
-            self._publish_task_status_event(TaskStatus.COMPLETED, self.end_time)
+            self._publish_run_status_event(RunStatus.COMPLETED, self.end_time)
         elif self.failed:
             if not self.started_event_published:
-                self._publish_task_status_event(TaskStatus.STARTED, self.start_time)
+                self._publish_run_status_event(RunStatus.RUNNING, self.start_time)
                 self.started_event_published = True
-            self._publish_task_status_event(TaskStatus.ERROR, self.end_time)
+            self._publish_run_status_event(RunStatus.FAILED, self.end_time)
 
-    def _publish_task_status_event(self, task_status: str, milliseconds_from_epoch: int) -> None:
+    def _publish_run_status_event(self, run_status: str, milliseconds_from_epoch: int) -> None:
         try:
             event_timestamp = datetime.utcfromtimestamp(milliseconds_from_epoch / 1000).isoformat()
             event_info = self.event_info_provider.get_event_info(
-                task_name=self.name, task_status=task_status.name, event_timestamp=event_timestamp
+                task_key=self.name, status=run_status.name, event_timestamp=event_timestamp
             )
             logger.info(f'Publishing event: {event_info}')
-            self.events_api_client.post_task_status(
-                TaskStatusApiSchema(**event_info), event_source=EVENT_SOURCE
-            )
+            self.events_api_client.post_run_status(RunStatusApiSchema(**event_info))
         except ApiException as e:
-            logger.error(f'Exception when calling EventsApi->post_task_status: {str(e)}\n')
+            logger.error(f'Exception when calling EventsApi->post_run_status: {str(e)}\n')
             raise
 
     def publish_tests(self) -> None:
@@ -240,11 +235,9 @@ class Node:
 
         try:
             event_info = self.event_info_provider.get_event_info(
-                task_name=self.name, test_results=test_reports, test_suite=TEST_SUITE
+                task_key=self.name, test_outcomes=test_reports
             )
-            self.events_api_client.post_test_result(
-                TestResultApiSchema(**event_info), event_source=EVENT_SOURCE
-            )
+            self.events_api_client.post_test_outcomes(TestOutcomesApiSchema(**event_info))
         except ApiException as e:
             logger.error(f'Exception when calling EventsApi->post_test_result:: {str(e)}\n')
 
@@ -254,7 +247,7 @@ class Node:
             status = test['status'].upper()
             if status in ALLOWED_TEST_STATUS_TYPES:
                 test_reports.append(
-                    TestReport(description=test['results'], name=name, status=status)
+                    TestOutcomeItem(description=test['results'], name=name, status=status)
                 )
         return test_reports
 
@@ -441,7 +434,7 @@ class OrderRunMonitor:
             'log_level': log_level,
             'message': log_entry['message'],
             'metadata': metadata,
-            'task_name': log_entry['node']
+            'task_key': log_entry['node']
         }
 
     def process_log_entries(self) -> None:
@@ -457,7 +450,7 @@ class OrderRunMonitor:
                             **self.parse_log_entry(log_entry)
                         )
                         body = MessageLogEventApiSchema(**event_info)
-                        self._events_api_client.post_message_log(body, event_source=EVENT_SOURCE)
+                        self._events_api_client.post_message_log(body)
                     except ApiException as e:
                         logger.error(
                             f'Exception when calling EventsApi->post_message_log: {str(e)}'
@@ -483,6 +476,7 @@ class OrderRunMonitor:
             return [], []
 
         nodes = []
+        failed_nodes = []
         try:
             nodes_are_running = True
             nodes_info = self.get_nodes_info()
@@ -503,8 +497,11 @@ class OrderRunMonitor:
         finally:
             self.process_log_entries()
             [node.publish_tests() for node in nodes]
-            self._events_api_client.post_close_run(
-                CloseRunApiSchema(**self._event_info_provider.get_event_info())
+            run_status = RunStatus.COMPLETED if len(failed_nodes) == 0 else RunStatus.FAILED
+            self._events_api_client.post_run_status(
+                RunStatusApiSchema(
+                    status=run_status.name, **self._event_info_provider.get_event_info()
+                )
             )
 
         return successful_nodes, failed_nodes
