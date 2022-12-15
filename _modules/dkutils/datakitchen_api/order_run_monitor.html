@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api.order_run_monitor &mdash; DKUtils 2.11.2 documentation</title>
+  <title>dkutils.datakitchen_api.order_run_monitor &mdash; DKUtils 2.11.3 documentation</title>
   
 
   
@@ -109,6 +109,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-3">v2.11.3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-2">v2.11.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-1">v2.11.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-0">v2.11.0</a></li>
@@ -258,20 +259,18 @@
 <span class="kn">from</span> <span class="nn">dkutils.decorators</span> <span class="kn">import</span> <span class="n">retry_50X_httperror</span>
 <span class="kn">from</span> <span class="nn">events_ingestion_client</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">ApiClient</span><span class="p">,</span>
-    <span class="n">CloseRunApiSchema</span><span class="p">,</span>
     <span class="n">Configuration</span><span class="p">,</span>
     <span class="n">EventsApi</span><span class="p">,</span>
     <span class="n">MessageLogEventApiSchema</span><span class="p">,</span>
-    <span class="n">TaskStatusApiSchema</span><span class="p">,</span>
-    <span class="n">TestReport</span><span class="p">,</span>
-    <span class="n">TestResultApiSchema</span><span class="p">,</span>
+    <span class="n">RunStatusApiSchema</span><span class="p">,</span>
+    <span class="n">TestOutcomeItem</span><span class="p">,</span>
+    <span class="n">TestOutcomesApiSchema</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">events_ingestion_client.rest</span> <span class="kn">import</span> <span class="n">ApiException</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 <span class="n">DEFAULT_HOST</span> <span class="o">=</span> <span class="s1">&#39;https://dev-api.datakitchen.io&#39;</span>
-<span class="n">EVENT_SOURCE</span> <span class="o">=</span> <span class="s1">&#39;API&#39;</span>
 
 <span class="n">NODE_UNKNOWN</span> <span class="o">=</span> <span class="s1">&#39;DKNodeStatus_Unknown&#39;</span>
 <span class="n">NODE_TEMPLATE</span> <span class="o">=</span> <span class="s1">&#39;DKNodeStatus_Template&#39;</span>
@@ -287,7 +286,6 @@
 <span class="n">LOG_LEVELS_TO_REPORT</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;WARNING&#39;</span><span class="p">,</span> <span class="s1">&#39;ERROR&#39;</span><span class="p">,</span> <span class="s1">&#39;CRITICAL&#39;</span><span class="p">]</span>
 <span class="n">LOG_METADATA_KEYS_TO_REPORT</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;exc_desc&#39;</span><span class="p">,</span> <span class="s1">&#39;exc_type&#39;</span><span class="p">,</span> <span class="s1">&#39;traceback&#39;</span><span class="p">]</span>
 <span class="n">ALLOWED_TEST_STATUS_TYPES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;PASSED&#39;</span><span class="p">,</span> <span class="s1">&#39;FAILED&#39;</span><span class="p">,</span> <span class="s1">&#39;WARNING&#39;</span><span class="p">]</span>
-<span class="n">TEST_SUITE</span> <span class="o">=</span> <span class="s1">&#39;DataKitchen Tests&#39;</span>
 
 
 <div class="viewcode-block" id="get_customer_code"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.get_customer_code">[docs]</a><span class="nd">@retry_50X_httperror</span><span class="p">()</span>
@@ -361,29 +359,29 @@
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="TaskStatus"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.TaskStatus">[docs]</a><span class="k">class</span> <span class="nc">TaskStatus</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="n">STARTED</span> <span class="o">=</span> <span class="s2">&quot;STARTED&quot;</span>
+<div class="viewcode-block" id="RunStatus"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.RunStatus">[docs]</a><span class="k">class</span> <span class="nc">RunStatus</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">RUNNING</span> <span class="o">=</span> <span class="s2">&quot;RUNNING&quot;</span>
     <span class="n">COMPLETED</span> <span class="o">=</span> <span class="s2">&quot;COMPLETED&quot;</span>
-    <span class="n">WARNING</span> <span class="o">=</span> <span class="s2">&quot;WARNING&quot;</span>
-    <span class="n">ERROR</span> <span class="o">=</span> <span class="s2">&quot;ERROR&quot;</span></div>
+    <span class="n">COMPLETED_WITH_WARNINGS</span> <span class="o">=</span> <span class="s2">&quot;COMPLETED_WITH_WARNINGS&quot;</span>
+    <span class="n">FAILED</span> <span class="o">=</span> <span class="s2">&quot;FAILED&quot;</span></div>
 
 
 <div class="viewcode-block" id="EventInfoProvider"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.EventInfoProvider">[docs]</a><span class="nd">@dataclass</span>
 <span class="k">class</span> <span class="nc">EventInfoProvider</span><span class="p">:</span>
     <span class="n">dk_client</span><span class="p">:</span> <span class="n">DataKitchenClient</span>
     <span class="n">customer_code</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">pipeline_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">pipeline_key</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">order_run_id</span><span class="p">:</span> <span class="nb">str</span>
 
 <div class="viewcode-block" id="EventInfoProvider.init"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.EventInfoProvider.init">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">init</span><span class="p">(</span>
-            <span class="bp">cls</span><span class="p">,</span> <span class="n">dk_client</span><span class="p">:</span> <span class="n">DataKitchenClient</span><span class="p">,</span> <span class="n">pipeline_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">:</span> <span class="nb">str</span>
+            <span class="bp">cls</span><span class="p">,</span> <span class="n">dk_client</span><span class="p">:</span> <span class="n">DataKitchenClient</span><span class="p">,</span> <span class="n">pipeline_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">:</span> <span class="nb">str</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EventInfoProvider</span><span class="p">:</span>
         <span class="n">customer_code</span> <span class="o">=</span> <span class="n">get_customer_code</span><span class="p">(</span><span class="n">dk_client</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">EventInfoProvider</span><span class="p">(</span><span class="n">dk_client</span><span class="p">,</span> <span class="n">customer_code</span><span class="p">,</span> <span class="n">pipeline_name</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">EventInfoProvider</span><span class="p">(</span><span class="n">dk_client</span><span class="p">,</span> <span class="n">customer_code</span><span class="p">,</span> <span class="n">pipeline_key</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="EventInfoProvider.get_event_info"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.EventInfoProvider.get_event_info">[docs]</a>    <span class="k">def</span> <span class="nf">get_event_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-        <span class="n">event_info</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;pipeline_name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_name</span><span class="p">,</span> <span class="s1">&#39;run_tag&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_run_id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">}</span>
+        <span class="n">event_info</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;pipeline_key&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_key</span><span class="p">,</span> <span class="s1">&#39;run_key&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_run_id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">}</span>
 
         <span class="k">if</span> <span class="s1">&#39;event_timestamp&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">event_info</span><span class="p">:</span>
             <span class="n">event_info</span><span class="p">[</span><span class="s1">&#39;event_timestamp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
@@ -450,31 +448,29 @@
 
     <span class="k">def</span> <span class="nf">_handle_event</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">running</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_publish_task_status_event</span><span class="p">(</span><span class="n">TaskStatus</span><span class="o">.</span><span class="n">STARTED</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_publish_run_status_event</span><span class="p">(</span><span class="n">RunStatus</span><span class="o">.</span><span class="n">RUNNING</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">started_event_published</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">succeeded</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">stopped</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">started_event_published</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_publish_task_status_event</span><span class="p">(</span><span class="n">TaskStatus</span><span class="o">.</span><span class="n">STARTED</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_publish_run_status_event</span><span class="p">(</span><span class="n">RunStatus</span><span class="o">.</span><span class="n">RUNNING</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">started_event_published</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_publish_task_status_event</span><span class="p">(</span><span class="n">TaskStatus</span><span class="o">.</span><span class="n">COMPLETED</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_time</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_publish_run_status_event</span><span class="p">(</span><span class="n">RunStatus</span><span class="o">.</span><span class="n">COMPLETED</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_time</span><span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">failed</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">started_event_published</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_publish_task_status_event</span><span class="p">(</span><span class="n">TaskStatus</span><span class="o">.</span><span class="n">STARTED</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_publish_run_status_event</span><span class="p">(</span><span class="n">RunStatus</span><span class="o">.</span><span class="n">RUNNING</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">started_event_published</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_publish_task_status_event</span><span class="p">(</span><span class="n">TaskStatus</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_time</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_publish_run_status_event</span><span class="p">(</span><span class="n">RunStatus</span><span class="o">.</span><span class="n">FAILED</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_time</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_publish_task_status_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_status</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">milliseconds_from_epoch</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_publish_run_status_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">run_status</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">milliseconds_from_epoch</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">event_timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcfromtimestamp</span><span class="p">(</span><span class="n">milliseconds_from_epoch</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
             <span class="n">event_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_info_provider</span><span class="o">.</span><span class="n">get_event_info</span><span class="p">(</span>
-                <span class="n">task_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">task_status</span><span class="o">=</span><span class="n">task_status</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">event_timestamp</span><span class="o">=</span><span class="n">event_timestamp</span>
+                <span class="n">task_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">run_status</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">event_timestamp</span><span class="o">=</span><span class="n">event_timestamp</span>
             <span class="p">)</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Publishing event: </span><span class="si">{</span><span class="n">event_info</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">events_api_client</span><span class="o">.</span><span class="n">post_task_status</span><span class="p">(</span>
-                <span class="n">TaskStatusApiSchema</span><span class="p">(</span><span class="o">**</span><span class="n">event_info</span><span class="p">),</span> <span class="n">event_source</span><span class="o">=</span><span class="n">EVENT_SOURCE</span>
-            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">events_api_client</span><span class="o">.</span><span class="n">post_run_status</span><span class="p">(</span><span class="n">RunStatusApiSchema</span><span class="p">(</span><span class="o">**</span><span class="n">event_info</span><span class="p">))</span>
         <span class="k">except</span> <span class="n">ApiException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Exception when calling EventsApi-&gt;post_task_status: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Exception when calling EventsApi-&gt;post_run_status: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="k">raise</span>
 
 <div class="viewcode-block" id="Node.publish_tests"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.Node.publish_tests">[docs]</a>    <span class="k">def</span> <span class="nf">publish_tests</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -485,11 +481,9 @@
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">event_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_info_provider</span><span class="o">.</span><span class="n">get_event_info</span><span class="p">(</span>
-                <span class="n">task_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">test_results</span><span class="o">=</span><span class="n">test_reports</span><span class="p">,</span> <span class="n">test_suite</span><span class="o">=</span><span class="n">TEST_SUITE</span>
+                <span class="n">task_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">test_outcomes</span><span class="o">=</span><span class="n">test_reports</span>
             <span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">events_api_client</span><span class="o">.</span><span class="n">post_test_result</span><span class="p">(</span>
-                <span class="n">TestResultApiSchema</span><span class="p">(</span><span class="o">**</span><span class="n">event_info</span><span class="p">),</span> <span class="n">event_source</span><span class="o">=</span><span class="n">EVENT_SOURCE</span>
-            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">events_api_client</span><span class="o">.</span><span class="n">post_test_outcomes</span><span class="p">(</span><span class="n">TestOutcomesApiSchema</span><span class="p">(</span><span class="o">**</span><span class="n">event_info</span><span class="p">))</span>
         <span class="k">except</span> <span class="n">ApiException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Exception when calling EventsApi-&gt;post_test_result:: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></div>
 
@@ -499,7 +493,7 @@
             <span class="n">status</span> <span class="o">=</span> <span class="n">test</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">status</span> <span class="ow">in</span> <span class="n">ALLOWED_TEST_STATUS_TYPES</span><span class="p">:</span>
                 <span class="n">test_reports</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="n">TestReport</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">test</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">)</span>
+                    <span class="n">TestOutcomeItem</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">test</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">)</span>
                 <span class="p">)</span>
         <span class="k">return</span> <span class="n">test_reports</span>
 
@@ -686,7 +680,7 @@
             <span class="s1">&#39;log_level&#39;</span><span class="p">:</span> <span class="n">log_level</span><span class="p">,</span>
             <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="n">log_entry</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span>
             <span class="s1">&#39;metadata&#39;</span><span class="p">:</span> <span class="n">metadata</span><span class="p">,</span>
-            <span class="s1">&#39;task_name&#39;</span><span class="p">:</span> <span class="n">log_entry</span><span class="p">[</span><span class="s1">&#39;node&#39;</span><span class="p">]</span>
+            <span class="s1">&#39;task_key&#39;</span><span class="p">:</span> <span class="n">log_entry</span><span class="p">[</span><span class="s1">&#39;node&#39;</span><span class="p">]</span>
         <span class="p">}</span></div>
 
 <div class="viewcode-block" id="OrderRunMonitor.process_log_entries"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.OrderRunMonitor.process_log_entries">[docs]</a>    <span class="k">def</span> <span class="nf">process_log_entries</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -702,7 +696,7 @@
                             <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">parse_log_entry</span><span class="p">(</span><span class="n">log_entry</span><span class="p">)</span>
                         <span class="p">)</span>
                         <span class="n">body</span> <span class="o">=</span> <span class="n">MessageLogEventApiSchema</span><span class="p">(</span><span class="o">**</span><span class="n">event_info</span><span class="p">)</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">_events_api_client</span><span class="o">.</span><span class="n">post_message_log</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">event_source</span><span class="o">=</span><span class="n">EVENT_SOURCE</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_events_api_client</span><span class="o">.</span><span class="n">post_message_log</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
                     <span class="k">except</span> <span class="n">ApiException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
                             <span class="sa">f</span><span class="s1">&#39;Exception when calling EventsApi-&gt;post_message_log: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
@@ -728,6 +722,7 @@
             <span class="k">return</span> <span class="p">[],</span> <span class="p">[]</span>
 
         <span class="n">nodes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">failed_nodes</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">nodes_are_running</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="n">nodes_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nodes_info</span><span class="p">()</span>
@@ -748,8 +743,11 @@
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">process_log_entries</span><span class="p">()</span>
             <span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">publish_tests</span><span class="p">()</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_events_api_client</span><span class="o">.</span><span class="n">post_close_run</span><span class="p">(</span>
-                <span class="n">CloseRunApiSchema</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_event_info_provider</span><span class="o">.</span><span class="n">get_event_info</span><span class="p">())</span>
+            <span class="n">run_status</span> <span class="o">=</span> <span class="n">RunStatus</span><span class="o">.</span><span class="n">COMPLETED</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">failed_nodes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">RunStatus</span><span class="o">.</span><span class="n">FAILED</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_events_api_client</span><span class="o">.</span><span class="n">post_run_status</span><span class="p">(</span>
+                <span class="n">RunStatusApiSchema</span><span class="p">(</span>
+                    <span class="n">status</span><span class="o">=</span><span class="n">run_status</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_event_info_provider</span><span class="o">.</span><span class="n">get_event_info</span><span class="p">()</span>
+                <span class="p">)</span>
             <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">successful_nodes</span><span class="p">,</span> <span class="n">failed_nodes</span></div></div>
