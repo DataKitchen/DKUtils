@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v2.11.4
+-------
+* Lock events-ingestion-client dependency to v1.x
+
 v2.11.3
 -------
 * Update events-ingestion-client dependency to v1.0.0
