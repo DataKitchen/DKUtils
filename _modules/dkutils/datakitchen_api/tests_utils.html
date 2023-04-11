@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api.tests_utils &mdash; DKUtils 2.11.3 documentation</title>
+  <title>dkutils.datakitchen_api.tests_utils &mdash; DKUtils 2.11.4 documentation</title>
   
 
   
@@ -109,6 +109,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-4">v2.11.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-3">v2.11.3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-2">v2.11.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-1">v2.11.1</a></li>
@@ -280,7 +281,7 @@
 
 
 <div class="viewcode-block" id="is_valid_test_directory"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.tests_utils.html#dkutils.datakitchen_api.tests_utils.is_valid_test_directory">[docs]</a><span class="k">def</span> <span class="nf">is_valid_test_directory</span><span class="p">(</span><span class="n">base_path</span><span class="p">,</span> <span class="n">file_depth</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Only node directories and their immediate subdirectories may contain tests. This function takes</span>
 <span class="sd">    a recipe subdirectory and returns True if it may contain tests or False otherwise.</span>
 
@@ -315,7 +316,7 @@
 
 
 <div class="viewcode-block" id="is_valid_test_file"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.tests_utils.html#dkutils.datakitchen_api.tests_utils.is_valid_test_file">[docs]</a><span class="k">def</span> <span class="nf">is_valid_test_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">file_depth</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Only certain files may contain tests. This function returns True if the provided file may</span>
 <span class="sd">    contain tests or False otherwise.</span>
 
@@ -337,7 +338,7 @@
 
 
 <div class="viewcode-block" id="get_recipe_test_paths"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.tests_utils.html#dkutils.datakitchen_api.tests_utils.get_recipe_test_paths">[docs]</a><span class="k">def</span> <span class="nf">get_recipe_test_paths</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">kitchen</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">recipe</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return a list of paths to all recipe files that potentially contain tests. The kitchen and</span>
 <span class="sd">    and recipe that are interrogated for tests are derived from the client, unless otherwise</span>
 <span class="sd">    specified as optional input arguments. If kitchen and/or recipe arguments are provided, they</span>
@@ -388,7 +389,7 @@
                              <span class="n">test_paths</span><span class="p">,</span>
                              <span class="n">kitchen</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                              <span class="n">recipe</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">TestInfo</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Extract tests from the provided test_paths. The kitchen and recipe are derived from the client,</span>
 <span class="sd">    unless otherwise specified as optional input arguments. If kitchen and/or recipe arguments are</span>
 <span class="sd">    provided, they are set accordingly on the provided client.</span>
@@ -473,7 +474,7 @@
                             <span class="p">)</span>
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s1">&#39;Failed to parse tests from </span><span class="si">{</span><span class="n">base_path</span> <span class="o">/</span> <span class="n">file_info</span><span class="p">[</span><span class="s2">&quot;filename&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+                        <span class="sa">f</span><span class="s1">&#39;Failed to parse tests from </span><span class="si">{</span><span class="n">base_path</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">file_info</span><span class="p">[</span><span class="s2">&quot;filename&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
                     <span class="p">)</span>
 
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Finished processing node: </span><span class="si">{</span><span class="n">node_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -482,7 +483,7 @@
 
 
 <div class="viewcode-block" id="get_test_infos"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.tests_utils.html#dkutils.datakitchen_api.tests_utils.get_test_infos">[docs]</a><span class="k">def</span> <span class="nf">get_test_infos</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">datestamp</span><span class="p">,</span> <span class="n">recipes</span><span class="p">,</span> <span class="n">kitchen</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">TestInfo</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    For a set of recipes in a kitchen, retrieve all the defined tests and their associated metadata.</span>
 <span class="sd">    Return a list of test_info dictionaries, one per test.</span>
 
@@ -515,7 +516,7 @@
 
 
 <div class="viewcode-block" id="write_test_infos_csv"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.tests_utils.html#dkutils.datakitchen_api.tests_utils.write_test_infos_csv">[docs]</a><span class="k">def</span> <span class="nf">write_test_infos_csv</span><span class="p">(</span><span class="n">test_infos</span><span class="p">,</span> <span class="n">output_csv_path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Write a list of TestInfo objects to a CSV file.</span>
 
 <span class="sd">    Parameters</span>

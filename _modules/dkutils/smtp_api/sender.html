@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.smtp_api.sender &mdash; DKUtils 2.11.3 documentation</title>
+  <title>dkutils.smtp_api.sender &mdash; DKUtils 2.11.4 documentation</title>
   
 
   
@@ -109,6 +109,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-4">v2.11.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-3">v2.11.3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-2">v2.11.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-1">v2.11.1</a></li>
@@ -260,7 +261,7 @@
 <div class="viewcode-block" id="create_message"><a class="viewcode-back" href="../../../apidoc/dkutils.smtp_api.sender.html#dkutils.smtp_api.sender.create_message">[docs]</a><span class="k">def</span> <span class="nf">create_message</span><span class="p">(</span>
     <span class="n">sender</span><span class="p">,</span> <span class="n">recipients</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">plain_text</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">html_text</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reply_addresses</span><span class="o">=</span><span class="kc">None</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a message for an email.</span>
 
 <span class="sd">        Parameters</span>
@@ -317,7 +318,7 @@
 
 
 <div class="viewcode-block" id="SMTP_Sender"><a class="viewcode-back" href="../../../apidoc/dkutils.smtp_api.sender.html#dkutils.smtp_api.sender.SMTP_Sender">[docs]</a><span class="k">class</span> <span class="nc">SMTP_Sender</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Class that can send emails using SMTP.</span>
 
 <span class="sd">        Parameters</span>
@@ -342,7 +343,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">use_tls</span> <span class="o">=</span> <span class="n">use_tls</span>
 
 <div class="viewcode-block" id="SMTP_Sender.do_send"><a class="viewcode-back" href="../../../apidoc/dkutils.smtp_api.sender.html#dkutils.smtp_api.sender.SMTP_Sender.do_send">[docs]</a>    <span class="k">def</span> <span class="nf">do_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Send an email message via SMTP</span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>

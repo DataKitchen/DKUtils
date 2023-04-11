@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api.vault &mdash; DKUtils 2.11.3 documentation</title>
+  <title>dkutils.datakitchen_api.vault &mdash; DKUtils 2.11.4 documentation</title>
   
 
   
@@ -109,6 +109,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-4">v2.11.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-3">v2.11.3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-2">v2.11.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-1">v2.11.1</a></li>
@@ -264,7 +265,7 @@
 <div class="viewcode-block" id="Vault"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.vault.html#dkutils.datakitchen_api.vault.Vault">[docs]</a><span class="k">class</span> <span class="nc">Vault</span><span class="p">:</span>
 
 <div class="viewcode-block" id="Vault.__init__"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.vault.html#dkutils.datakitchen_api.vault.Vault.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">DataKitchenClient</span><span class="p">,</span> <span class="n">kitchen_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Vault object for performing vault related API requests.</span>
 
 <span class="sd">        Parameters</span>
@@ -278,7 +279,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_kitchen_name</span> <span class="o">=</span> <span class="n">kitchen_name</span></div>
 
 <div class="viewcode-block" id="Vault.get_config"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.vault.html#dkutils.datakitchen_api.vault.Vault.get_config">[docs]</a>    <span class="k">def</span> <span class="nf">get_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">is_global</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the vault configuration for the global or kitchen vault.</span>
 
 <span class="sd">        Parameters</span>
@@ -317,7 +318,7 @@
         <span class="n">private</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">inheritable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the custom vault configuration for a Kitchen.</span>
 
 <span class="sd">        Parameters</span>
@@ -353,7 +354,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Vault.get_secrets"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.vault.html#dkutils.datakitchen_api.vault.Vault.get_secrets">[docs]</a>    <span class="k">def</span> <span class="nf">get_secrets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">is_global</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a list of paths for all the secrets in the kitchen or global vault. No secret values are</span>
 <span class="sd">        returned.</span>
 
@@ -384,7 +385,7 @@
         <span class="k">return</span> <span class="n">secrets</span><span class="p">[</span><span class="s1">&#39;list&#39;</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="Vault.update_or_add_secret"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.vault.html#dkutils.datakitchen_api.vault.Vault.update_or_add_secret">[docs]</a>    <span class="k">def</span> <span class="nf">update_or_add_secret</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">is_global</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update an existing secret value or add a new secret if one does not already exist.</span>
 
 <span class="sd">        Parameters</span>
@@ -415,7 +416,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Vault.delete_secret"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.vault.html#dkutils.datakitchen_api.vault.Vault.delete_secret">[docs]</a>    <span class="k">def</span> <span class="nf">delete_secret</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">is_global</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete a secret from vault.</span>
 
 <span class="sd">        Parameters</span>

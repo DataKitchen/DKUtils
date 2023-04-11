@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.dictionary_comparator &mdash; DKUtils 2.11.3 documentation</title>
+  <title>dkutils.dictionary_comparator &mdash; DKUtils 2.11.4 documentation</title>
   
 
   
@@ -109,6 +109,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../release_notes.html#v2-11-4">v2.11.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../release_notes.html#v2-11-3">v2.11.3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../release_notes.html#v2-11-2">v2.11.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../release_notes.html#v2-11-1">v2.11.1</a></li>
@@ -251,7 +252,7 @@
 <div class="viewcode-block" id="DictionaryComparator"><a class="viewcode-back" href="../../apidoc/dkutils.dictionary_comparator.html#dkutils.dictionary_comparator.DictionaryComparator">[docs]</a><span class="k">class</span> <span class="nc">DictionaryComparator</span><span class="p">:</span>
 
 <div class="viewcode-block" id="DictionaryComparator.__init__"><a class="viewcode-back" href="../../apidoc/dkutils.dictionary_comparator.html#dkutils.dictionary_comparator.DictionaryComparator.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Utility that can be used to perform a shallow comparison on two dictionaries.</span>
 
 <span class="sd">        Parameters</span>
@@ -286,7 +287,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_right</span>
 
 <div class="viewcode-block" id="DictionaryComparator.left_equals_right"><a class="viewcode-back" href="../../apidoc/dkutils.dictionary_comparator.html#dkutils.dictionary_comparator.DictionaryComparator.left_equals_right">[docs]</a>    <span class="k">def</span> <span class="nf">left_equals_right</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test is the the left dictionary is equal to the right dictionary.</span>
 
 <span class="sd">        Returns</span>
@@ -297,7 +298,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_left</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_right</span></div>
 
 <div class="viewcode-block" id="DictionaryComparator.get_keys_only_in_left"><a class="viewcode-back" href="../../apidoc/dkutils.dictionary_comparator.html#dkutils.dictionary_comparator.DictionaryComparator.get_keys_only_in_left">[docs]</a>    <span class="k">def</span> <span class="nf">get_keys_only_in_left</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the set of keys that are only present in the left side</span>
 
 <span class="sd">        Returns</span>
@@ -308,7 +309,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_left</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_right</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="DictionaryComparator.get_keys_only_in_right"><a class="viewcode-back" href="../../apidoc/dkutils.dictionary_comparator.html#dkutils.dictionary_comparator.DictionaryComparator.get_keys_only_in_right">[docs]</a>    <span class="k">def</span> <span class="nf">get_keys_only_in_right</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the set of keys that are only present in the right side</span>
 
 <span class="sd">        Returns</span>
@@ -319,7 +320,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_right</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_left</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="DictionaryComparator.get_keys_in_both"><a class="viewcode-back" href="../../apidoc/dkutils.dictionary_comparator.html#dkutils.dictionary_comparator.DictionaryComparator.get_keys_in_both">[docs]</a>    <span class="k">def</span> <span class="nf">get_keys_in_both</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the set of keys that are present on botch sides</span>
 
 <span class="sd">        Returns</span>
@@ -330,7 +331,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_right</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">&amp;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_left</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="DictionaryComparator.get_same_keys_different_values"><a class="viewcode-back" href="../../apidoc/dkutils.dictionary_comparator.html#dkutils.dictionary_comparator.DictionaryComparator.get_same_keys_different_values">[docs]</a>    <span class="k">def</span> <span class="nf">get_same_keys_different_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the key and values where the keys were the same for left and right but the values differed</span>
 
 <span class="sd">        Returns</span>
@@ -346,7 +347,7 @@
         <span class="p">}</span></div>
 
 <div class="viewcode-block" id="DictionaryComparator.merge_left"><a class="viewcode-back" href="../../apidoc/dkutils.dictionary_comparator.html#dkutils.dictionary_comparator.DictionaryComparator.merge_left">[docs]</a>    <span class="k">def</span> <span class="nf">merge_left</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Merge the dictionaries with preference being given to dictionary on the right if a key exists on both sides.</span>
 <span class="sd">        For example given::</span>
 
@@ -366,7 +367,7 @@
         <span class="k">return</span> <span class="p">{</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_left</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_right</span><span class="p">}</span></div>
 
 <div class="viewcode-block" id="DictionaryComparator.merge_right"><a class="viewcode-back" href="../../apidoc/dkutils.dictionary_comparator.html#dkutils.dictionary_comparator.DictionaryComparator.merge_right">[docs]</a>    <span class="k">def</span> <span class="nf">merge_right</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Merge the dictionaries with preference being given to dictionary on the left if a key exists on both sides.</span>
 <span class="sd">        For example given::</span>
 

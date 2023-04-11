@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.reporting.dataframe_wrapper &mdash; DKUtils 2.11.3 documentation</title>
+  <title>dkutils.reporting.dataframe_wrapper &mdash; DKUtils 2.11.4 documentation</title>
   
 
   
@@ -109,6 +109,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-4">v2.11.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-3">v2.11.3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-2">v2.11.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-1">v2.11.1</a></li>
@@ -251,7 +252,7 @@
 
 
 <div class="viewcode-block" id="DataFrameWrapper"><a class="viewcode-back" href="../../../apidoc/dkutils.reporting.dataframe_wrapper.html#dkutils.reporting.dataframe_wrapper.DataFrameWrapper">[docs]</a><span class="k">class</span> <span class="nc">DataFrameWrapper</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class that facilitates running a query in a database via a Pandas Dataframe and then writing the data to files.</span>
 <span class="sd">     A number of formats are supported including png, html and text files.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -264,7 +265,7 @@
     <span class="k">def</span> <span class="nf">snowflake</span><span class="p">(</span>
         <span class="bp">cls</span><span class="p">,</span> <span class="n">username</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">snowflake_account</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">database</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">warehouse</span><span class="p">:</span> <span class="nb">str</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a DataFrame with a connection to a Snowflake database</span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -292,7 +293,7 @@
     <span class="k">def</span> <span class="nf">postgresql</span><span class="p">(</span>
         <span class="bp">cls</span><span class="p">,</span> <span class="n">username</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">hostname</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">database</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5432</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">       Create a DataFrame with a connection to a postgreSQL database</span>
 <span class="sd">       Parameters</span>
 <span class="sd">       ----------</span>
@@ -318,7 +319,7 @@
 
 <div class="viewcode-block" id="DataFrameWrapper.mssql"><a class="viewcode-back" href="../../../apidoc/dkutils.reporting.dataframe_wrapper.html#dkutils.reporting.dataframe_wrapper.DataFrameWrapper.mssql">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">mssql</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">username</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">hostname</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">database</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1433</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a DataFrame with a connection to a mssql database</span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -343,7 +344,7 @@
         <span class="k">return</span> <span class="n">DataFrameWrapper</span><span class="p">(</span><span class="n">connection_string</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DataFrameWrapper.create_report"><a class="viewcode-back" href="../../../apidoc/dkutils.reporting.dataframe_wrapper.html#dkutils.reporting.dataframe_wrapper.DataFrameWrapper.create_report">[docs]</a>    <span class="k">def</span> <span class="nf">create_report</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">query_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">additional_parms</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method will execute the given query and then write out the results as an html, png or txt file depending on</span>
 <span class="sd">        the given query_type. The file will named with the given filename. If the the filename parameter then the file</span>
 <span class="sd">        will be named file_ddd.ext. Where ddd will be a three digit number with two leading zeros that is incremented</span>

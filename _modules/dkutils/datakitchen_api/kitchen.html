@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api.kitchen &mdash; DKUtils 2.11.3 documentation</title>
+  <title>dkutils.datakitchen_api.kitchen &mdash; DKUtils 2.11.4 documentation</title>
   
 
   
@@ -109,6 +109,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-4">v2.11.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-3">v2.11.3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-2">v2.11.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-1">v2.11.1</a></li>
@@ -271,7 +272,7 @@
 <div class="viewcode-block" id="Kitchen"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen">[docs]</a><span class="k">class</span> <span class="nc">Kitchen</span><span class="p">:</span>
 
 <div class="viewcode-block" id="Kitchen.__init__"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">DataKitchenClient</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Kitchen object for performing kitchen related API requests.</span>
 
 <span class="sd">        Parameters</span>
@@ -287,14 +288,14 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Kitchen name</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">parent_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parent kitchen name</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -302,7 +303,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent_name</span>
 
 <div class="viewcode-block" id="Kitchen.is_ingredient"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.is_ingredient">[docs]</a>    <span class="k">def</span> <span class="nf">is_ingredient</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return true if this is an ingredient kitchen, False otherwise.</span>
 
 <span class="sd">        Returns</span>
@@ -320,7 +321,7 @@
             <span class="n">new_kitchen_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
             <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Kitchen</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a new kitchen and return a kitchen object</span>
 
 <span class="sd">        Parameters</span>
@@ -355,7 +356,7 @@
         <span class="k">return</span> <span class="n">Kitchen</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">new_kitchen_name</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Kitchen.delete"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete the current kitchen.</span>
 
 <span class="sd">        Returns</span>
@@ -372,7 +373,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_DELETE</span><span class="p">,</span> <span class="s1">&#39;kitchen&#39;</span><span class="p">,</span> <span class="s1">&#39;delete&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_get_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve kitchen settings JSON.</span>
 
 <span class="sd">        Returns</span>
@@ -389,7 +390,7 @@
         <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_update_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update kitchen settings JSON.</span>
 
 <span class="sd">        Parameters</span>
@@ -423,7 +424,7 @@
         <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_get_roles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve the staff and their associated roles assigned to this kitchen.</span>
 
 <span class="sd">        Parameters</span>
@@ -451,7 +452,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_settings</span><span class="p">()[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-roles&#39;</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">_get_staff_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve the set of staff usernames assigned to this kitchen.</span>
 
 <span class="sd">        Parameters</span>
@@ -480,7 +481,7 @@
         <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_settings</span><span class="p">()[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-staff&#39;</span><span class="p">])</span>
 
     <span class="k">def</span> <span class="nf">_ensure_admin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">roles</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Ensure the user in the provided client has Admin privileges in this kitchen. Otherwise,</span>
 <span class="sd">        raise a PermissionError.</span>
 
@@ -506,7 +507,7 @@
             <span class="k">raise</span> <span class="ne">PermissionError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Current user (</span><span class="si">{</span><span class="n">current_user</span><span class="si">}</span><span class="s1">) not an Admin. Permission denied.&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_ensure_disjoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lists</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return True if all the provided lists (converted to sets) are disjoint, False otherwise.</span>
 
 <span class="sd">        Parameters</span>
@@ -528,7 +529,7 @@
         <span class="k">return</span> <span class="kc">True</span>
 
 <div class="viewcode-block" id="Kitchen.get_alerts"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.get_alerts">[docs]</a>    <span class="k">def</span> <span class="nf">get_alerts</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve alerts set on this kitchen.</span>
 
 <span class="sd">        Returns</span>
@@ -553,7 +554,7 @@
         <span class="p">}</span></div>
 
 <div class="viewcode-block" id="Kitchen.add_alerts"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.add_alerts">[docs]</a>    <span class="k">def</span> <span class="nf">add_alerts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alerts</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add the provided alerts to the kitchen.</span>
 
 <span class="sd">        Parameters</span>
@@ -595,7 +596,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_settings</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Kitchen.delete_alerts"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.delete_alerts">[docs]</a>    <span class="k">def</span> <span class="nf">delete_alerts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alerts</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete the provided kitchen alerts.</span>
 
 <span class="sd">        Parameters</span>
@@ -637,7 +638,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_settings</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Kitchen.get_staff"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.get_staff">[docs]</a>    <span class="k">def</span> <span class="nf">get_staff</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve the staff and their associated roles assigned to this kitchen.</span>
 
 <span class="sd">        Raises</span>
@@ -660,7 +661,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_roles</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Kitchen.delete_staff"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.delete_staff">[docs]</a>    <span class="k">def</span> <span class="nf">delete_staff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">staff_to_delete</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">set</span><span class="p">,</span> <span class="nb">list</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete the provided staff from this kitchen.</span>
 
 <span class="sd">        Parameters</span>
@@ -697,7 +698,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_settings</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Kitchen.add_staff"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.add_staff">[docs]</a>    <span class="k">def</span> <span class="nf">add_staff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">staff_to_add</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add the provided staff to this kitchen.</span>
 
 <span class="sd">        Parameters</span>
@@ -736,7 +737,7 @@
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">current_staff</span><span class="o">.</span><span class="n">isdisjoint</span><span class="p">(</span><span class="n">new_staff</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s1">&#39;The following staff already exist in kitchen: </span><span class="si">{</span><span class="n">current_staff</span> <span class="o">&amp;</span> <span class="n">new_staff</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;The following staff already exist in kitchen: </span><span class="si">{</span><span class="n">current_staff</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">new_staff</span><span class="si">}</span><span class="s1">&#39;</span>
             <span class="p">)</span>
 
         <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-staff&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">current_staff</span> <span class="o">|</span> <span class="n">new_staff</span><span class="p">)</span>
@@ -751,7 +752,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_settings</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Kitchen.update_staff"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.update_staff">[docs]</a>    <span class="k">def</span> <span class="nf">update_staff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">staff_to_update</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update roles for the provided staff to this kitchen.</span>
 
 <span class="sd">        Parameters</span>
@@ -790,7 +791,7 @@
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">updated_staff</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">current_staff</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s1">&#39;The following staff do not already exist in kitchen: </span><span class="si">{</span><span class="n">updated_staff</span> <span class="o">-</span> <span class="n">current_staff</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;The following staff do not already exist in kitchen: </span><span class="si">{</span><span class="n">updated_staff</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">current_staff</span><span class="si">}</span><span class="s1">&#39;</span>
             <span class="p">)</span>
 
         <span class="c1"># Update staff to roles</span>

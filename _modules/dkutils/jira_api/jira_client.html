@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.jira_api.jira_client &mdash; DKUtils 2.11.3 documentation</title>
+  <title>dkutils.jira_api.jira_client &mdash; DKUtils 2.11.4 documentation</title>
   
 
   
@@ -109,6 +109,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-4">v2.11.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-3">v2.11.3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-2">v2.11.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-1">v2.11.1</a></li>
@@ -261,7 +262,7 @@
 <div class="viewcode-block" id="JiraClient"><a class="viewcode-back" href="../../../apidoc/dkutils.jira_api.jira_client.html#dkutils.jira_api.jira_client.JiraClient">[docs]</a><span class="k">class</span> <span class="nc">JiraClient</span><span class="p">:</span>
 
 <div class="viewcode-block" id="JiraClient.__init__"><a class="viewcode-back" href="../../../apidoc/dkutils.jira_api.jira_client.html#dkutils.jira_api.jira_client.JiraClient.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">api_key</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Client object for invoking JIRA Python API &quot;https://pypi.org/project/jira/&quot;</span>
 
 <span class="sd">        Parameters</span>
@@ -277,7 +278,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">JIRA</span><span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="n">basic_auth</span><span class="o">=</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">api_key</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="JiraClient.transition_issue"><a class="viewcode-back" href="../../../apidoc/dkutils.jira_api.jira_client.html#dkutils.jira_api.jira_client.JiraClient.transition_issue">[docs]</a>    <span class="k">def</span> <span class="nf">transition_issue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">issue_key</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Perform a transition on an issue.</span>
 
 <span class="sd">        Parameters</span>
@@ -311,7 +312,7 @@
             <span class="k">raise</span></div>
 
 <div class="viewcode-block" id="JiraClient.add_comment"><a class="viewcode-back" href="../../../apidoc/dkutils.jira_api.jira_client.html#dkutils.jira_api.jira_client.JiraClient.add_comment">[docs]</a>    <span class="k">def</span> <span class="nf">add_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">issue_key</span><span class="p">,</span> <span class="n">comment</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a comment from the current authenticated user on the specified issue and return a Resource for it.</span>
 
 <span class="sd">        Parameters</span>
@@ -337,7 +338,7 @@
             <span class="k">raise</span></div>
 
 <div class="viewcode-block" id="JiraClient.get_issue_field"><a class="viewcode-back" href="../../../apidoc/dkutils.jira_api.jira_client.html#dkutils.jira_api.jira_client.JiraClient.get_issue_field">[docs]</a>    <span class="k">def</span> <span class="nf">get_issue_field</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">issue</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Helper function that returns the value of the requested value for an issue. This function is used in the</span>
 <span class="sd">        get_issues() funtion to extract the fields of an issue.</span>
 
@@ -372,7 +373,7 @@
             <span class="k">raise</span></div>
 
 <div class="viewcode-block" id="JiraClient.get_issues"><a class="viewcode-back" href="../../../apidoc/dkutils.jira_api.jira_client.html#dkutils.jira_api.jira_client.JiraClient.get_issues">[docs]</a>    <span class="k">def</span> <span class="nf">get_issues</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="n">DEFAULT_FIELDS</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a Pandas DataFrame of all JIRA Issues for the requested project with values for</span>
 <span class="sd">        all requested fields.</span>
 

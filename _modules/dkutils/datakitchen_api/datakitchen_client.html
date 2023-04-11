@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api.datakitchen_client &mdash; DKUtils 2.11.3 documentation</title>
+  <title>dkutils.datakitchen_api.datakitchen_client &mdash; DKUtils 2.11.4 documentation</title>
   
 
   
@@ -109,6 +109,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-4">v2.11.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-3">v2.11.3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-2">v2.11.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-1">v2.11.1</a></li>
@@ -288,7 +289,7 @@
 
 
 <div class="viewcode-block" id="create_using_context"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.create_using_context">[docs]</a><span class="k">def</span> <span class="nf">create_using_context</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">kitchen</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">recipe</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">variation</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This is a factory method that can be used to create a client using the context created by</span>
 <span class="sd">    DKCloudCommand</span>
 
@@ -322,7 +323,7 @@
 
 
 <div class="viewcode-block" id="ensure_and_get_kitchen"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.ensure_and_get_kitchen">[docs]</a><span class="k">def</span> <span class="nf">ensure_and_get_kitchen</span><span class="p">(</span><span class="n">kitchen</span><span class="p">,</span> <span class="n">kitchens</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Ensure the provided kitchens dictionary contains the provided kitchen and if so, return</span>
 <span class="sd">    its kitchen info. Otherwise, raise an exception.</span>
 
@@ -360,7 +361,7 @@
         <span class="n">variation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">is_api_token</span><span class="o">=</span><span class="kc">False</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Client object for invoking DataKitchen API calls. If the API call requires a kitchen,</span>
 <span class="sd">        recipe, and/or variation, you must set those fields on the client instance prior to</span>
 <span class="sd">        invoking those methods (or set them via the constructor when a class instance is</span>
@@ -435,12 +436,12 @@
         <span class="k">return</span> <span class="bp">self</span></div>
 
     <span class="k">def</span> <span class="nf">_ensure_attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Ensure the properties required for the API request are all defined.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">def</span> <span class="nf">sort_args</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-            <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Sort so attributes are processed in Kitchen, Recipe, Variation order</span>
 <span class="sd">            &quot;&quot;&quot;</span>
             <span class="k">if</span> <span class="n">KITCHEN</span> <span class="o">==</span> <span class="n">a</span><span class="p">:</span>
@@ -483,7 +484,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_valid_attributes</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">_api_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_method</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">is_json</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Make HTTP request to arbitrary API endpoint, with optional parameters as payload.</span>
 
 <span class="sd">        Parameters</span>
@@ -527,7 +528,7 @@
         <span class="k">return</span> <span class="n">response</span>
 
     <span class="k">def</span> <span class="nf">_validate_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Validate the current token.</span>
 
 <span class="sd">        Returns</span>
@@ -544,7 +545,7 @@
             <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">_refresh_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Validate the existing token. If invalid, refresh the token by logging into the DataKitchen</span>
 <span class="sd">        platform via the login API to retrieve a fresh token. Reset the current headers if the</span>
 <span class="sd">        token is refreshed.</span>
@@ -566,7 +567,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_headers</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_set_headers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the headers dictionary with the current token or api_token</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_api_token</span><span class="p">:</span>
@@ -575,14 +576,14 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;Bearer </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_token</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">}</span>
 
 <div class="viewcode-block" id="DataKitchenClient.get_kitchen"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_kitchen">[docs]</a>    <span class="k">def</span> <span class="nf">get_kitchen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create and return a kitchen object for use in making kitchen related API requests.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_attributes</span><span class="p">(</span><span class="n">KITCHEN</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Kitchen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DataKitchenClient.create_kitchen"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.create_kitchen">[docs]</a>    <span class="k">def</span> <span class="nf">create_kitchen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a child kitchen off of self.kitchen and return a Kitchen object for the newly</span>
 <span class="sd">        created kitchen.</span>
 
@@ -601,7 +602,7 @@
         <span class="k">return</span> <span class="n">Kitchen</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DataKitchenClient.create_order"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.create_order">[docs]</a>    <span class="k">def</span> <span class="nf">create_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="p">{}):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a new order. Kitchen, recipe and variation attributes must be set prior to invoking</span>
 <span class="sd">        this method.</span>
 
@@ -633,7 +634,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="DataKitchenClient.delete_order"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.delete_order">[docs]</a>    <span class="k">def</span> <span class="nf">delete_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete an Order. Kitchen attribute must be set prior to invoking this method.</span>
 
 <span class="sd">        Parameters</span>
@@ -655,7 +656,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_DELETE</span><span class="p">,</span> <span class="s1">&#39;order&#39;</span><span class="p">,</span> <span class="s1">&#39;delete&#39;</span><span class="p">,</span> <span class="n">order_id</span><span class="p">,</span> <span class="n">kitchen_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DataKitchenClient.delete_order_run"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.delete_order_run">[docs]</a>    <span class="k">def</span> <span class="nf">delete_order_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete an Order Run. Kitchen attribute must be set prior to invoking this method.</span>
 
 <span class="sd">        Parameters</span>
@@ -679,7 +680,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="DataKitchenClient.resume_order_run"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.resume_order_run">[docs]</a>    <span class="k">def</span> <span class="nf">resume_order_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Resume a failed order run. Kitchen attribute must be set prior to invoking this method.</span>
 
 <span class="sd">        Parameters</span>
@@ -710,7 +711,7 @@
         <span class="n">order_run_status</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">order_run_count</span><span class="o">=</span><span class="mi">3</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve a dictionary of orders and their associated order runs based on the applied</span>
 <span class="sd">        filters. To filter based on recipe and variation, ensure these properties are set on this</span>
 <span class="sd">        client. Alternatively, set recipe and/or variation to None to remove filtering based on</span>
@@ -825,7 +826,7 @@
         <span class="n">order_run_status</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">order_run_count</span><span class="o">=</span><span class="mi">3</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve the order (and associated order runs) status details based on the applied</span>
 <span class="sd">        filters. To filter based on recipe and variation, ensure these properties are set on this</span>
 <span class="sd">        client. Alternatively, set recipe and/or variation to None to remove filtering based on</span>
@@ -902,7 +903,7 @@
         <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">order_runs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">sort_start_time</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DataKitchenClient.get_order_runs"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_runs">[docs]</a>    <span class="k">def</span> <span class="nf">get_order_runs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve all the order runs associated with the provided order. The kitchen attribute</span>
 <span class="sd">        must be set prior to invoking this method.</span>
 
@@ -951,7 +952,7 @@
         <span class="n">include_testresults</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">include_timingresults</span><span class="o">=</span><span class="kc">False</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve the details of an order run.</span>
 
 <span class="sd">        Parameters</span>
@@ -1030,7 +1031,7 @@
         <span class="k">return</span> <span class="n">api_response</span><span class="p">[</span><span class="s1">&#39;servings&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="DataKitchenClient.get_order_run_status"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_order_run_status">[docs]</a>    <span class="k">def</span> <span class="nf">get_order_run_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve the status of the provided order run. If the order run isn&#39;t found, return None.</span>
 
 <span class="sd">        Parameters</span>
@@ -1052,7 +1053,7 @@
             <span class="k">return</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="DataKitchenClient.monitor_order_run"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.monitor_order_run">[docs]</a>    <span class="k">def</span> <span class="nf">monitor_order_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sleep_secs</span><span class="p">,</span> <span class="n">duration_secs</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Wait for the specified order run to complete and return completion status when finished.</span>
 <span class="sd">        If the order run takes &gt; duration_secs, return None.</span>
 
@@ -1076,7 +1077,7 @@
         <span class="k">return</span> <span class="n">order_run_statuses</span><span class="p">[</span><span class="n">order_run_id</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="DataKitchenClient.monitor_order_runs"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.monitor_order_runs">[docs]</a>    <span class="k">def</span> <span class="nf">monitor_order_runs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sleep_secs</span><span class="p">,</span> <span class="n">duration_secs</span><span class="p">,</span> <span class="n">order_run_ids</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Wait for the specified order runs to complete and return completion status when finished.</span>
 <span class="sd">        If the order runs take &gt; duration_secs, return None.</span>
 
@@ -1117,7 +1118,7 @@
 <div class="viewcode-block" id="DataKitchenClient.create_and_monitor_orders"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.create_and_monitor_orders">[docs]</a>    <span class="k">def</span> <span class="nf">create_and_monitor_orders</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">orders_details</span><span class="p">,</span> <span class="n">sleep_secs</span><span class="p">,</span> <span class="n">duration_secs</span><span class="p">,</span> <span class="n">max_concurrent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stop_on_error</span><span class="o">=</span><span class="kc">False</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create the specified orders and wait for them to complete (or timeout after the specified</span>
 <span class="sd">        duration_secs).</span>
 
@@ -1232,7 +1233,7 @@
         <span class="n">max_concurrent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">stop_on_error</span><span class="o">=</span><span class="kc">False</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Resume the specified order runs and wait for them to complete (or timeout after the</span>
 <span class="sd">        specified duration_secs).</span>
 
@@ -1334,7 +1335,7 @@
         <span class="k">return</span> <span class="n">completed_orders</span><span class="p">,</span> <span class="n">active_orders</span><span class="p">,</span> <span class="n">queued_orders</span></div>
 
 <div class="viewcode-block" id="DataKitchenClient.get_kitchens"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_kitchens">[docs]</a>    <span class="k">def</span> <span class="nf">get_kitchens</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve a list of all kitchen names:</span>
 
 <span class="sd">        Returns</span>
@@ -1352,7 +1353,7 @@
         <span class="n">private</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">inheritable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the custom vault configuration for a Kitchen.</span>
 
 <span class="sd">        Parameters</span>
@@ -1395,7 +1396,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_POST</span><span class="p">,</span> <span class="s1">&#39;vault&#39;</span><span class="p">,</span> <span class="s1">&#39;config&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">payload</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_get_kitchens_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get information about available kitchens</span>
 
 <span class="sd">        Raises</span>
@@ -1452,7 +1453,7 @@
         <span class="k">return</span> <span class="n">kitchens</span>
 
     <span class="k">def</span> <span class="nf">_get_kitchen_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets information about the current kitchen</span>
 
 <span class="sd">        Raises</span>
@@ -1505,7 +1506,7 @@
         <span class="k">return</span> <span class="n">ensure_and_get_kitchen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">,</span> <span class="n">kitchens</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_update_kitchen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kitchen_info</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">                Updates information about the current kitchen</span>
 
 <span class="sd">                Parameters</span>
@@ -1564,7 +1565,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_POST</span><span class="p">,</span> <span class="s1">&#39;kitchen&#39;</span><span class="p">,</span> <span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">,</span> <span class="o">**</span><span class="n">payload</span><span class="p">)</span>
 
 <div class="viewcode-block" id="DataKitchenClient.get_overrides"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_overrides">[docs]</a>    <span class="k">def</span> <span class="nf">get_overrides</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">override_names</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a dictionary containing the overrides for the current kitchen or if override_names is specified a</span>
 <span class="sd">        subset of overrides</span>
 
@@ -1594,7 +1595,7 @@
         <span class="k">return</span> <span class="n">overrides</span></div>
 
 <div class="viewcode-block" id="DataKitchenClient.update_overrides"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.update_overrides">[docs]</a>    <span class="k">def</span> <span class="nf">update_overrides</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">overrides</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the overrides for the current kitchen</span>
 
 <span class="sd">        Parameters</span>
@@ -1615,7 +1616,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_kitchen</span><span class="p">(</span><span class="n">kitchen_info</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DataKitchenClient.compare_overrides"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.compare_overrides">[docs]</a>    <span class="k">def</span> <span class="nf">compare_overrides</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compare the overrides in the current kitchen to those of the specified kitchen. If other is None then</span>
 <span class="sd">        the comparison is done against the parent kitchen</span>
 
@@ -1643,7 +1644,7 @@
         <span class="k">return</span> <span class="n">DictionaryComparator</span><span class="p">(</span><span class="n">my_overrides</span><span class="p">,</span> <span class="n">other_overrides</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DataKitchenClient.get_override_names_that_do_not_exist"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_override_names_that_do_not_exist">[docs]</a>    <span class="k">def</span> <span class="nf">get_override_names_that_do_not_exist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">override_names</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Given a set of override names that could exist in the kitchen, return a set of the names of any that do not</span>
 <span class="sd">        exist in the kitchen.</span>
 
@@ -1671,7 +1672,7 @@
         <span class="k">return</span> <span class="n">override_names</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_overrides</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="DataKitchenClient.get_override_names_that_exist"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_override_names_that_exist">[docs]</a>    <span class="k">def</span> <span class="nf">get_override_names_that_exist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">override_names</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Given a set of override names that could exist in the kitchen, return a set of the names of that exist in the</span>
 <span class="sd">        kitchen.</span>
 
@@ -1699,7 +1700,7 @@
         <span class="k">return</span> <span class="n">override_names</span> <span class="o">&amp;</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_overrides</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="DataKitchenClient.get_kitchen_staff"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_kitchen_staff">[docs]</a>    <span class="k">def</span> <span class="nf">get_kitchen_staff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a list containing the email addresses of the kitchen staff for the current kitchen</span>
 
 <span class="sd">        Raises</span>
@@ -1719,7 +1720,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_kitchen_info</span><span class="p">()[</span><span class="n">KITCHEN_STAFF</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="DataKitchenClient.update_kitchen_staff"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.update_kitchen_staff">[docs]</a>    <span class="k">def</span> <span class="nf">update_kitchen_staff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kitchen_staff</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the kitchen staff for the current kitchen</span>
 
 <span class="sd">        Parameters</span>
@@ -1744,7 +1745,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_kitchen</span><span class="p">(</span><span class="n">kitchen_info</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DataKitchenClient.add_kitchen_staff"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.add_kitchen_staff">[docs]</a>    <span class="k">def</span> <span class="nf">add_kitchen_staff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_kitchen_staff</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds the given email addresses to the kitchen staff for the current kitchen. Email addresses that are already</span>
 <span class="sd">        part of the existing kitchen staff will be ignored.</span>
 
@@ -1769,7 +1770,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">update_kitchen_staff</span><span class="p">(</span><span class="n">kitchen_staff</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DataKitchenClient.get_recipe"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_recipe">[docs]</a>    <span class="k">def</span> <span class="nf">get_recipe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recipe_files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include_recipe_tree</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve the file structure and contents of a recipe. Using the default arguments, all</span>
 <span class="sd">        files and their contents will be returned. To return specific file contents, provide those</span>
 <span class="sd">        file paths in the recipe_files list. To return a subset of file contents, but the entire</span>
@@ -1863,7 +1864,7 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_POST</span><span class="p">,</span> <span class="s1">&#39;recipe&#39;</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">recipe</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="DataKitchenClient.get_recipes"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_recipes">[docs]</a>    <span class="k">def</span> <span class="nf">get_recipes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a list of recipe names.</span>
 
 <span class="sd">        Raises</span>
@@ -1895,7 +1896,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api_request</span><span class="p">(</span><span class="n">API_GET</span><span class="p">,</span> <span class="s1">&#39;kitchen&#39;</span><span class="p">,</span> <span class="s1">&#39;recipenames&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kitchen</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;recipes&#39;</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="DataKitchenClient.get_variations"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.datakitchen_client.html#dkutils.datakitchen_api.datakitchen_client.DataKitchenClient.get_variations">[docs]</a>    <span class="k">def</span> <span class="nf">get_variations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a dictionary that contains the variation-list from the variations.json file</span>
 
 <span class="sd">        Raises</span>

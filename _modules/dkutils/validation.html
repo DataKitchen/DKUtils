@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.validation &mdash; DKUtils 2.11.3 documentation</title>
+  <title>dkutils.validation &mdash; DKUtils 2.11.4 documentation</title>
   
 
   
@@ -109,6 +109,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../release_notes.html#v2-11-4">v2.11.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../release_notes.html#v2-11-3">v2.11.3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../release_notes.html#v2-11-2">v2.11.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../release_notes.html#v2-11-1">v2.11.1</a></li>
@@ -258,7 +259,7 @@
 
 
 <div class="viewcode-block" id="get_globals_config"><a class="viewcode-back" href="../../apidoc/dkutils.validation.html#dkutils.validation.get_globals_config">[docs]</a><span class="k">def</span> <span class="nf">get_globals_config</span><span class="p">(</span><span class="n">global_var_names</span><span class="p">,</span> <span class="n">cur_globals</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load the specified glabal variables from a file named globals_config.json if it exists. This is to facillitate</span>
 <span class="sd">    a way of initializing the globals variables when running the code outside of DataKitchen. These global variables</span>
 <span class="sd">    would normally be passed from DataKitchen.</span>
@@ -278,7 +279,7 @@
 
 
 <div class="viewcode-block" id="validate_globals"><a class="viewcode-back" href="../../apidoc/dkutils.validation.html#dkutils.validation.validate_globals">[docs]</a><span class="k">def</span> <span class="nf">validate_globals</span><span class="p">(</span><span class="n">global_var_names</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Validate that the list of provided global variable names exist in the global namespace</span>
 <span class="sd">    of the calling function.</span>
 
@@ -316,7 +317,7 @@
 
 
 <div class="viewcode-block" id="skip_token_validation"><a class="viewcode-back" href="../../apidoc/dkutils.validation.html#dkutils.validation.skip_token_validation">[docs]</a><span class="k">def</span> <span class="nf">skip_token_validation</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Determine if the outgoing API request should validate the current auth token and</span>
 <span class="sd">    refresh it if invalid.</span>
 
@@ -330,7 +331,7 @@
 
 
 <div class="viewcode-block" id="get_max_concurrency"><a class="viewcode-back" href="../../apidoc/dkutils.validation.html#dkutils.validation.get_max_concurrency">[docs]</a><span class="k">def</span> <span class="nf">get_max_concurrency</span><span class="p">(</span><span class="n">num_orders</span><span class="p">,</span> <span class="n">max_concurrent</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Given a specified maximum concurrency and the number of orders being created/resumed, return</span>
 <span class="sd">    a valid maximum concurrency value (i.e. 1 &lt;= max_concurrent &lt;= num_orders). If max_concurrent</span>
 <span class="sd">    is None, return num_orders.</span>
@@ -357,7 +358,7 @@
 
 
 <div class="viewcode-block" id="ensure_pathlib"><a class="viewcode-back" href="../../apidoc/dkutils.validation.html#dkutils.validation.ensure_pathlib">[docs]</a><span class="k">def</span> <span class="nf">ensure_pathlib</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    If provided path is a pathlib.PurePath instance, return it. If it&#39;s a string, convert it to a</span>
 <span class="sd">    pathlib.PurePath instance and return it. Otherwise, raise a TypeError.</span>
 
@@ -383,7 +384,7 @@
 
 
 <div class="viewcode-block" id="set_logging_level"><a class="viewcode-back" href="../../apidoc/dkutils.validation.html#dkutils.validation.set_logging_level">[docs]</a><span class="k">def</span> <span class="nf">set_logging_level</span><span class="p">(</span><span class="n">logging_level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Set the logging level for the logger in the global variable LOGGER. If the global variable LOOGER does</span>
 <span class="sd">    not exist it will be set to a logger obtained from the logging library. This is to allow code to be run</span>
 <span class="sd">    outside of DataKitchen without the need to add code to initialize the global variable LOGGER has is done</span>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api.order_run_monitor &mdash; DKUtils 2.11.3 documentation</title>
+  <title>dkutils.datakitchen_api.order_run_monitor &mdash; DKUtils 2.11.4 documentation</title>
   
 
   
@@ -109,6 +109,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-4">v2.11.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-3">v2.11.3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-2">v2.11.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-1">v2.11.1</a></li>
@@ -290,7 +291,7 @@
 
 <div class="viewcode-block" id="get_customer_code"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.get_customer_code">[docs]</a><span class="nd">@retry_50X_httperror</span><span class="p">()</span>
 <span class="k">def</span> <span class="nf">get_customer_code</span><span class="p">(</span><span class="n">dk_client</span><span class="p">:</span> <span class="n">DataKitchenClient</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Retrieve the customer code from the authenticated user associated with the provided</span>
 <span class="sd">    DataKitchen client.</span>
 
@@ -309,7 +310,7 @@
 
 
 <div class="viewcode-block" id="get_order_run_url"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.get_order_run_url">[docs]</a><span class="k">def</span> <span class="nf">get_order_run_url</span><span class="p">(</span><span class="n">dk_client</span><span class="p">:</span> <span class="n">DataKitchenClient</span><span class="p">,</span> <span class="n">customer_code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Retrieve the URL for navigating to the Order Run Details page in the DataKitchen platform for</span>
 <span class="sd">    the provided order_run_id.</span>
 
@@ -334,7 +335,7 @@
 
 <div class="viewcode-block" id="get_ingredient_owner_order_run_id"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.get_ingredient_owner_order_run_id">[docs]</a><span class="nd">@retry_50X_httperror</span><span class="p">()</span>
 <span class="k">def</span> <span class="nf">get_ingredient_owner_order_run_id</span><span class="p">(</span><span class="n">dk_client</span><span class="p">:</span> <span class="n">DataKitchenClient</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    If this order run is for an ingredient, then return the parent order run id. Otherwise, return</span>
 <span class="sd">    None.</span>
 
@@ -523,7 +524,7 @@
         <span class="n">sleep_time_secs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
         <span class="n">host</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_HOST</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This class is for use in monitoring a DataKitchen Order Run and reporting its status to</span>
 <span class="sd">        DataKitchen&#39;s Observability module Events Ingestion API. It will report the start/stop of</span>
 <span class="sd">        each node as an individual task and close the run when finished.</span>
@@ -570,7 +571,7 @@
 
 <div class="viewcode-block" id="OrderRunMonitor.get_order_run_details"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.OrderRunMonitor.get_order_run_details">[docs]</a>    <span class="nd">@retry_50X_httperror</span><span class="p">()</span>
     <span class="k">def</span> <span class="nf">get_order_run_details</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve order run details for the associated order run. The provided kwargs may be used to</span>
 <span class="sd">        augment the returned value with more granular details.</span>
 
@@ -588,7 +589,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dk_client</span><span class="o">.</span><span class="n">get_order_run_details</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_order_run_id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="OrderRunMonitor.get_conditional_nodes"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.OrderRunMonitor.get_conditional_nodes">[docs]</a>    <span class="k">def</span> <span class="nf">get_conditional_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve a list of the conditional node names present in this Order Run.</span>
 
 <span class="sd">        Returns</span>
@@ -600,7 +601,7 @@
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="n">v</span><span class="p">[</span><span class="s1">&#39;node&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">order_run_details</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;conditions&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">values</span><span class="p">()]))</span></div>
 
 <div class="viewcode-block" id="OrderRunMonitor.get_nodes_info"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.OrderRunMonitor.get_nodes_info">[docs]</a>    <span class="k">def</span> <span class="nf">get_nodes_info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract and return the node information from the order run details, excluding the nodes that</span>
 <span class="sd">        should be ignored (e.g. conditional nodes and the Order_Run_Monitor node itself).</span>
 
@@ -614,7 +615,7 @@
         <span class="k">return</span> <span class="n">nodes_info</span></div>
 
     <span class="k">def</span> <span class="nf">_create_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">info</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Node</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a Node object and initialize it.</span>
 
 <span class="sd">        Parameters</span>
@@ -632,7 +633,7 @@
 
 <div class="viewcode-block" id="OrderRunMonitor.parse_log_entry"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.OrderRunMonitor.parse_log_entry">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">parse_log_entry</span><span class="p">(</span><span class="n">log_entry</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parse a log entry dictionary to derive the fields required for the</span>
 <span class="sd">        MessageLogEventApiSchema.</span>
 
@@ -684,7 +685,7 @@
         <span class="p">}</span></div>
 
 <div class="viewcode-block" id="OrderRunMonitor.process_log_entries"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.OrderRunMonitor.process_log_entries">[docs]</a>    <span class="k">def</span> <span class="nf">process_log_entries</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Send MessageLog events for WARNING and ERROR log messages.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
@@ -705,7 +706,7 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Failed to process logs: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="OrderRunMonitor.monitor"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.OrderRunMonitor.monitor">[docs]</a>    <span class="k">def</span> <span class="nf">monitor</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Poll the DataKitchen platform API for the status of the associated Order Run. Report the</span>
 <span class="sd">        status of each node until all the nodes have completed or if the run has failed and nodes</span>
 <span class="sd">        stopped processing. If this order run is for an ingredient, monitoring is disabled.</span>
