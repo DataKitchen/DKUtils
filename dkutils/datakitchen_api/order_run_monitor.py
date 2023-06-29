@@ -126,16 +126,20 @@ class EventInfoProvider:
     customer_code: str
     pipeline_key: str
     order_run_id: str
+    run_name: str = None
 
     @classmethod
     def init(
-            cls, dk_client: DataKitchenClient, pipeline_key: str, order_run_id: str
+            cls, dk_client: DataKitchenClient, pipeline_key: str, order_run_id: str, run_name: str
     ) -> EventInfoProvider:
         customer_code = get_customer_code(dk_client)
-        return EventInfoProvider(dk_client, customer_code, pipeline_key, order_run_id)
+        return EventInfoProvider(dk_client, customer_code, pipeline_key, order_run_id, run_name)
 
     def get_event_info(self, **kwargs) -> dict:
         event_info = {'pipeline_key': self.pipeline_key, 'run_key': self.order_run_id, **kwargs}
+
+        if self.run_name:
+            event_info['run_name'] = self.run_name
 
         if 'event_timestamp' not in event_info:
             event_info['event_timestamp'] = datetime.utcnow().isoformat()
@@ -273,6 +277,7 @@ class OrderRunMonitor:
         events_api_key: str,
         pipeline_name: str,
         order_run_id: str,
+        run_name: str = None,
         nodes_to_ignore: list = None,
         sleep_time_secs: int = 10,
         host: str = DEFAULT_HOST,
@@ -291,6 +296,8 @@ class OrderRunMonitor:
             Name of the pipeline being monitored
         order_run_id : str
             Id of the Order Run being monitored.
+        run_name : str, optional
+            Human readable name for the pipeline execution being monitored (default: None).
         nodes_to_ignore : list or None, optional
             List of nodes to ignore. If the monitor node is named Order_Run_Monitor, it is added to
             the ignore list by default and there is no need to add it here (default: None).
@@ -307,7 +314,9 @@ class OrderRunMonitor:
             logger.info(f'Ingredient order run originated from {ingredient_owner_order_run_id}')
             self.is_ingredient_order_run = True
 
-        self._event_info_provider = EventInfoProvider.init(dk_client, pipeline_name, order_run_id)
+        self._event_info_provider = EventInfoProvider.init(
+            dk_client, pipeline_name, order_run_id, run_name
+        )
         self._order_run_id = order_run_id
         self._nodes_to_ignore = nodes_to_ignore if nodes_to_ignore is not None else []
         self._nodes_to_ignore += ['Order_Run_Monitor']
