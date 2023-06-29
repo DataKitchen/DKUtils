@@ -304,7 +304,7 @@ class OrderRunMonitor:
         sleep_time_secs : int, optional
             Polling interval for monitoring the run in seconds (default: 10).
         host : str, optional
-            URL of the Events Ingestion API (default: https://dev-api.datakitchen.io').
+            URL of the Events Ingestion API.
         """
         self._dk_client = dk_client
         self.is_ingredient_order_run = False
