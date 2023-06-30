@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api.order_run_monitor &mdash; DKUtils 2.11.4 documentation</title>
+  <title>dkutils.datakitchen_api.order_run_monitor &mdash; DKUtils 2.11.5 documentation</title>
   
 
   
@@ -109,6 +109,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-5">v2.11.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-4">v2.11.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-3">v2.11.3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-2">v2.11.2</a></li>
@@ -373,16 +374,20 @@
     <span class="n">customer_code</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">pipeline_key</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">order_run_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">run_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="EventInfoProvider.init"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.EventInfoProvider.init">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">init</span><span class="p">(</span>
-            <span class="bp">cls</span><span class="p">,</span> <span class="n">dk_client</span><span class="p">:</span> <span class="n">DataKitchenClient</span><span class="p">,</span> <span class="n">pipeline_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">:</span> <span class="nb">str</span>
+            <span class="bp">cls</span><span class="p">,</span> <span class="n">dk_client</span><span class="p">:</span> <span class="n">DataKitchenClient</span><span class="p">,</span> <span class="n">pipeline_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">run_name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EventInfoProvider</span><span class="p">:</span>
         <span class="n">customer_code</span> <span class="o">=</span> <span class="n">get_customer_code</span><span class="p">(</span><span class="n">dk_client</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">EventInfoProvider</span><span class="p">(</span><span class="n">dk_client</span><span class="p">,</span> <span class="n">customer_code</span><span class="p">,</span> <span class="n">pipeline_key</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">EventInfoProvider</span><span class="p">(</span><span class="n">dk_client</span><span class="p">,</span> <span class="n">customer_code</span><span class="p">,</span> <span class="n">pipeline_key</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">,</span> <span class="n">run_name</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="EventInfoProvider.get_event_info"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.order_run_monitor.html#dkutils.datakitchen_api.order_run_monitor.EventInfoProvider.get_event_info">[docs]</a>    <span class="k">def</span> <span class="nf">get_event_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
         <span class="n">event_info</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;pipeline_key&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_key</span><span class="p">,</span> <span class="s1">&#39;run_key&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_run_id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">}</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_name</span><span class="p">:</span>
+            <span class="n">event_info</span><span class="p">[</span><span class="s1">&#39;run_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_name</span>
 
         <span class="k">if</span> <span class="s1">&#39;event_timestamp&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">event_info</span><span class="p">:</span>
             <span class="n">event_info</span><span class="p">[</span><span class="s1">&#39;event_timestamp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
@@ -520,6 +525,7 @@
         <span class="n">events_api_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">pipeline_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">order_run_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">run_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">nodes_to_ignore</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">sleep_time_secs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
         <span class="n">host</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_HOST</span><span class="p">,</span>
@@ -538,13 +544,15 @@
 <span class="sd">            Name of the pipeline being monitored</span>
 <span class="sd">        order_run_id : str</span>
 <span class="sd">            Id of the Order Run being monitored.</span>
+<span class="sd">        run_name : str, optional</span>
+<span class="sd">            Human readable name for the pipeline execution being monitored (default: None).</span>
 <span class="sd">        nodes_to_ignore : list or None, optional</span>
 <span class="sd">            List of nodes to ignore. If the monitor node is named Order_Run_Monitor, it is added to</span>
 <span class="sd">            the ignore list by default and there is no need to add it here (default: None).</span>
 <span class="sd">        sleep_time_secs : int, optional</span>
 <span class="sd">            Polling interval for monitoring the run in seconds (default: 10).</span>
 <span class="sd">        host : str, optional</span>
-<span class="sd">            URL of the Events Ingestion API (default: https://dev-api.datakitchen.io&#39;).</span>
+<span class="sd">            URL of the Events Ingestion API.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dk_client</span> <span class="o">=</span> <span class="n">dk_client</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_ingredient_order_run</span> <span class="o">=</span> <span class="kc">False</span>
@@ -554,7 +562,9 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Ingredient order run originated from </span><span class="si">{</span><span class="n">ingredient_owner_order_run_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">is_ingredient_order_run</span> <span class="o">=</span> <span class="kc">True</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_event_info_provider</span> <span class="o">=</span> <span class="n">EventInfoProvider</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">dk_client</span><span class="p">,</span> <span class="n">pipeline_name</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_event_info_provider</span> <span class="o">=</span> <span class="n">EventInfoProvider</span><span class="o">.</span><span class="n">init</span><span class="p">(</span>
+            <span class="n">dk_client</span><span class="p">,</span> <span class="n">pipeline_name</span><span class="p">,</span> <span class="n">order_run_id</span><span class="p">,</span> <span class="n">run_name</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_order_run_id</span> <span class="o">=</span> <span class="n">order_run_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_nodes_to_ignore</span> <span class="o">=</span> <span class="n">nodes_to_ignore</span> <span class="k">if</span> <span class="n">nodes_to_ignore</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_nodes_to_ignore</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;Order_Run_Monitor&#39;</span><span class="p">]</span>
