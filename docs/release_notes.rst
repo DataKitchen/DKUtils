@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v2.11.5
+-------
+* Updated Order Run Monitor module to optionally accept Run Name attribute
+
 v2.11.4
 -------
 * Lock events-ingestion-client dependency to v1.x
