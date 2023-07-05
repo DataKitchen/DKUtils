@@ -200,9 +200,12 @@ class Kitchen:
                     'Developer': ['developer1@gmail.com', 'developer2@gmail.com'],
                 }
         """
-        if settings:
-            return settings['kitchen']['kitchen-roles']
-        return self._get_settings()['kitchen']['kitchen-roles']
+        kitchen_settings = settings if settings else self._get_settings()
+        kitchen_roles = kitchen_settings['kitchen']['kitchen-roles']
+        result = {permission: list() for permission in kitchen_roles.values()}
+        for email, permission in kitchen_roles.items():
+            result[permission].append(email)
+        return result
 
     def _get_staff_set(self, settings: dict = None) -> set:
         """
@@ -442,11 +445,13 @@ class Kitchen:
 
         # Remove staff from list
         current_staff = self._get_staff_set(settings)
-        settings['kitchen']['kitchen-staff'] = list(current_staff - staff_to_delete)
+        if staff_to_delete.issubset(current_staff):
+            settings['kitchen']['kitchen-staff'] = list(current_staff - staff_to_delete)
 
         # Remove staff from roles
-        for role, role_staff in self._get_roles(settings=settings).items():
-            settings['kitchen']['kitchen-roles'][role] = list(set(role_staff) - staff_to_delete)
+        for staff in staff_to_delete:
+            if staff in settings['kitchen']['kitchen-roles']:
+                del settings['kitchen']['kitchen-roles'][staff]
 
         return self._update_settings(settings)
 
@@ -496,11 +501,9 @@ class Kitchen:
         settings['kitchen']['kitchen-staff'] = list(current_staff | new_staff)
 
         # Add staff to roles
-        for role, role_staff_to_add in staff_to_add.items():
-            cur_role_staff = settings['kitchen']['kitchen-roles'][role]
-            settings['kitchen']['kitchen-roles'][role] = list(
-                set(cur_role_staff) | set(role_staff_to_add)
-            )
+        for role, list_of_staff_to_add in staff_to_add.items():
+            for staff_to_add in list_of_staff_to_add:
+                settings['kitchen']['kitchen-roles'][staff_to_add] = role
 
         return self._update_settings(settings)
 
@@ -548,21 +551,9 @@ class Kitchen:
             )
 
         # Update staff to roles
-
-        for role, role_staff_to_update in staff_to_update.items():
-            # Update role staff
-            cur_role_staff = settings['kitchen']['kitchen-roles'][role]
-            settings['kitchen']['kitchen-roles'][role] = list(
-                set(cur_role_staff) | set(role_staff_to_update)
-            )
-
-            # Remove updated staff from other roles
-            for other_role, cur_staff in settings['kitchen']['kitchen-roles'].items():
-                if other_role != role:
-                    cur_other_role_staff = settings['kitchen']['kitchen-roles'][other_role]
-                    settings['kitchen']['kitchen-roles'][other_role] = list(
-                        set(cur_other_role_staff) - set(role_staff_to_update)
-                    )
+        for role, list_staff in staff_to_update.items():
+            for staff in list_staff:
+                settings['kitchen']['kitchen-roles'][staff] = role
 
         return self._update_settings(settings)
 

@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+v2.11.6
+-------
+* Fixed support for Kitchen Roles
+
+
 v2.11.5
 -------
 * Updated Order Run Monitor module to optionally accept Run Name attribute
