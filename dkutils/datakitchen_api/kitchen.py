@@ -452,11 +452,11 @@ class Kitchen:
 
         settings = self._get_settings()
         self._ensure_admin(settings=settings)
-        self.ensure_users_is_part_of_staff(staff_to_delete)
+
+        current_staff = self._get_staff_set(settings)
+        self.ensure_users_is_part_of_staff(staff_to_delete, current_staff)
 
         # Remove staff from list
-        current_staff = self._get_staff_set(settings)
-
         settings['kitchen']['kitchen-staff'] = list(current_staff - staff_to_delete)
 
         # Remove staff from roles
