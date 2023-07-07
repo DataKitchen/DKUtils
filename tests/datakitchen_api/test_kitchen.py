@@ -283,11 +283,10 @@ class TestKitchen(TestCase):
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
     def test_delete_staff_with_non_existing_user(self, mock_post, mock_get, _):
         mock_get.return_value = MockResponse(json=deepcopy(KITCHEN_SETTINGS))
-        Kitchen(self.dk_client, 'foo').delete_staff(['non_existing_user@datakitchen.io'])
-        exp_settings = {'kitchen.json': deepcopy(KITCHEN_SETTINGS['kitchen'])}
-        mock_post.assert_called_with(
-            f'{DUMMY_URL}/v2/kitchen/update/foo', headers=None, json=exp_settings
-        )
+
+        kitchen = Kitchen(self.dk_client, 'foo')
+        with self.assertRaises(ValueError):
+            kitchen.delete_staff(['non_existing_user@datakitchen.io'])
 
     @patch('dkutils.datakitchen_api.kitchen.Kitchen._ensure_admin')
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
