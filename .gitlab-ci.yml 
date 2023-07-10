@@ -1,0 +1,231 @@
+workflow:
+  rules:
+    # Create a build during a merge request and during updates.
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    # Always create the build, and stop checking rules (the 'always' directive)
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: always
+    # allow starts from the Web interface, and stop checking rules afterwards
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+      when: always
+    # Do not allow branch builds and merge builds to be kicked off at the same time.
+    - if: '$CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS'
+      when: never
+
+## Runner Image
+image: 
+  name: registry.gitlab.com/dkinternal/automation/automation-image-build:latest
+
+## Stages 
+stages:
+  - lint
+  #- scan secrets
+  #- basic tests
+  #- build-base
+  #- build-final
+  #- order tests
+
+variables:
+  # Change pip's cache directory to be inside the project directory since we can
+  # only cache local items.
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  # semgrep already uses bandit's rules as p/bandit. Gitlab is midswitch, and so
+  # we do not need to run both of these.
+  # SAST variables: https://docs.gitlab.com/ee/user/application_security/sast/#available-cicd-variables
+  SAST_EXCLUDED_ANALYZERS: "bandit"
+  # Remove results from the report that have these paths in them. This does include
+  # things like `module/.../tests/...`
+  SAST_EXCLUDED_PATHS: 'tests,venv'
+  # see: https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#use-the-overlayfs-driver
+  # Recommended docker-driver, which should be more performant.
+  DOCKER_DRIVER: overlay2
+  # By default, semgrep sends metrics upstream. This opts us out of sending those metrics.
+  SAST_SEMGREP_METRICS: "false"
+  # Tag value for docker images
+  IMAGE_TAG: "build-$CI_PIPELINE_IID"
+  # Timeout limit, in minutes, to upgrade the helm release (deploy)
+  DEPLOY_TIMEOUT_MINUTES: 10
+
+
+##--------------------------------------------------------------------------------------------------------------------------
+
+
+## Linting
+Scan Secrets:
+  stage: "lint"
+  script:
+        - echo "Navigate into DKUtils directory..."
+        - cd DKUtils
+
+        - echo "Pip install requirements..."
+        - pip3 install -r requirements-dev.txt
+		
+        - echo "Running flake8..."
+        - make flake8
+        - echo -n  $? > "../docker-share/flake8_result.txt"
+		
+		
+        - echo "Running yapf..."
+        - make yapf-diff
+        - echo -n  $? > "../docker-share/yapf_result.txt"
+
+
+
+
+##-----------------------------------------------------------------------------------------------------------------------
+
+
+
+
+### Basic Tests
+#Unit Tests:
+#  stage: "basic tests"
+#  script:
+#    - make unittest
+#  dependencies:  
+#    - "Scan Secrets"
+#
+### Docker Config
+#.docker_build_configuration:
+#  stage: build
+#  interruptible: true
+#  services:
+#   - name: docker:dind
+#     alias: dockerd
+#     # See: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/27300
+#     # TL;DR: There is a vicious delay when using TLS, and it causes
+#     # a race condition. The solution is to disable TLS, or introduce a sleep
+#     command: ["--tls=false"]
+#  variables:
+#    # We need to point docker at the docker-daemon
+#    DOCKER_HOST: tcp://dockerd:2375/
+#    # Part of disabling TLS
+#    DOCKER_TLS_CERTDIR: ""
+#
+### DOCKER BUILD
+#Build DokcerfileUbuntu20 Image:
+#  only: 
+#   - master
+#  extends: '.docker_build_configuration'
+#  stage: build-final
+#  variables:
+#    DOCKERFILE: "DockerfileUbuntu20"
+#    IMAGE: "docker.io/datakitchenprod/dk_general_purpose_container:u20"
+#  script:
+#    - docker build --no-cache -f ./${DOCKERFILE} -t ${IMAGE} .
+#    - echo "$DH_PASS" | docker login --username "$DH_USER" --password-stdin "$DH_REGISTRY"
+#    - docker push ${IMAGE}
+#  dependencies:
+#    - "Unit Tests"
+#
+### Order Run Tests
+#Image Test:
+#  only: 
+#   - master
+#  extends: '.docker_build_configuration'
+#  variables:
+#    DOCKERFILE: 'DockerfileUbuntu20'
+#    VERSION: '0.0.6'
+#  stage: "order tests"
+#  script:
+#    - make imagetest DOCKERFILE=$DOCKERFILE VERSION=$VERSION
+#  dependencies:  
+#    - "Unit Tests"
+#    - "Build DokcerfileUbuntu20 Image"
+#
+#Basic Test:
+#  only: 
+#   - master
+#  stage: 'order tests'
+#  extends: '.docker_build_configuration'
+#  variables:
+#    DOCKERFILE: 'DockerfileUbuntu20'
+#    KITCHEN: 'IM_Production'
+#    VERSION: '0.0.6'
+#  script:
+#    - make ordertest VERSION=${VERSION} DOCKERFILE=${DOCKERFILE} USERNAME=${API_USER} PASSWORD=${API_PW} KITCHEN=${KITCHEN} RECIPE=Training_General_Purpose_Container VARIATION=basic_example
+#  dependencies:
+#    - "Unit Tests"
+#    - "Image Test"
+#    - "Build DokcerfileUbuntu20 Image"
+#
+#    
+#Python Dependency Test:
+#  only: 
+#   - master
+#  stage: 'order tests'
+#  extends: '.docker_build_configuration'
+#  variables:
+#    DOCKERFILE: 'DockerfileUbuntu20'
+#    KITCHEN: 'IM_Production'
+#    VERSION: '0.0.6'
+#  script:
+#    - make ordertest VERSION=$VERSION DOCKERFILE=$DOCKERFILE USERNAME=${API_USER} PASSWORD=${API_PW} KITCHEN=$KITCHEN RECIPE=Training_General_Purpose_Container VARIATION=python_dependency_example
+#  dependencies:
+#    - "Unit Tests"
+#    - "Image Test"
+#    - "Build DokcerfileUbuntu20 Image"
+#
+#Shared Resources Test:
+#  only: 
+#   - master
+#  stage: 'order tests'
+#  extends: '.docker_build_configuration'
+#  variables:
+#    DOCKERFILE: 'DockerfileUbuntu20'
+#    KITCHEN: 'IM_Production'
+#    VERSION: '0.0.6'
+#  script:
+#    - make ordertest VERSION=$VERSION DOCKERFILE=$DOCKERFILE USERNAME=${API_USER} PASSWORD=${API_PW} KITCHEN=$KITCHEN RECIPE=Training_General_Purpose_Container VARIATION=shared_resources_example
+#  dependencies:
+#    - "Unit Tests"
+#    - "Image Test"
+#    - "Build DokcerfileUbuntu20 Image"
+#
+#Source Sink Test:
+#  only: 
+#   - master
+#  stage: 'order tests'
+#  extends: '.docker_build_configuration'
+#  variables:
+#    DOCKERFILE: 'DockerfileUbuntu20'
+#    KITCHEN: 'IM_Production'
+#    VERSION: '0.0.6'
+#  script: 
+#    - make ordertest VERSION=$VERSION DOCKERFILE=$DOCKERFILE USERNAME=${API_USER} PASSWORD=${API_PW} KITCHEN=$KITCHEN RECIPE=Training_General_Purpose_Container VARIATION=source_sink_example
+#  dependencies:
+#    - "Unit Tests"
+#    - "Image Test"
+#    - "Build DokcerfileUbuntu20 Image"
+#
+#Jupyter Notebook Test:
+#  only: 
+#   - master
+#  stage: 'order tests'
+#  extends: '.docker_build_configuration'
+#  variables:
+#    DOCKERFILE: 'DockerfileUbuntu20'
+#    KITCHEN: 'IM_Production'
+#    VERSION: '0.0.6'
+#  script:
+#    - make ordertest VERSION=$VERSION DOCKERFILE=$DOCKERFILE USERNAME=${API_USER} PASSWORD=${API_PW} KITCHEN=$KITCHEN RECIPE=Training_General_Purpose_Container VARIATION=jupyter_notebook_example
+#  dependencies:
+#    - "Unit Tests"
+#    - "Image Test"
+#    - "Build DokcerfileUbuntu20 Image"
+#
+#Jupyter Notebook from S3 Test:
+#  only: 
+#   - master
+#  stage: 'order tests'
+#  extends: '.docker_build_configuration'
+#  variables:
+#    DOCKERFILE: 'DockerfileUbuntu20'
+#    KITCHEN: 'IM_Production'
+#    VERSION: '0.0.6'
+#  script:
+#   - make ordertest VERSION=$VERSION DOCKERFILE=$DOCKERFILE USERNAME=${API_USER} PASSWORD=${API_PW} KITCHEN=$KITCHEN RECIPE=Training_General_Purpose_Container VARIATION=jupyter_notebook_from_s3_example
+#  dependencies:
+#    - "Unit Tests"
+#    - "Image Test"
+#    - "Build DokcerfileUbuntu20 Image"

@@ -6,6 +6,7 @@ import re
 
 from requests import Response
 from typing import TYPE_CHECKING, Union
+from collections import defaultdict
 
 from dkutils.constants import (
     API_DELETE,
@@ -200,9 +201,12 @@ class Kitchen:
                     'Developer': ['developer1@gmail.com', 'developer2@gmail.com'],
                 }
         """
-        if settings:
-            return settings['kitchen']['kitchen-roles']
-        return self._get_settings()['kitchen']['kitchen-roles']
+        kitchen_settings = settings if settings else self._get_settings()
+        kitchen_roles = kitchen_settings['kitchen']['kitchen-roles']
+        result = defaultdict(list)
+        for email, permission in kitchen_roles.items():
+            result[permission].append(email)
+        return result
 
     def _get_staff_set(self, settings: dict = None) -> set:
         """
@@ -229,9 +233,8 @@ class Kitchen:
                     'developer2@gmail.com',
                 }
         """
-        if settings:
-            return set(settings['kitchen']['kitchen-staff'])
-        return set(self._get_settings()['kitchen']['kitchen-staff'])
+        _settings = settings if settings else self._get_settings()
+        return set(_settings['kitchen']['kitchen-staff'])
 
     def _ensure_admin(self, roles: dict = None, settings: dict = None) -> None:
         """
@@ -413,6 +416,33 @@ class Kitchen:
         """
         return self._get_roles()
 
+    def ensure_users_is_part_of_staff(
+            self, users_to_check: Union[set, list], current_staff: Union[set, list] = None
+    ) -> None:
+        """
+        Ensure a list of users is part of Kitchen Staff. Otherwise, raise a ValueError.
+
+        Parameters
+        ----------
+        users_to_check : set or list
+            List or set of emails of the users to check if they are part of the staff.
+        current_staff : set or list
+            List or set of the current staff.
+        Raises
+        ------
+        ValueError
+            If the users to check are not part of the Kitchen Staff.
+
+        """
+        if not current_staff:
+            current_staff = self._get_staff_set()
+
+        if not users_to_check.issubset(current_staff):
+            raise ValueError(
+                f'The following staff do not already exist in kitchen: {users_to_check - current_staff}'
+            )
+        pass
+
     def delete_staff(self, staff_to_delete: Union[set, list]) -> Response:
         """
         Delete the provided staff from this kitchen.
@@ -440,13 +470,16 @@ class Kitchen:
         settings = self._get_settings()
         self._ensure_admin(settings=settings)
 
-        # Remove staff from list
         current_staff = self._get_staff_set(settings)
+        self.ensure_users_is_part_of_staff(staff_to_delete, current_staff)
+
+        # Remove staff from list
         settings['kitchen']['kitchen-staff'] = list(current_staff - staff_to_delete)
 
         # Remove staff from roles
-        for role, role_staff in self._get_roles(settings=settings).items():
-            settings['kitchen']['kitchen-roles'][role] = list(set(role_staff) - staff_to_delete)
+        for staff in staff_to_delete:
+            if staff in settings['kitchen']['kitchen-roles']:
+                del settings['kitchen']['kitchen-roles'][staff]
 
         return self._update_settings(settings)
 
@@ -496,11 +529,9 @@ class Kitchen:
         settings['kitchen']['kitchen-staff'] = list(current_staff | new_staff)
 
         # Add staff to roles
-        for role, role_staff_to_add in staff_to_add.items():
-            cur_role_staff = settings['kitchen']['kitchen-roles'][role]
-            settings['kitchen']['kitchen-roles'][role] = list(
-                set(cur_role_staff) | set(role_staff_to_add)
-            )
+        for role, list_of_staff_to_add in staff_to_add.items():
+            for staff_to_add in list_of_staff_to_add:
+                settings['kitchen']['kitchen-roles'][staff_to_add] = role
 
         return self._update_settings(settings)
 
@@ -542,27 +573,12 @@ class Kitchen:
         current_staff = self._get_staff_set(settings)
         updated_staff = set(itertools.chain.from_iterable(staff_to_update.values()))
 
-        if not updated_staff.issubset(current_staff):
-            raise ValueError(
-                f'The following staff do not already exist in kitchen: {updated_staff - current_staff}'
-            )
+        self.ensure_users_is_part_of_staff(updated_staff, current_staff)
 
         # Update staff to roles
-
-        for role, role_staff_to_update in staff_to_update.items():
-            # Update role staff
-            cur_role_staff = settings['kitchen']['kitchen-roles'][role]
-            settings['kitchen']['kitchen-roles'][role] = list(
-                set(cur_role_staff) | set(role_staff_to_update)
-            )
-
-            # Remove updated staff from other roles
-            for other_role, cur_staff in settings['kitchen']['kitchen-roles'].items():
-                if other_role != role:
-                    cur_other_role_staff = settings['kitchen']['kitchen-roles'][other_role]
-                    settings['kitchen']['kitchen-roles'][other_role] = list(
-                        set(cur_other_role_staff) - set(role_staff_to_update)
-                    )
+        for role, list_staff in staff_to_update.items():
+            for staff in list_staff:
+                settings['kitchen']['kitchen-roles'][staff] = role
 
         return self._update_settings(settings)
 

@@ -21,11 +21,15 @@ KITCHEN_SETTINGS = {
         'description': '',
         'git_name': 'im',
         'git_org': 'DKImplementation',
-        'kitchen-roles': {
-            'Admin': ['ddicara+im@datakitchen.io'],
-            'Developer': ['atiwari+im@datakitchen.io']
+        "kitchen-roles": {
+            "user1@email.com": "Admin",
+            "user2@email.com": "Admin",
+            "user3@email.com": "Developer",
+            "User4@EMAIL.com": "Guest"
         },
-        'kitchen-staff': ['atiwari+im@datakitchen.io', 'ddicara+im@datakitchen.io'],
+        "kitchen-staff": [
+            "user1@email.com", "user2@email.com", "user3@email.com", "User4@EMAIL.com"
+        ],
         'name': 'foo',
         'parent-kitchen': 'IM_Development',
         'recipeoverrides': {
@@ -188,14 +192,24 @@ class TestKitchen(TestCase):
         )
 
     def test_get_roles_with_settings(self):
+        expected = {
+            "Admin": ["user1@email.com", "user2@email.com"],
+            "Developer": ["user3@email.com"],
+            "Guest": ["User4@EMAIL.com"]
+        }
         roles = Kitchen(self.dk_client, 'foo')._get_roles(settings=KITCHEN_SETTINGS)
-        self.assertEqual(roles, KITCHEN_SETTINGS['kitchen']['kitchen-roles'])
+        self.assertEqual(roles, expected)
 
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
     def test_get_roles_without_settings(self, mock_get):
+        expected = {
+            "Admin": ["user1@email.com", "user2@email.com"],
+            "Developer": ["user3@email.com"],
+            "Guest": ["User4@EMAIL.com"]
+        }
         mock_get.return_value = MockResponse(json=KITCHEN_SETTINGS)
         roles = Kitchen(self.dk_client, 'foo')._get_roles()
-        self.assertEqual(roles, KITCHEN_SETTINGS['kitchen']['kitchen-roles'])
+        self.assertEqual(roles, expected)
 
     def test_get_staff_set_with_settings(self):
         roles = Kitchen(self.dk_client, 'foo')._get_staff_set(settings=KITCHEN_SETTINGS)
@@ -210,13 +224,13 @@ class TestKitchen(TestCase):
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
     def test_ensure_admin(self, mock_get):
         settings = deepcopy(KITCHEN_SETTINGS)
-        settings['kitchen']['kitchen-roles']['Admin'].append(DUMMY_USERNAME)
+        settings['kitchen']['kitchen-roles'][DUMMY_USERNAME] = 'Admin'
         mock_get.return_value = MockResponse(json=settings)
         Kitchen(self.dk_client, 'foo')._ensure_admin()
 
     def test_ensure_admin_with_settings(self):
         settings = deepcopy(KITCHEN_SETTINGS)
-        settings['kitchen']['kitchen-roles']['Admin'].append(DUMMY_USERNAME)
+        settings['kitchen']['kitchen-roles'][DUMMY_USERNAME] = 'Admin'
         Kitchen(self.dk_client, 'foo')._ensure_admin(settings=settings)
 
     def test_ensure_admin_with_roles(self):
@@ -239,21 +253,27 @@ class TestKitchen(TestCase):
 
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
     def test_get_staff(self, mock_get):
+        expected = {
+            "Admin": ["user1@email.com", "user2@email.com"],
+            "Developer": ["user3@email.com"],
+            "Guest": ["User4@EMAIL.com"]
+        }
         mock_get.return_value = MockResponse(json=KITCHEN_SETTINGS)
         staff = Kitchen(self.dk_client, 'foo').get_staff()
-        self.assertEqual(staff, KITCHEN_SETTINGS['kitchen']['kitchen-roles'])
+        self.assertEqual(staff, expected)
 
     @patch('dkutils.datakitchen_api.kitchen.Kitchen._ensure_admin')
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
-    def test_delete_staff(self, mock_post, mock_get, _):
+    def test_delete_staff_with_existing_user(self, mock_post, mock_get, _):
         mock_get.return_value = MockResponse(json=deepcopy(KITCHEN_SETTINGS))
-        Kitchen(self.dk_client, 'foo').delete_staff(['atiwari+im@datakitchen.io'])
+        Kitchen(self.dk_client, 'foo').delete_staff(['user3@email.com'])
         exp_settings = {'kitchen.json': deepcopy(KITCHEN_SETTINGS['kitchen'])}
-        exp_settings['kitchen.json']['kitchen-roles']['Developer'].remove(
-            'atiwari+im@datakitchen.io'
-        )
-        exp_settings['kitchen.json']['kitchen-staff'].remove('atiwari+im@datakitchen.io')
+        del exp_settings['kitchen.json']['kitchen-roles']['user3@email.com']
+        current_staff = set(exp_settings['kitchen.json']['kitchen-staff'])
+        new_staff = {'user3@email.com'}
+        staff = list(current_staff - new_staff)
+        exp_settings['kitchen.json']['kitchen-staff'] = staff
         mock_post.assert_called_with(
             f'{DUMMY_URL}/v2/kitchen/update/foo', headers=None, json=exp_settings
         )
@@ -261,18 +281,26 @@ class TestKitchen(TestCase):
     @patch('dkutils.datakitchen_api.kitchen.Kitchen._ensure_admin')
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
     @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
+    def test_delete_staff_with_non_existing_user(self, mock_post, mock_get, _):
+        mock_get.return_value = MockResponse(json=deepcopy(KITCHEN_SETTINGS))
+
+        kitchen = Kitchen(self.dk_client, 'foo')
+        with self.assertRaises(ValueError):
+            kitchen.delete_staff(['non_existing_user@datakitchen.io'])
+
+    @patch('dkutils.datakitchen_api.kitchen.Kitchen._ensure_admin')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.get')
+    @patch('dkutils.datakitchen_api.datakitchen_client.requests.post')
     def test_add_staff(self, mock_post, mock_get, _):
         mock_get.return_value = MockResponse(json=deepcopy(KITCHEN_SETTINGS))
-        Kitchen(self.dk_client, 'foo').add_staff({'Developer': ['new_developer@datakitchen.io']})
+        kitchen = Kitchen(self.dk_client, 'foo')
+        kitchen.add_staff({'Developer': ['new_developer@datakitchen.io']})
 
         exp_settings = {'kitchen.json': deepcopy(KITCHEN_SETTINGS['kitchen'])}
-        dev_roles = exp_settings['kitchen.json']['kitchen-roles']['Developer'] + [
-            'new_developer@datakitchen.io'
-        ]
-        dev_roles = list(set(dev_roles))
-        exp_settings['kitchen.json']['kitchen-roles']['Developer'] = dev_roles
-        staff = exp_settings['kitchen.json']['kitchen-staff'] + ['new_developer@datakitchen.io']
-        staff = list(set(staff))
+        exp_settings['kitchen.json']['kitchen-roles']['new_developer@datakitchen.io'] = 'Developer'
+        current_staff = set(exp_settings['kitchen.json']['kitchen-staff'])
+        new_staff = {'new_developer@datakitchen.io'}
+        staff = list(current_staff | new_staff)
         exp_settings['kitchen.json']['kitchen-staff'] = staff
         mock_post.assert_called_with(
             f'{DUMMY_URL}/v2/kitchen/update/foo', headers=None, json=exp_settings
@@ -284,13 +312,14 @@ class TestKitchen(TestCase):
     def test_update_staff(self, mock_post, mock_get, _):
         mock_get.return_value = MockResponse(json=deepcopy(KITCHEN_SETTINGS))
         Kitchen(self.dk_client, 'foo').update_staff({
-            'Admin': ['atiwari+im@datakitchen.io'],
-            'Developer': ['ddicara+im@datakitchen.io'],
+            'Admin': ['User4@EMAIL.com'],
+            'Developer': ['user1@email.com', 'user2@email.com'],
         })
 
         exp_settings = {'kitchen.json': deepcopy(KITCHEN_SETTINGS['kitchen'])}
-        exp_settings['kitchen.json']['kitchen-roles']['Admin'] = ['atiwari+im@datakitchen.io']
-        exp_settings['kitchen.json']['kitchen-roles']['Developer'] = ['ddicara+im@datakitchen.io']
+        exp_settings['kitchen.json']['kitchen-roles']['user1@email.com'] = 'Developer'
+        exp_settings['kitchen.json']['kitchen-roles']['user2@email.com'] = 'Developer'
+        exp_settings['kitchen.json']['kitchen-roles']['User4@EMAIL.com'] = 'Admin'
         mock_post.assert_called_with(
             f'{DUMMY_URL}/v2/kitchen/update/foo', headers=None, json=exp_settings
         )
