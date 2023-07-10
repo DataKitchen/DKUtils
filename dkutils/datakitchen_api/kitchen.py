@@ -416,7 +416,24 @@ class Kitchen:
         """
         return self._get_roles()
 
-    def ensure_users_is_part_of_staff(self, users_to_check: Union[set, list], current_staff: Union[set, list] = None):
+    def ensure_users_is_part_of_staff(
+            self, users_to_check: Union[set, list], current_staff: Union[set, list] = None
+    ) -> None:
+        """
+        Ensure a list of users is part of Kitchen Staff. Otherwise, raise a ValueError.
+
+        Parameters
+        ----------
+        users_to_check : set or list
+            List or set of emails of the users to check if they are part of the staff.
+        current_staff : set or list
+            List or set of the current staff.
+        Raises
+        ------
+        ValueError
+            If the users to check are not part of the Kitchen Staff.
+
+        """
         if not current_staff:
             current_staff = self._get_staff_set()
 
