@@ -416,7 +416,7 @@ class Kitchen:
         """
         return self._get_roles()
 
-    def ensure_users_is_part_of_staff(self, users_to_check: Union[set, list], current_staff: Union[set, list] = None) -> None:
+    def ensure_users_is_part_of_staff(self, users_to_check: Union[set, list], current_staff: Union[set, list] = None):
         if not current_staff:
             current_staff = self._get_staff_set()
 
