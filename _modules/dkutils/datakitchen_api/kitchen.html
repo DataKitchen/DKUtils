@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dkutils.datakitchen_api.kitchen &mdash; DKUtils 2.11.5 documentation</title>
+  <title>dkutils.datakitchen_api.kitchen &mdash; DKUtils 2.11.6 documentation</title>
   
 
   
@@ -109,6 +109,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-6">v2.11.6</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-5">v2.11.5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-4">v2.11.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../release_notes.html#v2-11-3">v2.11.3</a></li>
@@ -254,6 +255,7 @@
 
 <span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">Response</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 
 <span class="kn">from</span> <span class="nn">dkutils.constants</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">API_DELETE</span><span class="p">,</span>
@@ -448,9 +450,12 @@
 <span class="sd">                    &#39;Developer&#39;: [&#39;developer1@gmail.com&#39;, &#39;developer2@gmail.com&#39;],</span>
 <span class="sd">                }</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">settings</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-roles&#39;</span><span class="p">]</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_settings</span><span class="p">()[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-roles&#39;</span><span class="p">]</span>
+        <span class="n">kitchen_settings</span> <span class="o">=</span> <span class="n">settings</span> <span class="k">if</span> <span class="n">settings</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_settings</span><span class="p">()</span>
+        <span class="n">kitchen_roles</span> <span class="o">=</span> <span class="n">kitchen_settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-roles&#39;</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">email</span><span class="p">,</span> <span class="n">permission</span> <span class="ow">in</span> <span class="n">kitchen_roles</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">permission</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">email</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">def</span> <span class="nf">_get_staff_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -477,9 +482,8 @@
 <span class="sd">                    &#39;developer2@gmail.com&#39;,</span>
 <span class="sd">                }</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">settings</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-staff&#39;</span><span class="p">])</span>
-        <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_settings</span><span class="p">()[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-staff&#39;</span><span class="p">])</span>
+        <span class="n">_settings</span> <span class="o">=</span> <span class="n">settings</span> <span class="k">if</span> <span class="n">settings</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_settings</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">_settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-staff&#39;</span><span class="p">])</span>
 
     <span class="k">def</span> <span class="nf">_ensure_admin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">roles</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -661,6 +665,33 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_roles</span><span class="p">()</span></div>
 
+<div class="viewcode-block" id="Kitchen.ensure_users_is_part_of_staff"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.ensure_users_is_part_of_staff">[docs]</a>    <span class="k">def</span> <span class="nf">ensure_users_is_part_of_staff</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">users_to_check</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">set</span><span class="p">,</span> <span class="nb">list</span><span class="p">],</span> <span class="n">current_staff</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">set</span><span class="p">,</span> <span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Ensure a list of users is part of Kitchen Staff. Otherwise, raise a ValueError.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        users_to_check : set or list</span>
+<span class="sd">            List or set of emails of the users to check if they are part of the staff.</span>
+<span class="sd">        current_staff : set or list</span>
+<span class="sd">            List or set of the current staff.</span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the users to check are not part of the Kitchen Staff.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">current_staff</span><span class="p">:</span>
+            <span class="n">current_staff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_staff_set</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">users_to_check</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">current_staff</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;The following staff do not already exist in kitchen: </span><span class="si">{</span><span class="n">users_to_check</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">current_staff</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
+        <span class="k">pass</span></div>
+
 <div class="viewcode-block" id="Kitchen.delete_staff"><a class="viewcode-back" href="../../../apidoc/dkutils.datakitchen_api.kitchen.html#dkutils.datakitchen_api.kitchen.Kitchen.delete_staff">[docs]</a>    <span class="k">def</span> <span class="nf">delete_staff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">staff_to_delete</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">set</span><span class="p">,</span> <span class="nb">list</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete the provided staff from this kitchen.</span>
@@ -688,13 +719,16 @@
         <span class="n">settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_settings</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_admin</span><span class="p">(</span><span class="n">settings</span><span class="o">=</span><span class="n">settings</span><span class="p">)</span>
 
-        <span class="c1"># Remove staff from list</span>
         <span class="n">current_staff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_staff_set</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ensure_users_is_part_of_staff</span><span class="p">(</span><span class="n">staff_to_delete</span><span class="p">,</span> <span class="n">current_staff</span><span class="p">)</span>
+
+        <span class="c1"># Remove staff from list</span>
         <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-staff&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">current_staff</span> <span class="o">-</span> <span class="n">staff_to_delete</span><span class="p">)</span>
 
         <span class="c1"># Remove staff from roles</span>
-        <span class="k">for</span> <span class="n">role</span><span class="p">,</span> <span class="n">role_staff</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_roles</span><span class="p">(</span><span class="n">settings</span><span class="o">=</span><span class="n">settings</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-roles&#39;</span><span class="p">][</span><span class="n">role</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">role_staff</span><span class="p">)</span> <span class="o">-</span> <span class="n">staff_to_delete</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">staff</span> <span class="ow">in</span> <span class="n">staff_to_delete</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">staff</span> <span class="ow">in</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-roles&#39;</span><span class="p">]:</span>
+                <span class="k">del</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-roles&#39;</span><span class="p">][</span><span class="n">staff</span><span class="p">]</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_settings</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span></div>
 
@@ -744,11 +778,9 @@
         <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-staff&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">current_staff</span> <span class="o">|</span> <span class="n">new_staff</span><span class="p">)</span>
 
         <span class="c1"># Add staff to roles</span>
-        <span class="k">for</span> <span class="n">role</span><span class="p">,</span> <span class="n">role_staff_to_add</span> <span class="ow">in</span> <span class="n">staff_to_add</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">cur_role_staff</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-roles&#39;</span><span class="p">][</span><span class="n">role</span><span class="p">]</span>
-            <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-roles&#39;</span><span class="p">][</span><span class="n">role</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
-                <span class="nb">set</span><span class="p">(</span><span class="n">cur_role_staff</span><span class="p">)</span> <span class="o">|</span> <span class="nb">set</span><span class="p">(</span><span class="n">role_staff_to_add</span><span class="p">)</span>
-            <span class="p">)</span>
+        <span class="k">for</span> <span class="n">role</span><span class="p">,</span> <span class="n">list_of_staff_to_add</span> <span class="ow">in</span> <span class="n">staff_to_add</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">staff_to_add</span> <span class="ow">in</span> <span class="n">list_of_staff_to_add</span><span class="p">:</span>
+                <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-roles&#39;</span><span class="p">][</span><span class="n">staff_to_add</span><span class="p">]</span> <span class="o">=</span> <span class="n">role</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_settings</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span></div>
 
@@ -790,27 +822,12 @@
         <span class="n">current_staff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_staff_set</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
         <span class="n">updated_staff</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">staff_to_update</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">updated_staff</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">current_staff</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s1">&#39;The following staff do not already exist in kitchen: </span><span class="si">{</span><span class="n">updated_staff</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">current_staff</span><span class="si">}</span><span class="s1">&#39;</span>
-            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ensure_users_is_part_of_staff</span><span class="p">(</span><span class="n">updated_staff</span><span class="p">,</span> <span class="n">current_staff</span><span class="p">)</span>
 
         <span class="c1"># Update staff to roles</span>
-
-        <span class="k">for</span> <span class="n">role</span><span class="p">,</span> <span class="n">role_staff_to_update</span> <span class="ow">in</span> <span class="n">staff_to_update</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="c1"># Update role staff</span>
-            <span class="n">cur_role_staff</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-roles&#39;</span><span class="p">][</span><span class="n">role</span><span class="p">]</span>
-            <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-roles&#39;</span><span class="p">][</span><span class="n">role</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
-                <span class="nb">set</span><span class="p">(</span><span class="n">cur_role_staff</span><span class="p">)</span> <span class="o">|</span> <span class="nb">set</span><span class="p">(</span><span class="n">role_staff_to_update</span><span class="p">)</span>
-            <span class="p">)</span>
-
-            <span class="c1"># Remove updated staff from other roles</span>
-            <span class="k">for</span> <span class="n">other_role</span><span class="p">,</span> <span class="n">cur_staff</span> <span class="ow">in</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-roles&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="k">if</span> <span class="n">other_role</span> <span class="o">!=</span> <span class="n">role</span><span class="p">:</span>
-                    <span class="n">cur_other_role_staff</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-roles&#39;</span><span class="p">][</span><span class="n">other_role</span><span class="p">]</span>
-                    <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-roles&#39;</span><span class="p">][</span><span class="n">other_role</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
-                        <span class="nb">set</span><span class="p">(</span><span class="n">cur_other_role_staff</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">role_staff_to_update</span><span class="p">)</span>
-                    <span class="p">)</span>
+        <span class="k">for</span> <span class="n">role</span><span class="p">,</span> <span class="n">list_staff</span> <span class="ow">in</span> <span class="n">staff_to_update</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">staff</span> <span class="ow">in</span> <span class="n">list_staff</span><span class="p">:</span>
+                <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;kitchen&#39;</span><span class="p">][</span><span class="s1">&#39;kitchen-roles&#39;</span><span class="p">][</span><span class="n">staff</span><span class="p">]</span> <span class="o">=</span> <span class="n">role</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_settings</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span></div>
 
